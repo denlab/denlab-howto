@@ -1,0 +1,9 @@
+#+STARTUP: logdone
+#+STARTUP: hidestars
+
+* replace capslock by ctrl in console ?
+- in  /etc/default/keyboard
+- replace XKBOPTIONS="" by XKBOPTIONS="ctrl:nocaps"
+- run sudo dpkg-reconfigure -phigh console-setup
+
+see https://www.emacswiki.org/emacs/MovingTheCtrlKey#toc9
