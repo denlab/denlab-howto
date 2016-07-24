@@ -1,9 +1,18 @@
 #+STARTUP: logdone
 #+STARTUP: hidestars
 
+* template
+
+#+BEGIN_SRC sh
+
+#+END_SRC
+
+
 * linux: remove a user?
+#+BEGIN_SRC sh
 export U=<user>
 userdel -r $U
+#+END_SRC
 
 * replace capslock by ctrl in console ?
 - in  /etc/default/keyboard
