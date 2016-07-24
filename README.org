@@ -1,6 +1,10 @@
 #+STARTUP: logdone
 #+STARTUP: hidestars
 
+* linux: remove a user?
+export U=<user>
+userdel -r $U
+
 * replace capslock by ctrl in console ?
 - in  /etc/default/keyboard
 - replace XKBOPTIONS="" by XKBOPTIONS="ctrl:nocaps"
