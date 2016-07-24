@@ -9,7 +9,7 @@
 
 
 * linux: remove a user?
-#+BEGIN_SRC sh
+#+BEGIN_SRC java
 export U=<user>
 userdel -r $U
 #+END_SRC
