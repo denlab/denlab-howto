@@ -7,6 +7,19 @@
 
 #+END_SRC
 
+* ssh or scp in a script without entering password ?
+
+#+BEGIN_SRC sh
+expect -c "
+   set timeout 5
+   spawn scp login@somehost.com:/somefile .
+   expect password: { send password\r }
+   expect 100%
+   sleep 1
+   exit
+"
+#+END_SRC
+
 * Linux reload service config
 
 #+BEGIN_SRC sh
