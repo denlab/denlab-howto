@@ -11,11 +11,10 @@
 
 #+BEGIN_SRC sh
 expect -c "
-   set timeout 5
    spawn scp login@somehost.com:/somefile .
+   expect yes/no { send yes\r ; exp_continue }
    expect password: { send password\r }
    expect 100%
-   sleep 1
    exit
 "
 #+END_SRC
