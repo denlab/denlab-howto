@@ -7,6 +7,13 @@
 
 #+END_SRC
 
+* ssh reverse tunel ?
+
+#+BEGIN_SRC sh
+# from the target machine:
+ssh -R 2210:localhost:22 bserver.outside.com
+#+END_SRC
+
 * ssh or scp in a script without entering password ?
 
 #+BEGIN_SRC sh
