@@ -13,6 +13,7 @@
 # from the target machine:
 ssh -R 2210:localhost:22 bserver.outside.com
 #+END_SRC
+from: https://toic.org/blog/2009/reverse-ssh-port-forwarding/
 
 * ssh or scp in a script without entering password ?
 
