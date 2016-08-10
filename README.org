@@ -7,6 +7,12 @@
 
 #+END_SRC
 
+* redirect stderr on stdout ?                                         :shell:
+
+#+BEGIN_SRC sh
+ls 1>&2
+#+END_SRC
+
 * ssh or scp in a script without entering password ?
 
 #+BEGIN_SRC sh
