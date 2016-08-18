@@ -6,6 +6,13 @@
 #+BEGIN_SRC sh
 
 #+END_SRC
+* apt-get: what package provide this file?
+
+#+BEGIN_SRC sh
+apt-get install apt-file
+apt-file update
+apt-file find <file>
+#+END_SRC
 
 * redirect stderr on stdout ?                                         :shell:
 
