@@ -20,15 +20,22 @@ apt-file find <file>
 ls 2>&1
 #+END_SRC
 
+* ssh reverse tunel ?
+
+#+BEGIN_SRC sh
+# from the target machine:
+ssh -R 2210:localhost:22 bserver.outside.com
+#+END_SRC
+from: https://toic.org/blog/2009/reverse-ssh-port-forwarding/
+
 * ssh or scp in a script without entering password ?
 
 #+BEGIN_SRC sh
 expect -c "
-   set timeout 5
    spawn scp login@somehost.com:/somefile .
+   expect yes/no { send yes\r ; exp_continue }
    expect password: { send password\r }
    expect 100%
-   sleep 1
    exit
 "
 #+END_SRC
