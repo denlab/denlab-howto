@@ -6,6 +6,11 @@
 #+BEGIN_SRC sh
 
 #+END_SRC
+* dpkg show all installed files of a .deb?
+
+#+BEGIN_SRC sh
+dpkg -L jenkins
+#+END_SRC
 * apt-get: what package provide this file?
 
 #+BEGIN_SRC sh
@@ -20,7 +25,7 @@ apt-file find <file>
 ls 2>&1
 #+END_SRC
 
-* ssh reverse tunel ?
+* ssh reverse tunnel ?
 
 #+BEGIN_SRC sh
 # from the target machine:
