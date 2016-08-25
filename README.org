@@ -6,12 +6,19 @@
 #+BEGIN_SRC sh
 
 #+END_SRC
-* dpkg show all installed files of a .deb?
+* linux
+** find
+*** find files modified in the last x minutes
+#+BEGIN_SRC sh
+find . -cmin -5
+#+END_SRC
+* unsorted
+** dpkg show all installed files of a .deb?
 
 #+BEGIN_SRC sh
 dpkg -L jenkins
 #+END_SRC
-* apt-get: what package provide this file?
+** apt-get: what package provide this file?
 
 #+BEGIN_SRC sh
 apt-get install apt-file
@@ -19,13 +26,13 @@ apt-file update
 apt-file find <file>
 #+END_SRC
 
-* redirect stderr on stdout ?                                         :shell:
+** redirect stderr on stdout ?                                        :shell:
 
 #+BEGIN_SRC sh
 ls 2>&1
 #+END_SRC
 
-* ssh reverse tunnel ?
+** ssh reverse tunnel ?
 
 #+BEGIN_SRC sh
 # from the target machine:
@@ -33,7 +40,7 @@ ssh -R 2210:localhost:22 bserver.outside.com
 #+END_SRC
 from: https://toic.org/blog/2009/reverse-ssh-port-forwarding/
 
-* ssh or scp in a script without entering password ?
+** ssh or scp in a script without entering password ?
 
 #+BEGIN_SRC sh
 expect -c "
@@ -45,19 +52,19 @@ expect -c "
 "
 #+END_SRC
 
-* Linux reload service config
+** Linux reload service config
 
 #+BEGIN_SRC sh
 sudo systemctl daemon-reload
 #+END_SRC
 
-* linux: remove a user?
+** linux: remove a user?
 #+BEGIN_SRC sh
 export U=<user>
 userdel -r $U
 #+END_SRC
 
-* replace capslock by ctrl in console ?
+** replace capslock by ctrl in console ?
 #+BEGIN_SRC sh
 #in  /etc/default/keyboard
 #replace XKBOPTIONS="" by XKBOPTIONS="ctrl:nocaps"
