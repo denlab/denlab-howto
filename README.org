@@ -12,6 +12,12 @@
 #+BEGIN_SRC sh
 find . -cmin -5
 #+END_SRC
+** user admin
+*** how to add a group to a user ? 
+
+#+BEGIN_SRC sh
+sudo usermod -aG docker u
+#+END_SRC
 * unsorted
 ** dpkg show all installed files of a .deb?
 
