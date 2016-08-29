@@ -3,52 +3,52 @@
 
 * template
 
-#+BEGIN_SRC sh
+#+begin_src sh
 
-#+END_SRC
+#+end_src
 * linux
 ** find
 *** find files modified in the last x minutes
-#+BEGIN_SRC sh
+#+begin_src sh
 find . -cmin -5
-#+END_SRC
+#+end_src
 ** user admin
 *** how to add a group to a user ? 
 
-#+BEGIN_SRC sh
+#+begin_src sh
 sudo usermod -aG docker u
-#+END_SRC
+#+end_src
 * unsorted
 ** dpkg show all installed files of a .deb?
 
-#+BEGIN_SRC sh
+#+begin_src sh
 dpkg -L jenkins
-#+END_SRC
+#+end_src
 ** apt-get: what package provide this file?
 
-#+BEGIN_SRC sh
+#+begin_src sh
 apt-get install apt-file
 apt-file update
 apt-file find <file>
-#+END_SRC
+#+end_src
 
 ** redirect stderr on stdout ?                                        :shell:
 
-#+BEGIN_SRC sh
+#+begin_src sh
 ls 2>&1
-#+END_SRC
+#+end_src
 
 ** ssh reverse tunnel ?
 
-#+BEGIN_SRC sh
+#+begin_src sh
 # from the target machine:
 ssh -R 2210:localhost:22 bserver.outside.com
-#+END_SRC
+#+end_src
 from: https://toic.org/blog/2009/reverse-ssh-port-forwarding/
 
 ** ssh or scp in a script without entering password ?
 
-#+BEGIN_SRC sh
+#+begin_src sh
 expect -c "
    spawn scp login@somehost.com:/somefile .
    expect yes/no { send yes\r ; exp_continue }
@@ -56,26 +56,26 @@ expect -c "
    expect 100%
    exit
 "
-#+END_SRC
+#+end_src
 
 ** Linux reload service config
 
-#+BEGIN_SRC sh
+#+begin_src sh
 sudo systemctl daemon-reload
-#+END_SRC
+#+end_src
 
 ** linux: remove a user?
-#+BEGIN_SRC sh
+#+begin_src sh
 export U=<user>
 userdel -r $U
-#+END_SRC
+#+end_src
 
 ** replace capslock by ctrl in console ?
-#+BEGIN_SRC sh
+#+begin_src sh
 #in  /etc/default/keyboard
 #replace XKBOPTIONS="" by XKBOPTIONS="ctrl:nocaps"
 # then run
 run sudo dpkg-reconfigure -phigh console-setup
-#+END_SRC
+#+end_src
 
 ref: https://www.emacswiki.org/emacs/MovingTheCtrlKey#toc9
