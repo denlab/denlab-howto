@@ -18,6 +18,11 @@ find . -cmin -5
 #+begin_src sh
 sudo usermod -aG docker u
 #+end_src
+* git
+** how to delete a remote branch ? 
+#+begin_src sh
+git push origin --delete feature/example
+#+end_src
 * unsorted
 ** dpkg show all installed files of a .deb?
 
