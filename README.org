@@ -18,6 +18,12 @@ find . -cmin -5
 #+begin_src sh
 sudo usermod -aG docker u
 #+end_src
+** ssh
+*** generate public private key pair
+#+begin_src sh
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+#+end_src
+
 * git
 ** how to delete a remote branch ? 
 #+begin_src sh
