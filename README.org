@@ -24,6 +24,9 @@ sudo usermod -aG docker u
 ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 #+end_src
 
+* docker
+** find images on the command line ? 
+???
 * git
 ** how to delete a remote branch ? 
 #+begin_src sh
