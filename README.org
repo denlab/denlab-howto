@@ -27,6 +27,12 @@ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 * docker
 ** find images on the command line ? 
 ???
+** docker run/start/exec ?
+
+| run   | run cmd in *new* container     |
+| exec  | run cmd in *running* container |
+| start | start a *stopped* container    |
+
 * git
 ** how to delete a remote branch ? 
 #+begin_src sh
