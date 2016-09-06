@@ -32,6 +32,18 @@ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 | run   | run cmd in *new* container     |
 | exec  | run cmd in *running* container |
 | start | start a *stopped* container    |
+** troubleshoot ubuntu network ? 
+- ping 8.8.8.8 but no www.google.com ? 
+- incomplete response: 
+#+begin_src sh
+# Find your network's DNS server:
+$ nmcli dev show | grep 'IP4.DNS'
+IP4.DNS[1]:                             10.19.18.25
+
+# Open up /lib/systemd/system/docker.service and add DNS settings to the ExecStart line:
+ExecStart=/usr/bin/docker daemon --dns 8.8.8.8 --dns 10.19.18.25 -H fd://
+#+end_src
+From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying-to-use-8-8-8-8
 
 * git
 ** how to delete a remote branch ? 
