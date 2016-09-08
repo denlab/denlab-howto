@@ -76,6 +76,11 @@ apt-file find <file>
 ls 2>&1
 #+end_src
 
+** redirect stdout and stderr to file ?
+#+begin_src sh
+cmd &> file 
+#+end_src
+
 ** ssh reverse tunnel ?
 
 #+begin_src sh
