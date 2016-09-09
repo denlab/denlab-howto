@@ -56,6 +56,13 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
 #+begin_src sh
 git push origin --delete feature/example
 #+end_src
+* jq
+** Recursively find a value by key?
+#+begin_src sh
+echo '[{"a": 1}, {"b": 2}]' | jq '.. | .a? // empty'
+# => 1
+#+end_src
+
 * unsorted
 ** dpkg show all installed files of a .deb?
 
