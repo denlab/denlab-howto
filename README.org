@@ -24,10 +24,30 @@ http://www.cyberciti.biz/tips/handling-filenames-with-spaces-in-bash.html
 #+begin_src sh
 sudo usermod -aG docker u
 #+end_src
+*** add a user with specific groups ? 
+TODO
+*** get the groups of a user ?
+#+begin_src sh
+groups <user>
+#+end_src
+*** Change the shell of a user?
+#+begin_src sh
+usermod -s /bin/bash user
+#+end_src
+
 ** ssh
 *** generate public private key pair
 #+begin_src sh
 ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+#+end_src
+
+** centos
+*** manage services?
+#+begin_src sh
+# list all services
+systemctl list-unit-files --type=service
+
+# enable a service
 #+end_src
 
 * docker
