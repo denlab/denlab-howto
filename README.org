@@ -6,8 +6,20 @@
 #+begin_src sh
 
 #+end_src
-* linux
-** find
+* Linux
+** Io
+*** redirecting stdout, stderr
+
+#+begin_src sh
+# stdout to stderr
+echo x >&2
+# stdout and stderr to file
+cmd &> file 
+# stderr to stdout
+ls 2>&1
+#+end_src
+
+** Find
 *** find files modified in the last x minutes
 #+begin_src sh
 find . -cmin -5
@@ -18,30 +30,66 @@ find . -maxdepth 1 -print0 | while read -d $'\0' d ; do echo $d ; done
 #+end_src
 http://www.cyberciti.biz/tips/handling-filenames-with-spaces-in-bash.html
 
-** user admin
+** User Admin
 *** how to add a group to a user ? 
-
 #+begin_src sh
 sudo usermod -aG docker u
 #+end_src
 *** add a user with specific groups ? 
-TODO
+#+begin_src sh
+adduser -G group1,group2 <user>
+#+end_src
+
 *** get the groups of a user ?
 #+begin_src sh
 groups <user>
 #+end_src
-*** Change the shell of a user?
+*** change the shell of a user?
 #+begin_src sh
 usermod -s /bin/bash user
 #+end_src
+*** remove a user?
+#+begin_src sh
+export U=<user>
+userdel -r $U
+#+end_src
+*** add a user?
+#+begin_src sh
+adduser <user>
+#+end_src
 
-** ssh
+** Ssh
 *** generate public private key pair
 #+begin_src sh
 ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
 #+end_src
 
-** centos
+*** ssh reverse tunnel ?
+
+#+begin_src sh
+# from the target machine:
+ssh -R 2210:localhost:22 bserver.outside.com
+#+end_src
+from: https://toic.org/blog/2009/reverse-ssh-port-forwarding/
+
+*** ssh or scp in a script without entering password ?
+
+#+begin_src sh
+expect -c "
+   spawn scp login@somehost.com:/somefile .
+   expect yes/no { send yes\r ; exp_continue }
+   expect password: { send password\r }
+   expect 100%
+   exit
+"
+#+end_src
+
+** Services mgmt
+*** Linux reload service config
+#+begin_src sh
+sudo systemctl daemon-reload
+#+end_src
+** Centos
 *** manage services?
 #+begin_src sh
 # list all services
@@ -49,8 +97,18 @@ systemctl list-unit-files --type=service
 
 # enable a service
 #+end_src
+** Terminal
+*** replace capslock by ctrl in console ?
+#+begin_src sh
+#in  /etc/default/keyboard
+#replace XKBOPTIONS="" by XKBOPTIONS="ctrl:nocaps"
+# then run
+run sudo dpkg-reconfigure -phigh console-setup
+#+end_src
 
-* docker
+ref: https://www.emacswiki.org/emacs/MovingTheCtrlKey#toc9
+
+* Docker
 ** find images on the command line ? 
 ???
 ** docker run/start/exec ?
@@ -71,19 +129,18 @@ ExecStart=/usr/bin/docker daemon --dns 8.8.8.8 --dns 10.19.18.25 -H fd://
 #+end_src
 From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying-to-use-8-8-8-8
 
-* git
+* Git
 ** how to delete a remote branch ? 
 #+begin_src sh
 git push origin --delete feature/example
 #+end_src
-* jq
+* Jq
 ** Recursively find a value by key?
 #+begin_src sh
 echo '[{"a": 1}, {"b": 2}]' | jq '.. | .a? // empty'
 # => 1
 #+end_src
-
-* unsorted
+* Apt-get
 ** dpkg show all installed files of a .deb?
 
 #+begin_src sh
@@ -97,55 +154,4 @@ apt-file update
 apt-file find <file>
 #+end_src
 
-** redirect stderr on stdout ?                                        :shell:
 
-#+begin_src sh
-ls 2>&1
-#+end_src
-
-** redirect stdout and stderr to file ?
-#+begin_src sh
-cmd &> file 
-#+end_src
-
-** ssh reverse tunnel ?
-
-#+begin_src sh
-# from the target machine:
-ssh -R 2210:localhost:22 bserver.outside.com
-#+end_src
-from: https://toic.org/blog/2009/reverse-ssh-port-forwarding/
-
-** ssh or scp in a script without entering password ?
-
-#+begin_src sh
-expect -c "
-   spawn scp login@somehost.com:/somefile .
-   expect yes/no { send yes\r ; exp_continue }
-   expect password: { send password\r }
-   expect 100%
-   exit
-"
-#+end_src
-
-** Linux reload service config
-
-#+begin_src sh
-sudo systemctl daemon-reload
-#+end_src
-
-** linux: remove a user?
-#+begin_src sh
-export U=<user>
-userdel -r $U
-#+end_src
-
-** replace capslock by ctrl in console ?
-#+begin_src sh
-#in  /etc/default/keyboard
-#replace XKBOPTIONS="" by XKBOPTIONS="ctrl:nocaps"
-# then run
-run sudo dpkg-reconfigure -phigh console-setup
-#+end_src
-
-ref: https://www.emacswiki.org/emacs/MovingTheCtrlKey#toc9
