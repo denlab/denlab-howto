@@ -84,6 +84,14 @@ expect -c "
 "
 #+end_src
 
+*** ssh without password or key? 
+#+begin_src sh
+# remove password for user
+passwd -d user
+# sshd: allow empty password
+sed -r 's/#(PermitEmptyPasswords) no/\1 yes/' -i.bak /etc/ssh/sshd_config
+#+end_src
+
 ** Services mgmt
 *** Linux reload service config
 #+begin_src sh
