@@ -123,6 +123,18 @@ ref: https://www.emacswiki.org/emacs/MovingTheCtrlKey#toc9
 #+begin_src sh
 echo a | xclip -selection clipboard
 #+end_src
+** Bash
+*** Associative Arrays
+**** declare, print, ...
+#+begin_src sh
+# declare
+declare -A m=( [red]='0;31' [green]='0;32' )
+# print keys
+echo "keys=${!m[@]}"
+# print all
+declare | grep colorsCodes
+#+end_src
+
 * Docker
 ** find images on the command line ? 
 ???
