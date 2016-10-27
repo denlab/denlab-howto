@@ -135,6 +135,8 @@ echo "keys=${!m[@]}"
 declare | grep colorsCodes
 #+end_src
 
+*** ssh escape sequence?
+=ENTER, ~, .=
 * Docker
 ** find images on the command line ? 
 ???
