@@ -137,6 +137,13 @@ declare | grep colorsCodes
 
 *** ssh escape sequence?
 =ENTER, ~, .=
+*** c style for loop?
+#+begin_src sh
+for ((i=0;i<3;i++)); do
+  echo $i
+done
+#+end_src
+
 * Docker
 ** find images on the command line ? 
 ???
