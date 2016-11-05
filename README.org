@@ -218,6 +218,11 @@ apt-get install apt-file
 apt-file update
 apt-file find <file>
 #+end_src
+** fix a broken state ? 
+
+#+begin_src sh
+sudo apt-get install --fix-broken
+#+end_src
 * Rpm
 ** list files installed by a package?
 #+begin_src sh
