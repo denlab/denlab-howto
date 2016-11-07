@@ -17,6 +17,10 @@ echo x >&2
 cmd &> file 
 # stderr to stdout
 ls 2>&1
+# redirect stderr on stdout and pipe
+ls 2>&1 | grep '.*'
+## equiv
+ls |& grep '.*'
 #+end_src
 
 ** Find
