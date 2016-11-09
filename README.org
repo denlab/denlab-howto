@@ -156,8 +156,11 @@ done
 #+end_src
 *** bash strings cheat sheet?
 
-| size      | =${#s}=         |
-| substring | =${s:position}= |
+| what      | how                 | example |
+|-----------+---------------------+---------|
+| size      | =${#str}=           |         |
+| substring | =${str:pos}=        |         |
+| substring | =${str:pos:length}= |         |
 
 * Docker
 ** find images on the command line ? 
