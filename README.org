@@ -154,10 +154,10 @@ for ((i=0;i<3;i++)); do
   echo $i
 done
 #+end_src
-*** Size of a string? 
-#+begin_src sh
-${#foo}
-#+end_src
+*** bash strings cheat sheet?
+
+| size      | =${#s}=         |
+| substring | =${s:position}= |
 
 * Docker
 ** find images on the command line ? 
