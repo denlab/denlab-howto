@@ -236,6 +236,12 @@ echo '[1,2,3]' | jq '.|@tsv'
 #+begin_src sh
 -*- mode: outline -*-
 #+end_src
+* Sed 
+** use a backreference without grouping? 
+#+begin_src sh
+echo bar | sed 's/.*/=> & <=/'
+# => bar <=
+#+end_src
 
 * Apt-get
 ** dpkg show all installed files of a .deb?
