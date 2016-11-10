@@ -21,6 +21,8 @@ ls 2>&1
 ls 2>&1 | grep '.*'
 ## equiv
 ls |& grep '.*'
+## use stdout as a file (with filename) for anothe cmd?
+ ./s <(cat f)
 #+end_src
 
 ** Find
