@@ -242,6 +242,21 @@ echo '[1,2,3]' | jq '.|@tsv'
 echo bar | sed 's/.*/=> & <=/'
 # => bar <=
 #+end_src
+** remove backslash EOL with sed? 
+#+begin_src sh
+echo 'a
+b \
+c' | sed  '
+: again
+/\\$/ {
+    N
+    s/\\\n//
+    t again
+}'
+# a
+# b c
+#+end_src
+
 
 * Apt-get
 ** dpkg show all installed files of a .deb?
