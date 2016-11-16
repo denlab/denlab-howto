@@ -105,6 +105,11 @@ passwd -d user
 sed -r 's/#(PermitEmptyPasswords) no/\1 yes/' -i.bak /etc/ssh/sshd_config
 #+end_src
 
+*** get public key from private key ?
+#+begin_src sh
+ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
+#+end_src
+
 ** Services mgmt
 *** Linux reload service config
 #+begin_src sh
