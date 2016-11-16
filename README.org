@@ -236,6 +236,8 @@ echo '[{"a": 1}, {"b": 2}]' | jq '.. | .a? // empty'
 #+begin_src sh
 echo '[1,2,3]' | jq '.|@tsv'
 #+end_src
+** elements to array?
+
 * Emacs 
 ** file type indicator header for emacs?
 #+begin_src sh
