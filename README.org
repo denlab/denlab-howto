@@ -107,7 +107,7 @@ sed -r 's/#(PermitEmptyPasswords) no/\1 yes/' -i.bak /etc/ssh/sshd_config
 
 *** get public key from private key ?
 #+begin_src sh
-ssh-keygen -y -f ~/.ssh/id_rsa > ~/.ssh/id_rsa.pub
+ssh-keygen -y -f ~/.ssh/id_rsa
 #+end_src
 
 ** Services mgmt
