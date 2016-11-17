@@ -230,6 +230,11 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
 #+begin_src sh
 git push origin --delete feature/example
 #+end_src
+** fetch tags ? 
+#+begin_src sh
+git pull --tags
+#+end_src
+
 * Jq
 ** recursively find a value by key?
 #+begin_src sh
