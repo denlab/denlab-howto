@@ -161,13 +161,17 @@ for ((i=0;i<3;i++)); do
   echo $i
 done
 #+end_src
-*** bash strings cheat sheet?
+*** Bash Strings
+**** bash strings cheat sheet?
 
-| what      | how                 | example |
-|-----------+---------------------+---------|
-| size      | =${#str}=           |         |
-| substring | =${str:pos}=        |         |
-| substring | =${str:pos:length}= |         |
+| what        | how                  | example |
+|-------------+----------------------+---------|
+| size        | =${#str}=            |         |
+| substring   | =${str:pos}=         |         |
+| substring   | =${str:pos:length}=  |         |
+|             |                      |         |
+| char to int | =printf '%d\n' "'y"= |         |
+| int to char | =printf "\x$(printf %x 65)"= |         |
 
 * Docker
 ** find images on the command line ? 
