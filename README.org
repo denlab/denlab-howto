@@ -285,6 +285,26 @@ echo '[{"a": 1}, {"b": 2}]' | jq '.. | .a? // empty'
 echo '[1,2,3]' | jq '.|@tsv'
 #+end_src
 ** elements to array?
+** find all elements recursive
+#+begin_src sh
+$ echo '{
+  "a": {
+    "b": 1,
+    "c": {
+      "d": {
+        "key": 42
+      },
+      "e": 666
+    }
+  }
+}' | jq '..| .key?//empty'
+
+[
+  42
+]
+
+#+end_src
+
 ** find all path to "key" nodes: 
 #+begin_src sh
 $ echo '{
