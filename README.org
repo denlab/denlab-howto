@@ -310,7 +310,16 @@ c' | sed  '
 # a
 # b c
 #+end_src
+* Groovy
+** pipeline oriented programming in groovy like Clojure's threading macro?
+#+begin_src java
+Collection.metaClass.or = { Closure c -> delegate.collect c }
 
+assert(
+        [1]
+      | {it + 1}
+      | {it * 2}) == [4]
+#+end_src
 
 * Apt-get
 ** dpkg show all installed files of a .deb?
