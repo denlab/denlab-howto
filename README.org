@@ -171,14 +171,15 @@ done
 *** Bash Strings
 **** bash strings cheat sheet?
 
-| what        | how                  | example |
-|-------------+----------------------+---------|
-| size        | =${#str}=            |         |
-| substring   | =${str:pos}=         |         |
-| substring   | =${str:pos:length}=  |         |
-|             |                      |         |
-| char to int | =printf '%d\n' "'y"= |         |
+| what        | how                          | example |
+|-------------+------------------------------+---------|
+| size        | =${#str}=                    |         |
+| substring   | =${str:pos}=                 |         |
+| substring   | =${str:pos:length}=          |         |
+|             |                              |         |
+| char to int | =printf '%d\n' "'y"=         |         |
 | int to char | =printf "\x$(printf %x 65)"= |         |
+| replace all | =x=abcabc; echo ${s//b/x} # axcaxc= |         |
 *** generate random string?
 #+begin_src sh
 #!/bin/bash
