@@ -284,6 +284,28 @@ echo '[{"a": 1}, {"b": 2}]' | jq '.. | .a? // empty'
 echo '[1,2,3]' | jq '.|@tsv'
 #+end_src
 ** elements to array?
+** find all path to "key" nodes: 
+#+begin_src sh
+$ echo '{
+  "a": {
+    "b": 1,
+    "c": {
+      "d": {
+        "key": 42
+      },
+      "e": 666
+    }
+  }
+}' | jq 'path (..| .key?//empty)'
+
+[
+  "a",
+  "c",
+  "d",
+  "key"
+]
+
+#+end_src
 
 * Emacs 
 ** file type indicator header for emacs?
