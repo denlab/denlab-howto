@@ -431,7 +431,7 @@ rpm -ql [packageName]
 
  
 * Wget
-** recursivly download for example nexus ?
+** recursively download for example nexus ?
 
 #+begin_src sh
 wget --header="Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"                  \
