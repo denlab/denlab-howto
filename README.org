@@ -273,6 +273,10 @@ git push origin --delete feature/example
 #+begin_src sh
 git pull --tags
 #+end_src
+** push tags ? 
+#+begin_src sh
+git push origin <tag_name>
+#+end_src
 
 * Jq
 ** recursively find a value by key?
