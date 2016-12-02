@@ -426,3 +426,14 @@ rpm -ql [packageName]
 #+end_src
 
  
+* Wget
+** recursivly download for example nexus ?
+
+#+begin_src sh
+wget --header="Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"                  \
+     --header="User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:48.0) Gecko/20100101 Firefox/48.0" \
+     --recursive                                                                                         \
+     -e robots=off                                                                                       \
+     --no-parent                                                                                         \
+     http://nexus-url/x/y/z
+#+end_src
