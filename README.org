@@ -400,14 +400,14 @@ rpm -ql [packageName]
 
 * Unicode
 ** Handy emoticon ? 
-| thumbs up | 👍 |
+| thumbs up | 👍  |
 |           | 👏y |
-| speaker   | 🔇 |
+| speaker   | 🔇  |
 |           | 2🔈 |
-|           | 🔉 |
-|           | 🔊 |
-| warn      | ⚠ |
-|           |   |
+|           | 🔉  |
+|           | 🔊  |
+| warn      | ⚠  |
+|           |    |
 ** draft
 #+begin_src sh
 ┌┐
@@ -435,7 +435,6 @@ rpm -ql [packageName]
 
 #+end_src
 
- 
 * Wget
 ** recursively download for example nexus ?
 
