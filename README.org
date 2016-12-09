@@ -277,6 +277,12 @@ git pull --tags
 #+begin_src sh
 git push origin <tag_name>
 #+end_src
+** delete a local/remote tag ?
+#+begin_src sh
+git tag -d <tagname>
+git push --delete origin tagname
+
+#+end_src
 
 * Jq
 ** recursively find a value by key?
