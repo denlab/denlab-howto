@@ -401,9 +401,9 @@ rpm -ql [packageName]
 * Unicode
 ** Handy emoticon ? 
 | thumbs up | 👍 |
-|           | 👏 |
+|           | 👏y |
 | speaker   | 🔇 |
-|           | 🔈 |
+|           | 2🔈 |
 |           | 🔉 |
 |           | 🔊 |
 | warn      | ⚠ |
