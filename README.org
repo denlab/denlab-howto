@@ -72,6 +72,11 @@ userdel -r $U
 #+begin_src sh
 adduser <user>
 #+end_src
+** Sudo
+*** allow sudo without password for a user?
+#+begin_src sh
+# if there's a sudo group add the user to this group
+#+end_src
 
 ** Ssh
 *** generate public private key pair
@@ -143,6 +148,21 @@ run sudo dpkg-reconfigure -phigh console-setup
 #+end_src
 
 ref: https://www.emacswiki.org/emacs/MovingTheCtrlKey#toc9
+*** change language keyboard mapping
+#+begin_src sh
+# run
+dpkg-reconfigure keyboard-configuration
+# or
+# edit /etc/default/keyboard: 
+#   change XKBLAYOUT="us,de,fr,ua,ru" by "us" for example
+
+# for changes to take effect:
+service keyboard-setup restart
+
+# it should suffice, but if not: 
+udevadm trigger --subsystem-match=input --action=change
+#+end_src
+https://wiki.debian.org/Keyboard
 ** X
 *** copy to system clipboard from the command line?
 #+begin_src sh
