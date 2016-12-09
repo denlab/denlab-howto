@@ -232,6 +232,12 @@ if [ "$NUMBER" == "" ]; then
 fi
 #+end_src
 https://gist.github.com/earthgecko/3089509
+*** decimal / hex conversion? 
+#+begin_src sh
+echo $((0xa))
+# 10
+#+end_src
+
 * Docker
 ** find images on the command line ? 
 ???
