@@ -163,6 +163,8 @@ service keyboard-setup restart
 udevadm trigger --subsystem-match=input --action=change
 #+end_src
 https://wiki.debian.org/Keyboard
+*** change text mode resolution?
+
 ** X
 *** copy to system clipboard from the command line?
 #+begin_src sh
@@ -237,7 +239,8 @@ https://gist.github.com/earthgecko/3089509
 echo $((0xa))
 # 10
 #+end_src
-
+*** redirect output in variable?
+"must read" about the differents techniques of redirection: http://stackoverflow.com/questions/13763942/bash-why-piping-input-to-read-only-works-when-fed-into-while-read-const
 * Docker
 ** find images on the command line ? 
 ???
