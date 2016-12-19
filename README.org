@@ -292,7 +292,18 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
 | ps      | cont     | infos     |         | Y       | Y   | List containers                                           |
 | help    | special  | infos     |         | N       | N   | Get help on a command                                     |
 | version | special  | infos     |         | N       | N   | Show the Docker-Compose version information               |
+** repair docker after a disk full ? 
+#+begin_src sh
+service docker stop
 
+thin_check /var/lib/docker/devicemapper/devicemapper/metadata
+
+thin_check --clear-needs-check-flag /var/lib/docker/devicemapper/devicemapper/metadata
+
+service docker start
+
+#+end_src
+http://stackoverflow.com/questions/30719896/docker-dm-task-run-failed-error
 * Git
 ** how to delete a remote branch ? 
 #+begin_src sh
