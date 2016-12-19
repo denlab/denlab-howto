@@ -335,7 +335,7 @@ echo '[{"a": 1}, {"b": 2}]' | jq '.. | .a? // empty'
 echo '[1,2,3]' | jq '.|@tsv'
 #+end_src
 ** elements to array?
-** find all elements recursive
+** recursively find all values of a given key?
 #+begin_src sh
 $ echo '{
   "a": {
@@ -355,7 +355,7 @@ $ echo '{
 
 #+end_src
 
-** find all path to "key" nodes: 
+** recursively find all path leading to a given key
 #+begin_src sh
 $ echo '{
   "a": {
