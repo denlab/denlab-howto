@@ -378,6 +378,11 @@ $ echo '{
 
 #+end_src
 
+** delete the key of an object?
+#+begin_src sh
+echo '{"k": 1}' | jq 'del(.k)'
+#+end_src
+
 * Emacs 
 ** file type indicator header for emacs?
 #+begin_src sh
