@@ -383,6 +383,12 @@ $ echo '{
 echo '{"k": 1}' | jq 'del(.k)'
 #+end_src
 
+** reduce ? 
+#+begin_src sh
+echo '[1,2,3]' \
+| jq 'reduce .[] as $item (0; . + $item)'
+#+end_src
+
 * Emacs 
 ** file type indicator header for emacs?
 #+begin_src sh
