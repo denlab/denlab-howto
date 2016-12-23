@@ -241,6 +241,14 @@ echo $((0xa))
 #+end_src
 *** redirect output in variable?
 "must read" about the differents techniques of redirection: http://stackoverflow.com/questions/13763942/bash-why-piping-input-to-read-only-works-when-fed-into-while-read-const
+*** stop on error (even in subshell)?
+It seems that bash disable -e in subshells.
+A workaround: set -e explicitly at the start of each subshell
+
+
+
+
+
 * Docker
 ** find images on the command line ? 
 ???
