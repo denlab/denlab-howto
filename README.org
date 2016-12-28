@@ -497,3 +497,13 @@ wget --header="Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*
      --no-parent                                                                                         \
      http://nexus-url/x/y/z
 #+end_src
+* Pdf
+** replace a string in a pdf file ?
+#+begin_src sh
+pdftk file.pdf output uncompressed.pdf uncompress
+
+sed -e "s/ORIGINALSTRING/NEWSTRING/g" <uncompressed.pdf >modified.pdf
+
+pdftk modified.pdf output recompressed.pdf compress
+#+end_src
+http://stackoverflow.com/questions/9871585/how-to-find-and-replace-text-in-a-existing-pdf-file-with-pdftk-or-other-command
