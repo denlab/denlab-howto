@@ -188,6 +188,19 @@ echo "keys=${!m[@]}"
 # print all
 declare | grep colorsCodes
 #+end_src
+**** copy ?
+#+begin_src sh
+declare -A arr=([this]=hello [\'that\']=world [theother]='and "goodbye"!')
+declare -A newarr
+for idx in "${!arr[@]}"; do
+    newarr[$idx]=${arr[$idx]}
+done
+
+diff <(echo "$temp") <(declare -p newarr | sed 's/newarr=/arr=/')
+# no output
+#+end_src
+http://stackoverflow.com/questions/19417015/bash-copy-from-one-array-to-another
+
 
 *** ssh escape sequence?
 =ENTER, ~, .=
