@@ -351,6 +351,39 @@ git tag -d <tagname>
 git push --delete origin tagname
 
 #+end_src
+** rm a big file from history?
+#+begin_src sh
+# given : 
+# $ git lola --name-status
+# * f772d66 (HEAD, master) Login page
+| A     login.html
+# * cb14e Remove DVD-rip
+# | D     oops.iso
+# * ce36c98 Careless
+# | A     oops.iso
+# | A     other.html
+# * 5af4522 Admin page
+# | A     admin.html
+# * e738b63 Index
+#   A     index.html
+
+git rebase -i 5af4522
+
+# pick ce36c98 Careless
+# pick cb14e Remove DVD-rip
+# pick f772d66 Login page
+
+# e ce36c98 Careless
+# # pick cb14e Remove DVD-rip
+# pick f772d66 Login page
+
+$ git rm --cached oops.iso
+$ git commit --amend -C HEAD
+$ git rebase --continue
+
+
+#+end_src
+
 
 * Jq
 ** recursively find a value by key?
@@ -513,7 +546,7 @@ rpm -ql [packageName]
 └┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘
 
 #+end_src
-
+** use char by its code ?
 * Wget
 ** recursively download for example nexus ?
 
