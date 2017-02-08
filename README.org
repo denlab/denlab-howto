@@ -264,10 +264,17 @@ echo $((0xa))
 *** stop on error (even in subshell)?
 It seems that bash disable -e in subshells.
 A workaround: set -e explicitly at the start of each subshell
+** Ubuntu / Debian
+*** Setup locale?
+#+begin_src sh
+# add to /etc/environnement
+#LC_ALL=en_US.UTF-8
+LANG=en_US.UTF-8
 
+sudo locale-gen "en_US.UTF-8"
+sudo dpkg-reconfigure locales
 
-
-
+#+end_src
 
 * Docker
 ** find images on the command line ? 
