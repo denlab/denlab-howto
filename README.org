@@ -137,6 +137,9 @@ systemctl list-unit-files --type=service
 systemctl status name.service
 
 # enable a service
+systemctl enable docker.service
+
+# check if a service is enabled
 #+end_src
 ** Terminal
 *** replace capslock by ctrl in console ?
