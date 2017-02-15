@@ -275,6 +275,22 @@ sudo locale-gen "en_US.UTF-8"
 sudo dpkg-reconfigure locales
 
 #+end_src
+** Zip 
+** Tmux
+*** how do i detach other client when reattach to session?
+    #+begin_src sh
+tmux -2 a -dt 0
+    #+end_src
+
+*** compress dir recursive? 
+#+begin_src sh
+zip -r archive.zip /dir
+#+end_src
+*** compress dir but exclude a directory ?
+#+begin_src sh
+zip -9 -r --exclude=*.svn*  foo.zip [directory-to-compress]
+#+end_src
+
 
 * Docker
 ** find images on the command line ? 
