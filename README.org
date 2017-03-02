@@ -541,6 +541,10 @@ assert(
        break
    }
    #+end_src
+** groovy interval ?
+   #+begin_src java
+   (1..10).each{prinltn it}
+   #+end_src
 
 * Java
 ** Create an object with the same behavior than System.out (for testing output)?
