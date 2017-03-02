@@ -529,7 +529,15 @@ assert(
       | {it + 1}
       | {it * 2}) == [4]
 #+end_src
-
+* Java
+** Create an object with the same behavior than System.out (for testing output)?
+   #+begin_src java
+   ByteArrayOutputStream os = new ByteArrayOutputStream();
+   PrintStream ps = new PrintStream(os);
+   ...
+   String output = os.toString("UTF8");
+   #+end_src
+   http://stackoverflow.com/questions/1760654/java-printstream-to-string
 * Apt-get
 ** dpkg show all installed files of a .deb?
 
