@@ -529,6 +529,19 @@ assert(
       | {it + 1}
       | {it * 2}) == [4]
 #+end_src
+** groovy switch case?
+   #+begin_src java
+   switch(val) {
+     case ~/ab.*/: 
+       result="x"
+       break
+     case ...
+     default: 
+       ...
+       break
+   }
+   #+end_src
+
 * Java
 ** Create an object with the same behavior than System.out (for testing output)?
    #+begin_src java
