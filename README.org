@@ -216,7 +216,6 @@ diff <(echo "$temp") <(declare -p newarr | sed 's/newarr=/arr=/')
 #+end_src
 http://stackoverflow.com/questions/19417015/bash-copy-from-one-array-to-another
 
-
 *** ssh escape sequence?
 =ENTER, ~, .=
 *** c style for loop?
@@ -299,6 +298,14 @@ A workaround: set -e explicitly at the start of each subshell
     ;;
     esac
     #+end_src
+** MoreUtils
+*** read / process / write the same file ? 
+    - Use:  =sponge=
+    - =sponge= will read stdin and write to specified file. Unlike a shell redirect it will soaks all its input before writing the output file.
+    #+begin_src sh
+    sort f | sponge f
+    #+end_src
+
 
 ** Ubuntu / Debian
 *** Setup locale?
