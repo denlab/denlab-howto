@@ -278,7 +278,7 @@ echo $((0xa))
 *** stop on error (even in subshell)?
 It seems that bash disable -e in subshells.
 A workaround: set -e explicitly at the start of each subshell
-*** case ?
+*** switch case ?
     #+begin_src sh
     case $space in
     [1-6]*)
