@@ -216,7 +216,16 @@ echo a | xclip -selection clipboard
  # no output
  #+end_src
  http://stackoverflow.com/questions/19417015/bash-copy-from-one-array-to-another
-**** 
+**** Normal arrays
+     #+begin_src bash
+     declare -a a
+     # literal
+     a=( a b c )
+     # set 
+     a[0]=x
+     # get all
+     echo ${a[*]}
+     #+end_src
 *** ssh escape sequence?
 =ENTER, ~, .=
 *** c style for loop?
