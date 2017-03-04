@@ -220,7 +220,7 @@ echo a | xclip -selection clipboard
      #+begin_src bash
      declare -a a
      # literal
-     a=( a b c )
+     a=(a b c)
      # set 
      a[0]=x
      # get all
