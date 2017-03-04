@@ -298,6 +298,15 @@ A workaround: set -e explicitly at the start of each subshell
     ;;
     esac
     #+end_src
+*** loop over args? 
+    #+begin_src sh
+    for var in "$@"
+    do
+      echo "$var"
+    done
+    #+end_src
+    http://stackoverflow.com/questions/255898/how-to-iterate-over-arguments-in-a-bash-script
+
 ** MoreUtils
 *** read / process / write the same file ? 
     - Use:  =sponge=
