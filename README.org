@@ -194,7 +194,7 @@ echo a | xclip -selection clipboard
 #+end_src
 ** Bash
 *** Arrays
-**** Associative
+**** Associative arrays
 ***** declare, print, ...
  #+begin_src sh
  # declare
@@ -216,7 +216,7 @@ echo a | xclip -selection clipboard
  # no output
  #+end_src
  http://stackoverflow.com/questions/19417015/bash-copy-from-one-array-to-another
-
+**** 
 *** ssh escape sequence?
 =ENTER, ~, .=
 *** c style for loop?
