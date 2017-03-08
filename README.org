@@ -474,7 +474,10 @@ $ git rebase --continue
 
 
 #+end_src
-
+** list branch sorted by last commit date? 
+   #+begin_src sh
+   git for-each-ref --sort=-committerdate refs/heads/
+   #+end_src
 
 * Jq
 ** recursively find a value by key?
