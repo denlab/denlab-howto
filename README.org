@@ -316,6 +316,34 @@ A workaround: set -e explicitly at the start of each subshell
     done
     #+end_src
     http://stackoverflow.com/questions/255898/how-to-iterate-over-arguments-in-a-bash-script
+*** parse a string as args 
+    #+begin_src sh
+    How to process the following list of pairs: "Mercury 36" "Venus 67" "Earth 93"  "Mars 142" "Jupiter 483"? 
+    (note no =IFS= set)
+    #+begin_src sh
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    for planet in "Mercury 36" "Venus 67" 
+    do
+      set -- $planet
+      echo "\$1=$1"
+      echo "\$2=$2"
+    done
+    # outputs
+    #
+    # $1=Mercury
+    # $2=36
+    # $1=Venus
+    # $2=67
+    #+end_src
+*** How to save a script params (before doing modifications like shift, ..)?
+    #+begin_src sh
+    # save with 
+    original_params=("$@")
+    # use the copy with 
+    echo "${original_params[@]}"
+    #+end_src
 
 ** MoreUtils
 *** read / process / write the same file ? 
