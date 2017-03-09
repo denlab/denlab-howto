@@ -218,6 +218,7 @@ echo a | xclip -selection clipboard
  http://stackoverflow.com/questions/19417015/bash-copy-from-one-array-to-another
 **** Normal arrays
      #+begin_src bash
+     # declare
      declare -a a
      # literal
      a=(a b c)
@@ -225,6 +226,8 @@ echo a | xclip -selection clipboard
      a[0]=x
      # get all
      echo ${a[*]}
+     # size
+     echo "size=${#}"
      #+end_src
 *** ssh escape sequence?
 =ENTER, ~, .=
