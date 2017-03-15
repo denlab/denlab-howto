@@ -723,7 +723,11 @@ rpm -ql [packageName]
 | 18 | ⑱ |   |
 | 19 | ⑲ |   |
 | 20 | ⑳ |   |
-       
+** lambda
+   #+begin_src sh
+   λ
+   #+end_src
+
 * Wget
 ** recursively download for example nexus ?
 
