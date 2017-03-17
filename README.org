@@ -44,6 +44,15 @@ echo 'a
 b
 c' | xargs -I {} ./f {}
 #+end_src
+*** use bash function?
+    #+begin_src sh
+    f() { bc; }
+    echo '1 * 1
+    2 * 2
+    3 * 3'                                            \
+    | xargs -i echo "$(declare -f f) ; echo '{}' | f" \
+    | bash
+    #+end_src
 
 ** User Admin
 *** how to add a group to a user ? 
