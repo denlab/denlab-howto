@@ -741,6 +741,10 @@ rpm -ql [packageName]
    #+begin_src sh
    λ
    #+end_src
+** elipsis?
+   #+begin_src sh
+   …
+   #+end_src
 
 * Wget
 ** recursively download for example nexus ?
