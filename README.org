@@ -1,11 +1,6 @@
 #+STARTUP: logdone
 #+STARTUP: hidestars
 
-* template
-
-#+begin_src sh
-
-#+end_src
 * Linux
 ** Io
 *** redirecting stdout, stderr
