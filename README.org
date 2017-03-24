@@ -769,3 +769,7 @@ sed -e "s/ORIGINALSTRING/NEWSTRING/g" <uncompressed.pdf >modified.pdf
 pdftk modified.pdf output recompressed.pdf compress
 #+end_src
 http://stackoverflow.com/questions/9871585/how-to-find-and-replace-text-in-a-existing-pdf-file-with-pdftk-or-other-command
+* Visualization 
+** Online visualization of Wikipedia's graph?
+- http://tools.medialab.sciences-po.fr/seealsology/
+- http://seealso.org/
