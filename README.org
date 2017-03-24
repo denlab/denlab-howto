@@ -655,6 +655,12 @@ c' | sed  '
     String output = os.toString("UTF8");
     #+end_src
     http://stackoverflow.com/questions/1760654/java-printstream-to-string
+** Gradle
+*** how to create a new project from scratch?
+    #+begin_src sh
+    gradle init --type basic
+    #+end_src
+
 * Apt-get
 ** dpkg show all installed files of a .deb?
 
