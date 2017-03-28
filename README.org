@@ -523,6 +523,11 @@ $ git rebase --continue
    #+begin_src sh
    git grep <regexp> $(git rev-list --all)
    #+end_src
+** view ssh details? 
+   git v2.3.0 or higher:
+   #+begin_src sh
+   GIT_SSH_COMMAND="ssh -vvv" git clone example
+   #+end_src
 
 * Jq
 ** recursively find a value by key?
