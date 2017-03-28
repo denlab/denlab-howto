@@ -774,3 +774,17 @@ http://stackoverflow.com/questions/9871585/how-to-find-and-replace-text-in-a-exi
 ** Online visualization of Wikipedia's graph?
 - http://tools.medialab.sciences-po.fr/seealsology/
 - http://seealso.org/
+* Node
+** Npm
+*** how to install global packages without sudo?
+    #+begin_src sh
+    #Make a directory for global installations:
+    mkdir ~/.npm-global
+    #Configure npm to use the new directory path:
+    npm config set prefix '~/.npm-global'
+    #Open or create a ~/.profile file and add this line:
+    export PATH=~/.npm-global/bin:$PATH
+    #Back on the command line, update your system variables:
+    source ~/.profile
+    #+end_src
+    https://docs.npmjs.com/getting-started/fixing-npm-permissions
