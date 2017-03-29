@@ -473,16 +473,17 @@ git push origin --delete feature/example
 #+begin_src sh
 git pull --tags
 #+end_src
-** push tags ? 
-#+begin_src sh
-git push origin <tag_name>
-#+end_src
-** delete a local/remote tag ?
-#+begin_src sh
-git tag -d <tagname>
-git push --delete origin tagname
+** Tags
 
-#+end_src
+| action        | git command                        |
+|---------------+------------------------------------|
+| create local  | git tag <tagName> <commit>         |
+| fetch         | git pull --tags                    |
+| push          | git push origin <tag_name>         |
+| delete local  | git tag -d <tagName>               |
+| delete remote | git push --delete origin <tagName> |
+|               |                                    |
+
 ** rm a big file from history?
 #+begin_src sh
 # given : 
