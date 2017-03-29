@@ -469,20 +469,16 @@ http://stackoverflow.com/questions/30719896/docker-dm-task-run-failed-error
 #+begin_src sh
 git push origin --delete feature/example
 #+end_src
-** fetch tags ? 
-#+begin_src sh
-git pull --tags
-#+end_src
 ** Tags
 
-| action        | git command                        |
-|---------------+------------------------------------|
-| create local  | git tag <tagName> <commit>         |
-| fetch         | git pull --tags                    |
-| push          | git push origin <tag_name>         |
-| delete local  | git tag -d <tagName>               |
-| delete remote | git push --delete origin <tagName> |
-|               |                                    |
+| action        | git command                          |
+|---------------+--------------------------------------|
+| create local  | =git tag <tagName> <commit>=         |
+| fetch         | =git pull --tags=                    |
+| push          | =git push origin <tag_name>=         |
+| delete local  | =git tag -d <tagName>=               |
+| delete remote | =git push --delete origin <tagName>= |
+#+TBLFM: $2=git tag <tagName> <commit>
 
 ** rm a big file from history?
 #+begin_src sh
