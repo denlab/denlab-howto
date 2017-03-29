@@ -465,20 +465,18 @@ service docker start
 #+end_src
 http://stackoverflow.com/questions/30719896/docker-dm-task-run-failed-error
 * Git
-** how to delete a remote branch ? 
-#+begin_src sh
-git push origin --delete feature/example
-#+end_src
-** Tags
+** Tags/branches
 
-| action        | git command                          |
-|---------------+--------------------------------------|
-| create local  | =git tag <tagName> <commit>=         |
-| fetch         | =git pull --tags=                    |
-| push          | =git push origin <tag_name>=         |
-| delete local  | =git tag -d <tagName>=               |
-| delete remote | =git push --delete origin <tagName>= |
-#+TBLFM: $2=git tag <tagName> <commit>
+| what   | action               | where  | git command                                 |
+|--------+----------------------+--------+---------------------------------------------|
+| tag    | create               | local  | =git tag <tagName> <commit>=                |
+| tag    | fetch                |        | =git pull --tags=                           |
+| tag    | push                 |        | =git push origin <tag_name>=                |
+| tag    | delete               | local  | =git tag -d <tagName>=                      |
+| tag    | delete               | remote | =git push --delete origin <tagName>=        |
+| branch | delete               |        | =git push origin --delete feature/example=  |
+| branch | push && set upstream |        | =git push origin --set-upstream new-branch= |
+#+TBLFM: $4=git tag <tagName> <commit>
 
 ** rm a big file from history?
 #+begin_src sh
