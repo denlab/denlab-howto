@@ -382,6 +382,11 @@ sudo dpkg-reconfigure locales
 
 #+end_src
 ** Zip 
+*** unzip a single file from archive?
+    #+begin_src sh
+    unzip -p myarchive.zip path/to/zipped/file.txt >file.txt
+    #+end_src
+
 ** Tmux
 *** how do i detach other client when reattach to session?
     #+begin_src sh
