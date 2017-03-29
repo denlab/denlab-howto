@@ -21,6 +21,10 @@ ls |& grep '.*'
 ## use stdout as a file (with filename) for anothe cmd?
  ./s <(cat f)
 #+end_src
+*** eject a cd rom? 
+    #+begin_src sh
+    ejet /dev/cdrom
+    #+end_src
 
 ** Find
 *** find files modified in the last x minutes
