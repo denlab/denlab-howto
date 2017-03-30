@@ -820,4 +820,9 @@ http://stackoverflow.com/questions/9871585/how-to-find-and-replace-text-in-a-exi
     source ~/.profile
     #+end_src
     https://docs.npmjs.com/getting-started/fixing-npm-permissions
-    
+* VirtualBox
+** manually mount a shared folder in a linux guest?
+   #+begin_src sh
+   sudo mount -t vboxsf <sharedFolderName> /path/to/shared/folder/dir
+   #+end_src
+
