@@ -25,6 +25,10 @@ ls |& grep '.*'
     #+begin_src sh
     ejet /dev/cdrom
     #+end_src
+*** how to list all supported FS for mounting?
+    #+begin_src sh
+    cat /proc/filesystems
+    #+end_src
 
 ** Find
 *** find files modified in the last x minutes
