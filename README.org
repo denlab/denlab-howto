@@ -598,6 +598,12 @@ echo '[1,2,3]' \
 | jq 'reduce .[] as $item (0; . + $item)'
 #+end_src
 
+** get all the values of an object?
+   #+begin_src sh
+   jq -n '{"a": 1} | .[]'
+   1
+   #+end_src
+
 * Emacs 
 ** file type indicator header for emacs?
 #+begin_src sh
