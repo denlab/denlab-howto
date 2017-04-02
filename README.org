@@ -619,26 +619,33 @@ echo '[1,2,3]' \
 #+begin_src sh
 -*- mode: outline -*-
 #+end_src
-* Sed 
-** use a backreference without grouping? 
-#+begin_src sh
-echo bar | sed 's/.*/=> & <=/'
-# => bar <=
-#+end_src
-** remove backslash EOL with sed? 
-#+begin_src sh
-echo 'a
-b \
-c' | sed  '
-: again
-/\\$/ {
-    N
-    s/\\\n//
-    t again
-}'
-# a
-# b c
-#+end_src
+* Regex
+** Sed 
+*** use a backreference without grouping? 
+ #+begin_src sh
+ echo bar | sed 's/.*/=> & <=/'
+ # => bar <=
+ #+end_src
+*** remove backslash EOL with sed? 
+ #+begin_src sh
+ echo 'a
+ b \
+ c' | sed  '
+ : again
+ /\\$/ {
+     N
+     s/\\\n//
+     t again
+ }'
+ # a
+ # b c
+ #+end_src
+** Perl
+*** Multiline search and replace?
+    #+begin_src sh
+    perl -pe 's/<search>/<replace>/'  < in.file > out.file
+    #+end_src
+
 * JVM
 ** Groovy
 *** pipeline oriented programming in groovy like Clojure's threading macro?
