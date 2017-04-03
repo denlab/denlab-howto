@@ -673,7 +673,10 @@ echo '[1,2,3]' \
     #+begin_src java
     (1..10).each{prinltn it}
     #+end_src
-
+*** get cmd line args?
+    #+begin_src sh
+    println(args)
+    #+end_src
 ** Java
 *** Create an object with the same behavior than System.out (for testing output)?
     #+begin_src java
