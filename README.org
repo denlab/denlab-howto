@@ -829,3 +829,9 @@ http://stackoverflow.com/questions/9871585/how-to-find-and-replace-text-in-a-exi
    sudo mount -t vboxsf <sharedFolderName> /path/to/shared/folder/dir
    #+end_src
 
+* NxClient
+** keyboard issue when connecting with nx ? 
+   Try: 
+   #+begin_src sh
+   setxkbmap -model evdev -layout us
+   #+end_src
