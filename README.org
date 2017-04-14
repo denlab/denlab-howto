@@ -142,6 +142,12 @@ http://linuxcommando.blogspot.co.uk/2008/10/how-to-disable-ssh-host-key-checking
     sshfs sessy@mycomputer:/remote/path /local/path -C -p 9876 -o allow_other
     #+end_src
     https://wiki.archlinux.org/index.php/SSHFS
+*** copy pub key to remote authorized_keys?
+    #+begin_src sh
+    ssh-copy-id <user>@<host>
+
+    #+end_src
+
 ** Services mgmt
 *** Linux reload service config
 #+begin_src sh
