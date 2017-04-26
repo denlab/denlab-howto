@@ -716,6 +716,11 @@ apt-file find <file>
 #+begin_src sh
 sudo apt-get install --fix-broken
 #+end_src
+** install a specific version? 
+   #+begin_src sh
+   apt-get install my-lib-java=2016.03.30-79 my-lib=2016.03.30-79
+   #+end_src
+
 * Rpm
 ** list files installed by a package?
 #+begin_src sh
