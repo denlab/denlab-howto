@@ -621,6 +621,8 @@ echo '[1,2,3]' \
    #+end_src
 
 ** jq regexes cheet sheat ?
+   
+   Flags
 
    | flags |                                                        |
    |-------+--------------------------------------------------------|
@@ -633,6 +635,8 @@ echo '[1,2,3]' \
    | l     | find Longest possible matches                          |
    | x     | eXtended regex format (ignore whitespace and comments) |
    
+   Functions
+
    | fn      | args1 | args2        | res if match                      | else  | example                                     |
    |---------+-------+--------------+-----------------------------------+-------+---------------------------------------------|
    | test    | val   | regex; flags | true                              | false | =jq 'test("foo")'=                          |
