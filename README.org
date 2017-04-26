@@ -620,6 +620,28 @@ echo '[1,2,3]' \
    "ABCD"
    #+end_src
 
+** jq regexes cheet sheat ?
+
+   | flags |                                                        |
+   |-------+--------------------------------------------------------|
+   | g     | Global match, find all not just the first              |
+   | i     | case Insensitive                                       |
+   | m     | Multi line match '.' will match newlines               |
+   | n     | ignore empty matches                                   |
+   | p     | both s and m mode enabled                              |
+   | s     | Single line mode =('^' -> '\\A','$'->\\Z')=            |
+   | l     | find Longest possible matches                          |
+   | x     | eXtended regex format (ignore whitespace and comments) |
+   
+   | fn      | args1 | args2        | res if match                      | else  | example                                     |
+   |---------+-------+--------------+-----------------------------------+-------+---------------------------------------------|
+   | test    | val   | regex; flags | true                              | false | =jq 'test("foo")'=                          |
+   | match   | "     | "            | {offset,length,string,captures}   | empty | =jq 'match("(abc)+"; "g")'=                 |
+   | capture | "     | "            | map of matches                    | "     | =jq 'capture("(?<a>[a-z]+)-(?<n>[0-9]+)")'= |
+   | scan    | "     | "            | stream of non overlapping matches | empty |                                             |
+   | split   | "     | "            | <obsolete>                        |       |                                             |
+   | splits  | "     | "            | stream matches                    | ?     | =jq 'splits("\\s+")'=                       |
+
 * Emacs 
 ** file type indicator header for emacs?
 #+begin_src sh
