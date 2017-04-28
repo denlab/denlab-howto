@@ -665,6 +665,12 @@ echo '[1,2,3]' \
 #+begin_src sh
 -*- mode: outline -*-
 #+end_src
+** edit a file remotely over ssh with tramp?
+   #+begin_src sh
+   C-x C-f
+   /<user>@<host>:<file>
+   #+end_src
+
 * Regex
 ** Sed 
 *** use a backreference without grouping? 
