@@ -646,6 +646,15 @@ echo '[1,2,3]' \
    | split   | "     | "            | <obsolete>                        |       |                                             |
    | splits  | "     | "            | stream matches                    | ?     | =jq 'splits("\\s+")'=                       |
 
+** jq update ?
+   #+begin_src sh
+   jq -n '{foo:1, bar:10} | .foo |= . + 1 '
+{
+  "foo": 2,
+  "bar": 10
+}
+   #+end_src
+
 * Emacs 
 ** file type indicator header for emacs?
 #+begin_src sh
