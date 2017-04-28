@@ -660,6 +660,11 @@ echo '[1,2,3]' \
 }
    #+end_src
 
+** delete in nested datastructure?
+   #+begin_src sh
+   jq -n '{a:1, b:2, c:3} | del(.. | .a?//empty)'
+   #+end_src
+
 * Emacs 
 ** file type indicator header for emacs?
 #+begin_src sh
