@@ -488,6 +488,12 @@ service docker start
 
 #+end_src
 http://stackoverflow.com/questions/30719896/docker-dm-task-run-failed-error
+** use bashism in Dockerfile? 
+   #+begin_src sh
+# Define bash as the default shell 
+SHELL ["bash", "-c"]
+    #+end_src
+
 * Git
 ** Tags/branches
 
