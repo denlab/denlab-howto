@@ -671,6 +671,13 @@ echo '[1,2,3]' \
    jq -n '{a:1, b:2, c:3} | del(.. | .a?//empty)'
    #+end_src
 
+** recursively delete all keys leading to pair numbers?
+   Note: Probably could be written more concisely:
+   #+begin_src sh
+   jq -n '{a:1, b:2, c:3} \
+     | del(.. | numbers | (if (. % 2) == 0 then . else empty end))'
+   #+end_src
+
 * Emacs 
 ** file type indicator header for emacs?
 #+begin_src sh
