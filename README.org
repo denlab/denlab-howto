@@ -786,6 +786,10 @@ sudo apt-get install --fix-broken
    #+begin_src sh
    apt-get install my-lib-java=2016.03.30-79 my-lib=2016.03.30-79
    #+end_src
+** show version that a package can be upgraded to?
+   #+begin_src sh
+   apt-cache policy google-chrome-stable
+   #+end_src
 
 * Rpm
 ** list files installed by a package?
