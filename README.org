@@ -316,23 +316,17 @@ It seems that bash disable -e in subshells.
 A workaround: set -e explicitly at the start of each subshell
 *** switch case ?
     #+begin_src sh
-    case $space in
-    [1-6]*)
-    Message="All is quiet."
-    ;;
-    [7-8]*)
-    Message="Start thinking about cleaning out some stuff.  There's a partition that is $space % full."
-    ;;
-    9[1-8])
-    Message="Better hurry with that new disk...  One partition is $space % full."
-    ;;
-    99)
-    Message="I'm drowning here!  There's a partition at $space %!"
-    ;;
-    *)
-    Message="I seem to be running with an nonexistent amount of disk space..."
-    ;;
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        *:*          ) hostport=(${1//:/ }); shift 1 ;;
+             --child ) CHILD=1             ; shift 1 ;;
+        -q | --quiet ) QUIET=1             ; shift 1 ;;
+        -s | --strict) STRICT=1            ; shift 1 ;;
+        --host=*     ) HOST="${1#*=}"      ; shift 1 ;;
+        --help       ) usage               ; shift 1 ;;
+        *            ) unknownArg "$1"     ; shift 1 ;;
     esac
+done
     #+end_src
 *** loop over args? 
     #+begin_src sh
