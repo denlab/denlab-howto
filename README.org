@@ -40,6 +40,13 @@ find . -cmin -5
 find . -maxdepth 1 -print0 | while read -d $'\0' d ; do echo $d ; done
 #+end_src
 http://www.cyberciti.biz/tips/handling-filenames-with-spaces-in-bash.html
+*** sort files by modified date?
+    #+begin_src sh
+    find -type f -printf '%T@ %p\0' |
+    sort -zk 1nr |
+    sed -z 's/^[^ ]* //' | tr '\0' '\n'
+    #+end_src
+
 ** Xargs
 *** run a cmd on each line of stdin with xargs?
 #+begin_src sh
