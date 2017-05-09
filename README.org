@@ -379,6 +379,28 @@ done
     #+begin_src sh
     sort f | sponge f
     #+end_src
+*** instead of xxx use moreutils yyy?
+
+    | cmd       | insteadof                               | use                                                            |
+    |-----------+-----------------------------------------+----------------------------------------------------------------|
+    | =chronic= |                                         | =chronic backup_script.sh=                                     |
+    | =sponge=  | =sort filename= \vert =uniq/ > temp=    | =sort filename= \vert =uniq \vert sponge filename=             |
+    |           | =mv temp filename=                      |                                                                |
+    | =isutf8=  |                                         | =isutf8 filename=                                              |
+    | =ifne=    |                                         | =./script.sh= \vert =ifne less=                                |
+    | =pee=     | =./script.sh= \vert =tee output1 output2= | =./script.sh= \vert =pee 'grep pattern1' 'gzip -c > output.gz'_= |
+    | =ifdata=  | =<parsing ifconfig>=                    |                                                                |
+    | =zrun=    | =diff <(zcat one.gz) <(zcat two.gz)=    | =zrun diff one.gz two.gz=                                      |
+    | =ts=      |                                         | =$ { echo "One" ; sleep 3s ; echo "Two" ; }= \vert =ts=        |
+    | =errno=   |                                         | =$ errno 98=                                                   |
+    | =vipe=    |                                         | =command1= \vert =vipe= \vert =command2=                       |
+    | =vidir=   |                                         | =vidir directory/=                                             |
+    | =combine= | =comm -12 file1 file2=                  | =combine file1 and file2=                                      |
+    |           | =comm -23 fileA fileB=                  | =combine fileA not fileB=                                      |
+    |           | =sort file1 file2= \vert =uniq=         | =combine file1 or file2=                                       |
+    |           | =sort file1 file2= \vert =uniq --unique= | =combine file1 xor file2=                                      |
+
+    See: http://devblog.nestoria.com/post/110168998173/moreutils-basic-unix-tools-that-ought-to-be
 
 ** Bc
 *** float precision?
