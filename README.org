@@ -798,11 +798,22 @@ echo '[1,2,3]' \
     #+end_src
 ** Maven
 *** simply download a jar with maven?
+
+**** simple
+
     #+begin_src sh
     mvn dependency:get -Dartifact=org.springframework:spring-instrument:3.2.3.RELEASE
     #+end_src
     
     See: http://stackoverflow.com/questions/7110114/how-to-simply-download-a-jar-using-maven
+**** specifying transitivity and repo
+
+     #+begin_src sh
+     mvn dependency:get -DremoteRepositories=https://repo.maven.apache.org/maven2 \
+       -Dartifact=org.jenkins-ci.plugins:swarm-client:3.4                         \
+       -Dtransitive=false
+     #+end_src
+
 
 * Apt-get
 ** dpkg show all installed files of a .deb?
