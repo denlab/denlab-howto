@@ -796,6 +796,13 @@ echo '[1,2,3]' \
     #+begin_src sh
     gradle init --type basic
     #+end_src
+** Maven
+*** simply download a jar with maven?
+    #+begin_src sh
+    mvn dependency:get -Dartifact=org.springframework:spring-instrument:3.2.3.RELEASE
+    #+end_src
+    
+    See: http://stackoverflow.com/questions/7110114/how-to-simply-download-a-jar-using-maven
 
 * Apt-get
 ** dpkg show all installed files of a .deb?
