@@ -529,6 +529,18 @@ SHELL ["bash", "-ueo","pipefail", "-c"]
 | ps      | cont     | infos     |         | Y       | Y   | List containers                                           |
 | help    | special  | infos     |         | N       | N   | Get help on a command                                     |
 | version | special  | infos     |         | N       | N   | Show the Docker-Compose version information               |
+*** pass env var at build time ?
+
+    from: https://docs.docker.com/compose/compose-file/#cachefrom: 
+    #+begin_src sh
+    build:
+      context: .
+      args:
+        buildno: 1
+        password: secret
+    #+end_src
+    
+
 * Git
 ** Tags/branches
 
