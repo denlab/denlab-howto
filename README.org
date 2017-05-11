@@ -479,7 +479,7 @@ ExecStart=/usr/bin/docker daemon --dns 8.8.8.8 --dns 10.19.18.25 -H fd://
 #+end_src
 From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying-to-use-8-8-8-8
 ** Docker Compose
-*** commands ? 
+*** commands cheatsheet ? 
 | cmd     | act on   | type      | target  | service | all | descr                                                     |
 |         |          |           | state   |         |     |                                                           |
 |---------+----------+-----------+---------+---------+-----+-----------------------------------------------------------|
