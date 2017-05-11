@@ -809,7 +809,7 @@ echo '[1,2,3]' \
 **** specifying transitivity and repo
 
      #+begin_src sh
-     mvn dependency:get -DremoteRepositories=https://repo.maven.apache.org/maven2 \
+     mvn dependency:get -DremoteRepositories=https://repo.jenkins-ci.org/releases \
        -Dartifact=org.jenkins-ci.plugins:swarm-client:3.4                         \
        -Dtransitive=false
      #+end_src
