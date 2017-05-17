@@ -725,6 +725,25 @@ echo '[1,2,3]' \
      | del(.. | numbers | (if (. % 2) == 0 then . else empty end))'
    #+end_src
 
+** recursively find containers having a value that match a given regex?
+   #+begin_src sh
+   $ jq.help | jq '.. | select(.[]? | strings | test("transpose"))'
+{
+  "body": "\nTranspose a possibly jagged matrix (an array of arrays).\nRows are padded with nulls so the result is always rectangular.\n",
+  "examples": [
+    {
+      "input": "[[1], [2,3]]",
+      "program": "transpose",
+      "output": [
+        "[[1,2],[null,3]]"
+      ]
+    }
+  ],
+  "title": "`transpose`"
+}
+(...)
+   #+end_src
+
 * Emacs 
 ** file type indicator header for emacs?
 #+begin_src sh
