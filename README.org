@@ -553,7 +553,7 @@ SHELL ["bash", "-ueo","pipefail", "-c"]
    | tag    | delete               | remote | =git push --delete origin <tagName>=        |
    | branch | delete               |        | =git push origin --delete feature/example=  |
    | branch | push && set upstream |        | =git push origin --set-upstream new-branch= |
-#+TBLFM: $4=git tag <tagName> <commit>
+   #+TBLFM: $4=git tag <tagName> <commit>
 ** submodule lifecycle mgmt
 
    | action                        | normal git managed file | for submodule          |
