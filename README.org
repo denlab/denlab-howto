@@ -91,6 +91,11 @@ userdel -r $U
 #+begin_src sh
 adduser <user>
 #+end_src
+*** view login activity?
+    #+begin_src sh
+    last 
+    #+end_src
+
 ** Sudo
 *** allow sudo without password for a user?
 #+begin_src sh
