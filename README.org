@@ -542,7 +542,7 @@ SHELL ["bash", "-ueo","pipefail", "-c"]
     
 
 * Git
-** Tags/branches
+** Tags / branches lifecycle mgmt
 
 | what   | action               | where  | git command                                 |
 |--------+----------------------+--------+---------------------------------------------|
@@ -554,6 +554,11 @@ SHELL ["bash", "-ueo","pipefail", "-c"]
 | branch | delete               |        | =git push origin --delete feature/example=  |
 | branch | push && set upstream |        | =git push origin --set-upstream new-branch= |
 #+TBLFM: $4=git tag <tagName> <commit>
+** submodule lifecycle mgmt
+
+   | action                        | normal git managed file | for submodule        |
+   |-------------------------------+-------------------------+----------------------|
+   | revert file to repo's version | git checkout --         | git submodule update |
 
 ** rm a big file from history?
 #+begin_src sh
