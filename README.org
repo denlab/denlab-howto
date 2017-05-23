@@ -548,6 +548,7 @@ SHELL ["bash", "-ueo","pipefail", "-c"]
 ** docker for install official doc?
 
    - [[https://docs.docker.com/engine/installation/linux/centos/][centos]]
+   - [[https://docs.docker.com/engine/userguide/storagedriver/zfs-driver/#image-layering-and-sharing-with-zfs][zfs]]
 
 * Git
 ** Tags / branches lifecycle mgmt
