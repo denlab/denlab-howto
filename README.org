@@ -167,6 +167,32 @@ sudo systemctl daemon-reload
 #+end_src
 ** Centos
 *** manage services?
+*** create a new systemd unit file?
+    #+begin_center sh
+    # create a new unit file
+      (cat <<EOF''
+[Unit]
+Description=Post docker
+After=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/chmod 606 /var/run/docker.sock
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
+
+EOF
+   ) | sudo tee /etc/systemd/system/multi-user.target.wants/docker-post.service
+   # reload 
+   sudo systemctl daemon-reload
+   # check the status
+   systemctl status docker-post.service
+   # enable at boot
+   systemctl enable docker-post.service
+    #+end_center
+
 #+begin_src sh
 # list all services
 systemctl list-unit-files --type=service
@@ -548,6 +574,22 @@ SHELL ["bash", "-ueo","pipefail", "-c"]
 ** docker for install official doc?
 
    - [[https://docs.docker.com/engine/installation/linux/centos/][centos]]
+
+*** storage drivers in practice
+
+    [[https://docs.docker.com/engine/userguide/storagedriver/aufs-driver/][aufs]] 
+    [[https://docs.docker.com/engine/userguide/storagedriver/device-mapper-driver/][devicemapper]]
+    [[https://docs.docker.com/engine/userguide/storagedriver/device-mapper-driver/][overlay]]
+    [[https://docs.docker.com/engine/userguide/storagedriver/btrfs-driver/][btrfs]]
+    [[https://docs.docker.com/engine/userguide/storagedriver/zfs-driver/][zfs]]
+
+
+
+
+
+
+
+
    - [[https://docs.docker.com/engine/userguide/storagedriver/zfs-driver/#image-layering-and-sharing-with-zfs][zfs]]
 
 * Git
@@ -610,10 +652,39 @@ $ git rebase --continue
    git grep <regexp> $(git rev-list --all)
    #+end_src
 ** view ssh details? 
+** 
    git v2.3.0 or higher:
    #+begin_src sh
    GIT_SSH_COMMAND="ssh -vvv" git clone example
    #+end_src
+
+*** Git Lfs essentials?
+#+begin_center sh
+# Download 
+wget https://github.com/git-lfs/git-lfs/releases/download/v2.1.1/git-lfs-linux-amd64-2.1.1.tar.gz
+tar xavf git-lfs-linux-amd64-2.1.1.tar.gz
+cd xavf git-lfs-linux-amd64-2.1.1
+
+# install 
+./install.sh
+git lfs install
+
+# Select the file types you'd like Git LFS to manage (or directly edit your .gitattributes). You can configure additional file extensions at anytime.
+
+git lfs track "*.psd"
+
+#Make sure .gitattributes is tracked
+
+git add .gitattributes
+
+#There is no step three. Just commit and push to GitHub as you normally would.
+
+git add file.psd
+git commit -m "Add design file"
+git push origin master
+#+end_center
+
+from: https://git-lfs.github.com/
 
 * Jq
 ** recursively find a value by key?
