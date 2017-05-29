@@ -488,6 +488,15 @@ zip -9 -r --exclude=*.svn*  foo.zip [directory-to-compress]
     #+begin_src sh
     hostname -I | cut -d' ' -f1
     #+end_src
+* Unixes
+** Solaris 
+*** equivalent of linux's =ps aux= ?
+    
+    maybee not exaclty equiv, but roughly: 
+
+    #+begin_src sh
+    ps -AfL
+    #+end_src
 
 * Docker
 ** find images on the command line ? 
