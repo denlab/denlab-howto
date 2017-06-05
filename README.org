@@ -35,6 +35,10 @@ ls |& grep '.*'
 #+begin_src sh
 find . -cmin -5
 #+end_src
+*** find files modified in the last x days?
+#+begin_src sh
+find . -ctime -5
+#+end_src
 *** handle filenames with spaces ?
 #+begin_src sh
 find . -maxdepth 1 -print0 | while read -d $'\0' d ; do echo $d ; done
