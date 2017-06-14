@@ -603,8 +603,17 @@ SHELL ["bash", "-ueo","pipefail", "-c"]
 
 
 
+
    - [[https://docs.docker.com/engine/userguide/storagedriver/zfs-driver/#image-layering-and-sharing-with-zfs][zfs]]
 
+** bind host /lib and /bin to the guest to run (eg) wget?
+   #+begin_src sh
+   # on the host
+   docker run -v /usr/lib/x86_64-linux-gnu:/usr-lib-host -v /lib/x86_64-linux-gnu/:/lib-host -v /usr/bin/:/bin-host -it ubuntu:16.04 bash
+   # on the guest
+   export LD_LIBRARY_PATH=/lib-host:/usr-lib-host && export PATH=$PATH:/bin-host
+   wget google.com
+   #e+nd_src
 * Git
 ** Tags / branches lifecycle mgmt
 
