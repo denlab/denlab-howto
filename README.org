@@ -987,7 +987,7 @@ echo '[1,2,3]' \
        -Dtransitive=false
      #+end_src
 
-
+     
 * Apt-get
 ** dpkg show all installed files of a .deb?
 
