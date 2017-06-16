@@ -1156,3 +1156,5 @@ http://stackoverflow.com/questions/9871585/how-to-find-and-replace-text-in-a-exi
         cygrunsrv -S sshd
         #+END_SRC
         (from: https://unix.stackexchange.com/questions/296275/running-sshd-in-cygwin-var-empty-must-be-owned-by-root
+**** install gpg under cygwin?
+     It's already in the standard Cygwin repo, only called =gnupg=.
