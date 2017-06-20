@@ -499,6 +499,12 @@ zip -9 -r --exclude=*.svn*  foo.zip [directory-to-compress]
     #+begin_src sh
     hostname -I | cut -d' ' -f1
     #+end_src
+** Server
+*** Nohup
+**** run nohup?
+     #+BEGIN_SRC sh
+     nohup bash -c "(time bash executeScript 1 input fileOutput > scrOutput) &> timeUse.txt" &
+     #+END_SRC
 * Unixes
 ** Solaris 
 *** equivalent of linux's =ps aux= ?
