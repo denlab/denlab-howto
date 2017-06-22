@@ -29,7 +29,15 @@ ls |& grep '.*'
     #+begin_src sh
     cat /proc/filesystems
     #+end_src
-
+*** how to fix a screwed nfs mount without rebooting?
+    TODO: should be completed 
+    - Find the list of process open on the screwed fs: 
+    #+BEGIN_SRC sh
+    lsof | grep '/path/to/nfs'
+    #+END_SRC
+    - kill them
+    - remount
+    ref: http://joelinoff.com/blog/?p=356
 ** Find
 *** find files modified in the last x minutes
 #+begin_src sh
