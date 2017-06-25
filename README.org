@@ -1055,6 +1055,15 @@ echo '[1,2,3]' \
        #+BEGIN_SRC sh
        pip3 <cmd>
        #+END_SRC
+**** pip completion on the command line?
+     #+BEGIN_SRC sh
+     pip completion --bash >> ~/.profile
+     #+END_SRC
+     or
+     #+BEGIN_SRC sh
+     eval "`pip completion --zsh`"
+     #+END_SRC
+     from: https://pip.pypa.io/en/stable/user_guide/?highlight=completion%20#command-completion
 * Apt-get
 ** dpkg show all installed files of a .deb?
 
