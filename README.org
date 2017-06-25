@@ -1005,10 +1005,15 @@ echo '[1,2,3]' \
 ** Python
 *** Pip
 **** How to install pip for python 3 ? 
-     on ubuntu/debian:
-     #+BEGIN_SRC sh
-     aptitude install python3-pip
-     #+END_SRC
+     - install: 
+       on ubuntu/debian:
+       #+BEGIN_SRC sh
+       aptitude install python3-pip
+       #+END_SRC
+     - invoke:
+       #+BEGIN_SRC sh
+       pip3 <cmd>
+       #+END_SRC
 * Apt-get
 ** dpkg show all installed files of a .deb?
 
