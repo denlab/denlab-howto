@@ -629,7 +629,7 @@ SHELL ["bash", "-ueo","pipefail", "-c"]
    # on the guest
    export LD_LIBRARY_PATH=/lib-host:/usr-lib-host && export PATH=$PATH:/bin-host
    wget google.com
-   #e+nd_src
+   #+end_src
 * Git
 ** Tags / branches lifecycle mgmt
 
