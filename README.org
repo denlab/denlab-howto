@@ -1143,6 +1143,37 @@ http://stackoverflow.com/questions/9871585/how-to-find-and-replace-text-in-a-exi
 ** Online visualization of Wikipedia's graph?
 - http://tools.medialab.sciences-po.fr/seealsology/
 - http://seealso.org/
+* Non-unixes
+** Ms windows
+*** Cygwin
+**** Sshd
+***** start sshd as a service after its installation with the Cygwin installer?
+****** TODO to be verified
+      1) Open a cmd.exe as administrator
+      2) Run: 
+         #+BEGIN_SRC sh
+         cygrunsrv -S sshd
+         #+END_SRC
+         (from: https://unix.stackexchange.com/questions/296275/running-sshd-in-cygwin-var-empty-must-be-owned-by-root
+***** install gpg under cygwin?
+      It's already in the standard Cygwin repo, only called =gnupg=.
+*** cmd.exe
+**** windows services cheatsheet?
+     - list all
+       #+BEGIN_SRC sh
+       sc queryex type= service state= all
+       #+END_SRC 
+    - list service containing the string "NATION"?
+      #+BEGIN_SRC sh
+      sc queryex type= service state= all | find /i "NATION" 
+      #+END_SRC
+
+
+      
+
+
+
+
 * Node
 ** Npm
 *** how to install global packages without sudo?
@@ -1174,34 +1205,3 @@ http://stackoverflow.com/questions/9871585/how-to-find-and-replace-text-in-a-exi
    #+begin_src sh
    setxkbmap -model evdev -layout us
    #+end_src
-* Ms windows
-** Cygwin
-*** Sshd
-**** start sshd as a service after its installation with the Cygwin installer?
-***** TODO to be verified
-     1) Open a cmd.exe as administrator
-     2) Run: 
-        #+BEGIN_SRC sh
-        cygrunsrv -S sshd
-        #+END_SRC
-        (from: https://unix.stackexchange.com/questions/296275/running-sshd-in-cygwin-var-empty-must-be-owned-by-root
-**** install gpg under cygwin?
-     It's already in the standard Cygwin repo, only called =gnupg=.
-** cmd.exe
-*** windows services cheatsheet?
-    - list all
-      #+BEGIN_SRC sh
-      sc queryex type= service state= all
-      #+END_SRC 
-   - list service containing the string "NATION"?
-     #+BEGIN_SRC sh
-     sc queryex type= service state= all | find /i "NATION" 
-     #+END_SRC
-
-
-      
-
-
-
-
-
