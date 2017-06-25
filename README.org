@@ -605,27 +605,22 @@ SHELL ["bash", "-ueo","pipefail", "-c"]
         password: secret
     #+end_src
     
-** docker for install official doc?
-   - [[https://docs.docker.com/engine/installation/linux/ubuntu/][ubuntu]]
-   - [[https://docs.docker.com/engine/installation/linux/centos/][centos]]
+** docker docs
 
-*** storage drivers in practice
+   | what              | url          |
+   |-------------------+--------------|
+   | docker install    | [[https://docs.docker.com/engine/installation/linux/ubuntu/][ubuntu]]       |
+   |                   | [[https://docs.docker.com/engine/installation/linux/centos/][centos]]       |
+   |-------------------+--------------|
+   | compose install   | [[https://github.com/docker/compose/releases][any OS]]       |
+   |-------------------+--------------|
+   | storage drivers [[1]] | [[https://docs.docker.com/engine/userguide/storagedriver/aufs-driver/][aufs]]         |
+   |                   | [[https://docs.docker.com/engine/userguide/storagedriver/device-mapper-driver/][devicemapper]] |
+   |                   | [[https://docs.docker.com/engine/userguide/storagedriver/device-mapper-driver/][overlay]]      |
+   |                   | [[https://docs.docker.com/engine/userguide/storagedriver/btrfs-driver/][btrfs]]        |
+   |                   | [[https://docs.docker.com/engine/userguide/storagedriver/zfs-driver/][zfs]]          |
+*** <<1>> storage drivers in practice
 
-    [[https://docs.docker.com/engine/userguide/storagedriver/aufs-driver/][aufs]] 
-    [[https://docs.docker.com/engine/userguide/storagedriver/device-mapper-driver/][devicemapper]]
-    [[https://docs.docker.com/engine/userguide/storagedriver/device-mapper-driver/][overlay]]
-    [[https://docs.docker.com/engine/userguide/storagedriver/btrfs-driver/][btrfs]]
-    [[https://docs.docker.com/engine/userguide/storagedriver/zfs-driver/][zfs]]
-
-
-
-
-
-
-
-
-
-   - [[https://docs.docker.com/engine/userguide/storagedriver/zfs-driver/#image-layering-and-sharing-with-zfs][zfs]]
 
 ** bind host /lib and /bin to the guest to run (eg) wget?
    #+begin_src sh
