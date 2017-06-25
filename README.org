@@ -607,20 +607,18 @@ SHELL ["bash", "-ueo","pipefail", "-c"]
     
 ** docker docs
 
-   | what                        | url          |
-   |-----------------------------+--------------|
-   | docker install              | [[https://docs.docker.com/engine/installation/linux/ubuntu/][ubuntu]]       |
-   |                             | [[https://docs.docker.com/engine/installation/linux/centos/][centos]]       |
-   |-----------------------------+--------------|
-   | compose install             | [[https://github.com/docker/compose/releases][any OS]]       |
-   |-----------------------------+--------------|
-   | storage drivers in practice | [[https://docs.docker.com/engine/userguide/storagedriver/aufs-driver/][aufs]]         |
-   |                             | [[https://docs.docker.com/engine/userguide/storagedriver/device-mapper-driver/][devicemapper]] |
-   |                             | [[https://docs.docker.com/engine/userguide/storagedriver/device-mapper-driver/][overlay]]      |
-   |                             | [[https://docs.docker.com/engine/userguide/storagedriver/btrfs-driver/][btrfs]]        |
-   |                             | [[https://docs.docker.com/engine/userguide/storagedriver/zfs-driver/][zfs]]          |
-
-
+   | what                        | url                      |
+   |-----------------------------+--------------------------|
+   | docker install              | [[https://docs.docker.com/engine/installation/linux/ubuntu/][ubuntu]]                   |
+   |                             | [[https://docs.docker.com/engine/installation/linux/centos/][centos]]                   |
+   |-----------------------------+--------------------------|
+   | compose install             | [[https://github.com/docker/compose/releases][any OS]]                   |
+   |-----------------------------+--------------------------|
+   | storage drivers in practice | [[https://docs.docker.com/engine/userguide/storagedriver/aufs-driver/][aufs in practice]]         |
+   |                             | [[https://docs.docker.com/engine/userguide/storagedriver/device-mapper-driver/][devicemapper in practice]] |
+   |                             | [[https://docs.docker.com/engine/userguide/storagedriver/device-mapper-driver/][overlay in practice]]      |
+   |                             | [[https://docs.docker.com/engine/userguide/storagedriver/btrfs-driver/][btrfs in practice]]        |
+   |                             | [[https://docs.docker.com/engine/userguide/storagedriver/zfs-driver/][zfs in practice]]          |
 ** bind host /lib and /bin to the guest to run (eg) wget?
    #+begin_src sh
    # on the host
