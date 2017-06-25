@@ -927,6 +927,19 @@ echo '[1,2,3]' \
 ** OrgMode
 *** Tables 
 **** pipe in table cells? 
+***** pipe in table with code block
+      - create the table in org mode
+      | x    | l               |
+      |------+-----------------|
+      | cmd1 | cmd             |
+      | cmd2 | cmd <pipe> cmdx |
+      - copy and pase the table in a code block and add the missing pipes: 
+        #+BEGIN_SRC sh
+      | x    | l               |
+      |------+-----------------|
+      | cmd1 | cmd             |
+      | cmd2 | cmd | cmdx      |
+        #+END_SRC
 ***** TODO org mode how to use pipes in tables? [0%]
 ****** TODO using contants?
       #+CONSTANTS: c=299792458. pi=3.14 eps=2.4e-6
