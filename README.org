@@ -900,6 +900,21 @@ echo '[1,2,3]' \
 | replace (like replace mode - opposite of insert)   |                       | R                     |                          |
 | append at the end of the line                      |                       | A                     |                          |
 
+** OrgMode
+*** Tables 
+**** pipe in table cells? 
+***** TODO org mode how to use pipes in tables? [0%]
+****** TODO using contants?
+      #+CONSTANTS: c=299792458. pi=3.14 eps=2.4e-6
+      | name | value |
+      |------+-------|
+      | c    | $c    |
+      | pi   | $pi   |
+      | eps  | $eps  |
+****** TODO macros?
+****** TODO latex?
+****** TODO html?
+****** TODO compute cells values ?
 * Regex
 ** Sed 
 *** use a backreference without grouping? 
@@ -1159,7 +1174,6 @@ http://stackoverflow.com/questions/9871585/how-to-find-and-replace-text-in-a-exi
 
 
       
-
 
 
 
