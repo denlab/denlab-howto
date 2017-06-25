@@ -1001,7 +1001,14 @@ echo '[1,2,3]' \
        -Dtransitive=false
      #+end_src
 
-     
+* Programming languages 
+** Python
+*** Pip
+**** How to install pip for python 3 ? 
+     on ubuntu/debian:
+     #+BEGIN_SRC sh
+     aptitude install python3-pip
+     #+END_SRC
 * Apt-get
 ** dpkg show all installed files of a .deb?
 
