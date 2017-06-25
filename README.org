@@ -6,15 +6,16 @@
 * Linux
 ** Stdin/out/err
 *** redirecting stdout, stderr
+    #+BEGIN_SRC sh
     | redirect from | to   | cmd                            | notes          |
     |---------------+------+--------------------------------+----------------|
-    | out           | err  | ~ls x >&2~                     |                |
-    | out & err     | file | ~ls &> file~                   |                |
-    |               |      | ~ls > file 2>&1~               | for older bash |
-    | err           | out  | ~ls 2>&1~                      |                |
-    | err & out     | pipe | ~ls 2>&1~ \vert ~grep '.*'~    |                |
-    | err & out2    | pipe | ~ls 2>&1~ \vert ~grep '.*'~    |                |
-    |               |      | ~ls~ {{{pipeAnd}}} ~grep '.*'~ |                |
+    | out           | err  |  ls 1>&2                       |                |
+    | out & err     | file |  ls &>   file                  |                |
+    |               |      |  ls >    file 2>&1             | for older bash |
+    | err           | out  |  ls 2>&1                       |                |
+    | err & out     | pipe |  ls 2>&1 |  grep '.*'          |                |
+    |               |      |  ls      |& grep '.*'          | equiv          |
+    #+END_SRC
 *** use stdout as a file (with filename) for another cmd? 
     #+BEGIN_SRC sh
     cmd <(cat f)
