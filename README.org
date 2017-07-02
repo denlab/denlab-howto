@@ -1068,6 +1068,11 @@ echo '[1,2,3]' \
      eval "`pip completion --zsh`"
      #+END_SRC
      from: https://pip.pypa.io/en/stable/user_guide/?highlight=completion%20#command-completion
+** Lorem ipsum
+   |      |        |                                         |
+   |------+--------+-----------------------------------------|
+   | json | online | ~curl https://registry.npmjs.com/lobar~ |
+
 * Apt-get
 ** dpkg show all installed files of a .deb?
 
