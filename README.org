@@ -1260,7 +1260,10 @@ http://stackoverflow.com/questions/9871585/how-to-find-and-replace-text-in-a-exi
    #+begin_src sh
    sudo mount -t vboxsf <sharedFolderName> /path/to/shared/folder/dir
    #+end_src
-
+** host alt-tab when in a guest?
+   =host key=
+   then
+  alt-tab 
 * NxClient
 ** keyboard issue when connecting with nx ? 
    Try: 
