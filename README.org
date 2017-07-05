@@ -134,7 +134,11 @@ adduser <user>
 #+begin_src sh
 # if there's a sudo group add the user to this group
 #+end_src
-
+*** execute a cmd as another user?
+#+BEGIN_SRC sh
+sudo -u <user> /bin/ls -alrth <...>
+# WARN! path to binaries must be absolute!
+#+END_SRC
 ** Ssh
 *** generate public private key pair
 #+begin_src sh
