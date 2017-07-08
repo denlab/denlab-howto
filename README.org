@@ -536,6 +536,10 @@ zip -9 -r --exclude=*.svn*  foo.zip [directory-to-compress]
     #+begin_src sh
     hostname -I | cut -d' ' -f1
     #+end_src
+*** list open ports?
+    #+BEGIN_SRC sh
+    netstat -lntu
+    #+END_SRC
 ** Server
 *** Nohup
 **** run nohup?
