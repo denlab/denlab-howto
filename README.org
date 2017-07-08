@@ -1076,6 +1076,16 @@ echo '[1,2,3]' \
      eval "`pip completion --zsh`"
      #+END_SRC
      from: https://pip.pypa.io/en/stable/user_guide/?highlight=completion%20#command-completion
+*** Json
+**** Parse a json string?
+     #+BEGIN_SRC sh
+		python <<- EOF
+import json
+j = json.loads('{"one" : "1", "two" : "2", "three" : "3"}')
+
+#print j['two']
+EOF
+     #+END_SRC
 ** Lorem ipsum
    |      |        |                                         |
    |------+--------+-----------------------------------------|
