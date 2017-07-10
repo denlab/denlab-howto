@@ -973,6 +973,24 @@ echo '[1,2,3]' \
     The above options are described in the export settings section of the orgmode manual. This component introduces a new setting whn for per document, and :with-headline-numbers for publish config, which controls the display of section numbers. To disable, set to nil, to enable, set to t, and to control depth of display, use a whole number.
     #+END_QUOTE
     from: https://github.com/marsmining/ox-twbs
+*** easy templates?
+
+from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
+
+| s  | 	#+BEGIN_SRC ... #+END_SRC        |
+| e	 | #+BEGIN_EXAMPLE ... #+END_EXAMPLE |
+| q	 | #+BEGIN_QUOTE ... #+END_QUOTE     |
+| v	 | #+BEGIN_VERSE ... #+END_VERSE     |
+| c	 | #+BEGIN_CENTER ... #+END_CENTER   |
+| l	 | #+BEGIN_LaTeX ... #+END_LaTeX     |
+| L	 | #+LaTeX:                          |
+| h	 | #+BEGIN_HTML ... #+END_HTML       |
+| H	 | #+HTML:                           |
+| a	 | #+BEGIN_ASCII ... #+END_ASCII     |
+| A	 | #+ASCII:                          |
+| i	 | #+INDEX: line                     |
+| I	 | #+INCLUDE: line                   |
+
 * Regex
 ** Sed 
 *** use a backreference without grouping? 
