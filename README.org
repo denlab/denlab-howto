@@ -1064,44 +1064,45 @@ from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
     #+begin_src sh
     git grep <regexp> $(git rev-list --all)
     #+end_src
-*** view ssh details? 
-**** git v2.3.0 or higher:
-     #+begin_src sh
-     GIT_SSH_COMMAND="ssh -vvv" git clone example
-     #+end_src
-
-***** Git Lfs essentials?
-  #+begin_center sh
-  # Download 
-  wget https://github.com/git-lfs/git-lfs/releases/download/v2.1.1/git-lfs-linux-amd64-2.1.1.tar.gz
-  tar xavf git-lfs-linux-amd64-2.1.1.tar.gz
-  cd xavf git-lfs-linux-amd64-2.1.1
-
-  # install 
-  ./install.sh
-  git lfs install
-
-  # Select the file types you'd like Git LFS to manage (or directly edit your .gitattributes). You can configure additional file extensions at anytime.
-
-  git lfs track "*.psd"
-
-  #Make sure .gitattributes is tracked
-
-  git add .gitattributes
-
-  #There is no step three. Just commit and push to GitHub as you normally would.
-
-  git add file.psd
-  git commit -m "Add design file"
-  git push origin master
-  #+end_center
-
-  from: https://git-lfs.github.com/
-
 *** config for colors?
     #+BEGIN_SRC sh
     git config --global color.ui true
     #+END_SRC
+*** Git Lfs essentials?
+#+begin_center sh
+# Download 
+wget https://github.com/git-lfs/git-lfs/releases/download/v2.1.1/git-lfs-linux-amd64-2.1.1.tar.gz
+tar xavf git-lfs-linux-amd64-2.1.1.tar.gz
+cd xavf git-lfs-linux-amd64-2.1.1
+
+# install 
+./install.sh
+git lfs install
+
+# Select the file types you'd like Git LFS to manage (or directly edit your .gitattributes). You can configure additional file extensions at anytime.
+
+git lfs track "*.psd"
+
+#Make sure .gitattributes is tracked
+
+git add .gitattributes
+
+#There is no step three. Just commit and push to GitHub as you normally would.
+
+git add file.psd
+git commit -m "Add design file"
+git push origin master
+#+end_center
+
+from: https://git-lfs.github.com/
+
+*** git & ssh
+**** view ssh details? 
+***** git v2.3.0 or higher:
+      #+begin_src sh
+      GIT_SSH_COMMAND="ssh -vvv" git clone example
+      #+end_src
+
 ** Jq
 *** recursively find a value by key?
  #+begin_src sh
