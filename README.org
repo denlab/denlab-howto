@@ -453,7 +453,10 @@ done
     # use the copy with 
     echo "${original_params[@]}"
     #+end_src
-
+** file format conversion table
+| src   | dst   | command                                                                           |
+|-------+-------+-----------------------------------------------------------------------------------|
+| ~rtf~ | ~pdf~ | ~libreoffice --headless --invisible --norestore --convert-to pdf source-file.rtf~ |
 ** MoreUtils
 *** read / process / write the same file ? 
     - Use:  =sponge=
@@ -506,7 +509,6 @@ sudo dpkg-reconfigure locales
     #+begin_src sh
     unzip -p myarchive.zip path/to/zipped/file.txt >file.txt
     #+end_src
-
 ** Tmux
 *** how do i detach other client when reattach to session?
     #+begin_src sh
