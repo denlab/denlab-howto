@@ -3,555 +3,633 @@
 #+MACRO: pipe @@html:&#124;@@ 
 #+MACRO: pipeAnd @@html:&#124;&amp;@@ 
 
-* Linux
-** Devices (hdd,...)
-*** eject a cd rom? 
-    #+begin_src sh
-    ejet /dev/cdrom
-    #+end_src
-*** how to list all supported FS for mounting?
-    #+begin_src sh
-    cat /proc/filesystems
-    #+end_src
-*** how to fix a screwed nfs mount without rebooting?
-    TODO: should be completed 
-    - Find the list of process open on the screwed fs: 
-    #+BEGIN_SRC sh
-    lsof | grep '/path/to/nfs'
-    #+END_SRC
-    - kill them
-    - remount
-    ref: http://joelinoff.com/blog/?p=356
-** Find
-*** find files modified in the last x minutes
-#+begin_src sh
-find . -cmin -5
-#+end_src
-*** find files modified in the last x days 
-#+begin_src sh
-find . -ctime -5
-#+end_src
-*** handle filenames with spaces ?
-#+begin_src sh
-find . -maxdepth 1 -print0 | while read -d $'\0' d ; do echo $d ; done
-#+end_src
-http://www.cyberciti.biz/tips/handling-filenames-with-spaces-in-bash.html
-*** sort files by modified date?
-    #+begin_src sh
-    find -type f -printf '%T@ %p\0' |
-    sort -zk 1nr |
-    sed -z 's/^[^ ]* //' | tr '\0' '\n'
-    #+end_src
-*** find files bigger than x MBytes?
-    #+BEGIN_SRC sh
-    find . -size +500M -exec l {} \;
-    #+END_SRC
-** Xargs
-*** run a cmd on each line of stdin with xargs?
-#+begin_src sh
-echo 'a
-b
-c' | xargs -I {} ./f {}
-#+end_src
-*** use bash function?
-    #+begin_src sh
-    f() { bc; }
-    echo '1 * 1
-    2 * 2
-    3 * 3'                                            \
-    | xargs -i echo "$(declare -f f) ; echo '{}' | f" \
-    | bash
-    #+end_src
-
-** User Admin
-*** how to add a group to a user ? 
-#+begin_src sh
-sudo usermod -aG docker u
-#+end_src
-*** add a user with specific groups ? 
-#+begin_src sh
-adduser -G group1,group2 <user>
-#+end_src
-
-*** get the groups of a user ?
-#+begin_src sh
-groups <user>
-#+end_src
-*** change the shell of a user?
-#+begin_src sh
-usermod -s /bin/bash user
-#+end_src
-*** remove a user?
-#+begin_src sh
-export U=<user>
-userdel -r $U
-#+end_src
-*** add a user?
-#+begin_src sh
-adduser <user>
-#+end_src
-*** view login activity?
-    #+begin_src sh
-    last 
-    #+end_src
-
-** Sudo
-*** allow sudo without password for a user?
-#+begin_src sh
-# if there's a sudo group add the user to this group
-#+end_src
-*** execute a cmd as another user?
-#+BEGIN_SRC sh
-sudo -u <user> /bin/ls -alrth <...>
-# WARN! path to binaries must be absolute!
-#+END_SRC
-** Ssh
-*** generate public private key pair
-#+begin_src sh
-ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
-#+end_src
-
-*** ssh reverse tunnel ?
-
-#+begin_src sh
-# from the target machine:
-ssh -R 2210:localhost:22 bserver.outside.com
-#+end_src
-from: https://toic.org/blog/2009/reverse-ssh-port-forwarding/
-
-*** ssh or scp in a script without entering password ?
-
-#+begin_src sh
-expect -c "
-   spawn scp login@somehost.com:/somefile .
-   expect yes/no { send yes\r ; exp_continue }
-   expect password: { send password\r }
-   expect 100%
-   exit
-"
-#+end_src
-
-*** ssh without password or key? 
-#+begin_src sh
-# remove password for user
-passwd -d user
-# sshd: allow empty password
-sed -r 's/#(PermitEmptyPasswords) no/\1 yes/' -i.bak /etc/ssh/sshd_config
-#+end_src
-
-*** get public key from private key ?
-#+begin_src sh
-ssh-keygen -y -f ~/.ssh/id_rsa
-#+end_src
-
-*** Disable host verification?
-#+begin_src sh
-ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no peter@192.168.0.100
-#+end_src
-http://linuxcommando.blogspot.co.uk/2008/10/how-to-disable-ssh-host-key-checking.html
-*** how to mount remote fs with sshfs?
-    #+begin_src sh
-    # usage
-    sshfs USERNAME@HOSTNAME_OR_IP:/REMOTE_PATH LOCAL_MOUNT_POINT SSH_OPTIONS
-    # example
-    sshfs sessy@mycomputer:/remote/path /local/path -C -p 9876 -o allow_other
-    #+end_src
-    https://wiki.archlinux.org/index.php/SSHFS
-*** copy pub key to remote authorized_keys?
-    #+begin_src sh
-    ssh-copy-id <user>@<host>
-
-    #+end_src
-
-** Services mgmt
-*** Linux reload service config
-#+begin_src sh
-sudo systemctl daemon-reload
-#+end_src
-** Centos
-*** manage services?
-*** create a new systemd unit file?
-    #+begin_center sh
-    # create a new unit file
-      (cat <<EOF''
-[Unit]
-Description=Post docker
-After=docker.service
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/chmod 606 /var/run/docker.sock
-RemainAfterExit=true
-
-[Install]
-WantedBy=multi-user.target
-
-EOF
-   ) | sudo tee /etc/systemd/system/multi-user.target.wants/docker-post.service
-   # reload 
-   sudo systemctl daemon-reload
-   # check the status
-   systemctl status docker-post.service
-   # enable at boot
-   systemctl enable docker-post.service
-    #+end_center
-
-#+begin_src sh
-# list all services
-systemctl list-unit-files --type=service
-
-# check if a service is running
-systemctl status name.service
-
-# enable a service
-systemctl enable docker.service
-
-# check if a service is enabled
-#+end_src
-** Terminal
-*** replace capslock by ctrl in console ?
-#+begin_src sh
-#in  /etc/default/keyboard
-#replace XKBOPTIONS="" by XKBOPTIONS="ctrl:nocaps"
-# then run
-run sudo dpkg-reconfigure -phigh console-setup
-#+end_src
-
-ref: https://www.emacswiki.org/emacs/MovingTheCtrlKey#toc9
-*** change language keyboard mapping
-#+begin_src sh
-# run
-dpkg-reconfigure keyboard-configuration
-# or
-# edit /etc/default/keyboard: 
-#   change XKBLAYOUT="us,de,fr,ua,ru" by "us" for example
-
-# for changes to take effect:
-service keyboard-setup restart
-
-# it should suffice, but if not: 
-udevadm trigger --subsystem-match=input --action=change
-#+end_src
-https://wiki.debian.org/Keyboard
-*** change text mode resolution?
-*** paste example?
-#+begin_src sh
-$ paste <(seq 1 3) <(seq 1 3)
-1       1
-2       2
-3       3
-#+end_src
-*** show which key is pressed?
-#+begin_src sh
-
-#+end_src
-*** get the number of rows and colums?
-    #+begin_src sh
-    tput lines
-    tput cols
-    #+end_src
-*** Presentation conventions
-**** display a command line?
-     #+BEGIN_SRC sh
-     `npm install -g jsonresume-theme-kendall`
-     #+END_SRC
-** X
-*** copy to system clipboard from the command line?
-#+begin_src sh
-echo a | xclip -selection clipboard
-#+end_src
-*** dual monitor setup: turn off one of the monitor and not the other?
-    #+BEGIN_SRC sh
-    # choose one of the monitor with:
-    xrandr -q
-    # disbale it
-    xrandr --output LVDS1 --off
-    #+END_SRC
-** Bash
-*** Stdin/out/err
-**** redirecting stdout, stderr
-     #+BEGIN_SRC sh
-     | redirect from | to   | cmd                            | notes          |
-     |---------------+------+--------------------------------+----------------|
-     | out           | err  |  ls 1>&2                       |                |
-     | out & err     | file |  ls &>   file                  |                |
-     |               |      |  ls >    file 2>&1             | for older bash |
-     | err           | out  |  ls 2>&1                       |                |
-     | err & out     | pipe |  ls 2>&1 |  grep '.*'          |                |
-     |               |      |  ls      |& grep '.*'          | equiv          |
-     #+END_SRC
-**** use stdout as a file (with filename) for another cmd? 
-     #+BEGIN_SRC sh
-     cmd <(cat f)
-     #+END_SRC
-**** swap stdout and stderr?
-     =cmd 3>&1 1>&2 2>&3=
-    #+BEGIN_SRC sh
-    $ f() { (echo out) && (echo err 1>&2); }
-    $ f
- out
- err
-    $ s() { sed "s/.*/=$1>&<$1=/"; }
-    $ f | s 1
- err
- =1>out<1=
-    $ (f 3>&1 1>&2 2>&3) | s 1
- out
- =1>err<1=
-    $ ((f 3>&1 1>&2 2>&3) | s 1) | s 2
- out
- =2>=1>err<1=<2=
-    $ (((f 3>&1 1>&2 2>&3) | s 1) 3>&1 1>&2 2>&3) | s 2
- =2>out<2=
- =1>err<1=
-    #+END_SRC 
-*** Arrays
-**** Associative arrays
-***** declare, print, ...
- #+begin_src sh
- # declare
- declare -A m=( [red]='0;31' [green]='0;32' )
- # print keys
- echo "keys=${!m[@]}"
- # print all
- declare | grep colorsCodes
- #+end_src
-***** copy ?
- #+begin_src sh
- declare -A arr=([this]=hello [\'that\']=world [theother]='and "goodbye"!')
- declare -A newarr
- for idx in "${!arr[@]}"; do
-     newarr[$idx]=${arr[$idx]}
- done
-
- diff <(echo "$temp") <(declare -p newarr | sed 's/newarr=/arr=/')
- # no output
- #+end_src
- http://stackoverflow.com/questions/19417015/bash-copy-from-one-array-to-another
-**** Normal arrays
-     #+begin_src bash
-     # declare
-     declare -a a
-     # literal
-     a=(a b c)
-     # set 
-     a[0]=x
-     # get all
-     echo ${a[*]}
-     # size
-     echo "size=${#}"
-     #+end_src
-*** ssh escape sequence?
-=ENTER, ~, .=
-*** c style for loop?
-#+begin_src sh
-for ((i=0;i<3;i++)); do
-  echo $i
-done
-#+end_src
-*** Bash Strings
-**** bash strings cheat sheet?
-
-| what        | how                                 | example |
-|-------------+-------------------------------------+---------|
-| size        | =${#str}=                           |         |
-| substring   | =${str:pos}=                        |         |
-| substring   | =${str:pos:length}=                 |         |
-|             |                                     |         |
-| char to int | =printf '%d\n' "'y"=                |         |
-| int to char | =printf "\x$(printf %x 65)"=        |         |
-| replace all | =x=abcabc; echo ${s//b/x} # axcaxc= |         |
-|             |                                     |         |
-*** generate random string?
-#+begin_src sh
-#!/bin/bash
-# bash generate random alphanumeric string
-#
-
-# bash generate random 32 character alphanumeric string (upper and lowercase) and
-NEW_UUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
-
-# bash generate random 32 character alphanumeric string (lowercase only)
-cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1
-
-# Random numbers in a range, more randomly distributed than $RANDOM which is not
-# very random in terms of distribution of numbers.
-
-# bash generate random number between 0 and 9
-cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | head --bytes 1
-
-# bash generate random number between 0 and 99
-NUMBER=$(cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | sed -e 's/^0*//' | head --bytes 2)
-if [ "$NUMBER" == "" ]; then
-  NUMBER=0
-fi
-
-# bash generate random number between 0 and 999
-NUMBER=$(cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | sed -e 's/^0*//' | head --bytes 3)
-if [ "$NUMBER" == "" ]; then
-  NUMBER=0
-fi
-#+end_src
-https://gist.github.com/earthgecko/3089509
-*** decimal / hex conversion? 
-#+begin_src sh
-echo $((0xa))
-# 10
-#+end_src
-*** redirect output in variable?
-"must read" about the differents techniques of redirection: http://stackoverflow.com/questions/13763942/bash-why-piping-input-to-read-only-works-when-fed-into-while-read-const
-*** stop on error (even in subshell)?
-It seems that bash disable -e in subshells.
-A workaround: set -e explicitly at the start of each subshell
-*** switch case ?
-    #+begin_src sh
-while [[ $# -gt 0 ]]; do
-    case "$1" in
-        *:*          ) hostport=(${1//:/ }); shift 1 ;;
-             --child ) CHILD=1             ; shift 1 ;;
-        -q | --quiet ) QUIET=1             ; shift 1 ;;
-        -s | --strict) STRICT=1            ; shift 1 ;;
-        --host=*     ) HOST="${1#*=}"      ; shift 1 ;;
-        --help       ) usage               ; shift 1 ;;
-        *            ) unknownArg "$1"     ; shift 1 ;;
-    esac
-done
-    #+end_src
-*** loop over args? 
-    #+begin_src sh
-    for var in "$@"
-    do
-      echo "$var"
-    done
-    #+end_src
-    http://stackoverflow.com/questions/255898/how-to-iterate-over-arguments-in-a-bash-script
-*** parse a string as args 
-    #+begin_src sh
-    How to process the following list of pairs: "Mercury 36" "Venus 67" "Earth 93"  "Mars 142" "Jupiter 483"? 
-    (note no =IFS= set)
-    #+begin_src sh
-    #!/usr/bin/env bash
-    set -euo pipefail
-
-    for planet in "Mercury 36" "Venus 67" 
-    do
-      set -- $planet
-      echo "\$1=$1"
-      echo "\$2=$2"
-    done
-    # outputs
-    #
-    # $1=Mercury
-    # $2=36
-    # $1=Venus
-    # $2=67
-    #+end_src
-*** How to save a script params (before doing modifications like shift, ..)?
-    #+begin_src sh
-    # save with 
-    original_params=("$@")
-    # use the copy with 
-    echo "${original_params[@]}"
-    #+end_src
-** file format conversion table
-| src   | dst   | command                                                                           |
-|-------+-------+-----------------------------------------------------------------------------------|
-| ~rtf~ | ~pdf~ | ~libreoffice --headless --invisible --norestore --convert-to pdf source-file.rtf~ |
-** MoreUtils
-*** read / process / write the same file ? 
-    - Use:  =sponge=
-    - =sponge= will read stdin and write to specified file. Unlike a shell redirect it will soaks all its input before writing the output file.
-    #+begin_src sh
-    sort f | sponge f
-    #+end_src
-*** instead of xxx use moreutils yyy?
-
-    | cmd       | insteadof                               | use                                                            |
-    |-----------+-----------------------------------------+----------------------------------------------------------------|
-    | =chronic= |                                         | =chronic backup_script.sh=                                     |
-    | =sponge=  | =sort filename= \vert =uniq/ > temp=    | =sort filename= \vert =uniq \vert sponge filename=             |
-    |           | =mv temp filename=                      |                                                                |
-    | =isutf8=  |                                         | =isutf8 filename=                                              |
-    | =ifne=    |                                         | =./script.sh= \vert =ifne less=                                |
-    | =pee=     | =./script.sh= \vert =tee output1 output2= | =./script.sh= \vert =pee 'grep pattern1' 'gzip -c > output.gz'_= |
-    | =ifdata=  | =<parsing ifconfig>=                    |                                                                |
-    | =zrun=    | =diff <(zcat one.gz) <(zcat two.gz)=    | =zrun diff one.gz two.gz=                                      |
-    | =ts=      |                                         | =$ { echo "One" ; sleep 3s ; echo "Two" ; }= \vert =ts=        |
-    | =errno=   |                                         | =$ errno 98=                                                   |
-    | =vipe=    |                                         | =command1= \vert =vipe= \vert =command2=                       |
-    | =vidir=   |                                         | =vidir directory/=                                             |
-    | =combine= | =comm -12 file1 file2=                  | =combine file1 and file2=                                      |
-    |           | =comm -23 fileA fileB=                  | =combine fileA not fileB=                                      |
-    |           | =sort file1 file2= \vert =uniq=         | =combine file1 or file2=                                       |
-    |           | =sort file1 file2= \vert =uniq --unique= | =combine file1 xor file2=                                      |
-
-    See: http://devblog.nestoria.com/post/110168998173/moreutils-basic-unix-tools-that-ought-to-be
-
-** Bc
-*** float precision?
-    #+begin_src sh
-    echo 'scale=2 ; 1/3' | bc -l
-    #+end_src
-
-** Ubuntu / Debian
-*** Setup locale?
-#+begin_src sh
-# add to /etc/environnement
-#LC_ALL=en_US.UTF-8
-LANG=en_US.UTF-8
-
-sudo locale-gen "en_US.UTF-8"
-sudo dpkg-reconfigure locales
-
-#+end_src
-** Zip 
-*** unzip a single file from archive?
-    #+begin_src sh
-    unzip -p myarchive.zip path/to/zipped/file.txt >file.txt
-    #+end_src
-** Tmux
-*** how do i detach other client when reattach to session?
-    #+begin_src sh
-tmux -2 a -dt 0
-    #+end_src
-
-*** compress dir recursive? 
-#+begin_src sh
-zip -r archive.zip /dir
-#+end_src
-*** compress dir but exclude a directory ?
-#+begin_src sh
-zip -9 -r --exclude=*.svn*  foo.zip [directory-to-compress]
-#+end_src
-
-** Network
-*** How to trace all network activity?
-    =tcpflow=
-    #+begin_src sh
-   
- tcpflow -p -c -i eth0 port 80 | grep -oE '(GET|POST|HEAD) .* HTTP/1.[01]|Host: .*'
-    #+end_src
-    http://unix.stackexchange.com/questions/6279/on-the-fly-monitoring-http-requests-on-a-network-interface
-*** how to get the ip adresse of the local host ?
-    *Note*: To be verfied!
-    #+begin_src sh
-    hostname -I
-    #+end_src
-    or (?)
-    #+begin_src sh
-    hostname -I | cut -d' ' -f1
-    #+end_src
-*** list open ports?
-    #+BEGIN_SRC sh
-    netstat -lntu
-    #+END_SRC
-** Server
-*** Nohup
-**** run nohup?
-     #+BEGIN_SRC sh
-     nohup bash -c "(time bash executeScript 1 input fileOutput > scrOutput) &> timeUse.txt" &
-     #+END_SRC
 * Unixes
+** Linux
+*** Packages
+**** Ssh
+***** generate public private key pair
+  #+begin_src sh
+  ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+  #+end_src
+
+***** ssh reverse tunnel ?
+
+  #+begin_src sh
+  # from the target machine:
+  ssh -R 2210:localhost:22 bserver.outside.com
+  #+end_src
+  from: https://toic.org/blog/2009/reverse-ssh-port-forwarding/
+
+***** ssh or scp in a script without entering password ?
+
+  #+begin_src sh
+  expect -c "
+     spawn scp login@somehost.com:/somefile .
+     expect yes/no { send yes\r ; exp_continue }
+     expect password: { send password\r }
+     expect 100%
+     exit
+  "
+  #+end_src
+
+***** ssh without password or key? 
+  #+begin_src sh
+  # remove password for user
+  passwd -d user
+  # sshd: allow empty password
+  sed -r 's/#(PermitEmptyPasswords) no/\1 yes/' -i.bak /etc/ssh/sshd_config
+  #+end_src
+
+***** get public key from private key ?
+  #+begin_src sh
+  ssh-keygen -y -f ~/.ssh/id_rsa
+  #+end_src
+
+***** Disable host verification?
+  #+begin_src sh
+  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no peter@192.168.0.100
+  #+end_src
+  http://linuxcommando.blogspot.co.uk/2008/10/how-to-disable-ssh-host-key-checking.html
+***** how to mount remote fs with sshfs?
+      #+begin_src sh
+      # usage
+      sshfs USERNAME@HOSTNAME_OR_IP:/REMOTE_PATH LOCAL_MOUNT_POINT SSH_OPTIONS
+      # example
+      sshfs sessy@mycomputer:/remote/path /local/path -C -p 9876 -o allow_other
+      #+end_src
+      https://wiki.archlinux.org/index.php/SSHFS
+***** copy pub key to remote authorized_keys?
+      #+begin_src sh
+      ssh-copy-id <user>@<host>
+
+      #+end_src
+
+**** Tmux
+***** how do i detach other client when reattach to session?
+      #+begin_src sh
+  tmux -2 a -dt 0
+      #+end_src
+
+***** compress dir recursive? 
+  #+begin_src sh
+  zip -r archive.zip /dir
+  #+end_src
+***** compress dir but exclude a directory ?
+  #+begin_src sh
+  zip -9 -r --exclude=*.svn*  foo.zip [directory-to-compress]
+  #+end_src
+
+**** Find
+***** find files modified in the last x minutes
+  #+begin_src sh
+  find . -cmin -5
+  #+end_src
+***** find files modified in the last x days 
+  #+begin_src sh
+  find . -ctime -5
+  #+end_src
+***** handle filenames with spaces ?
+  #+begin_src sh
+  find . -maxdepth 1 -print0 | while read -d $'\0' d ; do echo $d ; done
+  #+end_src
+  http://www.cyberciti.biz/tips/handling-filenames-with-spaces-in-bash.html
+***** sort files by modified date?
+      #+begin_src sh
+      find -type f -printf '%T@ %p\0' |
+      sort -zk 1nr |
+      sed -z 's/^[^ ]* //' | tr '\0' '\n'
+      #+end_src
+***** find files bigger than x MBytes?
+      #+BEGIN_SRC sh
+      find . -size +500M -exec l {} \;
+      #+END_SRC
+**** Xargs
+***** run a cmd on each line of stdin with xargs?
+  #+begin_src sh
+  echo 'a
+  b
+  c' | xargs -I {} ./f {}
+  #+end_src
+***** use bash function?
+      #+begin_src sh
+      f() { bc; }
+      echo '1 * 1
+      2 * 2
+      3 * 3'                                            \
+      | xargs -i echo "$(declare -f f) ; echo '{}' | f" \
+      | bash
+      #+end_src
+**** Nohup
+***** run nohup?
+      #+BEGIN_SRC sh
+      nohup bash -c "(time bash executeScript 1 input fileOutput > scrOutput) &> timeUse.txt" &
+      #+END_SRC
+
+**** MoreUtils
+***** read / process / write the same file ? 
+      - Use:  =sponge=
+      - =sponge= will read stdin and write to specified file. Unlike a shell redirect it will soaks all its input before writing the output file.
+      #+begin_src sh
+      sort f | sponge f
+      #+end_src
+***** instead of xxx use moreutils yyy?
+
+      | cmd       | insteadof                               | use                                                            |
+      |-----------+-----------------------------------------+----------------------------------------------------------------|
+      | =chronic= |                                         | =chronic backup_script.sh=                                     |
+      | =sponge=  | =sort filename= \vert =uniq/ > temp=    | =sort filename= \vert =uniq \vert sponge filename=             |
+      |           | =mv temp filename=                      |                                                                |
+      | =isutf8=  |                                         | =isutf8 filename=                                              |
+      | =ifne=    |                                         | =./script.sh= \vert =ifne less=                                |
+      | =pee=     | =./script.sh= \vert =tee output1 output2= | =./script.sh= \vert =pee 'grep pattern1' 'gzip -c > output.gz'_= |
+      | =ifdata=  | =<parsing ifconfig>=                    |                                                                |
+      | =zrun=    | =diff <(zcat one.gz) <(zcat two.gz)=    | =zrun diff one.gz two.gz=                                      |
+      | =ts=      |                                         | =$ { echo "One" ; sleep 3s ; echo "Two" ; }= \vert =ts=        |
+      | =errno=   |                                         | =$ errno 98=                                                   |
+      | =vipe=    |                                         | =command1= \vert =vipe= \vert =command2=                       |
+      | =vidir=   |                                         | =vidir directory/=                                             |
+      | =combine= | =comm -12 file1 file2=                  | =combine file1 and file2=                                      |
+      |           | =comm -23 fileA fileB=                  | =combine fileA not fileB=                                      |
+      |           | =sort file1 file2= \vert =uniq=         | =combine file1 or file2=                                       |
+      |           | =sort file1 file2= \vert =uniq --unique= | =combine file1 xor file2=                                      |
+
+      See: http://devblog.nestoria.com/post/110168998173/moreutils-basic-unix-tools-that-ought-to-be
+
+**** Bc
+***** float precision?
+      #+begin_src sh
+      echo 'scale=2 ; 1/3' | bc -l
+      #+end_src
+
+**** Zip 
+***** unzip a single file from archive?
+      #+begin_src sh
+      unzip -p myarchive.zip path/to/zipped/file.txt >file.txt
+      #+end_src
+**** Apt-get
+***** dpkg show all installed files of a .deb?
+
+   #+begin_src sh
+   dpkg -L jenkins
+   #+end_src
+***** apt-get: what package provide this file?
+
+   #+begin_src sh
+   apt-get install apt-file
+   apt-file update
+   apt-file find <file>
+   #+end_src
+***** fix a broken state ? 
+
+   #+begin_src sh
+   sudo apt-get install --fix-broken
+   #+end_src
+***** install a specific version? 
+      #+begin_src sh
+      apt-get install my-lib-java=2016.03.30-79 my-lib=2016.03.30-79
+      #+end_src
+***** show version that a package can be upgraded to?
+      #+begin_src sh
+      apt-cache policy google-chrome-stable
+      #+end_src
+***** customize output of dpkg -l?
+      #+BEGIN_SRC sh
+      dpkg-query --show --showformat='${Package}\n'
+      #+END_SRC
+**** Rpm
+***** list files installed by a package?
+   #+begin_src sh
+   rpm -ql [packageName]
+   #+end_src
+
+**** Wget
+***** recursively download for example nexus ?
+
+   #+begin_src sh
+   wget --header="Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"                  \
+        --header="User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:48.0) Gecko/20100101 Firefox/48.0" \
+        --recursive                                                                                         \
+        -e robots=off                                                                                       \
+        --no-parent                                                                                         \
+        http://nexus-url/x/y/z
+   #+end_src
+**** NxClient
+***** keyboard issue when connecting with nx ? 
+      Try: 
+      #+begin_src sh
+      setxkbmap -model evdev -layout us
+      #+end_src
+**** VirtualBox
+***** manually mount a shared folder in a linux guest?
+      #+begin_src sh
+      sudo mount -t vboxsf <sharedFolderName> /path/to/shared/folder/dir
+      #+end_src
+***** host alt-tab when in a guest?
+      =host key=
+      then
+     alt-tab 
+
+*** Sysadmin
+**** System Services (systemctl, ...)
+***** General Linux
+****** Linux reload service config
+   #+begin_src sh
+   sudo systemctl daemon-reload
+   #+end_src
+***** Centos
+****** create a new systemd unit file?
+       #+begin_center sh
+       # create a new unit file
+         (cat <<EOF''
+   [Unit]
+   Description=Post docker
+   After=docker.service
+
+   [Service]
+   Type=oneshot
+   ExecStart=/usr/bin/chmod 606 /var/run/docker.sock
+   RemainAfterExit=true
+
+   [Install]
+   WantedBy=multi-user.target
+
+   EOF
+      ) | sudo tee /etc/systemd/system/multi-user.target.wants/docker-post.service
+      # reload 
+      sudo systemctl daemon-reload
+      # check the status
+      systemctl status docker-post.service
+      # enable at boot
+      systemctl enable docker-post.service
+       #+end_center
+
+   #+begin_src sh
+   # list all services
+   systemctl list-unit-files --type=service
+
+   # check if a service is running
+   systemctl status name.service
+
+   # enable a service
+   systemctl enable docker.service
+
+   # check if a service is enabled
+   #+end_src
+
+**** User Admin
+***** how to add a group to a user ? 
+  #+begin_src sh
+  sudo usermod -aG docker u
+  #+end_src
+***** add a user with specific groups ? 
+  #+begin_src sh
+  adduser -G group1,group2 <user>
+  #+end_src
+
+***** get the groups of a user ?
+  #+begin_src sh
+  groups <user>
+  #+end_src
+***** change the shell of a user?
+  #+begin_src sh
+  usermod -s /bin/bash user
+  #+end_src
+***** remove a user?
+  #+begin_src sh
+  export U=<user>
+  userdel -r $U
+  #+end_src
+***** add a user?
+  #+begin_src sh
+  adduser <user>
+  #+end_src
+***** view login activity?
+      #+begin_src sh
+      last 
+      #+end_src
+
+**** Sudo
+***** allow sudo without password for a user?
+  #+begin_src sh
+  # if there's a sudo group add the user to this group
+  #+end_src
+***** execute a cmd as another user?
+  #+BEGIN_SRC sh
+  sudo -u <user> /bin/ls -alrth <...>
+  # WARN! path to binaries must be absolute!
+  #+END_SRC
+**** Devices (hdd,...)
+***** eject a cd rom? 
+      #+begin_src sh
+      ejet /dev/cdrom
+      #+end_src
+***** how to list all supported FS for mounting?
+      #+begin_src sh
+      cat /proc/filesystems
+      #+end_src
+***** how to fix a screwed nfs mount without rebooting?
+      TODO: should be completed 
+      - Find the list of process open on the screwed fs: 
+      #+BEGIN_SRC sh
+      lsof | grep '/path/to/nfs'
+      #+END_SRC
+      - kill them
+      - remount
+      ref: http://joelinoff.com/blog/?p=356
+
+*** Terminal
+**** replace capslock by ctrl in console ?
+ #+begin_src sh
+ #in  /etc/default/keyboard
+ #replace XKBOPTIONS="" by XKBOPTIONS="ctrl:nocaps"
+ # then run
+ run sudo dpkg-reconfigure -phigh console-setup
+ #+end_src
+
+ ref: https://www.emacswiki.org/emacs/MovingTheCtrlKey#toc9
+**** change language keyboard mapping
+ #+begin_src sh
+ # run
+ dpkg-reconfigure keyboard-configuration
+ # or
+ # edit /etc/default/keyboard: 
+ #   change XKBLAYOUT="us,de,fr,ua,ru" by "us" for example
+
+ # for changes to take effect:
+ service keyboard-setup restart
+
+ # it should suffice, but if not: 
+ udevadm trigger --subsystem-match=input --action=change
+ #+end_src
+ https://wiki.debian.org/Keyboard
+**** change text mode resolution?
+**** paste example?
+ #+begin_src sh
+ $ paste <(seq 1 3) <(seq 1 3)
+ 1       1
+ 2       2
+ 3       3
+ #+end_src
+**** show which key is pressed?
+ #+begin_src sh
+
+ #+end_src
+**** get the number of rows and colums?
+     #+begin_src sh
+     tput lines
+     tput cols
+     #+end_src
+**** Presentation conventions
+***** display a command line?
+      #+BEGIN_SRC sh
+      `npm install -g jsonresume-theme-kendall`
+      #+END_SRC
+*** Bash
+**** Stdin/out/err
+***** redirecting stdout, stderr
+      #+BEGIN_SRC sh
+      | redirect from | to   | cmd                            | notes          |
+      |---------------+------+--------------------------------+----------------|
+      | out           | err  |  ls 1>&2                       |                |
+      | out & err     | file |  ls &>   file                  |                |
+      |               |      |  ls >    file 2>&1             | for older bash |
+      | err           | out  |  ls 2>&1                       |                |
+      | err & out     | pipe |  ls 2>&1 |  grep '.*'          |                |
+      |               |      |  ls      |& grep '.*'          | equiv          |
+      #+END_SRC
+***** use stdout as a file (with filename) for another cmd? 
+      #+BEGIN_SRC sh
+      cmd <(cat f)
+      #+END_SRC
+***** swap stdout and stderr?
+      =cmd 3>&1 1>&2 2>&3=
+     #+BEGIN_SRC sh
+     $ f() { (echo out) && (echo err 1>&2); }
+     $ f
+  out
+  err
+     $ s() { sed "s/.*/=$1>&<$1=/"; }
+     $ f | s 1
+  err
+  =1>out<1=
+     $ (f 3>&1 1>&2 2>&3) | s 1
+  out
+  =1>err<1=
+     $ ((f 3>&1 1>&2 2>&3) | s 1) | s 2
+  out
+  =2>=1>err<1=<2=
+     $ (((f 3>&1 1>&2 2>&3) | s 1) 3>&1 1>&2 2>&3) | s 2
+  =2>out<2=
+  =1>err<1=
+     #+END_SRC 
+**** Arrays
+***** Associative arrays
+****** declare, print, ...
+  #+begin_src sh
+  # declare
+  declare -A m=( [red]='0;31' [green]='0;32' )
+  # print keys
+  echo "keys=${!m[@]}"
+  # print all
+  declare | grep colorsCodes
+  #+end_src
+****** copy ?
+  #+begin_src sh
+  declare -A arr=([this]=hello [\'that\']=world [theother]='and "goodbye"!')
+  declare -A newarr
+  for idx in "${!arr[@]}"; do
+      newarr[$idx]=${arr[$idx]}
+  done
+
+  diff <(echo "$temp") <(declare -p newarr | sed 's/newarr=/arr=/')
+  # no output
+  #+end_src
+  http://stackoverflow.com/questions/19417015/bash-copy-from-one-array-to-another
+***** Normal arrays
+      #+begin_src bash
+      # declare
+      declare -a a
+      # literal
+      a=(a b c)
+      # set 
+      a[0]=x
+      # get all
+      echo ${a[*]}
+      # size
+      echo "size=${#}"
+      #+end_src
+**** ssh escape sequence?
+ =ENTER, ~, .=
+**** c style for loop?
+ #+begin_src sh
+ for ((i=0;i<3;i++)); do
+   echo $i
+ done
+ #+end_src
+**** Bash Strings
+***** bash strings cheat sheet?
+
+ | what        | how                                 | example |
+ |-------------+-------------------------------------+---------|
+ | size        | =${#str}=                           |         |
+ | substring   | =${str:pos}=                        |         |
+ | substring   | =${str:pos:length}=                 |         |
+ |             |                                     |         |
+ | char to int | =printf '%d\n' "'y"=                |         |
+ | int to char | =printf "\x$(printf %x 65)"=        |         |
+ | replace all | =x=abcabc; echo ${s//b/x} # axcaxc= |         |
+ |             |                                     |         |
+**** generate random string?
+ #+begin_src sh
+ #!/bin/bash
+ # bash generate random alphanumeric string
+ #
+
+ # bash generate random 32 character alphanumeric string (upper and lowercase) and
+ NEW_UUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+
+ # bash generate random 32 character alphanumeric string (lowercase only)
+ cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1
+
+ # Random numbers in a range, more randomly distributed than $RANDOM which is not
+ # very random in terms of distribution of numbers.
+
+ # bash generate random number between 0 and 9
+ cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | head --bytes 1
+
+ # bash generate random number between 0 and 99
+ NUMBER=$(cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | sed -e 's/^0*//' | head --bytes 2)
+ if [ "$NUMBER" == "" ]; then
+   NUMBER=0
+ fi
+
+ # bash generate random number between 0 and 999
+ NUMBER=$(cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | sed -e 's/^0*//' | head --bytes 3)
+ if [ "$NUMBER" == "" ]; then
+   NUMBER=0
+ fi
+ #+end_src
+ https://gist.github.com/earthgecko/3089509
+**** decimal / hex conversion? 
+ #+begin_src sh
+ echo $((0xa))
+ # 10
+ #+end_src
+**** redirect output in variable?
+ "must read" about the differents techniques of redirection: http://stackoverflow.com/questions/13763942/bash-why-piping-input-to-read-only-works-when-fed-into-while-read-const
+**** stop on error (even in subshell)?
+ It seems that bash disable -e in subshells.
+ A workaround: set -e explicitly at the start of each subshell
+**** switch case ?
+     #+begin_src sh
+ while [[ $# -gt 0 ]]; do
+     case "$1" in
+         *:*          ) hostport=(${1//:/ }); shift 1 ;;
+              --child ) CHILD=1             ; shift 1 ;;
+         -q | --quiet ) QUIET=1             ; shift 1 ;;
+         -s | --strict) STRICT=1            ; shift 1 ;;
+         --host=*     ) HOST="${1#*=}"      ; shift 1 ;;
+         --help       ) usage               ; shift 1 ;;
+         *            ) unknownArg "$1"     ; shift 1 ;;
+     esac
+ done
+     #+end_src
+**** loop over args? 
+     #+begin_src sh
+     for var in "$@"
+     do
+       echo "$var"
+     done
+     #+end_src
+     http://stackoverflow.com/questions/255898/how-to-iterate-over-arguments-in-a-bash-script
+**** parse a string as args 
+     #+begin_src sh
+     How to process the following list of pairs: "Mercury 36" "Venus 67" "Earth 93"  "Mars 142" "Jupiter 483"? 
+     (note no =IFS= set)
+     #+begin_src sh
+     #!/usr/bin/env bash
+     set -euo pipefail
+
+     for planet in "Mercury 36" "Venus 67" 
+     do
+       set -- $planet
+       echo "\$1=$1"
+       echo "\$2=$2"
+     done
+     # outputs
+     #
+     # $1=Mercury
+     # $2=36
+     # $1=Venus
+     # $2=67
+     #+end_src
+**** How to save a script params (before doing modifications like shift, ..)?
+     #+begin_src sh
+     # save with 
+     original_params=("$@")
+     # use the copy with 
+     echo "${original_params[@]}"
+     #+end_src
+
+*** X
+**** copy to system clipboard from the command line?
+ #+begin_src sh
+ echo a | xclip -selection clipboard
+ #+end_src
+**** dual monitor setup: turn off one of the monitor and not the other?
+     #+BEGIN_SRC sh
+     # choose one of the monitor with:
+     xrandr -q
+     # disbale it
+     xrandr --output LVDS1 --off
+     #+END_SRC
+*** Converting formats
+**** convert file format table?
+ | src   | dst   | command                                                                           |
+ |-------+-------+-----------------------------------------------------------------------------------|
+ | ~rtf~ | ~pdf~ | ~libreoffice --headless --invisible --norestore --convert-to pdf source-file.rtf~ |
+**** Pdf
+***** replace a string in a pdf file ?
+   #+begin_src sh
+   pdftk file.pdf output uncompressed.pdf uncompress
+
+   sed -e "s/ORIGINALSTRING/NEWSTRING/g" <uncompressed.pdf >modified.pdf
+
+   pdftk modified.pdf output recompressed.pdf compress
+   #+end_src
+   http://stackoverflow.com/questions/9871585/how-to-find-and-replace-text-in-a-existing-pdf-file-with-pdftk-or-other-command
+*** Ubuntu / Debian
+**** Setup locale?
+ #+begin_src sh
+ # add to /etc/environnement
+ #LC_ALL=en_US.UTF-8
+ LANG=en_US.UTF-8
+
+ sudo locale-gen "en_US.UTF-8"
+ sudo dpkg-reconfigure locales
+
+ #+end_src
+*** Network
+**** How to trace all network activity?
+     =tcpflow=
+     #+begin_src sh
+   
+  tcpflow -p -c -i eth0 port 80 | grep -oE '(GET|POST|HEAD) .* HTTP/1.[01]|Host: .*'
+     #+end_src
+     http://unix.stackexchange.com/questions/6279/on-the-fly-monitoring-http-requests-on-a-network-interface
+**** how to get the ip adresse of the local host ?
+     *Note*: To be verfied!
+     #+begin_src sh
+     hostname -I
+     #+end_src
+     or (?)
+     #+begin_src sh
+     hostname -I | cut -d' ' -f1
+     #+end_src
+**** list open ports?
+     #+BEGIN_SRC sh
+     netstat -lntu
+     #+END_SRC
 ** Solaris 
 *** equivalent of linux's =ps aux= ?
     
@@ -560,6 +638,30 @@ zip -9 -r --exclude=*.svn*  foo.zip [directory-to-compress]
     #+begin_src sh
     ps -AfL
     #+end_src
+* Non-unixes
+** Ms windows
+*** Cygwin
+**** Sshd
+***** start sshd as a service after its installation with the Cygwin installer?
+****** TODO to be verified
+      1) Open a cmd.exe as administrator
+      2) Run: 
+         #+BEGIN_SRC sh
+         cygrunsrv -S sshd
+         #+END_SRC
+         (from: https://unix.stackexchange.com/questions/296275/running-sshd-in-cygwin-var-empty-must-be-owned-by-root
+***** install gpg under cygwin?
+      It's already in the standard Cygwin repo, only called =gnupg=.
+*** cmd.exe
+**** windows services cheatsheet?
+     - list all
+       #+BEGIN_SRC sh
+       sc queryex type= service state= all
+       #+END_SRC 
+    - list service containing the string "NATION"?
+      #+BEGIN_SRC sh
+      sc queryex type= service state= all | find /i "NATION" 
+      #+END_SRC
 
 * Docker
 ** find images on the command line ? 
@@ -665,246 +767,6 @@ SHELL ["bash", "-ueo","pipefail", "-c"]
    export LD_LIBRARY_PATH=/lib-host:/usr-lib-host && export PATH=$PATH:/bin-host
    wget google.com
    #+end_src
-* Git
-** Tags / branches lifecycle mgmt
-
-   | what   | action               | where  | git command                                 |
-   |--------+----------------------+--------+---------------------------------------------|
-   | tag    | create               | local  | =git tag <tagName> <commit>=                |
-   | tag    | fetch                |        | =git pull --tags=                           |
-   | tag    | push                 |        | =git push origin <tag_name>=                |
-   | tag    | delete               | local  | =git tag -d <tagName>=                      |
-   | tag    | delete               | remote | =git push --delete origin <tagName>=        |
-   | branch | delete               |        | =git push origin --delete feature/example=  |
-   | branch | push && set upstream |        | =git push origin --set-upstream new-branch= |
-   #+TBLFM: $4=git tag <tagName> <commit>
-** submodule lifecycle mgmt
-
-   | action                        | normal git managed file | for submodule          |
-   |-------------------------------+-------------------------+------------------------|
-   | revert file to repo's version | =git checkout --=       | =git submodule update= |
-
-** rm a big file from history?
-#+begin_src sh
-# given : 
-# $ git lola --name-status
-# * f772d66 (HEAD, master) Login page
-| A     login.html
-# * cb14e Remove DVD-rip
-# | D     oops.iso
-# * ce36c98 Careless
-# | A     oops.iso
-# | A     other.html
-# * 5af4522 Admin page
-# | A     admin.html
-# * e738b63 Index
-#   A     index.html
-
-git rebase -i 5af4522
-
-# pick ce36c98 Careless
-# pick cb14e Remove DVD-rip
-# pick f772d66 Login page
-
-# e ce36c98 Careless
-# # pick cb14e Remove DVD-rip
-# pick f772d66 Login page
-
-$ git rm --cached oops.iso
-$ git commit --amend -C HEAD
-$ git rebase --continue
-
-
-#+end_src
-** list branch sorted by last commit date? 
-   #+begin_src sh
-   git for-each-ref --sort=-committerdate refs/heads/
-   #+end_src
-** grep history?
-   #+begin_src sh
-   git grep <regexp> $(git rev-list --all)
-   #+end_src
-** view ssh details? 
-** git v2.3.0 or higher:
-   #+begin_src sh
-   GIT_SSH_COMMAND="ssh -vvv" git clone example
-   #+end_src
-
-*** Git Lfs essentials?
-#+begin_center sh
-# Download 
-wget https://github.com/git-lfs/git-lfs/releases/download/v2.1.1/git-lfs-linux-amd64-2.1.1.tar.gz
-tar xavf git-lfs-linux-amd64-2.1.1.tar.gz
-cd xavf git-lfs-linux-amd64-2.1.1
-
-# install 
-./install.sh
-git lfs install
-
-# Select the file types you'd like Git LFS to manage (or directly edit your .gitattributes). You can configure additional file extensions at anytime.
-
-git lfs track "*.psd"
-
-#Make sure .gitattributes is tracked
-
-git add .gitattributes
-
-#There is no step three. Just commit and push to GitHub as you normally would.
-
-git add file.psd
-git commit -m "Add design file"
-git push origin master
-#+end_center
-
-from: https://git-lfs.github.com/
-
-** config for colors?
-   #+BEGIN_SRC sh
-   git config --global color.ui true
-   #+END_SRC
-* Jq
-** recursively find a value by key?
-#+begin_src sh
-echo '[{"a": 1}, {"b": 2}]' | jq '.. | .a? // empty'
-# => 1
-#+end_src
-** output a array for bash?
-#+begin_src sh
-echo '[1,2,3]' | jq '.|@tsv'
-#+end_src
-** elements to array?
-** recursively find all values of a given key?
-#+begin_src sh
-$ echo '{
-  "a": {
-    "b": 1,
-    "c": {
-      "d": {
-        "key": 42
-      },
-      "e": 666
-    }
-  }
-}' | jq '..| .key?//empty'
-
-[
-  42
-]
-
-#+end_src
-
-** recursively find all path leading to a given key
-#+begin_src sh
-$ echo '{
-  "a": {
-    "b": 1,
-    "c": {
-      "d": {
-        "key": 42
-      },
-      "e": 666
-    }
-  }
-}' | jq 'path (..| .key?//empty)'
-
-[
-  "a",
-  "c",
-  "d",
-  "key"
-]
-
-#+end_src
-
-** delete the key of an object?
-#+begin_src sh
-echo '{"k": 1}' | jq 'del(.k)'
-#+end_src
-
-** reduce ? 
-#+begin_src sh
-echo '[1,2,3]' \
-| jq 'reduce .[] as $item (0; . + $item)'
-#+end_src
-
-** get all the values of an object?
-   #+begin_src sh
-   jq -n '{"a": 1} | .[]'
-   1
-   #+end_src
-
-** convert string to upper case?
-   #+begin_src sh
-   $ jq -n '"abCD" | ascii_upcase'
-   "ABCD"
-   #+end_src
-
-** jq regexes cheet sheat ?
-   
-   Flags
-
-   | flags |                                                        |
-   |-------+--------------------------------------------------------|
-   | g     | Global match, find all not just the first              |
-   | i     | case Insensitive                                       |
-   | m     | Multi line match '.' will match newlines               |
-   | n     | ignore empty matches                                   |
-   | p     | both s and m mode enabled                              |
-   | s     | Single line mode =('^' -> '\\A','$'->\\Z')=            |
-   | l     | find Longest possible matches                          |
-   | x     | eXtended regex format (ignore whitespace and comments) |
-   
-   Functions
-
-   | fn      | args1 | args2        | res if match                      | else  | example                                     |
-   |---------+-------+--------------+-----------------------------------+-------+---------------------------------------------|
-   | test    | val   | regex; flags | true                              | false | =jq 'test("foo")'=                          |
-   | match   | "     | "            | {offset,length,string,captures}   | empty | =jq 'match("(abc)+"; "g")'=                 |
-   | capture | "     | "            | map of matches                    | "     | =jq 'capture("(?<a>[a-z]+)-(?<n>[0-9]+)")'= |
-   | scan    | "     | "            | stream of non overlapping matches | empty |                                             |
-   | split   | "     | "            | <obsolete>                        |       |                                             |
-   | splits  | "     | "            | stream matches                    | ?     | =jq 'splits("\\s+")'=                       |
-
-** jq update ?
-   #+begin_src sh
-   jq -n '{foo:1, bar:10} | .foo |= . + 1 '
-{
-  "foo": 2,
-  "bar": 10
-}
-   #+end_src
-
-** delete in nested datastructure?
-   #+begin_src sh
-   jq -n '{a:1, b:2, c:3} | del(.. | .a?//empty)'
-   #+end_src
-
-** recursively delete all keys leading to pair numbers?
-   Note: Probably could be written more concisely:
-   #+begin_src sh
-   jq -n '{a:1, b:2, c:3} \
-     | del(.. | numbers | (if (. % 2) == 0 then . else empty end))'
-   #+end_src
-
-** recursively find containers having a value that match a given regex?
-   #+begin_src sh
-   $ jq.help | jq '.. | select(.[]? | strings | test("transpose"))'
-{
-  "body": "\nTranspose a possibly jagged matrix (an array of arrays).\nRows are padded with nulls so the result is always rectangular.\n",
-  "examples": [
-    {
-      "input": "[[1], [2,3]]",
-      "program": "transpose",
-      "output": [
-        "[[1,2],[null,3]]"
-      ]
-    }
-  ],
-  "title": "`transpose`"
-}
-(...)
-   #+end_src
-
 * Emacs 
 ** file type indicator header for emacs?
 #+begin_src sh
@@ -996,323 +858,462 @@ from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
 | i	 | #+INDEX: line                     |
 | I	 | #+INCLUDE: line                   |
 
-* Regex
-** Sed 
-*** use a backreference without grouping? 
- #+begin_src sh
- echo bar | sed 's/.*/=> & <=/'
- # => bar <=
- #+end_src
-*** remove backslash EOL with sed? 
- #+begin_src sh
- echo 'a
- b \
- c' | sed  '
- : again
- /\\$/ {
-     N
-     s/\\\n//
-     t again
- }'
- # a
- # b c
- #+end_src
-** Perl
-*** Multiline search and replace?
-    #+begin_src sh
-    perl -pe 's/<search>/<replace>/'  < in.file > out.file
-    #+end_src
+* Programming
+** JVM ecosystem
+*** Groovy
+**** pipeline oriented programming in groovy like Clojure's threading macro?
+  #+begin_src java
+  Collection.metaClass.or = { Closure c -> delegate.collect c }
 
-* JVM
-** Groovy
-*** pipeline oriented programming in groovy like Clojure's threading macro?
- #+begin_src java
- Collection.metaClass.or = { Closure c -> delegate.collect c }
+  assert(
+          [1]
+        | {it + 1}
+        | {it * 2}) == [4]
+  #+end_src
+**** groovy switch case?
+     #+begin_src java
+     switch(val) {
+       case ~/ab.*/: 
+         result="x"
+         break
+       case ...
+       default: 
+         ...
+         break
+     }
+     #+end_src
+**** groovy interval ?
+     #+begin_src java
+     (1..10).each{prinltn it}
+     #+end_src
+**** get cmd line args?
+     #+begin_src sh
+     println(args)
+     #+end_src
+*** Java
+**** Create an object with the same behavior than System.out (for testing output)?
+     #+begin_src java
+     ByteArrayOutputStream os = new ByteArrayOutputStream();
+     PrintStream ps = new PrintStream(os);
+     ...
+     String output = os.toString("UTF8");
+     #+end_src
+     http://stackoverflow.com/questions/1760654/java-printstream-to-string
+*** Gradle
+**** how to create a new project from scratch?
+     #+begin_src sh
+     gradle init --type basic
+     #+end_src
+*** Maven
+**** simply download a jar with maven?
 
- assert(
-         [1]
-       | {it + 1}
-       | {it * 2}) == [4]
- #+end_src
-*** groovy switch case?
-    #+begin_src java
-    switch(val) {
-      case ~/ab.*/: 
-        result="x"
-        break
-      case ...
-      default: 
-        ...
-        break
-    }
-    #+end_src
-*** groovy interval ?
-    #+begin_src java
-    (1..10).each{prinltn it}
-    #+end_src
-*** get cmd line args?
-    #+begin_src sh
-    println(args)
-    #+end_src
-** Java
-*** Create an object with the same behavior than System.out (for testing output)?
-    #+begin_src java
-    ByteArrayOutputStream os = new ByteArrayOutputStream();
-    PrintStream ps = new PrintStream(os);
-    ...
-    String output = os.toString("UTF8");
-    #+end_src
-    http://stackoverflow.com/questions/1760654/java-printstream-to-string
-** Gradle
-*** how to create a new project from scratch?
-    #+begin_src sh
-    gradle init --type basic
-    #+end_src
-** Maven
-*** simply download a jar with maven?
-
-**** simple
-
-    #+begin_src sh
-    mvn dependency:get -Dartifact=org.springframework:spring-instrument:3.2.3.RELEASE
-    #+end_src
-    
-    See: http://stackoverflow.com/questions/7110114/how-to-simply-download-a-jar-using-maven
-**** specifying transitivity and repo
+***** simple
 
      #+begin_src sh
-     mvn dependency:get -DremoteRepositories=https://repo.jenkins-ci.org/releases \
-       -Dartifact=org.jenkins-ci.plugins:swarm-client:3.4                         \
-       -Dtransitive=false
+     mvn dependency:get -Dartifact=org.springframework:spring-instrument:3.2.3.RELEASE
+     #+end_src
+    
+     See: http://stackoverflow.com/questions/7110114/how-to-simply-download-a-jar-using-maven
+***** specifying transitivity and repo
+
+      #+begin_src sh
+      mvn dependency:get -DremoteRepositories=https://repo.jenkins-ci.org/releases \
+        -Dartifact=org.jenkins-ci.plugins:swarm-client:3.4                         \
+        -Dtransitive=false
+      #+end_src
+
+** Node
+*** Npm
+**** how to install global packages without sudo?
+     #+begin_src sh
+     #Make a directory for global installations:
+     mkdir ~/.npm-global
+     #Configure npm to use the new directory path:
+     npm config set prefix '~/.npm-global'
+     #Open or create a ~/.profile file and add this line:
+     export PATH=~/.npm-global/bin:$PATH >> ~/.bashrc
+     #Back on the command line, update your system variables:
+     source ~/.profile
+     #+end_src
+     https://docs.npmjs.com/getting-started/fixing-npm-permissions
+**** upgrade npm to latest?
+     #+begin_src sh
+     npm install npm@latest -g
      #+end_src
 
-* Programming languages 
-** Python
-*** Pip
-**** How to install pip for python 3 ? 
-     - install: 
-       on ubuntu/debian:
+*** Regex
+**** Sed 
+***** use a backreference without grouping? 
+   #+begin_src sh
+   echo bar | sed 's/.*/=> & <=/'
+   # => bar <=
+   #+end_src
+***** remove backslash EOL with sed? 
+   #+begin_src sh
+   echo 'a
+   b \
+   c' | sed  '
+   : again
+   /\\$/ {
+       N
+       s/\\\n//
+       t again
+   }'
+   # a
+   # b c
+   #+end_src
+**** Perl
+***** Multiline search and replace?
+      #+begin_src sh
+      perl -pe 's/<search>/<replace>/'  < in.file > out.file
+      #+end_src
+
+*** Languages
+**** Python
+***** Pip
+****** How to install pip for python 3 ? 
+       - install: 
+         on ubuntu/debian:
+         #+BEGIN_SRC sh
+         aptitude install python3-pip
+         #+END_SRC
+       - invoke:
+         #+BEGIN_SRC sh
+         pip3 <cmd>
+         #+END_SRC
+****** pip completion on the command line?
        #+BEGIN_SRC sh
-       aptitude install python3-pip
+       pip completion --bash >> ~/.profile
        #+END_SRC
-     - invoke:
+       or
        #+BEGIN_SRC sh
-       pip3 <cmd>
+       eval "`pip completion --zsh`"
        #+END_SRC
-**** pip completion on the command line?
-     #+BEGIN_SRC sh
-     pip completion --bash >> ~/.profile
-     #+END_SRC
-     or
-     #+BEGIN_SRC sh
-     eval "`pip completion --zsh`"
-     #+END_SRC
-     from: https://pip.pypa.io/en/stable/user_guide/?highlight=completion%20#command-completion
-*** Json
-**** Parse a json string?
-     #+BEGIN_SRC sh
-		python <<- EOF
-import json
-j = json.loads('{"one" : "1", "two" : "2", "three" : "3"}')
+       from: https://pip.pypa.io/en/stable/user_guide/?highlight=completion%20#command-completion
+***** Json
+****** Parse a json string?
+       #+BEGIN_SRC sh
+		  python <<- EOF
+  import json
+  j = json.loads('{"one" : "1", "two" : "2", "three" : "3"}')
 
-#print j['two']
-EOF
-     #+END_SRC
-** Lorem ipsum
-   |      |        |                                         |
-   |------+--------+-----------------------------------------|
-   | json | online | ~curl https://registry.npmjs.com/lobar~ |
+  #print j['two']
+  EOF
+       #+END_SRC
+*** Lorem ipsum
+    |      |        |                                         |
+    |------+--------+-----------------------------------------|
+    | json | online | ~curl https://registry.npmjs.com/lobar~ |
 
-* Apt-get
-** dpkg show all installed files of a .deb?
+** Git
+*** Tags / branches lifecycle mgmt
 
-#+begin_src sh
-dpkg -L jenkins
-#+end_src
-** apt-get: what package provide this file?
+    | what   | action               | where  | git command                                 |
+    |--------+----------------------+--------+---------------------------------------------|
+    | tag    | create               | local  | =git tag <tagName> <commit>=                |
+    | tag    | fetch                |        | =git pull --tags=                           |
+    | tag    | push                 |        | =git push origin <tag_name>=                |
+    | tag    | delete               | local  | =git tag -d <tagName>=                      |
+    | tag    | delete               | remote | =git push --delete origin <tagName>=        |
+    | branch | delete               |        | =git push origin --delete feature/example=  |
+    | branch | push && set upstream |        | =git push origin --set-upstream new-branch= |
+    #+TBLFM: $4=git tag <tagName> <commit>
+*** submodule lifecycle mgmt
 
-#+begin_src sh
-apt-get install apt-file
-apt-file update
-apt-file find <file>
-#+end_src
-** fix a broken state ? 
+    | action                        | normal git managed file | for submodule          |
+    |-------------------------------+-------------------------+------------------------|
+    | revert file to repo's version | =git checkout --=       | =git submodule update= |
 
-#+begin_src sh
-sudo apt-get install --fix-broken
-#+end_src
-** install a specific version? 
-   #+begin_src sh
-   apt-get install my-lib-java=2016.03.30-79 my-lib=2016.03.30-79
-   #+end_src
-** show version that a package can be upgraded to?
-   #+begin_src sh
-   apt-cache policy google-chrome-stable
-   #+end_src
-** customize output of dpkg -l?
-   #+BEGIN_SRC sh
-   dpkg-query --show --showformat='${Package}\n'
-   #+END_SRC
-* Rpm
-** list files installed by a package?
-#+begin_src sh
-rpm -ql [packageName]
-#+end_src
+*** rm a big file from history?
+ #+begin_src sh
+ # given : 
+ # $ git lola --name-status
+ # * f772d66 (HEAD, master) Login page
+ | A     login.html
+ # * cb14e Remove DVD-rip
+ # | D     oops.iso
+ # * ce36c98 Careless
+ # | A     oops.iso
+ # | A     other.html
+ # * 5af4522 Admin page
+ # | A     admin.html
+ # * e738b63 Index
+ #   A     index.html
 
-* Unicode
-** Handy emoticon ? 
-| thumbs up | 👍  |
-|           | 👏y |
-| speaker   | 🔇  |
-|           | 2🔈 |
-|           | 🔉  |
-|           | 🔊  |
-| warn      | ⚠  |
-|           |    |
-** draft
-#+begin_src sh
-┌┐
-└┘
-┌┐┌┐
-└┘└┘
-┌─┐
-└─┘
-┌──┐
-│  │
-└──┘
-┌──────┐
-│      │
-│      │
-└──────┘
-╭──────╮
-│      │
-│      │
-╰──────╯
-╭─╮
-╰─╯
+ git rebase -i 5af4522
 
-┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌
-└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘
+ # pick ce36c98 Careless
+ # pick cb14e Remove DVD-rip
+ # pick f772d66 Login page
 
-#+end_src
-** use char by its code ?
-** unicode number in circle
+ # e ce36c98 Careless
+ # # pick cb14e Remove DVD-rip
+ # pick f772d66 Login page
 
-|  1 | ① | ❶ | ⬤ |
-|  2 | ② | ❷ |   |
-|  3 | ③ | ❸ |   |
-|  4 | ④ | ❹ |   |
-|  5 | ⑤ | ❺ |   |
-|  6 | ⑥ | ❻ |   |
-|  7 | ⑦ | ❼ |   |
-|  8 | ⑧ | ❽ |   |
-|  9 | ⑨ | ❾ |   |
-| 10 | ⑩ | ❿ |   |
-| 11 | ⑪ |   |   |
-| 12 | ⑫ |   |   |
-| 13 | ⑬ |   |   |
-| 14 | ⑭ |   |   |
-| 15 | ⑮ |   |   |
-| 16 | ⑯ |   |   |
-| 17 | ⑰ |   |   |
-| 18 | ⑱ |   |   |
-| 19 | ⑲ |   |   |
-| 20 | ⑳ |   |   |
-** lambda
-   #+begin_src sh
-   λ
-   #+end_src
-** elipsis?
-   #+begin_src sh
-   …
-   #+end_src
+ $ git rm --cached oops.iso
+ $ git commit --amend -C HEAD
+ $ git rebase --continue
 
-* Wget
-** recursively download for example nexus ?
 
-#+begin_src sh
-wget --header="Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"                  \
-     --header="User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:48.0) Gecko/20100101 Firefox/48.0" \
-     --recursive                                                                                         \
-     -e robots=off                                                                                       \
-     --no-parent                                                                                         \
-     http://nexus-url/x/y/z
-#+end_src
-* Pdf
-** replace a string in a pdf file ?
-#+begin_src sh
-pdftk file.pdf output uncompressed.pdf uncompress
+ #+end_src
+*** list branch sorted by last commit date? 
+    #+begin_src sh
+    git for-each-ref --sort=-committerdate refs/heads/
+    #+end_src
+*** grep history?
+    #+begin_src sh
+    git grep <regexp> $(git rev-list --all)
+    #+end_src
+*** view ssh details? 
+*** git v2.3.0 or higher:
+    #+begin_src sh
+    GIT_SSH_COMMAND="ssh -vvv" git clone example
+    #+end_src
 
-sed -e "s/ORIGINALSTRING/NEWSTRING/g" <uncompressed.pdf >modified.pdf
+**** Git Lfs essentials?
+ #+begin_center sh
+ # Download 
+ wget https://github.com/git-lfs/git-lfs/releases/download/v2.1.1/git-lfs-linux-amd64-2.1.1.tar.gz
+ tar xavf git-lfs-linux-amd64-2.1.1.tar.gz
+ cd xavf git-lfs-linux-amd64-2.1.1
 
-pdftk modified.pdf output recompressed.pdf compress
-#+end_src
-http://stackoverflow.com/questions/9871585/how-to-find-and-replace-text-in-a-existing-pdf-file-with-pdftk-or-other-command
+ # install 
+ ./install.sh
+ git lfs install
+
+ # Select the file types you'd like Git LFS to manage (or directly edit your .gitattributes). You can configure additional file extensions at anytime.
+
+ git lfs track "*.psd"
+
+ #Make sure .gitattributes is tracked
+
+ git add .gitattributes
+
+ #There is no step three. Just commit and push to GitHub as you normally would.
+
+ git add file.psd
+ git commit -m "Add design file"
+ git push origin master
+ #+end_center
+
+ from: https://git-lfs.github.com/
+
+*** config for colors?
+    #+BEGIN_SRC sh
+    git config --global color.ui true
+    #+END_SRC
+** Jq
+*** recursively find a value by key?
+ #+begin_src sh
+ echo '[{"a": 1}, {"b": 2}]' | jq '.. | .a? // empty'
+ # => 1
+ #+end_src
+*** output a array for bash?
+ #+begin_src sh
+ echo '[1,2,3]' | jq '.|@tsv'
+ #+end_src
+*** elements to array?
+*** recursively find all values of a given key?
+ #+begin_src sh
+ $ echo '{
+   "a": {
+     "b": 1,
+     "c": {
+       "d": {
+         "key": 42
+       },
+       "e": 666
+     }
+   }
+ }' | jq '..| .key?//empty'
+
+ [
+   42
+ ]
+
+ #+end_src
+
+*** recursively find all path leading to a given key
+ #+begin_src sh
+ $ echo '{
+   "a": {
+     "b": 1,
+     "c": {
+       "d": {
+         "key": 42
+       },
+       "e": 666
+     }
+   }
+ }' | jq 'path (..| .key?//empty)'
+
+ [
+   "a",
+   "c",
+   "d",
+   "key"
+ ]
+
+ #+end_src
+
+*** delete the key of an object?
+ #+begin_src sh
+ echo '{"k": 1}' | jq 'del(.k)'
+ #+end_src
+
+*** reduce ? 
+ #+begin_src sh
+ echo '[1,2,3]' \
+ | jq 'reduce .[] as $item (0; . + $item)'
+ #+end_src
+
+*** get all the values of an object?
+    #+begin_src sh
+    jq -n '{"a": 1} | .[]'
+    1
+    #+end_src
+
+*** convert string to upper case?
+    #+begin_src sh
+    $ jq -n '"abCD" | ascii_upcase'
+    "ABCD"
+    #+end_src
+
+*** jq regexes cheet sheat ?
+   
+    Flags
+
+    | flags |                                                        |
+    |-------+--------------------------------------------------------|
+    | g     | Global match, find all not just the first              |
+    | i     | case Insensitive                                       |
+    | m     | Multi line match '.' will match newlines               |
+    | n     | ignore empty matches                                   |
+    | p     | both s and m mode enabled                              |
+    | s     | Single line mode =('^' -> '\\A','$'->\\Z')=            |
+    | l     | find Longest possible matches                          |
+    | x     | eXtended regex format (ignore whitespace and comments) |
+   
+    Functions
+
+    | fn      | args1 | args2        | res if match                      | else  | example                                     |
+    |---------+-------+--------------+-----------------------------------+-------+---------------------------------------------|
+    | test    | val   | regex; flags | true                              | false | =jq 'test("foo")'=                          |
+    | match   | "     | "            | {offset,length,string,captures}   | empty | =jq 'match("(abc)+"; "g")'=                 |
+    | capture | "     | "            | map of matches                    | "     | =jq 'capture("(?<a>[a-z]+)-(?<n>[0-9]+)")'= |
+    | scan    | "     | "            | stream of non overlapping matches | empty |                                             |
+    | split   | "     | "            | <obsolete>                        |       |                                             |
+    | splits  | "     | "            | stream matches                    | ?     | =jq 'splits("\\s+")'=                       |
+
+*** jq update ?
+    #+begin_src sh
+    jq -n '{foo:1, bar:10} | .foo |= . + 1 '
+ {
+   "foo": 2,
+   "bar": 10
+ }
+    #+end_src
+
+*** delete in nested datastructure?
+    #+begin_src sh
+    jq -n '{a:1, b:2, c:3} | del(.. | .a?//empty)'
+    #+end_src
+
+*** recursively delete all keys leading to pair numbers?
+    Note: Probably could be written more concisely:
+    #+begin_src sh
+    jq -n '{a:1, b:2, c:3} \
+      | del(.. | numbers | (if (. % 2) == 0 then . else empty end))'
+    #+end_src
+
+*** recursively find containers having a value that match a given regex?
+    #+begin_src sh
+    $ jq.help | jq '.. | select(.[]? | strings | test("transpose"))'
+ {
+   "body": "\nTranspose a possibly jagged matrix (an array of arrays).\nRows are padded with nulls so the result is always rectangular.\n",
+   "examples": [
+     {
+       "input": "[[1], [2,3]]",
+       "program": "transpose",
+       "output": [
+         "[[1,2],[null,3]]"
+       ]
+     }
+   ],
+   "title": "`transpose`"
+ }
+ (...)
+    #+end_src
+
+** Unicode
+*** Handy emoticon ? 
+ | thumbs up | 👍  |
+ |           | 👏y |
+ | speaker   | 🔇  |
+ |           | 2🔈 |
+ |           | 🔉  |
+ |           | 🔊  |
+ | warn      | ⚠  |
+ |           |    |
+*** draft
+ #+begin_src sh
+ ┌┐
+ └┘
+ ┌┐┌┐
+ └┘└┘
+ ┌─┐
+ └─┘
+ ┌──┐
+ │  │
+ └──┘
+ ┌──────┐
+ │      │
+ │      │
+ └──────┘
+ ╭──────╮
+ │      │
+ │      │
+ ╰──────╯
+ ╭─╮
+ ╰─╯
+
+ ┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌
+ └┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘
+
+ #+end_src
+*** use char by its code ?
+*** unicode number in circle
+
+ |  1 | ① | ❶ | ⬤ |
+ |  2 | ② | ❷ |   |
+ |  3 | ③ | ❸ |   |
+ |  4 | ④ | ❹ |   |
+ |  5 | ⑤ | ❺ |   |
+ |  6 | ⑥ | ❻ |   |
+ |  7 | ⑦ | ❼ |   |
+ |  8 | ⑧ | ❽ |   |
+ |  9 | ⑨ | ❾ |   |
+ | 10 | ⑩ | ❿ |   |
+ | 11 | ⑪ |   |   |
+ | 12 | ⑫ |   |   |
+ | 13 | ⑬ |   |   |
+ | 14 | ⑭ |   |   |
+ | 15 | ⑮ |   |   |
+ | 16 | ⑯ |   |   |
+ | 17 | ⑰ |   |   |
+ | 18 | ⑱ |   |   |
+ | 19 | ⑲ |   |   |
+ | 20 | ⑳ |   |   |
+*** lambda
+    #+begin_src sh
+    λ
+    #+end_src
+*** elipsis?
+    #+begin_src sh
+    …
+    #+end_src
+
 * Visualization 
 ** Online visualization of Wikipedia's graph?
 - http://tools.medialab.sciences-po.fr/seealsology/
 - http://seealso.org/
-* Non-unixes
-** Ms windows
-*** Cygwin
-**** Sshd
-***** start sshd as a service after its installation with the Cygwin installer?
-****** TODO to be verified
-      1) Open a cmd.exe as administrator
-      2) Run: 
-         #+BEGIN_SRC sh
-         cygrunsrv -S sshd
-         #+END_SRC
-         (from: https://unix.stackexchange.com/questions/296275/running-sshd-in-cygwin-var-empty-must-be-owned-by-root
-***** install gpg under cygwin?
-      It's already in the standard Cygwin repo, only called =gnupg=.
-*** cmd.exe
-**** windows services cheatsheet?
-     - list all
-       #+BEGIN_SRC sh
-       sc queryex type= service state= all
-       #+END_SRC 
-    - list service containing the string "NATION"?
-      #+BEGIN_SRC sh
-      sc queryex type= service state= all | find /i "NATION" 
-      #+END_SRC
-
-
-      
-
-
-
-* Node
-** Npm
-*** how to install global packages without sudo?
-    #+begin_src sh
-    #Make a directory for global installations:
-    mkdir ~/.npm-global
-    #Configure npm to use the new directory path:
-    npm config set prefix '~/.npm-global'
-    #Open or create a ~/.profile file and add this line:
-    export PATH=~/.npm-global/bin:$PATH >> ~/.bashrc
-    #Back on the command line, update your system variables:
-    source ~/.profile
-    #+end_src
-    https://docs.npmjs.com/getting-started/fixing-npm-permissions
-*** upgrade npm to latest?
-    #+begin_src sh
-    npm install npm@latest -g
-    #+end_src
-
-* VirtualBox
-** manually mount a shared folder in a linux guest?
-   #+begin_src sh
-   sudo mount -t vboxsf <sharedFolderName> /path/to/shared/folder/dir
-   #+end_src
-** host alt-tab when in a guest?
-   =host key=
-   then
-  alt-tab 
-* NxClient
-** keyboard issue when connecting with nx ? 
-   Try: 
-   #+begin_src sh
-   setxkbmap -model evdev -layout us
-   #+end_src
