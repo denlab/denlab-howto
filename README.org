@@ -833,12 +833,12 @@ SHELL ["bash", "-ueo","pipefail", "-c"]
 ****** TODO compute cells values ?
 *** twbs export html
     Controlling html output?
-    #+BEGIN_QUOTE
+  #+BEGIN_SRC sh
     #+OPTIONS: num:5 whn:2 toc:4 H:6
     And to set these via your publish configuration using the org-publish-project-alist, the options would be :section-numbers, :headline-levels and :with-toc.
 
     The above options are described in the export settings section of the orgmode manual. This component introduces a new setting whn for per document, and :with-headline-numbers for publish config, which controls the display of section numbers. To disable, set to nil, to enable, set to t, and to control depth of display, use a whole number.
-    #+END_QUOTE
+  #+END_SRC  
     from: https://github.com/marsmining/ox-twbs
 *** easy templates?
 
