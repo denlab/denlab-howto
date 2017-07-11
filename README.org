@@ -1313,6 +1313,12 @@ from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
     …
     #+end_src
 
+** Jira
+*** Jira webapp keyboard shortcut cheat sheet
+    | action                           | shortcut |
+    |----------------------------------+----------|
+    | send card to top of the board    | ~s + t~  |
+    | send card to bottom of the board | ~s + b~  |
 * Visualization 
 ** Online visualization of Wikipedia's graph?
 - http://tools.medialab.sciences-po.fr/seealsology/
