@@ -42,7 +42,10 @@ http://www.cyberciti.biz/tips/handling-filenames-with-spaces-in-bash.html
     sort -zk 1nr |
     sed -z 's/^[^ ]* //' | tr '\0' '\n'
     #+end_src
-
+*** find files bigger than x MBytes?
+    #+BEGIN_SRC sh
+    find . -size +500M -exec l {} \;
+    #+END_SRC
 ** Xargs
 *** run a cmd on each line of stdin with xargs?
 #+begin_src sh
