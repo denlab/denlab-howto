@@ -6,6 +6,11 @@
 * Unixes
 ** Linux
 *** Packages
+**** Netcat
+***** simple web server with netcat?
+      #+BEGIN_SRC sh
+      while true; do nc -l 8989 <<< "Hi! the time is now $(date)"; done
+      #+END_SRC
 **** Ssh
 ***** generate public private key pair
   #+begin_src sh
