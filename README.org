@@ -1107,7 +1107,12 @@ from: https://git-lfs.github.com/
       #+begin_src sh
       GIT_SSH_COMMAND="ssh -vvv" git clone example
       #+end_src
-
+**** how to specify the ssh key used by git?
+     from: https://stackoverflow.com/questions/4565700/specify-private-ssh-key-to-use-when-executing-shell-command-with-or-without-ruby
+     #+BEGIN_SRC sh
+     ssh-agent bash -c 'ssh-add /somewhere/yourkey; git clone git@github.com:user/project.git'
+     #+END_SRC
+     
 ** Jq
 *** recursively find a value by key?
  #+begin_src sh
