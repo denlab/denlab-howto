@@ -1208,11 +1208,11 @@ from: https://git-lfs.github.com/
      |---------+-------+--------------+-----------------------------------+-------+----------------------------------------|
      | test    | val   | regex        | true                              | false | =test("foo")=                          |
      | test    | val   | regex; flags | true                              | false | =test("foo")=                          |
-     | match   | "     | "            | {offset,length,string,captures}   | empty | =match("(abc)+"; "g")=                 |
-     | capture | "     | "            | map of matches                    | "     | =capture("(?<a>[a-z]+)-(?<n>[0-9]+)")= |
-     | scan    | "     | "            | stream of non overlapping matches | empty |                                        |
-     | split   | "     | "            | <obsolete>                        |       |                                        |
-     | splits  | "     | "            | stream matches                    | ?     | =splits("\\s+")=                       |
+     | match   | ”     | ”            | {offset,length,string,captures}   | empty | =match("(abc)+"; "g")=                 |
+     | capture | ”     | ”            | map of matches                    | ”     | =capture("(?<a>[a-z]+)-(?<n>[0-9]+)")= |
+     | scan    | ”     | ”            | stream of non overlapping matches | empty |                                        |
+     | split   | ”     | ”            | <obsolete>                        |       |                                        |
+     | splits  | ”     | ”            | stream matches                    | ?     | =splits("\\s+")=                       |
 
 **** recursively find containers having a value that match a given regex?
      #+begin_src sh
