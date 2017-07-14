@@ -1189,8 +1189,7 @@ from: https://git-lfs.github.com/
 *** Strings / Regex
 **** jq regexes cheet sheat ?
    
-     Flags
-
+     #+CAPTION: jq regex flags
      | flags |                                                        |
      |-------+--------------------------------------------------------|
      | =g=   | Global match, find all not just the first              |
@@ -1202,8 +1201,7 @@ from: https://git-lfs.github.com/
      | =l=   | find Longest possible matches                          |
      | =x=   | eXtended regex format (ignore whitespace and comments) |
    
-     Functions
-
+     #+CAPTION: jq regex functions
      | fn        | args1 | args2          | result if match                     | else    | jq program example                     |
      |-----------+-------+----------------+-------------------------------------+---------+----------------------------------------|
      | =test=    | =val= | =regex=        | =true=                              | =false= | =test("foo")=                          |
