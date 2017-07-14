@@ -1118,7 +1118,7 @@ from: https://git-lfs.github.com/
 **** recursively find a value by key?
   #+begin_src sh
   echo '[{"a": 1}, {"b": 2}]' | jq '.. | .a? // empty'
-  # => 1
+  #=> 1
   #+end_src
 **** recursively find all values of a given key?
   #+begin_src sh
@@ -1136,12 +1136,10 @@ from: https://git-lfs.github.com/
   #=> [
   #=>   42
   #=> ]
-
   #+end_src
-
 **** recursively find all path leading to a given key
   #+begin_src sh
-  $ echo '{
+  echo '{
     "a": {
       "b": 1,
       "c": {
@@ -1152,22 +1150,19 @@ from: https://git-lfs.github.com/
       }
     }
   }' | jq 'path (..| .key?//empty)'
-
-  [
-    "a",
-    "c",
-    "d",
-    "key"
-  ]
-
+  #=> [
+  #=>   "a",
+  #=>   "c",
+  #=>   "d",
+  #=>   "key"
+  #=> ]
   #+end_src
 
 **** get all the values of an object?
      #+begin_src sh
      jq -n '{"a": 1} | .[]'
-     1
+     #=> 1
      #+end_src
-
 *** Modifying
 **** delete the key of an object?
   #+begin_src sh
@@ -1176,24 +1171,21 @@ from: https://git-lfs.github.com/
 **** jq update ?
      #+begin_src sh
      jq -n '{foo:1, bar:10} | .foo |= . + 1 '
-  {
-    "foo": 2,
-    "bar": 10
-  }
+  #=> {
+  #=>   "foo": 2,
+  #=>   "bar": 10
+  #=> }
      #+end_src
-
 **** delete in nested datastructure?
      #+begin_src sh
      jq -n '{a:1, b:2, c:3} | del(.. | .a?//empty)'
      #+end_src
-
 **** recursively delete all keys leading to pair numbers?
      Note: Probably could be written more concisely:
      #+begin_src sh
      jq -n '{a:1, b:2, c:3} \
        | del(.. | numbers | (if (. % 2) == 0 then . else empty end))'
      #+end_src
-
 *** Strings / Regex
 **** jq regexes cheet sheat ?
    
@@ -1223,29 +1215,27 @@ from: https://git-lfs.github.com/
 
 **** recursively find containers having a value that match a given regex?
      #+begin_src sh
-     $ jq.help | jq '.. | select(.[]? | strings | test("transpose"))'
-  {
-    "body": "\nTranspose a possibly jagged matrix (an array of arrays).\nRows are padded with nulls so the result is always rectangular.\n",
-    "examples": [
-      {
-        "input": "[[1], [2,3]]",
-        "program": "transpose",
-        "output": [
-          "[[1,2],[null,3]]"
-        ]
-      }
-    ],
-    "title": "`transpose`"
-  }
-  (...)
+     jq.help | jq '.. | select(.[]? | strings | test("transpose"))'
+  #=> {
+  #=>   "body": "\nTranspose a possibly jagged matrix (an array of arrays).\nRows are padded with nulls so the result is always rectangular.\n",
+  #=>   "examples": [
+  #=>     {
+  #=>       "input": "[[1], [2,3]]",
+  #=>       "program": "transpose",
+  #=>       "output": [
+  #=>         "[[1,2],[null,3]]"
+  #=>       ]
+  #=>     }
+  #=>   ],
+  #=>   "title": "`transpose`"
+  #=> }
+  #=> (...)
      #+end_src
-
 **** convert string to upper case?
      #+begin_src sh
-     $ jq -n '"abCD" | ascii_upcase'
-     "ABCD"
+     jq -n '"abCD" | ascii_upcase'
+     #=> "ABCD"
      #+end_src
-
 *** Interop
 **** output a array for bash?
   #+begin_src sh
@@ -1263,11 +1253,11 @@ from: https://git-lfs.github.com/
     #+BEGIN_SRC sh
      echo '["a", "b", "c"]       ' \
      | jq '[{(.[]): null}] | add '
-# {
-#  "a": null,
-#  "b": null,
-#  "c": null
-# }
+#=>  {
+#=>   "a": null,
+#=>   "b": null,
+#=>   "c": null
+#=>  }
     #+END_SRC 
 ** Unicode
 *** Handy emoticon ? 
