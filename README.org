@@ -243,7 +243,7 @@
    #+end_src
 ***** Centos
 ****** create a new systemd unit file?
-       #+begin_center sh
+       #+begin_src sh
        # create a new unit file
          (cat <<EOF''
    [Unit]
@@ -266,7 +266,7 @@
       systemctl status docker-post.service
       # enable at boot
       systemctl enable docker-post.service
-       #+end_center
+       #+end_src
 
    #+begin_src sh
    # list all services
