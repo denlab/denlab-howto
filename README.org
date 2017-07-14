@@ -1204,10 +1204,11 @@ from: https://git-lfs.github.com/
    
      Functions
 
-     | fn      | args1 | args2        | result if match                   | else  | example                                     |
+     | fn      | args1 | args2        | result if match                   | else  | jq program example                          |
      |---------+-------+--------------+-----------------------------------+-------+---------------------------------------------|
      | test    | val   | regex        | true                              | false | =jq test(foo)=                              |
      | test    | val   | regex        | true                              | false | =jq 'test("foo")'=                          |
+     | test    | val   | regex        | true                              | false | =test("foo")=                               |
      | test    | val   | regex; flags | true                              | false | =jq 'test("foo")'=                          |
      | match   | "     | "            | {offset,length,string,captures}   | empty | ~jq 'match("(abc)+"; "g")'~                 |
      | capture | "     | "            | map of matches                    | "     | ~jq 'capture("(?<a>[a-z]+)-(?<n>[0-9]+)")'~ |
