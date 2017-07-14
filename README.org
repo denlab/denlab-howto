@@ -1193,26 +1193,26 @@ from: https://git-lfs.github.com/
 
      | flags |                                                        |
      |-------+--------------------------------------------------------|
-     | g     | Global match, find all not just the first              |
-     | i     | case Insensitive                                       |
-     | m     | Multi line match '.' will match newlines               |
-     | n     | ignore empty matches                                   |
-     | p     | both s and m mode enabled                              |
-     | s     | Single line mode =('^' -> '\\A','$'->\\Z')=            |
-     | l     | find Longest possible matches                          |
-     | x     | eXtended regex format (ignore whitespace and comments) |
+     | =g=   | Global match, find all not just the first              |
+     | =i=   | case Insensitive                                       |
+     | =m=   | Multi line match '.' will match newlines               |
+     | =n=   | ignore empty matches                                   |
+     | =p=   | both s and m mode enabled                              |
+     | =s=   | Single line mode =('^' -> '\\A','$'->\\Z')=            |
+     | =l=   | find Longest possible matches                          |
+     | =x=   | eXtended regex format (ignore whitespace and comments) |
    
      Functions
 
-     | fn      | args1 | args2        | result if match                   | else  | jq program example                     |
-     |---------+-------+--------------+-----------------------------------+-------+----------------------------------------|
-     | test    | val   | regex        | true                              | false | =test("foo")=                          |
-     | test    | val   | regex; flags | true                              | false | =test("foo")=                          |
-     | match   | ”     | ”            | {offset,length,string,captures}   | empty | =match("(abc)+"; "g")=                 |
-     | capture | ”     | ”            | map of matches                    | ”     | =capture("(?<a>[a-z]+)-(?<n>[0-9]+)")= |
-     | scan    | ”     | ”            | stream of non overlapping matches | empty |                                        |
-     | split   | ”     | ”            | <obsolete>                        |       |                                        |
-     | splits  | ”     | ”            | stream matches                    | ?     | =splits("\\s+")=                       |
+     | fn        | args1 | args2          | result if match                     | else    | jq program example                     |
+     |-----------+-------+----------------+-------------------------------------+---------+----------------------------------------|
+     | =test=    | =val= | =regex=        | =true=                              | =false= | =test("foo")=                          |
+     | =test=    | =”=   | =regex; flags= | =true=                              | =false= | =test("foo")=                          |
+     | =match=   | =”=   | =”=            | ={offset,length,string,captures}=   | =empty= | =match("(abc)+"; "g")=                 |
+     | =capture= | =”=   | =”=            | =map of matches=                    | =empty= | =capture("(?<a>[a-z]+)-(?<n>[0-9]+)")= |
+     | =scan=    | =”=   | =”=            | =stream of non overlapping matches= | =empty= |                                        |
+     | =split=   | =”=   | =”=            | =<obsolete>=                        |         |                                        |
+     | =splits=  | =”=   | =”=            | =stream matches=                    | =?=     | =splits("\\s+")=                       |
 
 **** recursively find containers having a value that match a given regex?
      #+begin_src sh
