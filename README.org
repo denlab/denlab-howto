@@ -1204,17 +1204,15 @@ from: https://git-lfs.github.com/
    
      Functions
 
-     | fn      | args1 | args2        | result if match                   | else  | jq program example                          |
-     |---------+-------+--------------+-----------------------------------+-------+---------------------------------------------|
-     | test    | val   | regex        | true                              | false | =jq test(foo)=                              |
-     | test    | val   | regex        | true                              | false | =jq 'test("foo")'=                          |
-     | test    | val   | regex        | true                              | false | =test("foo")=                               |
-     | test    | val   | regex; flags | true                              | false | =jq 'test("foo")'=                          |
-     | match   | "     | "            | {offset,length,string,captures}   | empty | ~jq 'match("(abc)+"; "g")'~                 |
-     | capture | "     | "            | map of matches                    | "     | ~jq 'capture("(?<a>[a-z]+)-(?<n>[0-9]+)")'~ |
-     | scan    | "     | "            | stream of non overlapping matches | empty |                                             |
-     | split   | "     | "            | <obsolete>                        |       |                                             |
-     | splits  | "     | "            | stream matches                    | ?     | ~jq 'splits("\\s+")'~                       |
+     | fn      | args1 | args2        | result if match                   | else  | jq program example                     |
+     |---------+-------+--------------+-----------------------------------+-------+----------------------------------------|
+     | test    | val   | regex        | true                              | false | =test("foo")=                          |
+     | test    | val   | regex; flags | true                              | false | =test("foo")=                          |
+     | match   | "     | "            | {offset,length,string,captures}   | empty | =match("(abc)+"; "g")=                 |
+     | capture | "     | "            | map of matches                    | "     | =capture("(?<a>[a-z]+)-(?<n>[0-9]+)")= |
+     | scan    | "     | "            | stream of non overlapping matches | empty |                                        |
+     | split   | "     | "            | <obsolete>                        |       |                                        |
+     | splits  | "     | "            | stream matches                    | ?     | =splits("\\s+")=                       |
 
 **** recursively find containers having a value that match a given regex?
      #+begin_src sh
