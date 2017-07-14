@@ -1204,14 +1204,14 @@ from: https://git-lfs.github.com/
    
      Functions
 
-     | fn      | args1 | args2        | res if match                      | else  | example                                     |
+     | fn      | args1 | args2        | result if match                   | else  | example                                     |
      |---------+-------+--------------+-----------------------------------+-------+---------------------------------------------|
-     | test    | val   | regex; flags | true                              | false | =jq 'test("foo")'=                          |
-     | match   | "     | "            | {offset,length,string,captures}   | empty | =jq 'match("(abc)+"; "g")'=                 |
-     | capture | "     | "            | map of matches                    | "     | =jq 'capture("(?<a>[a-z]+)-(?<n>[0-9]+)")'= |
+     | test    | val   | regex; flags | true                              | false | ~jq 'test("foo")'~                          |
+     | match   | "     | "            | {offset,length,string,captures}   | empty | ~jq 'match("(abc)+"; "g")'~                 |
+     | capture | "     | "            | map of matches                    | "     | ~jq 'capture("(?<a>[a-z]+)-(?<n>[0-9]+)")'~ |
      | scan    | "     | "            | stream of non overlapping matches | empty |                                             |
      | split   | "     | "            | <obsolete>                        |       |                                             |
-     | splits  | "     | "            | stream matches                    | ?     | =jq 'splits("\\s+")'=                       |
+     | splits  | "     | "            | stream matches                    | ?     | ~jq 'splits("\\s+")'~                       |
 
 **** recursively find containers having a value that match a given regex?
      #+begin_src sh
