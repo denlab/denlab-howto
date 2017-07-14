@@ -1188,8 +1188,7 @@ from: https://git-lfs.github.com/
      #+end_src
 *** Strings / Regex
 **** jq regexes cheet sheat ?
-   
-     #+CAPTION: jq regex flags
+***** jq regex flags
      | flags |                                                        |
      |-------+--------------------------------------------------------|
      | =g=   | Global match, find all not just the first              |
@@ -1200,8 +1199,7 @@ from: https://git-lfs.github.com/
      | =s=   | Single line mode =('^' -> '\\A','$'->\\Z')=            |
      | =l=   | find Longest possible matches                          |
      | =x=   | eXtended regex format (ignore whitespace and comments) |
-   
-     #+CAPTION: jq regex functions
+*****  jq regex functions
      | fn        | args1 | args2          | result if match                     | else    | jq program example                     |
      |-----------+-------+----------------+-------------------------------------+---------+----------------------------------------|
      | =test=    | =val= | =regex=        | =true=                              | =false= | =test("foo")=                          |
