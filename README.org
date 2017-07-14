@@ -1258,7 +1258,18 @@ from: https://git-lfs.github.com/
   echo '[1,2,3]' \
   | jq 'reduce .[] as $item (0; . + $item)'
   #+end_src
-
+*** Convert
+**** TODO element to array?
+**** convert an array to a map? 
+    #+BEGIN_SRC sh
+     echo '["a", "b", "c"]       ' \
+     | jq '[{(.[]): null}] | add '
+# {
+#  "a": null,
+#  "b": null,
+#  "c": null
+# }
+    #+END_SRC 
 ** Unicode
 *** Handy emoticon ? 
  | thumbs up | 👍  |
