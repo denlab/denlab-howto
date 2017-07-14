@@ -201,6 +201,14 @@
       #+BEGIN_SRC sh
       dpkg-query --show --showformat='${Package}\n'
       #+END_SRC
+***** Alternative
+****** rebuild alternative for a particular package?
+       Note: there's problably a better way :)
+       But this had worked:
+       #+BEGIN_SRC sh
+        sudo aptitude purge openjdk-8-jdk
+        sudo aptitude install openjdk-8-jdk
+       #+END_SRC
 **** Rpm
 ***** list files installed by a package?
    #+begin_src sh
