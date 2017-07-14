@@ -1114,147 +1114,150 @@ from: https://git-lfs.github.com/
      #+END_SRC
      
 ** Jq
-*** recursively find a value by key?
- #+begin_src sh
- echo '[{"a": 1}, {"b": 2}]' | jq '.. | .a? // empty'
- # => 1
- #+end_src
-*** output a array for bash?
- #+begin_src sh
- echo '[1,2,3]' | jq '.|@tsv'
- #+end_src
-*** elements to array?
-*** recursively find all values of a given key?
- #+begin_src sh
- $ echo '{
-   "a": {
-     "b": 1,
-     "c": {
-       "d": {
-         "key": 42
-       },
-       "e": 666
-     }
-   }
- }' | jq '..| .key?//empty'
+*** Finding
+**** recursively find a value by key?
+  #+begin_src sh
+  echo '[{"a": 1}, {"b": 2}]' | jq '.. | .a? // empty'
+  # => 1
+  #+end_src
+**** recursively find all values of a given key?
+  #+begin_src sh
+  $ echo '{
+    "a": {
+      "b": 1,
+      "c": {
+        "d": {
+          "key": 42
+        },
+        "e": 666
+      }
+    }
+  }' | jq '..| .key?//empty'
 
- [
-   42
- ]
+  [
+    42
+  ]
 
- #+end_src
+  #+end_src
 
-*** recursively find all path leading to a given key
- #+begin_src sh
- $ echo '{
-   "a": {
-     "b": 1,
-     "c": {
-       "d": {
-         "key": 42
-       },
-       "e": 666
-     }
-   }
- }' | jq 'path (..| .key?//empty)'
+**** recursively find all path leading to a given key
+  #+begin_src sh
+  $ echo '{
+    "a": {
+      "b": 1,
+      "c": {
+        "d": {
+          "key": 42
+        },
+        "e": 666
+      }
+    }
+  }' | jq 'path (..| .key?//empty)'
 
- [
-   "a",
-   "c",
-   "d",
-   "key"
- ]
+  [
+    "a",
+    "c",
+    "d",
+    "key"
+  ]
 
- #+end_src
+  #+end_src
 
-*** delete the key of an object?
- #+begin_src sh
- echo '{"k": 1}' | jq 'del(.k)'
- #+end_src
+**** get all the values of an object?
+     #+begin_src sh
+     jq -n '{"a": 1} | .[]'
+     1
+     #+end_src
 
-*** reduce ? 
- #+begin_src sh
- echo '[1,2,3]' \
- | jq 'reduce .[] as $item (0; . + $item)'
- #+end_src
+*** Modifying
+**** delete the key of an object?
+  #+begin_src sh
+  echo '{"k": 1}' | jq 'del(.k)'
+  #+end_src
+**** jq update ?
+     #+begin_src sh
+     jq -n '{foo:1, bar:10} | .foo |= . + 1 '
+  {
+    "foo": 2,
+    "bar": 10
+  }
+     #+end_src
 
-*** get all the values of an object?
-    #+begin_src sh
-    jq -n '{"a": 1} | .[]'
-    1
-    #+end_src
+**** delete in nested datastructure?
+     #+begin_src sh
+     jq -n '{a:1, b:2, c:3} | del(.. | .a?//empty)'
+     #+end_src
 
-*** convert string to upper case?
-    #+begin_src sh
-    $ jq -n '"abCD" | ascii_upcase'
-    "ABCD"
-    #+end_src
+**** recursively delete all keys leading to pair numbers?
+     Note: Probably could be written more concisely:
+     #+begin_src sh
+     jq -n '{a:1, b:2, c:3} \
+       | del(.. | numbers | (if (. % 2) == 0 then . else empty end))'
+     #+end_src
 
-*** jq regexes cheet sheat ?
+*** Strings / Regex
+**** jq regexes cheet sheat ?
    
-    Flags
+     Flags
 
-    | flags |                                                        |
-    |-------+--------------------------------------------------------|
-    | g     | Global match, find all not just the first              |
-    | i     | case Insensitive                                       |
-    | m     | Multi line match '.' will match newlines               |
-    | n     | ignore empty matches                                   |
-    | p     | both s and m mode enabled                              |
-    | s     | Single line mode =('^' -> '\\A','$'->\\Z')=            |
-    | l     | find Longest possible matches                          |
-    | x     | eXtended regex format (ignore whitespace and comments) |
+     | flags |                                                        |
+     |-------+--------------------------------------------------------|
+     | g     | Global match, find all not just the first              |
+     | i     | case Insensitive                                       |
+     | m     | Multi line match '.' will match newlines               |
+     | n     | ignore empty matches                                   |
+     | p     | both s and m mode enabled                              |
+     | s     | Single line mode =('^' -> '\\A','$'->\\Z')=            |
+     | l     | find Longest possible matches                          |
+     | x     | eXtended regex format (ignore whitespace and comments) |
    
-    Functions
+     Functions
 
-    | fn      | args1 | args2        | res if match                      | else  | example                                     |
-    |---------+-------+--------------+-----------------------------------+-------+---------------------------------------------|
-    | test    | val   | regex; flags | true                              | false | =jq 'test("foo")'=                          |
-    | match   | "     | "            | {offset,length,string,captures}   | empty | =jq 'match("(abc)+"; "g")'=                 |
-    | capture | "     | "            | map of matches                    | "     | =jq 'capture("(?<a>[a-z]+)-(?<n>[0-9]+)")'= |
-    | scan    | "     | "            | stream of non overlapping matches | empty |                                             |
-    | split   | "     | "            | <obsolete>                        |       |                                             |
-    | splits  | "     | "            | stream matches                    | ?     | =jq 'splits("\\s+")'=                       |
+     | fn      | args1 | args2        | res if match                      | else  | example                                     |
+     |---------+-------+--------------+-----------------------------------+-------+---------------------------------------------|
+     | test    | val   | regex; flags | true                              | false | =jq 'test("foo")'=                          |
+     | match   | "     | "            | {offset,length,string,captures}   | empty | =jq 'match("(abc)+"; "g")'=                 |
+     | capture | "     | "            | map of matches                    | "     | =jq 'capture("(?<a>[a-z]+)-(?<n>[0-9]+)")'= |
+     | scan    | "     | "            | stream of non overlapping matches | empty |                                             |
+     | split   | "     | "            | <obsolete>                        |       |                                             |
+     | splits  | "     | "            | stream matches                    | ?     | =jq 'splits("\\s+")'=                       |
 
-*** jq update ?
-    #+begin_src sh
-    jq -n '{foo:1, bar:10} | .foo |= . + 1 '
- {
-   "foo": 2,
-   "bar": 10
- }
-    #+end_src
+**** recursively find containers having a value that match a given regex?
+     #+begin_src sh
+     $ jq.help | jq '.. | select(.[]? | strings | test("transpose"))'
+  {
+    "body": "\nTranspose a possibly jagged matrix (an array of arrays).\nRows are padded with nulls so the result is always rectangular.\n",
+    "examples": [
+      {
+        "input": "[[1], [2,3]]",
+        "program": "transpose",
+        "output": [
+          "[[1,2],[null,3]]"
+        ]
+      }
+    ],
+    "title": "`transpose`"
+  }
+  (...)
+     #+end_src
 
-*** delete in nested datastructure?
-    #+begin_src sh
-    jq -n '{a:1, b:2, c:3} | del(.. | .a?//empty)'
-    #+end_src
+**** convert string to upper case?
+     #+begin_src sh
+     $ jq -n '"abCD" | ascii_upcase'
+     "ABCD"
+     #+end_src
 
-*** recursively delete all keys leading to pair numbers?
-    Note: Probably could be written more concisely:
-    #+begin_src sh
-    jq -n '{a:1, b:2, c:3} \
-      | del(.. | numbers | (if (. % 2) == 0 then . else empty end))'
-    #+end_src
-
-*** recursively find containers having a value that match a given regex?
-    #+begin_src sh
-    $ jq.help | jq '.. | select(.[]? | strings | test("transpose"))'
- {
-   "body": "\nTranspose a possibly jagged matrix (an array of arrays).\nRows are padded with nulls so the result is always rectangular.\n",
-   "examples": [
-     {
-       "input": "[[1], [2,3]]",
-       "program": "transpose",
-       "output": [
-         "[[1,2],[null,3]]"
-       ]
-     }
-   ],
-   "title": "`transpose`"
- }
- (...)
-    #+end_src
+*** Interop
+**** output a array for bash?
+  #+begin_src sh
+  echo '[1,2,3]' | jq '.|@tsv'
+  #+end_src
+*** Functional
+**** reduce ? 
+  #+begin_src sh
+  echo '[1,2,3]' \
+  | jq 'reduce .[] as $item (0; . + $item)'
+  #+end_src
 
 ** Unicode
 *** Handy emoticon ? 
