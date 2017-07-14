@@ -1133,10 +1133,9 @@ from: https://git-lfs.github.com/
       }
     }
   }' | jq '..| .key?//empty'
-
-  [
-    42
-  ]
+  #=> [
+  #=>   42
+  #=> ]
 
   #+end_src
 
