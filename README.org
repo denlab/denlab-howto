@@ -815,12 +815,14 @@ SHELL ["bash", "-ueo","pipefail", "-c"]
 |                                                    | above                 | O                     |                          |
 | replace (like replace mode - opposite of insert)   |                       | R                     |                          |
 | append at the end of the line                      |                       | A                     |                          |
-
 *** run a command and get the output in the current buffer?
 **** Emacs
     ~C-u M-! <shell-command>~
 **** Spacemacs (evil mode)
      ~SPC u SPC ! <shell-command>~
+*** Universal argument in spacemacs (evil mode)?
+    instead of the traditional ~C-u~
+    ~SPC u~
 ** OrgMode
 *** Tables 
 **** pipe in table cells? 
