@@ -583,7 +583,6 @@
      # use the copy with 
      echo "${original_params[@]}"
      #+end_src
-
 *** X
 **** copy to system clipboard from the command line?
  #+begin_src sh
