@@ -1,7 +1,7 @@
 #+STARTUP: logdone
 #+STARTUP: hidestars
-#+MACRO: pipe @@html:&#124;@@ 
-#+MACRO: pipeAnd @@html:&#124;&amp;@@ 
+#+MACRO: pipe @@html:&#124;@@
+#+MACRO: pipeAnd @@html:&#124;&amp;@@
 
 * Unixes
 ** Linux
@@ -37,7 +37,7 @@
   "
   #+end_src
 
-***** ssh without password or key? 
+***** ssh without password or key?
   #+begin_src sh
   # remove password for user
   passwd -d user
@@ -75,7 +75,7 @@
   tmux -2 a -dt 0
       #+end_src
 
-***** compress dir recursive? 
+***** compress dir recursive?
   #+begin_src sh
   zip -r archive.zip /dir
   #+end_src
@@ -89,7 +89,7 @@
   #+begin_src sh
   find . -cmin -5
   #+end_src
-***** find files modified in the last x days 
+***** find files modified in the last x days
   #+begin_src sh
   find . -ctime -5
   #+end_src
@@ -131,7 +131,7 @@
       #+END_SRC
 
 **** MoreUtils
-***** read / process / write the same file ? 
+***** read / process / write the same file ?
       - Use:  =sponge=
       - =sponge= will read stdin and write to specified file. Unlike a shell redirect it will soaks all its input before writing the output file.
       #+begin_src sh
@@ -166,7 +166,7 @@
       echo 'scale=2 ; 1/3' | bc -l
       #+end_src
 
-**** Zip 
+**** Zip
 ***** unzip a single file from archive?
       #+begin_src sh
       unzip -p myarchive.zip path/to/zipped/file.txt >file.txt
@@ -184,12 +184,12 @@
    apt-file update
    apt-file find <file>
    #+end_src
-***** fix a broken state ? 
+***** fix a broken state ?
 
    #+begin_src sh
    sudo apt-get install --fix-broken
    #+end_src
-***** install a specific version? 
+***** install a specific version?
       #+begin_src sh
       apt-get install my-lib-java=2016.03.30-79 my-lib=2016.03.30-79
       #+end_src
@@ -227,8 +227,8 @@
         http://nexus-url/x/y/z
    #+end_src
 **** NxClient
-***** keyboard issue when connecting with nx ? 
-      Try: 
+***** keyboard issue when connecting with nx ?
+      Try:
       #+begin_src sh
       setxkbmap -model evdev -layout us
       #+end_src
@@ -240,7 +240,7 @@
 ***** host alt-tab when in a guest?
       =host key=
       then
-     alt-tab 
+     alt-tab
 
 *** Sysadmin
 **** System Services (systemctl, ...)
@@ -268,7 +268,7 @@
 
    EOF
       ) | sudo tee /etc/systemd/system/multi-user.target.wants/docker-post.service
-      # reload 
+      # reload
       sudo systemctl daemon-reload
       # check the status
       systemctl status docker-post.service
@@ -290,11 +290,11 @@
    #+end_src
 
 **** User Admin
-***** how to add a group to a user ? 
+***** how to add a group to a user ?
   #+begin_src sh
   sudo usermod -aG docker u
   #+end_src
-***** add a user with specific groups ? 
+***** add a user with specific groups ?
   #+begin_src sh
   adduser -G group1,group2 <user>
   #+end_src
@@ -318,7 +318,7 @@
   #+end_src
 ***** view login activity?
       #+begin_src sh
-      last 
+      last
       #+end_src
 
 **** Sudo
@@ -332,7 +332,7 @@
   # WARN! path to binaries must be absolute!
   #+END_SRC
 **** Devices (hdd,...)
-***** eject a cd rom? 
+***** eject a cd rom?
       #+begin_src sh
       ejet /dev/cdrom
       #+end_src
@@ -341,8 +341,8 @@
       cat /proc/filesystems
       #+end_src
 ***** how to fix a screwed nfs mount without rebooting?
-      TODO: should be completed 
-      - Find the list of process open on the screwed fs: 
+      TODO: should be completed
+      - Find the list of process open on the screwed fs:
       #+BEGIN_SRC sh
       lsof | grep '/path/to/nfs'
       #+END_SRC
@@ -365,13 +365,13 @@
  # run
  dpkg-reconfigure keyboard-configuration
  # or
- # edit /etc/default/keyboard: 
+ # edit /etc/default/keyboard:
  #   change XKBLAYOUT="us,de,fr,ua,ru" by "us" for example
 
  # for changes to take effect:
  service keyboard-setup restart
 
- # it should suffice, but if not: 
+ # it should suffice, but if not:
  udevadm trigger --subsystem-match=input --action=change
  #+end_src
  https://wiki.debian.org/Keyboard
@@ -410,7 +410,7 @@
       | err & out     | pipe |  ls 2>&1 |  grep '.*'          |                |
       |               |      |  ls      |& grep '.*'          | equiv          |
       #+END_SRC
-***** use stdout as a file (with filename) for another cmd? 
+***** use stdout as a file (with filename) for another cmd?
       #+BEGIN_SRC sh
       cmd <(cat f)
       #+END_SRC
@@ -434,7 +434,7 @@
      $ (((f 3>&1 1>&2 2>&3) | s 1) 3>&1 1>&2 2>&3) | s 2
   =2>out<2=
   =1>err<1=
-     #+END_SRC 
+     #+END_SRC
 **** Arrays
 ***** Associative arrays
 ****** declare, print, ...
@@ -464,7 +464,7 @@
       declare -a a
       # literal
       a=(a b c)
-      # set 
+      # set
       a[0]=x
       # get all
       echo ${a[*]}
@@ -523,7 +523,7 @@
  fi
  #+end_src
  https://gist.github.com/earthgecko/3089509
-**** decimal / hex conversion? 
+**** decimal / hex conversion?
  #+begin_src sh
  echo $((0xa))
  # 10
@@ -547,7 +547,7 @@
      esac
  done
      #+end_src
-**** loop over args? 
+**** loop over args?
      #+begin_src sh
      for var in "$@"
      do
@@ -555,15 +555,15 @@
      done
      #+end_src
      http://stackoverflow.com/questions/255898/how-to-iterate-over-arguments-in-a-bash-script
-**** parse a string as args 
+**** parse a string as args
      #+begin_src sh
-     How to process the following list of pairs: "Mercury 36" "Venus 67" "Earth 93"  "Mars 142" "Jupiter 483"? 
+     How to process the following list of pairs: "Mercury 36" "Venus 67" "Earth 93"  "Mars 142" "Jupiter 483"?
      (note no =IFS= set)
      #+begin_src sh
      #!/usr/bin/env bash
      set -euo pipefail
 
-     for planet in "Mercury 36" "Venus 67" 
+     for planet in "Mercury 36" "Venus 67"
      do
        set -- $planet
        echo "\$1=$1"
@@ -578,9 +578,9 @@
      #+end_src
 **** How to save a script params (before doing modifications like shift, ..)?
      #+begin_src sh
-     # save with 
+     # save with
      original_params=("$@")
-     # use the copy with 
+     # use the copy with
      echo "${original_params[@]}"
      #+end_src
 *** X
@@ -625,7 +625,7 @@
 **** How to trace all network activity?
      =tcpflow=
      #+begin_src sh
-   
+
   tcpflow -p -c -i eth0 port 80 | grep -oE '(GET|POST|HEAD) .* HTTP/1.[01]|Host: .*'
      #+end_src
      http://unix.stackexchange.com/questions/6279/on-the-fly-monitoring-http-requests-on-a-network-interface
@@ -642,10 +642,10 @@
      #+BEGIN_SRC sh
      netstat -lntu
      #+END_SRC
-** Solaris 
+** Solaris
 *** equivalent of linux's =ps aux= ?
-    
-    maybee not exaclty equiv, but roughly: 
+
+    maybee not exaclty equiv, but roughly:
 
     #+begin_src sh
     ps -AfL
@@ -657,7 +657,7 @@
 ***** start sshd as a service after its installation with the Cygwin installer?
 ****** TODO to be verified
       1) Open a cmd.exe as administrator
-      2) Run: 
+      2) Run:
          #+BEGIN_SRC sh
          cygrunsrv -S sshd
          #+END_SRC
@@ -669,23 +669,23 @@
      - list all
        #+BEGIN_SRC sh
        sc queryex type= service state= all
-       #+END_SRC 
+       #+END_SRC
     - list service containing the string "NATION"?
       #+BEGIN_SRC sh
-      sc queryex type= service state= all | find /i "NATION" 
+      sc queryex type= service state= all | find /i "NATION"
       #+END_SRC
 
 * Docker
-** find images on the command line ? 
+** find images on the command line ?
 ???
 ** docker run/start/exec ?
 
 | run   | run cmd in *new* container     |
 | exec  | run cmd in *running* container |
 | start | start a *stopped* container    |
-** troubleshoot ubuntu network ? 
-- ping 8.8.8.8 but no www.google.com ? 
-- incomplete response: 
+** troubleshoot ubuntu network ?
+- ping 8.8.8.8 but no www.google.com ?
+- incomplete response:
 #+begin_src sh
 # Find your network's DNS server:
 $ nmcli dev show | grep 'IP4.DNS'
@@ -695,7 +695,7 @@ IP4.DNS[1]:                             10.19.18.25
 ExecStart=/usr/bin/docker daemon --dns 8.8.8.8 --dns 10.19.18.25 -H fd://
 #+end_src
 From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying-to-use-8-8-8-8
-** repair docker after a disk full? 
+** repair docker after a disk full?
 #+begin_src sh
 service docker stop
 
@@ -707,16 +707,16 @@ service docker start
 
 #+end_src
 http://stackoverflow.com/questions/30719896/docker-dm-task-run-failed-error
-** use bashism in Dockerfile? 
+** use bashism in Dockerfile?
    #+begin_src sh
-# Define bash as the default shell 
+# Define bash as the default shell
 SHELL ["bash", "-c"]
-# or: 
+# or:
 SHELL ["bash", "-ueo","pipefail", "-c"]
     #+end_src
 
 ** Docker Compose
-*** commands cheatsheet ? 
+*** commands cheatsheet ?
 | cmd     | act on   | type      | target  | service | all | descr                                                     |
 |         |          |           | state   |         |     |                                                           |
 |---------+----------+-----------+---------+---------+-----+-----------------------------------------------------------|
@@ -748,7 +748,7 @@ SHELL ["bash", "-ueo","pipefail", "-c"]
 | version | special  | infos     |         | N       | N   | Show the Docker-Compose version information               |
 *** pass env var at build time ?
 
-    from: https://docs.docker.com/compose/compose-file/#cachefrom: 
+    from: https://docs.docker.com/compose/compose-file/#cachefrom:
     #+begin_src sh
     build:
       context: .
@@ -756,7 +756,7 @@ SHELL ["bash", "-ueo","pipefail", "-c"]
         buildno: 1
         password: secret
     #+end_src
-    
+
 ** docker docs
 
    | what                        | url                      |
@@ -779,7 +779,7 @@ SHELL ["bash", "-ueo","pipefail", "-c"]
    export LD_LIBRARY_PATH=/lib-host:/usr-lib-host && export PATH=$PATH:/bin-host
    wget google.com
    #+end_src
-* Emacs 
+* Emacs
 ** file type indicator header for emacs?
 #+begin_src sh
 -*- mode: outline -*-
@@ -823,15 +823,15 @@ SHELL ["bash", "-ueo","pipefail", "-c"]
     instead of the traditional ~C-u~
     ~SPC u~
 ** OrgMode
-*** Tables 
-**** pipe in table cells? 
+*** Tables
+**** pipe in table cells?
 ***** pipe in table with code block
       - create the table in org mode
       | x    | l               |
       |------+-----------------|
       | cmd1 | cmd             |
       | cmd2 | cmd <pipe> cmdx |
-      - copy and pase the table in a code block and add the missing pipes: 
+      - copy and pase the table in a code block and add the missing pipes:
         #+BEGIN_SRC sh
       | x    | l               |
       |------+-----------------|
@@ -857,25 +857,25 @@ SHELL ["bash", "-ueo","pipefail", "-c"]
     And to set these via your publish configuration using the org-publish-project-alist, the options would be :section-numbers, :headline-levels and :with-toc.
 
     The above options are described in the export settings section of the orgmode manual. This component introduces a new setting whn for per document, and :with-headline-numbers for publish config, which controls the display of section numbers. To disable, set to nil, to enable, set to t, and to control depth of display, use a whole number.
-  #+END_SRC  
+  #+END_SRC
     from: https://github.com/marsmining/ox-twbs
 *** easy templates?
 
 from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
 
-| s  | 	#+BEGIN_SRC ... #+END_SRC        |
-| e	 | #+BEGIN_EXAMPLE ... #+END_EXAMPLE |
-| q	 | #+BEGIN_QUOTE ... #+END_QUOTE     |
-| v	 | #+BEGIN_VERSE ... #+END_VERSE     |
-| c	 | #+BEGIN_CENTER ... #+END_CENTER   |
-| l	 | #+BEGIN_LaTeX ... #+END_LaTeX     |
-| L	 | #+LaTeX:                          |
-| h	 | #+BEGIN_HTML ... #+END_HTML       |
-| H	 | #+HTML:                           |
-| a	 | #+BEGIN_ASCII ... #+END_ASCII     |
-| A	 | #+ASCII:                          |
-| i	 | #+INDEX: line                     |
-| I	 | #+INCLUDE: line                   |
+| s  |  #+BEGIN_SRC ... #+END_SRC        |
+| e  | #+BEGIN_EXAMPLE ... #+END_EXAMPLE |
+| q  | #+BEGIN_QUOTE ... #+END_QUOTE     |
+| v  | #+BEGIN_VERSE ... #+END_VERSE     |
+| c  | #+BEGIN_CENTER ... #+END_CENTER   |
+| l  | #+BEGIN_LaTeX ... #+END_LaTeX     |
+| L  | #+LaTeX:                          |
+| h  | #+BEGIN_HTML ... #+END_HTML       |
+| H  | #+HTML:                           |
+| a  | #+BEGIN_ASCII ... #+END_ASCII     |
+| A  | #+ASCII:                          |
+| i  | #+INDEX: line                     |
+| I  | #+INCLUDE: line                   |
 
 * Programming
 ** JVM ecosystem
@@ -892,11 +892,11 @@ from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
 **** groovy switch case?
      #+begin_src java
      switch(val) {
-       case ~/ab.*/: 
+       case ~/ab.*/:
          result="x"
          break
        case ...
-       default: 
+       default:
          ...
          break
      }
@@ -931,7 +931,7 @@ from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
      #+begin_src sh
      mvn dependency:get -Dartifact=org.springframework:spring-instrument:3.2.3.RELEASE
      #+end_src
-    
+
      See: http://stackoverflow.com/questions/7110114/how-to-simply-download-a-jar-using-maven
 ***** specifying transitivity and repo
 
@@ -961,13 +961,13 @@ from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
      #+end_src
 
 *** Regex
-**** Sed 
-***** use a backreference without grouping? 
+**** Sed
+***** use a backreference without grouping?
    #+begin_src sh
    echo bar | sed 's/.*/=> & <=/'
    # => bar <=
    #+end_src
-***** remove backslash EOL with sed? 
+***** remove backslash EOL with sed?
    #+begin_src sh
    echo 'a
    b \
@@ -990,8 +990,8 @@ from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
 *** Languages
 **** Python
 ***** Pip
-****** How to install pip for python 3 ? 
-       - install: 
+****** How to install pip for python 3 ?
+       - install:
          on ubuntu/debian:
          #+BEGIN_SRC sh
          aptitude install python3-pip
@@ -1012,7 +1012,7 @@ from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
 ***** Json
 ****** Parse a json string?
        #+BEGIN_SRC sh
-		  python <<- EOF
+      python <<- EOF
   import json
   j = json.loads('{"one" : "1", "two" : "2", "three" : "3"}')
 
@@ -1045,7 +1045,7 @@ from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
 
 *** rm a big file from history?
  #+begin_src sh
- # given : 
+ # given :
  # $ git lola --name-status
  # * f772d66 (HEAD, master) Login page
  | A     login.html
@@ -1075,7 +1075,7 @@ from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
 
 
  #+end_src
-*** list branch sorted by last commit date? 
+*** list branch sorted by last commit date?
     #+begin_src sh
     git for-each-ref --sort=-committerdate refs/heads/
     #+end_src
@@ -1089,12 +1089,12 @@ from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
     #+END_SRC
 *** Git Lfs essentials?
 #+begin_center sh
-# Download 
+# Download
 wget https://github.com/git-lfs/git-lfs/releases/download/v2.1.1/git-lfs-linux-amd64-2.1.1.tar.gz
 tar xavf git-lfs-linux-amd64-2.1.1.tar.gz
 cd xavf git-lfs-linux-amd64-2.1.1
 
-# install 
+# install
 ./install.sh
 git lfs install
 
@@ -1116,7 +1116,7 @@ git push origin master
 from: https://git-lfs.github.com/
 
 *** git & ssh
-**** view ssh details? 
+**** view ssh details?
 ***** git v2.3.0 or higher:
       #+begin_src sh
       GIT_SSH_COMMAND="ssh -vvv" git clone example
@@ -1126,7 +1126,7 @@ from: https://git-lfs.github.com/
      #+BEGIN_SRC sh
      ssh-agent bash -c 'ssh-add /somewhere/yourkey; git clone git@github.com:user/project.git'
      #+END_SRC
-     
+
 ** Jq
 *** Finding
 **** recursively find a value by key?
@@ -1253,14 +1253,31 @@ from: https://git-lfs.github.com/
   echo '[1,2,3]' | jq '.|@tsv'
   #+end_src
 *** Functional
-**** reduce ? 
+**** reduce ?
   #+begin_src sh
   echo '[1,2,3]' \
   | jq 'reduce .[] as $item (0; . + $item)'
   #+end_src
+**** zip two arrays into a map?
+     #+BEGIN_SRC sh
+jq -n '
+  ["a","b"] as $a | [1,2] as $b
+| [$a,$b]
+| transpose | map({(.[0]): .[1]})
+'
+#> [
+#>  {
+#>    "a": 1
+#>  },
+#>  {
+#>    "b": 2
+#>  }
+#>
+     #+END_SRC
+
 *** Convert
 **** TODO element to array?
-**** convert an array to a map? 
+**** convert an array to a map?
     #+BEGIN_SRC sh
      echo '["a", "b", "c"]       ' \
      | jq '[{(.[]): null}] | add '
@@ -1269,9 +1286,9 @@ from: https://git-lfs.github.com/
 #=>   "b": null,
 #=>   "c": null
 #=>  }
-    #+END_SRC 
+    #+END_SRC
 ** Unicode
-*** Handy emoticon ? 
+*** Handy emoticon ?
  | thumbs up | 👍  |
  |           | 👏y |
  | speaker   | 🔇  |
@@ -1344,7 +1361,7 @@ from: https://git-lfs.github.com/
     |----------------------------------+----------|
     | send card to top of the board    | ~s + t~  |
     | send card to bottom of the board | ~s + b~  |
-* Visualization 
+* Visualization
 ** Online visualization of Wikipedia's graph?
 - http://tools.medialab.sciences-po.fr/seealsology/
 - http://seealso.org/
