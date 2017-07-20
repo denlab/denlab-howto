@@ -241,7 +241,11 @@
       =host key=
       then
      alt-tab
-
+**** Grep 
+***** cheat sheet
+      |                            | short opt | long opt          |
+      |----------------------------+-----------+-------------------|
+      | print file name with match | ~-H~      | ~--with-filename~ |
 *** Sysadmin
 **** System Services (systemctl, ...)
 ***** General Linux
