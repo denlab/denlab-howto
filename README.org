@@ -646,6 +646,15 @@
      #+BEGIN_SRC sh
      netstat -lntu
      #+END_SRC
+
+*** Compression
+**** compress stdin, uncompress to stdout ?
+#+BEGIN_SRC sh
+     |            | cmd                       |
+     |------------+---------------------------|
+     | compress   | echo foobarXgzip > msg.gz |
+     | decompress | zcat msg.gz               |
+#+END_SRC
 ** Solaris
 *** equivalent of linux's =ps aux= ?
 
