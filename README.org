@@ -1204,6 +1204,21 @@ from: https://git-lfs.github.com/
      jq -n '{a:1, b:2, c:3} \
        | del(.. | numbers | (if (. % 2) == 0 then . else empty end))'
      #+end_src
+**** deep merge two nested datastructure?
+     Use the ~*~ operator:
+     #+BEGIN_SRC sh
+jq -n '{a: 1, b: {ba: 10, bb: {bba: 42, bbb: 43} }} * {b: {bb: {bba: 49}}}'
+#=> {
+#=>   "a": 1,
+#=>   "b": {
+#=>     "ba": 10,
+#=>     "bb": {
+#=>       "bba": 49,
+#=>       "bbb": 43
+#=>     }
+#=>   }
+#=> }
+     #+END_SRC
 *** Strings / Regex
 **** jq regexes cheet sheat ?
 ***** jq regex flags
