@@ -241,7 +241,7 @@
       =host key=
       then
      alt-tab
-**** Grep 
+**** Grep
 ***** cheat sheet
       |                            | short opt | long opt          |
       |----------------------------+-----------+-------------------|
