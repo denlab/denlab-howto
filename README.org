@@ -1389,7 +1389,9 @@ jq -n '
     |----------------------------------+----------|
     | send card to top of the board    | ~s + t~  |
     | send card to bottom of the board | ~s + b~  |
-* Visualization
-** Online visualization of Wikipedia's graph?
-- http://tools.medialab.sciences-po.fr/seealsology/
-- http://seealso.org/
+
+* Audio/Video
+** Visualization
+*** Online visualization of Wikipedia's graph?
+ - http://tools.medialab.sciences-po.fr/seealsology/
+ - http://seealso.org/
