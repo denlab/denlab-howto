@@ -1395,3 +1395,12 @@ jq -n '
 *** Online visualization of Wikipedia's graph?
  - http://tools.medialab.sciences-po.fr/seealsology/
  - http://seealso.org/
+** Video editing
+*** how to copy part of a video?
+    #+BEGIN_SRC sh
+    start=00:30:00
+    duration=00:00:55
+    in=originalfile
+    out=newfile
+    avconv -ss $start -t $duration -i $in -codec copy $out
+    #+END_SRC
