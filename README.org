@@ -590,6 +590,16 @@
      # use the copy with
      echo "${original_params[@]}"
      #+end_src
+**** Tmp files
+***** "delete while still open" trick to be sure a file will be deleted?
+      from: https://unix.stackexchange.com/questions/181937/how-create-a-temporary-file-in-shell-script
+      #+BEGIN_SRC sh
+      tmpfile=$(mktemp /tmp/abc-script.XXXXXX)
+      exec 3>"$tmpfile"
+      rm "$tmpfile"
+      : ...
+      echo foo >&3
+      #+END_SRC
 *** X
 **** copy to system clipboard from the command line?
  #+begin_src sh
