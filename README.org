@@ -976,69 +976,75 @@ from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
      npm install npm@latest -g
      #+end_src
 
-*** Regex
-**** Sed
-***** use a backreference without grouping?
-   #+begin_src sh
-   echo bar | sed 's/.*/=> & <=/'
-   # => bar <=
-   #+end_src
-***** remove backslash EOL with sed?
-   #+begin_src sh
-   echo 'a
-   b \
-   c' | sed  '
-   : again
-   /\\$/ {
-       N
-       s/\\\n//
-       t again
-   }'
-   # a
-   # b c
-   #+end_src
-**** Perl
-***** Multiline search and replace?
-      #+begin_src sh
-      perl -pe 's/<search>/<replace>/'  < in.file > out.file
-      #+end_src
+** Regex
+*** Sed
+**** use a backreference without grouping?
+  #+begin_src sh
+  echo bar | sed 's/.*/=> & <=/'
+  # => bar <=
+  #+end_src
+**** remove backslash EOL with sed?
+  #+begin_src sh
+  echo 'a
+  b \
+  c' | sed  '
+  : again
+  /\\$/ {
+      N
+      s/\\\n//
+      t again
+  }'
+  # a
+  # b c
+  #+end_src
+*** Perl
+**** Multiline search and replace?
+     #+begin_src sh
+     perl -pe 's/<search>/<replace>/'  < in.file > out.file
+     #+end_src
 
-*** Languages
-**** Python
-***** Pip
-****** How to install pip for python 3 ?
-       - install:
-         on ubuntu/debian:
-         #+BEGIN_SRC sh
-         aptitude install python3-pip
-         #+END_SRC
-       - invoke:
-         #+BEGIN_SRC sh
-         pip3 <cmd>
-         #+END_SRC
-****** pip completion on the command line?
+** Python
+*** Pip
+**** How to install pip for python 3 ?
+     - install:
+       on ubuntu/debian:
        #+BEGIN_SRC sh
-       pip completion --bash >> ~/.profile
+       aptitude install python3-pip
        #+END_SRC
-       or
+     - invoke:
        #+BEGIN_SRC sh
-       eval "`pip completion --zsh`"
+       pip3 <cmd>
        #+END_SRC
-       from: https://pip.pypa.io/en/stable/user_guide/?highlight=completion%20#command-completion
-***** Json
-****** Parse a json string?
-       #+BEGIN_SRC sh
-      python <<- EOF
-  import json
-  j = json.loads('{"one" : "1", "two" : "2", "three" : "3"}')
+**** pip completion on the command line?
+     #+BEGIN_SRC sh
+     pip completion --bash >> ~/.profile
+     #+END_SRC
+     or
+     #+BEGIN_SRC sh
+     eval "`pip completion --zsh`"
+     #+END_SRC
+     from: https://pip.pypa.io/en/stable/user_guide/?highlight=completion%20#command-completion
+**** avoid pip warning when pip list in a script?
+     #+BEGIN_SRC sh
+     cat >> ~/.pip/pip.conf <<EOF
+[list]
+format=columns 
+EOF 
+     #+END_SRC
+*** Json
+**** Parse a json string?
+     #+BEGIN_SRC sh
+    python <<- EOF
+import json
+j = json.loads('{"one" : "1", "two" : "2", "three" : "3"}')
 
-  #print j['two']
-  EOF
-       #+END_SRC
-*** Lorem ipsum
-    |      |        |                                         |
-    |------+--------+-----------------------------------------|
-    | json | online | ~curl https://registry.npmjs.com/lobar~ |
+#print j['two']
+EOF
+     #+END_SRC
+** Lorem ipsum
+   |      |        |                                         |
+   |------+--------+-----------------------------------------|
+   | json | online | ~curl https://registry.npmjs.com/lobar~ |
 
 ** Git
 *** Tags / branches lifecycle mgmt
