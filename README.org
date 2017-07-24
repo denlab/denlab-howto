@@ -83,7 +83,10 @@
   #+begin_src sh
   zip -9 -r --exclude=*.svn*  foo.zip [directory-to-compress]
   #+end_src
-
+***** reload .tmux.conf?
+      #+BEGIN_SRC sh
+      tmux source-file ~/.tmux.conf 
+      #+END_SRC
 **** Find
 ***** find files modified in the last x minutes
   #+begin_src sh
