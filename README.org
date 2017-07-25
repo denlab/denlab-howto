@@ -1077,6 +1077,24 @@ $(exe) : $(objs)
 clean:
     rm -fr $(blddir)
     #+END_SRC
+*** Gmake language
+**** print newline?
+     ~Makefile~:
+     #+BEGIN_SRC Makefile
+    define \n
+
+
+endef
+
+$(info - newline: ${\n} has been inserted)
+     #+END_SRC
+**** print all variables?
+     ~Makefile~:
+     #+BEGIN_SRC sh
+     info:
+        @echo "V=$(foreach v, $(.VARIABLES), $(v):$($(v)))" | tr ' ' '\n' | jq -R '.' | jq -Ss '[ .[] | select(length > 0)  | [splits(":")]  | {key: .[0], value: .[1]}] | .[] | .key + ":" + .value' | jq -r '.' | column
+     #+END_SRC
+
 ** Lorem ipsum
    |      |        |                                         |
    |------+--------+-----------------------------------------|
