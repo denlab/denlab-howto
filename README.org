@@ -1051,6 +1051,32 @@ j = json.loads('{"one" : "1", "two" : "2", "three" : "3"}')
 #print j['two']
 EOF
      #+END_SRC
+** GMake
+*** build in a diferent directory than the Makefile?
+    from: https://stackoverflow.com/questions/37467969/how-to-change-current-directory-in-make
+    ~Makefile~:
+    #+BEGIN_SRC sh
+srcs := main.c foo.c
+blddir := bld
+objs := $(addprefix $(blddir)/,$(srcs:.c=.o))
+exe := $(blddir)/prog
+
+.PHONY: all clean
+
+all: $(exe)
+
+$(blddir):
+    mkdir -p $@
+
+$(blddir)/%.o: %.c | $(blddir)
+    $(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
+
+$(exe) : $(objs)
+    $(CC) -o $@ $^ $(LDFLAGS) $(LDLIBS)
+
+clean:
+    rm -fr $(blddir)
+    #+END_SRC
 ** Lorem ipsum
    |      |        |                                         |
    |------+--------+-----------------------------------------|
