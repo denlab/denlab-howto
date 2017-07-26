@@ -612,6 +612,11 @@
      # disbale it
      xrandr --output LVDS1 --off
      #+END_SRC
+**** Fonts
+***** List fonts?
+      #+BEGIN_SRC sh
+      fc-list 
+      #+END_SRC
 *** Converting formats
 **** convert file format table?
  | src   | dst   | command                                                                           |
