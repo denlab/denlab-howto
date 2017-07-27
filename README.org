@@ -990,6 +990,11 @@ from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
      #+begin_src sh
      npm install npm@latest -g
      #+end_src
+**** color config in npm?
+     Starting point: 
+     #+BEGIN_SRC sh
+     npm config set color always
+     #+END_SRC
 
 ** Regex
 *** Sed
