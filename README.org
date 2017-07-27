@@ -995,7 +995,10 @@ from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
      #+BEGIN_SRC sh
      npm config set color always
      #+END_SRC
-
+**** npm list all config keys?
+     #+BEGIN_SRC sh
+     npm config ls -l  
+     #+END_SRC
 ** Regex
 *** Sed
 **** use a backreference without grouping?
