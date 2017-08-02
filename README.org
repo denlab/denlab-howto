@@ -5,6 +5,15 @@
 
 * Unixes
 ** Linux
+*** Package managers
+    |        | package manager | no sudo  | install | list all installed | remove |
+    |--------+-----------------+----------+---------+--------------------+--------|
+    | python | pip             | --user   | install | ls                 | ?      |
+    | node   | npm             | --global | install | ls                 | ?      |
+    | perl   | cpan            | ?        | install | cpan -a            | ?      |
+    | debian | aptitude        | ?        | install | dpkg -l            | purge  |
+    | rhel   | yum             | ?        | install | rpm -qa            | ?      |
+    | groovy | sdk             | ?        | install | ?                  | ?      |
 *** Packages
 **** Netcat
 ***** simple web server with netcat?
@@ -1073,7 +1082,7 @@ j = json.loads('{"one" : "1", "two" : "2", "three" : "3"}')
 #print j['two']
 EOF
      #+END_SRC
-** GMake
+** GnuMake
 *** build in a diferent directory than the Makefile?
     from: https://stackoverflow.com/questions/37467969/how-to-change-current-directory-in-make
     ~Makefile~:
@@ -1099,7 +1108,7 @@ $(exe) : $(objs)
 clean:
     rm -fr $(blddir)
     #+END_SRC
-*** Gmake language
+*** GnuMake language
 **** print newline?
      ~Makefile~:
      #+BEGIN_SRC Makefile
