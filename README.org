@@ -217,7 +217,10 @@
    #+begin_src sh
    rpm -ql [packageName]
    #+end_src
-
+***** list only names of packages?
+      #+BEGIN_SRC sh
+      rpm -qa --qf "%{NAME}\n"
+      #+END_SRC
 **** Wget
 ***** recursively download for example nexus ?
 
