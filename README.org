@@ -406,6 +406,12 @@
       #+END_SRC
 *** Bash
 **** Stdin/out/err
+***** redirect file to stdin on the left side?
+      see: http://www.tldp.org/LDP/abs/html/io-redirection.html 
+      #+BEGIN_SRC sh
+      < input-file command > output-file
+      # non standard
+      #+END_SRC
 ***** redirecting stdout, stderr
       #+BEGIN_SRC sh
       | redirect from | to   | cmd                            | notes          |
