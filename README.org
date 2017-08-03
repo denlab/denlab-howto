@@ -1491,7 +1491,19 @@ jq -n '
     |----------------------------------+----------|
     | send card to top of the board    | ~s + t~  |
     | send card to bottom of the board | ~s + b~  |
-
+*** command line online help?
+    #+BEGIN_SRC sh
+    # repl: 
+    python
+    # import the wanted module (eg: yaml)
+    import yaml
+    # help: 
+    help(yaml.load)
+    #> Help on function load in module yaml:
+    #> ...
+    #+END_SRC
+    - open the repl: ~python~
+    - import the wanted module; 
 * Audio/Video
 ** Visualization
 *** Online visualization of Wikipedia's graph?
