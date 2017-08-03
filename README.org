@@ -1082,6 +1082,14 @@ j = json.loads('{"one" : "1", "two" : "2", "three" : "3"}')
 #print j['two']
 EOF
      #+END_SRC
+*** read from stdin?
+    #+BEGIN_SRC python
+   #!/usr/bin/env python
+import fileinput
+
+for line in fileinput.input():
+  print line, # comma to avoid double printing newline
+    #+END_SRC
 ** GnuMake
 *** build in a diferent directory than the Makefile?
     from: https://stackoverflow.com/questions/37467969/how-to-change-current-directory-in-make
