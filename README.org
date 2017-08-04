@@ -368,7 +368,12 @@
       - kill them
       - remount
       ref: http://joelinoff.com/blog/?p=356
-
+**** Email
+***** How to query all the entries of a dns server ?
+      #+BEGIN_SRC sh
+      set -- domain=fircosoft.net
+      dig +nocmd ${domain} any +multiline +noall +answer
+      #+END_SRC
 *** Terminal
 **** replace capslock by ctrl in console ?
  #+begin_src sh
