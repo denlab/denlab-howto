@@ -1029,6 +1029,7 @@ from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
      #+BEGIN_SRC sh
      npm config ls -l  
      #+END_SRC
+     http://nipstr.com/
 ** Regex
 *** Sed
 **** use a backreference without grouping?
