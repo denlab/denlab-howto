@@ -96,6 +96,13 @@
       #+BEGIN_SRC sh
       tmux source-file ~/.tmux.conf 
       #+END_SRC
+***** bindings to install plugins?
+      #+BEGIN_SRC sh
+      <prefix> + I
+      #+END_SRC
+      Note: After an tmux you may need to upgrade plugins too [[bindings to upgrade plugins?][see upgrading]].
+***** bindings to upgrade plugins?
+      ~<prefix> + U
 **** Find
 ***** find files modified in the last x minutes
   #+begin_src sh
