@@ -898,6 +898,14 @@ SHELL ["bash", "-ueo","pipefail", "-c"]
 *** Universal argument in spacemacs (evil mode)?
     instead of the traditional ~C-u~
     ~SPC u~
+*** Project
+**** search and replace in project?
+     |                          |                      |             |
+     |--------------------------+----------------------+-------------|
+     | search string in project | ~helm-project-do-ag~ | ~SPC s a p~ |
+     | edit the search results  |                      | ~C-c C-e~   |
+     | commit the changes       |                      | ~C-c C-c~   |
+
 ** OrgMode
 *** Tables
 **** pipe in table cells?
