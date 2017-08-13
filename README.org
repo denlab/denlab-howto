@@ -630,6 +630,21 @@
       : ...
       echo foo >&3
       #+END_SRC
+**** bash pointer variables?
+#+BEGIN_SRC sh
+     declare varName=foo
+     declare -n refToVar=varName
+     echo ${refToVar}
+     #> foo
+#+END_SRC
+works recursively: 
+#+BEGIN_SRC sh
+$ declare varName=foo
+$ declare -n refToVar=varName
+$ declare -n refToRefToVar=refToVar
+$ echo ${refToRefToVar}
+#> foo
+#+END_SRC
 *** X
 **** copy to system clipboard from the command line?
  #+begin_src sh
