@@ -974,6 +974,28 @@ from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
 | i  | #+INDEX: line                     |
 | I  | #+INCLUDE: line                   |
 
+** install emacs25 on ubuntu16.04?
+   #+BEGIN_SRC sh
+cd
+mkdir emacs25.install
+cd emacs25.install
+# install preReqs
+sudo apt install build-essential checkinstall
+# install build deps (same for emacs24 or 25)
+sudo apt-get build-dep emacs24
+# Download emacs25 src
+wget http://ftp.igh.cnrs.fr/pub/gnu/emacs/emacs-25.1.tar.{xz,xz.sig}
+keyId=7C207910
+keyFingerprint='28D3 BED8 51FD F3AB 57FE F93C 2335 87A4 7C20 7910'
+gpg --keyserver keyserver.ubuntu.com --recv "${keyId}"
+gpg --list-keys --with-fingerprint "${keyId}" | tr -s ' ' | grep "${keyFingerprint}"
+# build
+cd emacs-25.1
+./configure
+make
+# install
+sudo checkinstall
+   #+END_SRC
 * Programming
 ** JVM ecosystem
 *** Groovy
