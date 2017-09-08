@@ -732,6 +732,13 @@ $ echo ${refToRefToVar}
     #+BEGIN_SRC sh
     gpg --verify file.gpg file
     #+END_SRC
+*** how to import a gpg public key?
+    #+BEGIN_SRC sh
+    keyId=7C207910
+    keyFingerprint='28D3 BED8 51FD F3AB 57FE F93C 2335 87A4 7C20 7910'
+    gpg --keyserver keyserver.ubuntu.com --recv $keyId 
+    gpg --list-keys --with-fingerprint $keyId | tr -s ' ' | grep "${keyFingerprint}"
+    #+END_SRC
 * Non-unixes
 ** Ms windows
 *** Cygwin
