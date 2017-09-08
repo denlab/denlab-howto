@@ -726,6 +726,12 @@ $ echo ${refToRefToVar}
     #+begin_src sh
     ps -AfL
     #+end_src
+* Crypto
+** Gpg
+*** verify a gpg signed file?
+    #+BEGIN_SRC sh
+    gpg --verify file.gpg file
+    #+END_SRC
 * Non-unixes
 ** Ms windows
 *** Cygwin
