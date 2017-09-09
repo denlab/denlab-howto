@@ -265,9 +265,10 @@
      alt-tab
 **** Grep
 ***** cheat sheet
-      |                            | short opt | long opt          |
-      |----------------------------+-----------+-------------------|
-      | print file name with match | ~-H~      | ~--with-filename~ |
+      |                                 | short opt | long opt               |
+      |---------------------------------+-----------+------------------------|
+      | print file name with match      | ~-H~      | ~--with-filename~      |
+      | print only filename for matches | ~-l~      | ~--files-with-matches~ |
 *** Sysadmin
 **** System Services (systemctl, ...)
 ***** General Linux
