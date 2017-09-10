@@ -383,15 +383,20 @@
       dig +nocmd ${domain} any +multiline +noall +answer
       #+END_SRC
 *** Terminal
-**** replace capslock by ctrl in console ?
+**** Replace capslock by ctrl in console?
+***** working also in virtual consoles?
  #+begin_src sh
  #in  /etc/default/keyboard
  #replace XKBOPTIONS="" by XKBOPTIONS="ctrl:nocaps"
  # then run
  run sudo dpkg-reconfigure -phigh console-setup
  #+end_src
-
  ref: https://www.emacswiki.org/emacs/MovingTheCtrlKey#toc9
+***** working under X?
+#+BEGIN_SRC sh
+setxkbmap -option ctrl:nocaps
+#+END_SRC
+**** replace capslock by ctrl in a terminal under X ?
 **** change language keyboard mapping
  #+begin_src sh
  # run
