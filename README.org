@@ -1389,6 +1389,13 @@ from: https://git-lfs.github.com/
      jq -n '{"a": 1} | .[]'
      #=> 1
      #+end_src
+**** Does this array contains this element?
+     #+BEGIN_SRC sh
+     jq -n '[4,3,2,1] | contains([0])'
+     #> false
+     jq -n '[4,3,2,1] | contains([2])'
+     #> true
+     #+END_SRC
 *** Modifying
 **** delete the key of an object?
   #+begin_src sh
