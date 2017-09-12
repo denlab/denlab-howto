@@ -1522,6 +1522,12 @@ jq -n '
 #=>   "c": null
 #=>  }
     #+END_SRC
+*** Dates and time
+**** Get a human readable date of current time?
+    #+BEGIN_SRC sh
+    jq -n 'now | todate'
+    #> "2017-09-12T18:35:01Z"  
+    #+END_SRC 
 ** Unicode
 *** Handy emoticon ?
  | thumbs up | 👍  |
