@@ -781,13 +781,30 @@ $ echo ${refToRefToVar}
       #+END_SRC
 
 * Docker
-** find images on the command line ?
-???
-** docker run/start/exec ?
-
-| run   | run cmd in *new* container     |
-| exec  | run cmd in *running* container |
-| start | start a *stopped* container    |
+** Images
+*** find images on the command line ?
+   ???
+*** Building
+**** docker build from stdin?
+     #+BEGIN_SRC sh
+     #
+     # docker < 17.05
+     # 
+     docker build -t foo -<<EOF
+     FROM busybox
+     RUN echo "hello world"
+     EOF  
+     #
+     # docker >= 17.05 
+     #
+     docker build -t . -f-<<EOF
+     FROM busybox
+     RUN echo "hello world"
+     COPY . /my-copied-files
+     EOF
+     #+END_SRC
+** Containers
+*** docker run/start/exec ? | run   | run cmd in *new* container     | | exec  | run cmd in *running* container | | start | start a *stopped* container    |
 ** troubleshoot ubuntu network ?
 - ping 8.8.8.8 but no www.google.com ?
 - incomplete response:
@@ -800,25 +817,27 @@ IP4.DNS[1]:                             10.19.18.25
 ExecStart=/usr/bin/docker daemon --dns 8.8.8.8 --dns 10.19.18.25 -H fd://
 #+end_src
 From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying-to-use-8-8-8-8
-** repair docker after a disk full?
-#+begin_src sh
-service docker stop
+** Persistence
+*** repair docker after a disk full?
+ #+begin_src sh
+ service docker stop
 
-thin_check /var/lib/docker/devicemapper/devicemapper/metadata
+ thin_check /var/lib/docker/devicemapper/devicemapper/metadata
 
-thin_check --clear-needs-check-flag /var/lib/docker/devicemapper/devicemapper/metadata
+ thin_check --clear-needs-check-flag /var/lib/docker/devicemapper/devicemapper/metadata
 
-service docker start
+ service docker start
 
-#+end_src
-http://stackoverflow.com/questions/30719896/docker-dm-task-run-failed-error
-** use bashism in Dockerfile?
-   #+begin_src sh
-# Define bash as the default shell
-SHELL ["bash", "-c"]
-# or:
-SHELL ["bash", "-ueo","pipefail", "-c"]
-    #+end_src
+ #+end_src
+ http://stackoverflow.com/questions/30719896/docker-dm-task-run-failed-error
+** Dockerfile
+*** use bashism in Dockerfile?
+    #+begin_src sh
+ # Define bash as the default shell
+ SHELL ["bash", "-c"]
+ # or:
+ SHELL ["bash", "-ueo","pipefail", "-c"]
+     #+end_src
 
 ** Docker Compose
 *** commands cheatsheet ?
@@ -876,14 +895,15 @@ SHELL ["bash", "-ueo","pipefail", "-c"]
    |                             | [[https://docs.docker.com/engine/userguide/storagedriver/device-mapper-driver/][overlay in practice]]      |
    |                             | [[https://docs.docker.com/engine/userguide/storagedriver/btrfs-driver/][btrfs in practice]]        |
    |                             | [[https://docs.docker.com/engine/userguide/storagedriver/zfs-driver/][zfs in practice]]          |
-** bind host /lib and /bin to the guest to run (eg) wget?
-   #+begin_src sh
-   # on the host
-   docker run -v /usr/lib/x86_64-linux-gnu:/usr-lib-host -v /lib/x86_64-linux-gnu/:/lib-host -v /usr/bin/:/bin-host -it ubuntu:16.04 bash
-   # on the guest
-   export LD_LIBRARY_PATH=/lib-host:/usr-lib-host && export PATH=$PATH:/bin-host
-   wget google.com
-   #+end_src
+** Network
+*** bind host /lib and /bin to the guest to run (eg) wget?
+    #+begin_src sh
+    # on the host
+    docker run -v /usr/lib/x86_64-linux-gnu:/usr-lib-host -v /lib/x86_64-linux-gnu/:/lib-host -v /usr/bin/:/bin-host -it ubuntu:16.04 bash
+    # on the guest
+    export LD_LIBRARY_PATH=/lib-host:/usr-lib-host && export PATH=$PATH:/bin-host
+    wget google.com
+    #+end_src
 * Emacs
 ** file type indicator header for emacs?
 #+begin_src sh
