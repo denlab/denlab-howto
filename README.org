@@ -435,6 +435,16 @@ setxkbmap -option ctrl:nocaps
       `npm install -g jsonresume-theme-kendall`
       #+END_SRC
 *** Bash
+**** Bash options
+***** How to get the values of errexit etc (set by set -e ...)?
+      #+BEGIN_SRC sh
+set -o
+#> allexport       off
+#> braceexpand     on
+#> emacs           on
+#> errexit         off
+#> errtrace        off
+      #+END_SRC
 **** Stdin/out/err
 ***** redirect file to stdin on the left side?
       see: http://www.tldp.org/LDP/abs/html/io-redirection.html 
