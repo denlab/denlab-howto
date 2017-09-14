@@ -1468,6 +1468,10 @@ jq -n '{a: 1, b: {ba: 10, bb: {bba: 42, bbb: 43} }} * {b: {bb: {bba: 49}}}'
 *** Strings / Regex
 **** jq regexes cheet sheat ?
 ***** jq regex flags
+      flag usage example: 
+      #+BEGIN_SRC sh
+      jq -n '"FOO" | test("foo"; "i")' 
+      #+END_SRC
      | flags |                                                        |
      |-------+--------------------------------------------------------|
      | =g=   | Global match, find all not just the first              |
