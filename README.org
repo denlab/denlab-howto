@@ -488,6 +488,19 @@ set -o
   =2>out<2=
   =1>err<1=
      #+END_SRC
+***** write to stdin of a backround process?
+      see: https://serverfault.com/questions/188936/writing-to-stdin-of-background-process
+      #+BEGIN_SRC sh
+      # create server
+      mkfifo in
+      cat > in &
+      echo $! > pid
+      cat in | sed 's/.*/changed> &/' &
+      # use server  
+      echo foo > in
+      # stop server
+      kill -9 $(cat pid)
+      #+END_SRC
 **** Arrays
 ***** Associative arrays
 ****** declare, print, ...
