@@ -77,7 +77,21 @@
       ssh-copy-id <user>@<host>
 
       #+end_src
-
+***** workaround for a ssh slow login on a particular server?
+      Use port forwarding to keep the connection open
+      #+BEGIN_SRC sh
+      remoteUser=user
+      remoteHost=server.com
+      remoteSshPort=22
+      # choose a free port on the client
+      localPort=5555
+      # port forward the remote host ssh 
+      ssh -N  -f -L ${localPort}:localhost:${remoteSshPort} ${remoteUser}@${remoteHost}
+      # use the local port forward
+      ssh -p ${localPort} ${remoteUser}@${remoteHost}
+      # close the port forwarding
+      fuser -k -n tcp 5555
+      #+END_SRC
 **** Tmux
 ***** how do i detach other client when reattach to session?
       #+begin_src sh
