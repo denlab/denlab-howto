@@ -830,6 +830,12 @@ $ echo ${refToRefToVar}
      COPY . /my-copied-files
      EOF
      #+END_SRC
+*** Tags
+**** Give a name to an image?
+     #+BEGIN_SRC sh
+     docker tag <srcImgId>   <imgName>
+     docker tag 978d85d02b87 firc/foo:1
+     #+END_SRC
 ** Containers
 *** docker run/start/exec ? | run   | run cmd in *new* container     | | exec  | run cmd in *running* container | | start | start a *stopped* container    |
 ** troubleshoot ubuntu network ?
