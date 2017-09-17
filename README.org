@@ -397,6 +397,16 @@
       dig +nocmd ${domain} any +multiline +noall +answer
       #+END_SRC
 *** Terminal
+**** Colors
+***** simple way to color output with grep?
+      #+BEGIN_SRC sh
+      echo -e 'foo\nbar\nbaz'                           \
+      | GREP_COLOR='01;36' egrep --color=always 'foo|$' \
+      | GREP_COLOR='01;31' egrep --color=always 'baz|$'
+      #> foo *colored turquoise*
+      #> bar
+      #> baz *colored red*
+      #+END_SRC
 **** Replace capslock by ctrl in console?
 ***** working also in virtual consoles?
  #+begin_src sh
