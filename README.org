@@ -779,6 +779,11 @@ $ echo ${refToRefToVar}
     #+begin_src sh
     ps -AfL
     #+end_src
+** AIX
+*** list all processes with their corresponding commands?
+    #+BEGIN_SRC sh
+    ps -Af
+    #+END_SRC
 * Crypto
 ** Gpg
 *** verify a gpg signed file?
