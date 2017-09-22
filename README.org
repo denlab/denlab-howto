@@ -698,6 +698,14 @@ $ declare -n refToRefToVar=refToVar
 $ echo ${refToRefToVar}
 #> foo
 #+END_SRC
+**** Env
+***** How to run a command with the env cleared?
+      #+BEGIN_SRC sh
+      env -i bash -c env
+      #>        -i, --ignore-environment
+      #>        start with an empty environment
+
+      #+END_SRC
 *** X
 **** copy to system clipboard from the command line?
  #+begin_src sh
