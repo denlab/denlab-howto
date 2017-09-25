@@ -60,10 +60,26 @@
   #+end_src
 
 ***** Disable host verification?
+****** for one session
   #+begin_src sh
   ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no peter@192.168.0.100
   #+end_src
   http://linuxcommando.blogspot.co.uk/2008/10/how-to-disable-ssh-host-key-checking.html
+
+****** for all sessions: 
+       in ~~/.ssh/config~: 
+       #+BEGIN_SRC sh
+Host 192.168.0.*
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
+       #+END_SRC
+****** for all sessions and all hosts: 
+       in ~~/.ssh/config~: 
+       #+BEGIN_SRC sh
+StrictHostKeyChecking no
+UserKnownHostsFile=/dev/null
+       #+END_SRC
+
 ***** how to mount remote fs with sshfs?
       #+begin_src sh
       # usage
