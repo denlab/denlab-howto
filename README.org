@@ -960,6 +960,15 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
     export LD_LIBRARY_PATH=/lib-host:/usr-lib-host && export PATH=$PATH:/bin-host
     wget google.com
     #+end_src
+** DockerHub
+*** How to list all tags of a particular image?
+    #+BEGIN_SRC sh
+    img=jenkins
+    curl "https://registry.hub.docker.com/v1/repositories/${img}/tags"  | jq -c '.[]'
+    #> {"layer":"","name":"2.7.3-alpine"}
+    #> {"layer":"","name":"2.7.4"}
+    #> {"layer":"","name":"2.7.4-alpine"}
+    #+END_SRC
 * Emacs
 ** file type indicator header for emacs?
 #+begin_src sh
