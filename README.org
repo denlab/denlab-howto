@@ -1597,6 +1597,11 @@ jq -n '{a: 1, b: {ba: 10, bb: {bba: 42, bbb: 43} }} * {b: {bb: {bba: 49}}}'
      jq -n '"abCD" | ascii_upcase'
      #=> "ABCD"
      #+end_src
+**** jq regex replace?
+     #+BEGIN_SRC sh
+     sub(regex; string)
+     jq -n '"foo bar" | sub(" "; "x")'
+     #+END_SRC
 *** Interop
 **** output a array for bash?
   #+begin_src sh
