@@ -1224,6 +1224,12 @@ p.waitFor()
      npm config ls -l  
      #+END_SRC
      http://nipstr.com/
+**** npm install a module from a git url ?
+     notes, the repo:
+     - must contains a package.json at it's root dir
+     #+BEGIN_SRC sh
+     npm install 'git+ssh://git@github.com:denlab/denlab-examples.git#repo/npm/npmLib' --save
+     #+END_SRC
 ** Regex
 *** Sed
 **** use a backreference without grouping?
