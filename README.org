@@ -299,6 +299,11 @@ UserKnownHostsFile=/dev/null
       |---------------------------------+-----------+------------------------|
       | print file name with match      | ~-H~      | ~--with-filename~      |
       | print only filename for matches | ~-l~      | ~--files-with-matches~ |
+**** Imagemagick
+***** how to change the quality of a jpeg image?
+      #+BEGIN_SRC sh
+      convert input.png -quality 75 output.jpg
+      #+END_SRC
 *** Sysadmin
 **** System Services (systemctl, ...)
 ***** General Linux
