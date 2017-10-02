@@ -1200,7 +1200,19 @@ p.waitFor()
         -Dartifact=org.jenkins-ci.plugins:swarm-client:3.4                         \
         -Dtransitive=false
       #+end_src
-
+**** generate a simple maven project?
+     #+BEGIN_SRC sh
+     # full list
+     mvn archetype:generate
+     # only with groupId org.apache.maven.archetypes: 
+     mvn archetype:generate -Dfilter=org.apache.maven.archetypes:
+     # good for quick start: 
+     mvn archetype:generate -Dfilter=maven-archetype-quickstar
+     # or
+     mvn archetype:generate -Dfilter=maven-archetype-webapp
+     # or 
+     mvn archetype:generate -Dfilter=maven-archetype-simple
+     #+END_SRC
 ** Node
 *** Npm
 **** how to install global packages without sudo?
