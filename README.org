@@ -411,10 +411,10 @@ UserKnownHostsFile=/dev/null
       - kill them
       - remount
       ref: http://joelinoff.com/blog/?p=356
-**** Email
+**** Dns 
 ***** How to query all the entries of a dns server ?
       #+BEGIN_SRC sh
-      set -- domain=fircosoft.net
+      set -- domain=mydomain.net
       dig +nocmd ${domain} any +multiline +noall +answer
       #+END_SRC
 *** Terminal
