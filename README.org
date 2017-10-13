@@ -6,14 +6,15 @@
 * Unixes
 ** Linux
 *** Package managers
-    |        | package manager | no sudo  | install | list all installed | remove |
-    |--------+-----------------+----------+---------+--------------------+--------|
-    | python | pip             | --user   | install | ls                 | ?      |
-    | node   | npm             | --global | install | ls                 | ?      |
-    | perl   | cpan            | ?        | install | cpan -a            | ?      |
-    | debian | aptitude        | ?        | install | dpkg -l            | purge  |
-    | rhel   | yum             | ?        | install | rpm -qa            | ?      |
-    | groovy | sdk             | ?        | install | ?                  | ?      |
+    |        | package manager | no sudo        | install | list all installed | remove |
+    |--------+-----------------+----------------+---------+--------------------+--------|
+    | python | pip             | --user         | install | ls                 | ?      |
+    | node   | npm             | --global       | install | ls                 | ?      |
+    | perl   | cpan            | ?              | install | cpan -a            | ?      |
+    | debian | aptitude        | ?              | install | dpkg -l            | purge  |
+    | rhel   | yum             | ?              | install | rpm -qa            | ?      |
+    | groovy | sdk             | ?              | install | ?                  | ?      |
+    | ruby   | gem             | --user-install | install | ?                  | ?      |
 *** Packages
 **** Netcat
 ***** simple web server with netcat?
