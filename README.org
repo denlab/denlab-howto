@@ -53,6 +53,10 @@
   passwd -d user
   # sshd: allow empty password
   sed -r 's/#(PermitEmptyPasswords) no/\1 yes/' -i.bak /etc/ssh/sshd_config
+  # allow login with passwords
+  sed -r                                       \
+      -e 's/#(PasswordAuthentication yes)/\1/' \
+      -i /etc/ssh/sshd_config                                                                          \ 
   #+end_src
 
 ***** get public key from private key ?
