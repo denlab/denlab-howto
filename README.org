@@ -832,6 +832,15 @@ $ echo ${refToRefToVar}
     #+END_SRC
 * Non-unixes
 ** Ms windows
+*** Vsphere
+**** when cloning a win vm, how to avoid a duplicate ip adress?
+     - vsphere: clone the vm : 
+       - but customize the hardware
+       - disable the network card
+     - Open the vmware console to access the machine:
+       - win: setup a new ip adress
+     - vsphere: enable "connect" "connect at startup"
+
 *** Cygwin
 **** Sshd
 ***** start sshd as a service after its installation with the Cygwin installer?
