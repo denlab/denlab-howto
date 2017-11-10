@@ -639,8 +639,11 @@ set -o
  fi
  #+end_src
  https://gist.github.com/earthgecko/3089509
-**** decimal / hex conversion?
+**** decimal / hex (and opposite) conversion?
  #+begin_src sh
+# decimal to hex
+echo "obase=16; 34" | bc
+# hex to decimal
  echo $((0xa))
  # 10
  #+end_src
