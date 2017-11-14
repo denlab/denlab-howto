@@ -56,7 +56,7 @@
   # allow login with passwords
   sed -r                                       \
       -e 's/#(PasswordAuthentication yes)/\1/' \
-      -i /etc/ssh/sshd_config                                                                          \ 
+      -i /etc/ssh/sshd_config                                                                          \
   #+end_src
 
 ***** get public key from private key ?
@@ -71,15 +71,15 @@
   #+end_src
   http://linuxcommando.blogspot.co.uk/2008/10/how-to-disable-ssh-host-key-checking.html
 
-****** for all sessions: 
-       in ~~/.ssh/config~: 
+****** for all sessions:
+       in ~~/.ssh/config~:
        #+BEGIN_SRC sh
 Host 192.168.0.*
   StrictHostKeyChecking no
   UserKnownHostsFile=/dev/null
        #+END_SRC
-****** for all sessions and all hosts: 
-       in ~~/.ssh/config~: 
+****** for all sessions and all hosts:
+       in ~~/.ssh/config~:
        #+BEGIN_SRC sh
 StrictHostKeyChecking no
 UserKnownHostsFile=/dev/null
@@ -106,7 +106,7 @@ UserKnownHostsFile=/dev/null
       remoteSshPort=22
       # choose a free port on the client
       localPort=5555
-      # port forward the remote host ssh 
+      # port forward the remote host ssh
       ssh -N  -f -L ${localPort}:localhost:${remoteSshPort} ${remoteUser}@${remoteHost}
       # use the local port forward
       ssh -p ${localPort} ${remoteUser}@${remoteHost}
@@ -129,7 +129,7 @@ UserKnownHostsFile=/dev/null
   #+end_src
 ***** reload .tmux.conf?
       #+BEGIN_SRC sh
-      tmux source-file ~/.tmux.conf 
+      tmux source-file ~/.tmux.conf
       #+END_SRC
 ***** bindings to install plugins?
       #+BEGIN_SRC sh
@@ -298,6 +298,20 @@ UserKnownHostsFile=/dev/null
       =host key=
       then
      alt-tab
+***** Windows Hosts
+****** Windows10
+******* VT-x is not available (VERR_VMX_NO_VMX)
+        From:
+
+        - VT-x is not enabled in the BIOS
+        - The CPU doesn't support VT-x
+        - Hyper-V virtualization is enabled in Windows
+        -
+        - Run in command prompt:
+       #+BEGIN_SRC sh
+       dism.exe /Online /Disable-Feature:Microsoft-Hyper-V
+       #+END_SRC
+       - And reboot
 **** Grep
 ***** cheat sheet
       |                                 | short opt | long opt               |
@@ -416,7 +430,7 @@ UserKnownHostsFile=/dev/null
       - kill them
       - remount
       ref: http://joelinoff.com/blog/?p=356
-**** Dns 
+**** Dns
 ***** How to query all the entries of a dns server ?
       #+BEGIN_SRC sh
       set -- domain=mydomain.net
@@ -497,7 +511,7 @@ set -o
       #+END_SRC
 **** Stdin/out/err
 ***** redirect file to stdin on the left side?
-      see: http://www.tldp.org/LDP/abs/html/io-redirection.html 
+      see: http://www.tldp.org/LDP/abs/html/io-redirection.html
       #+BEGIN_SRC sh
       < input-file command > output-file
       # non standard
@@ -546,7 +560,7 @@ set -o
       cat > in &
       echo $! > pid
       cat in | sed 's/.*/changed> &/' &
-      # use server  
+      # use server
       echo foo > in
       # stop server
       kill -9 $(cat pid)
@@ -719,7 +733,7 @@ echo "obase=16; 34" | bc
      echo ${refToVar}
      #> foo
 #+END_SRC
-works recursively: 
+works recursively:
 #+BEGIN_SRC sh
 $ declare varName=foo
 $ declare -n refToVar=varName
@@ -750,7 +764,7 @@ $ echo ${refToRefToVar}
 **** Fonts
 ***** List fonts?
       #+BEGIN_SRC sh
-      fc-list 
+      fc-list
       #+END_SRC
 *** Converting formats
 **** convert file format table?
@@ -830,14 +844,14 @@ $ echo ${refToRefToVar}
     #+BEGIN_SRC sh
     keyId=7C207910
     keyFingerprint='28D3 BED8 51FD F3AB 57FE F93C 2335 87A4 7C20 7910'
-    gpg --keyserver keyserver.ubuntu.com --recv $keyId 
+    gpg --keyserver keyserver.ubuntu.com --recv $keyId
     gpg --list-keys --with-fingerprint $keyId | tr -s ' ' | grep "${keyFingerprint}"
     #+END_SRC
 * Non-unixes
 ** Ms windows
 *** Vsphere
 **** when cloning a win vm, how to avoid a duplicate ip adress?
-     - vsphere: clone the vm : 
+     - vsphere: clone the vm :
        - but customize the hardware
        - disable the network card
      - Open the vmware console to access the machine:
@@ -876,13 +890,13 @@ $ echo ${refToRefToVar}
      #+BEGIN_SRC sh
      #
      # docker < 17.05
-     # 
+     #
      docker build -t foo -<<EOF
      FROM busybox
      RUN echo "hello world"
-     EOF  
+     EOF
      #
-     # docker >= 17.05 
+     # docker >= 17.05
      #
      docker build -t . -f-<<EOF
      FROM busybox
@@ -1170,7 +1184,7 @@ sudo checkinstall
      see: http://docs.groovy-lang.org/latest/html/documentation/working-with-io.html
      #+BEGIN_SRC sh
 def process = "ls -l".execute()
-println "Found text ${process.text}"        
+println "Found text ${process.text}"
      #+END_SRC
 
      #+BEGIN_SRC sh
@@ -1179,11 +1193,11 @@ process.in.eachLine { line ->
     println line
 }
      #+END_SRC
-     
+
      #+BEGIN_SRC sh
     def p = "rm -f foo.tmp".execute([], tmpDir)
 p.consumeProcessOutput()
-p.waitFor() 
+p.waitFor()
      #+END_SRC
 *** Java
 **** Create an object with the same behavior than System.out (for testing output)?
@@ -1220,13 +1234,13 @@ p.waitFor()
      #+BEGIN_SRC sh
      # full list
      mvn archetype:generate
-     # only with groupId org.apache.maven.archetypes: 
+     # only with groupId org.apache.maven.archetypes:
      mvn archetype:generate -Dfilter=org.apache.maven.archetypes:
-     # good for quick start: 
+     # good for quick start:
      mvn archetype:generate -Dfilter=maven-archetype-quickstar
      # or
      mvn archetype:generate -Dfilter=maven-archetype-webapp
-     # or 
+     # or
      mvn archetype:generate -Dfilter=maven-archetype-simple
      #+END_SRC
 ** Node
@@ -1248,13 +1262,13 @@ p.waitFor()
      npm install npm@latest -g
      #+end_src
 **** color config in npm?
-     Starting point: 
+     Starting point:
      #+BEGIN_SRC sh
      npm config set color always
      #+END_SRC
 **** npm list all config keys?
      #+BEGIN_SRC sh
-     npm config ls -l  
+     npm config ls -l
      #+END_SRC
      http://nipstr.com/
 **** npm install a module from a git url ?
@@ -1315,8 +1329,8 @@ p.waitFor()
      #+BEGIN_SRC sh
      cat >> ~/.pip/pip.conf <<EOF
 [list]
-format=columns 
-EOF 
+format=columns
+EOF
      #+END_SRC
 *** Json
 **** Parse a json string?
@@ -1393,16 +1407,16 @@ $(info - newline: ${\n} has been inserted)
      | action                        | normal git managed file | for submodule          |
      |-------------------------------+-------------------------+------------------------|
      | revert file to repo's version | =git checkout --=       | =git submodule update= |
-**** submodule: track latest? 
+**** submodule: track latest?
      #+BEGIN_SRC sh
      # add submodule to track master branch
 git submodule add -b master [URL to Git repo];
 
 # update your submodule
-git submodule update --remote 
+git submodule update --remote
      #+END_SRC
 *** Tags / branches lifecycle mgmt
-    
+
     | what   | action               | where        | git command                                                                                               |
     |--------+----------------------+--------------+-----------------------------------------------------------------------------------------------------------|
     | tag    | create               | local        | =git tag <tagName> <commit>=                                                                              |
@@ -1553,7 +1567,7 @@ from: https://git-lfs.github.com/
      # - With contains:
      jq -n '[4,3,2,1] | contains([0])' #> false
      jq -n '[4,3,2,1] | contains([2])' #> true
-     # - With inside: 
+     # - With inside:
      jq -n '[0] | inside([1,2])'       #> false
      #+END_SRC
 *** Modifying
@@ -1597,9 +1611,9 @@ jq -n '{a: 1, b: {ba: 10, bb: {bba: 42, bbb: 43} }} * {b: {bb: {bba: 49}}}'
 *** Strings / Regex
 **** jq regexes cheet sheat ?
 ***** jq regex flags
-      flag usage example: 
+      flag usage example:
       #+BEGIN_SRC sh
-      jq -n '"FOO" | test("foo"; "i")' 
+      jq -n '"FOO" | test("foo"; "i")'
       #+END_SRC
      | flags |                                                        |
      |-------+--------------------------------------------------------|
@@ -1694,8 +1708,8 @@ jq -n '
 **** Get a human readable date of current time?
     #+BEGIN_SRC sh
     jq -n 'now | todate'
-    #> "2017-09-12T18:35:01Z"  
-    #+END_SRC 
+    #> "2017-09-12T18:35:01Z"
+    #+END_SRC
 ** Unicode
 *** Handy emoticon ?
  | thumbs up | 👍  |
@@ -1772,17 +1786,17 @@ jq -n '
     | send card to bottom of the board | ~s + b~  |
 *** command line online help?
     #+BEGIN_SRC sh
-    # repl: 
+    # repl:
     python
     # import the wanted module (eg: yaml)
     import yaml
-    # help: 
+    # help:
     help(yaml.load)
     #> Help on function load in module yaml:
     #> ...
     #+END_SRC
     - open the repl: ~python~
-    - import the wanted module; 
+    - import the wanted module;
 * Audio/Video
 ** Visualization
 *** Online visualization of Wikipedia's graph?
