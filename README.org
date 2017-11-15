@@ -499,6 +499,13 @@ setxkbmap -option ctrl:nocaps
       #+BEGIN_SRC sh
       `npm install -g jsonresume-theme-kendall`
       #+END_SRC
+*** Io
+**** Disk
+***** list files open by a particular process
+
+      #+BEGIN_SRC sh
+      lsof -u jenkins | <grep/cut/jq> 
+      #+END_SRC
 *** Bash
 **** Bash options
 ***** How to get the values of errexit etc (set by set -e ...)?
