@@ -1512,6 +1512,12 @@ from: https://git-lfs.github.com/
      ssh-agent bash -c 'ssh-add /somewhere/yourkey; git clone git@github.com:user/project.git'
      #+END_SRC
 
+     
+*** Diffing
+**** show only the filnames that changed
+     #+BEGIN_SRC sh
+     git diff --stat --names-only HEAD^^..HEAD^
+     #+END_SRC 
 ** Jq
 *** Finding
 **** recursively find a value by key?
