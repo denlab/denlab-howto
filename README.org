@@ -137,7 +137,8 @@ UserKnownHostsFile=/dev/null
       #+END_SRC
       Note: After an tmux you may need to upgrade plugins too [[bindings to upgrade plugins?][see upgrading]].
 ***** bindings to upgrade plugins?
-      ~<prefix> + U
+      - update plugins: ~<prefix> + U
+      - remove plugins not on the list: =<prefix> + alt + u=
 **** Find
 ***** find files modified in the last x minutes
   #+begin_src sh
