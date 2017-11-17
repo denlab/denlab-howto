@@ -1678,6 +1678,11 @@ jq -n '{a: 1, b: {ba: 10, bb: {bba: 42, bbb: 43} }} * {b: {bb: {bba: 49}}}'
      sub(regex; string)
      jq -n '"foo bar" | sub(" "; "x")'
      #+END_SRC
+**** single quote as a integer (to escape it in bash)?
+     #+BEGIN_SRC sh
+     jq -n '([39] | implode) as $quote | $quote'
+     #> "'"
+     #+END_SRC
 *** Interop
 **** output a array for bash?
   #+begin_src sh
