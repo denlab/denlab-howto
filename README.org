@@ -330,6 +330,11 @@ UserKnownHostsFile=/dev/null
       #+BEGIN_SRC sh
       convert input.png -quality 75 output.jpg
       #+END_SRC
+**** Rsync
+***** how to specify the port in rsync?
+      #+BEGIN_SRC sh
+      rsync -rvz -e 'ssh -p 2222' --progress --remove-sent-files ./dir user@host:/path
+      #+END_SRC
 *** Sysadmin
 **** System Services (systemctl, ...)
 ***** General Linux
