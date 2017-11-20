@@ -86,6 +86,8 @@ UserKnownHostsFile=/dev/null
        #+END_SRC
 
 ***** how to mount remote fs with sshfs?
+      
+      - mount:
       #+begin_src sh
       # usage
       sshfs USERNAME@HOSTNAME_OR_IP:/REMOTE_PATH LOCAL_MOUNT_POINT SSH_OPTIONS
@@ -93,6 +95,10 @@ UserKnownHostsFile=/dev/null
       sshfs sessy@mycomputer:/remote/path /local/path -C -p 9876 -o allow_other
       #+end_src
       https://wiki.archlinux.org/index.php/SSHFS
+      - umount: 
+        #+BEGIN_SRC sh
+        fusermount -u <mount-point>
+        #+END_SRC
 ***** copy pub key to remote authorized_keys?
       #+begin_src sh
       ssh-copy-id <user>@<host>
