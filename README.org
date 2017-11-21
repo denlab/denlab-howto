@@ -1414,7 +1414,7 @@ $(info - newline: ${\n} has been inserted)
      #+END_SRC
 *** print all targets?
     #+BEGIN_SRC sh
-    make -Rrnp 
+    make -Rrnp  | egrep -v '^#|:= | = ' | grep ':'
     #+END_SRC
 ** Lorem ipsum
    |      |        |                                         |
