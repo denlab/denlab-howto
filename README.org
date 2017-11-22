@@ -1416,6 +1416,10 @@ $(info - newline: ${\n} has been inserted)
     #+BEGIN_SRC sh
     make -Rrnp  | egrep -v '^#|:= | = ' | grep ':'
     #+END_SRC
+    or 
+    #+BEGIN_SRC sh
+       @grep '^[^#[:space:]].*:' Makefile
+    #+END_SRC
 ** Lorem ipsum
    |      |        |                                         |
    |------+--------+-----------------------------------------|
