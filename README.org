@@ -169,6 +169,10 @@ UserKnownHostsFile=/dev/null
       #+BEGIN_SRC sh
       find . -size +500M -exec l {} \;
       #+END_SRC
+***** find filename with regex?
+      #+BEGIN_SRC sh
+     find . -type f -regextype egrep -regex '.*\.(msg|txt)$$' 
+      #+END_SRC
 **** Xargs
 ***** run a cmd on each line of stdin with xargs?
   #+begin_src sh
