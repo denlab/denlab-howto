@@ -341,6 +341,20 @@ UserKnownHostsFile=/dev/null
       #+END_SRC
 *** Sysadmin
 **** System Services (systemctl, ...)
+***** systemd
+****** systemd / systemV cheatsheet
+
+from: https://fedoraproject.org/wiki/SysVinit_to_Systemd_Cheatsheet
+
+| Sysvinit Command            | Systemd Command               | Notes                                                                            |
+|-----------------------------+-------------------------------+----------------------------------------------------------------------------------|
+| service frobozz start       | systemctl start frobozz       | Used to start a service (not reboot persistent)                                  |
+| service frobozz stop        | systemctl stop frobozz        | Used to stop a service (not reboot persistent)                                   |
+| service frobozz restart     | systemctl restart frobozz     | Used to stop and then start a service                                            |
+| service frobozz reload      | systemctl reload frobozz      | When supported, reloads the config file without interrupting pending operations. |
+| service frobozz condrestart | systemctl condrestart frobozz | Restarts if the service is already running.                                      |
+| service frobozz status      | systemctl status frobozz      | Tells whether a service is currently running.                                    |
+
 ***** General Linux
 ****** Linux reload service config
    #+begin_src sh
