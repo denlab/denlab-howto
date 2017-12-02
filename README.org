@@ -786,6 +786,11 @@ $ echo ${refToRefToVar}
       #>        start with an empty environment
 
       #+END_SRC
+**** generate uuid?
+     #+BEGIN_SRC sh
+     cat /proc/sys/kernel/random/uuid
+     #> aa6bc854-9eab-43cd-986d-d2318bf4a845
+     #+END_SRC
 *** X
 **** copy to system clipboard from the command line?
  #+begin_src sh
