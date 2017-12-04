@@ -863,6 +863,12 @@ $ echo ${refToRefToVar}
      | compress   | echo foobarXgzip > msg.gz |
      | decompress | zcat msg.gz               |
 #+END_SRC
+*** Fs
+**** difference between =/bin=, =/usr/bin=, =/usr/local/bin=?
+     From: https://unix.stackexchange.com/questions/8656/usr-bin-vs-usr-local-bin-on-linux
+     - =/bin=: for booting the os (must fit on a small partition)
+     - =/usr/bin=: Normal binaries installed by the package manager
+     - =/usr/local/bin=: Was installed after manually compiled (for exemple)
 ** Solaris
 *** equivalent of linux's =ps aux= ?
 
