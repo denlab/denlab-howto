@@ -17,7 +17,7 @@
     | ruby   | gem             | --user-install | install | ?                  | ?      |
 **** apk
 ***** equivalent of apt-file search?
-      
+
 *** Packages
 **** Netcat
 ***** simple web server with netcat?
@@ -89,7 +89,7 @@ UserKnownHostsFile=/dev/null
        #+END_SRC
 
 ***** how to mount remote fs with sshfs?
-      
+
       - mount:
       #+begin_src sh
       # usage
@@ -98,7 +98,7 @@ UserKnownHostsFile=/dev/null
       sshfs sessy@mycomputer:/remote/path /local/path -C -p 9876 -o allow_other
       #+end_src
       https://wiki.archlinux.org/index.php/SSHFS
-      - umount: 
+      - umount:
         #+BEGIN_SRC sh
         fusermount -u <mount-point>
         #+END_SRC
@@ -174,7 +174,7 @@ UserKnownHostsFile=/dev/null
       #+END_SRC
 ***** find filename with regex?
       #+BEGIN_SRC sh
-     find . -type f -regextype egrep -regex '.*\.(msg|txt)$$' 
+     find . -type f -regextype egrep -regex '.*\.(msg|txt)$$'
       #+END_SRC
 **** Xargs
 ***** run a cmd on each line of stdin with xargs?
@@ -536,7 +536,7 @@ setxkbmap -option ctrl:nocaps
 ***** list files open by a particular process
 
       #+BEGIN_SRC sh
-      lsof -u jenkins | <grep/cut/jq> 
+      lsof -u jenkins | <grep/cut/jq>
       #+END_SRC
 *** Bash
 **** Bash options
@@ -1448,13 +1448,13 @@ $(info - newline: ${\n} has been inserted)
     #+BEGIN_SRC sh
     make -Rrnp  | egrep -v '^#|:= | = ' | grep ':'
     #+END_SRC
-    or 
+    or
     #+BEGIN_SRC sh
        @grep '^[^#[:space:]].*:' Makefile
     #+END_SRC
-    or 
+    or
     #+BEGIN_SRC sh
-    make -prRn | egrep -v $'(^(#|\t)|=)' | egrep ':' 2> /dev/null | cut -d: -f1 | sort 
+    make -prRn | egrep -v $'(^(#|\t)|=)' | egrep ':' 2> /dev/null | cut -d: -f1 | sort
     #+END_SRC
 ** Lorem ipsum
    |      |        |                                         |
@@ -1579,7 +1579,7 @@ from: https://git-lfs.github.com/
 **** show only the filnames that changed
      #+BEGIN_SRC sh
      git diff --stat --names-only HEAD^^..HEAD^
-     #+END_SRC 
+     #+END_SRC
 ** Jq
 *** Finding
 **** recursively find a value by key?
