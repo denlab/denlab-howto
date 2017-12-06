@@ -15,6 +15,9 @@
     | rhel   | yum             | ?              | install | rpm -qa            | ?      |
     | groovy | sdk             | ?              | install | ?                  | ?      |
     | ruby   | gem             | --user-install | install | ?                  | ?      |
+**** apk
+***** equivalent of apt-file search?
+      
 *** Packages
 **** Netcat
 ***** simple web server with netcat?
@@ -1449,6 +1452,10 @@ $(info - newline: ${\n} has been inserted)
     #+BEGIN_SRC sh
        @grep '^[^#[:space:]].*:' Makefile
     #+END_SRC
+    or 
+    #+BEGIN_SRC sh
+    make -prRn | egrep -v $'(^(#|\t)|=)' | egrep ':' 2> /dev/null | cut -d: -f1 | sort 
+    #+END_SRC
 ** Lorem ipsum
    |      |        |                                         |
    |------+--------+-----------------------------------------|
@@ -1521,7 +1528,8 @@ git submodule update --remote
     #+end_src
 *** grep history?
     #+begin_src sh
-    git grep <regexp> $(git rev-list --all)
+    set -- '<regex>'
+    git grep "$@" $(git rev-list --all)
     #+end_src
 *** config for colors?
     #+BEGIN_SRC sh
@@ -1567,7 +1575,6 @@ from: https://git-lfs.github.com/
      ssh-agent bash -c 'ssh-add /somewhere/yourkey; git clone git@github.com:user/project.git'
      #+END_SRC
 
-     
 *** Diffing
 **** show only the filnames that changed
      #+BEGIN_SRC sh
