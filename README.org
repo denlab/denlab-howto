@@ -826,8 +826,9 @@ $ echo ${refToRefToVar}
    pdftk modified.pdf output recompressed.pdf compress
    #+end_src
    http://stackoverflow.com/questions/9871585/how-to-find-and-replace-text-in-a-existing-pdf-file-with-pdftk-or-other-command
-*** Ubuntu / Debian
-**** Setup locale?
+*** Locale
+**** fix locale config?
+***** ubuntu / debian
  #+begin_src sh
  # add to /etc/environnement
  #LC_ALL=en_US.UTF-8
@@ -837,6 +838,19 @@ $ echo ${refToRefToVar}
  sudo dpkg-reconfigure locales
 
  #+end_src
+***** centos
+      #+BEGIN_SRC sh
+cat /etc/environment /etc/environment.bak
+cat /etc/environment          \
+| jq -R .                     \
+| jq -sr '
+  ["LANG=en_US.utf-10", "LC_ALL=en_US.utf-8"] as $vars
+  | if contains($vars) then empty else $vars end
+  | join("\n")
+  | "echo \"\(.)\"
+  | tee -a /etc/environment " ' \
+| bash -xeuo pipefail
+#+END_SRC
 *** Network
 **** How to trace all network activity?
      =tcpflow=
