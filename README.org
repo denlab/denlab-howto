@@ -342,6 +342,24 @@ UserKnownHostsFile=/dev/null
       #+BEGIN_SRC sh
       rsync -rvz -e 'ssh -p 2222' --progress --remove-sent-files ./dir user@host:/path
       #+END_SRC
+**** Comm
+***** comm summary?
+     =comm <(echo $'a\nb') <(echo $'a\nc')=
+
+     | 1 | 2 | 3 |
+     |---+---+---|
+     |   |   | a |
+     | b |   |   |
+     |   | c |   |
+
+     - column1: only in FILE1
+     - colukn2: only in FILE2
+     - column3: in FILE1 and FILE2
+
+**** Other
+***** binary to compare the content of files (all in a but not in b, etc)?
+      =comm=
+
 *** Sysadmin
 **** System Services (systemctl, ...)
 ***** systemd
