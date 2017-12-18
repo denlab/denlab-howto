@@ -666,6 +666,12 @@ set -o
        echo -n a=
        echo ${a[@} + "${a[@]}"}
        #+END_SRC
+****** parse string to array?
+       #+BEGIN_SRC sh
+       IFS=', ' read -r -a array <<< "a, b, c"
+       echo "array=${array[@]}"
+       #> array=a b c
+       #+END_SRC
 **** ssh escape sequence?
  =ENTER, ~, .=
 **** c style for loop?
