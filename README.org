@@ -657,7 +657,7 @@ set -o
       # get all
       echo ${a[*]}
       # size
-      echo "size=${#}"
+      echo "size=${#a[@]}"
       #+end_src
 ****** access empty array?
 
