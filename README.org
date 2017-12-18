@@ -659,6 +659,13 @@ set -o
       # size
       echo "size=${#}"
       #+end_src
+****** access empty array?
+
+       #+BEGIN_SRC sh
+       declare -a a=()
+       echo -n a=
+       echo ${a[@} + "${a[@]}"}
+       #+END_SRC
 **** ssh escape sequence?
  =ENTER, ~, .=
 **** c style for loop?
