@@ -1782,6 +1782,11 @@ jq -n '{a: 1, b: {ba: 10, bb: {bba: 42, bbb: 43} }} * {b: {bb: {bba: 49}}}'
      jq -n '([39] | implode) as $quote | $quote'
      #> "'"
      #+END_SRC
+**** substring?
+     #+BEGIN_SRC sh
+     echo foo | jq -R '.[0:1]'
+"f"
+     #+END_SRC
 *** Interop
 **** output a array for bash?
   #+begin_src sh
