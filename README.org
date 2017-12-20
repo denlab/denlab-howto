@@ -557,6 +557,14 @@ setxkbmap -option ctrl:nocaps
       lsof -u jenkins | <grep/cut/jq>
       #+END_SRC
 *** Bash
+**** Looping
+***** loop over cmd output with while?
+      #+BEGIN_SRC sh
+     iseq 3 | while read l; do echo ">$l"; done
+     #> >1
+     #> >2
+     #> >3
+      #+END_SRC
 **** Bash options
 ***** How to get the values of errexit etc (set by set -e ...)?
       #+BEGIN_SRC sh
