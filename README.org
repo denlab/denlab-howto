@@ -557,6 +557,12 @@ setxkbmap -option ctrl:nocaps
       lsof -u jenkins | <grep/cut/jq>
       #+END_SRC
 *** Bash
+**** Tests/Conditionnals
+***** cheatsheet
+      |      |          |            |                 |
+      |------+----------+------------+-----------------|
+      | file | is empty | =[ -s a ]= | single brackets |
+      |      |          |            |                 |
 **** Looping
 ***** loop over cmd output with while?
       #+BEGIN_SRC sh
