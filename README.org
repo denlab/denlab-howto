@@ -850,6 +850,11 @@ $ echo ${refToRefToVar}
       #+BEGIN_SRC sh
       fc-list
       #+END_SRC
+**** Gnome
+***** How to logout from Gnome with the terminal? 
+      #+BEGIN_SRC sh
+      gnome-session-quit
+      #+END_SRC
 *** Converting formats
 **** convert file format table?
  | src   | dst   | command                                                                           |
