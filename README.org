@@ -839,6 +839,38 @@ $ echo ${refToRefToVar}
      cat /proc/sys/kernel/random/uuid
      #> aa6bc854-9eab-43cd-986d-d2318bf4a845
      #+END_SRC
+**** Complete
+***** bash completion cheat sheet?
+      | complete on                                                              | cmd        | options |             |               | for what?     | short form |
+      |--------------------------------------------------------------------------+------------+---------+-------------+---------------+---------------+------------|
+      | remove                                                                   | =complete= | =-r=    |             |               | all           |            |
+      |                                                                          | =complete= | =-r=    |             | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+      |--------------------------------------------------------------------------+------------+---------+-------------+---------------+---------------+------------|
+      | complete on alias names                                                  | =complete= | =-A=    | =alias=     | =cmd1 … cmdN= | =cmd1 … cmdN= | =-a=       |
+      |--------------------------------------------------------------------------+------------+---------+-------------+---------------+---------------+------------|
+      | array variable names                                                     | =complete= | =-A=    | =arrayvar=  | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+      | readline key binding names                                               | =complete= | =-A=    | =binding=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+      | names of shell builtin commands                                          | =complete= | =-A=    | =builtin=   | =cmd1 … cmdN= | =cmd1 … cmdN= | =-b=       |
+      | command names                                                            | =complete= | =-A=    | =command=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+      | directory names                                                          | =complete= | =-A=    | =directory= | =cmd1 … cmdN= | =cmd1 … cmdN= | =-d=       |
+      | disabled shell builtins                                                  | =complete= | =-A=    | =disabled=  | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+      | enabled shell builtins                                                   | =complete= | =-A=    | =enabled=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+      | names of exported shell variables                                        | =complete= | =-A=    | =export=    | =cmd1 … cmdN= | =cmd1 … cmdN= | =-e=       |
+      | file names                                                               | =complete= | =-A=    | =file=      | =cmd1 … cmdN= | =cmd1 … cmdN= | =-f=       |
+      | names of shell functions                                                 | =complete= | =-A=    | =function=  | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+      | group names                                                              | =complete= | =-A=    | =group=     | =cmd1 … cmdN= | =cmd1 … cmdN= | =-g=       |
+      | help topics accepted by the help builtin                                 | =complete= | =-A=    | =helptopic= | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+      | hostnames as taken from the file specifed by the HOSTFILE shell variable | =complete= | =-A=    | =hostname=  | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+      | job names                                                                | =complete= | =-A=    | =job=       | =cmd1 … cmdN= | =cmd1 … cmdN= | =-j=       |
+      | shell reserved words                                                     | =complete= | =-A=    | =keyword=   | =cmd1 … cmdN= | =cmd1 … cmdN= | =-k=       |
+      | names of running jobs                                                    | =complete= | =-A=    | =running=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+      | service names                                                            | =complete= | =-A=    | =service=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+      | valid args for the -o option of the set builtin                          | =complete= | =-A=    | =setopt=    | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+      | shell option names as accepted by the shopt builtin                      | =complete= | =-A=    | =shopt=     | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+      | signal names                                                             | =complete= | =-A=    | =signal=    | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+      | names of stopped jobs                                                    | =complete= | =-A=    | =stopped=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+      | user names                                                               | =complete= | =-A=    | =user=      | =cmd1 … cmdN= | =cmd1 … cmdN= | =-u=       |
+      | names of all shell variables                                             | =complete= | =-A=    | =variable=  | =cmd1 … cmdN= | =cmd1 … cmdN= | =-v=       |
 *** Zsh
 **** Completion
 ***** using bash's autocomplete with zsh?
@@ -853,9 +885,9 @@ $ echo ${refToRefToVar}
       #+END_SRC
 *** X
 **** copy to system clipboard from the command line?
- #+begin_src sh
+     #+begin_src sh
  echo a | xclip -selection clipboard
- #+end_src
+     #+end_src
 **** dual monitor setup: turn off one of the monitor and not the other?
      #+BEGIN_SRC sh
      # choose one of the monitor with:
@@ -875,23 +907,23 @@ $ echo ${refToRefToVar}
       #+END_SRC
 *** Converting formats
 **** convert file format table?
- | src   | dst   | command                                                                           |
- |-------+-------+-----------------------------------------------------------------------------------|
- | ~rtf~ | ~pdf~ | ~libreoffice --headless --invisible --norestore --convert-to pdf source-file.rtf~ |
+     | src   | dst   | command                                                                           |
+     |-------+-------+-----------------------------------------------------------------------------------|
+     | ~rtf~ | ~pdf~ | ~libreoffice --headless --invisible --norestore --convert-to pdf source-file.rtf~ |
 **** Pdf
 ***** replace a string in a pdf file ?
-   #+begin_src sh
+      #+begin_src sh
    pdftk file.pdf output uncompressed.pdf uncompress
 
    sed -e "s/ORIGINALSTRING/NEWSTRING/g" <uncompressed.pdf >modified.pdf
 
    pdftk modified.pdf output recompressed.pdf compress
-   #+end_src
-   http://stackoverflow.com/questions/9871585/how-to-find-and-replace-text-in-a-existing-pdf-file-with-pdftk-or-other-command
+      #+end_src
+      http://stackoverflow.com/questions/9871585/how-to-find-and-replace-text-in-a-existing-pdf-file-with-pdftk-or-other-command
 *** Locale
 **** fix locale config?
 ***** ubuntu / debian
- #+begin_src sh
+      #+begin_src sh
  # add to /etc/environnement
  #LC_ALL=en_US.UTF-8
  LANG=en_US.UTF-8
@@ -899,7 +931,7 @@ $ echo ${refToRefToVar}
  sudo locale-gen "en_US.UTF-8"
  sudo dpkg-reconfigure locales
 
- #+end_src
+      #+end_src
 ***** centos
       #+BEGIN_SRC sh
 cat /etc/environment /etc/environment.bak
@@ -912,7 +944,7 @@ cat /etc/environment          \
   | "echo \"\(.)\"
   | tee -a /etc/environment " ' \
 | bash -xeuo pipefail
-#+END_SRC
+      #+END_SRC
 *** Network
 **** How to trace all network activity?
      =tcpflow=
