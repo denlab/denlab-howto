@@ -839,6 +839,18 @@ $ echo ${refToRefToVar}
      cat /proc/sys/kernel/random/uuid
      #> aa6bc854-9eab-43cd-986d-d2318bf4a845
      #+END_SRC
+*** Zsh
+**** Completion
+***** using bash's autocomplete with zsh?
+      #+BEGIN_SRC sh
+      touch cmd && chmod +x cmd
+      # run bashcompinit
+      autoload bashcompinit
+      bashcompinit
+      # bash's way of saying that cmd can complete with foo or bar or baz:
+      complete -W 'foo bar baz' cmd
+      #> ./cmd b<tab><tab> will show "foo" "bar" "baz"
+      #+END_SRC
 *** X
 **** copy to system clipboard from the command line?
  #+begin_src sh
