@@ -869,7 +869,7 @@ $ echo ${refToRefToVar}
       fc-list
       #+END_SRC
 **** Gnome
-***** How to logout from Gnome with the terminal? 
+***** How to logout from Gnome with the terminal?
       #+BEGIN_SRC sh
       gnome-session-quit
       #+END_SRC
