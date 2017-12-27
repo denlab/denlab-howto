@@ -878,6 +878,16 @@ $ echo ${refToRefToVar}
       trap '(read -p "[$BASH_SOURCE:$LINENO] $BASH_COMMAND?")' DEBUG
       #+END_SRC
       From: https://translate.google.co.uk/translate?hl=fr&sl=en&tl=fr&u=http%3A%2F%2Fwww.softpanorama.org%2FScripting%2FShellorama%2Fbash_debugging.shtml&anno=2
+**** Variables
+***** how to test if a variable is defined?
+      #+BEGIN_SRC sh
+      if [[ ${varname:-} ]]; then 
+        echo "var is defined"
+      else
+        echo "var not defined or empt"
+      fi
+      #+END_SRC
+
 *** Zsh
 **** Completion
 ***** using bash's autocomplete with zsh?
