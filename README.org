@@ -871,6 +871,13 @@ $ echo ${refToRefToVar}
       | names of stopped jobs                                                    | =complete= | =-A=    | =stopped=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
       | user names                                                               | =complete= | =-A=    | =user=      | =cmd1 … cmdN= | =cmd1 … cmdN= | =-u=       |
       | names of all shell variables                                             | =complete= | =-A=    | =variable=  | =cmd1 … cmdN= | =cmd1 … cmdN= | =-v=       |
+**** Debugging
+***** how to make a bash script stop and print current line before running it?
+      Add to your script: 
+      #+BEGIN_SRC sh
+      trap '(read -p "[$BASH_SOURCE:$LINENO] $BASH_COMMAND?")' DEBUG
+      #+END_SRC
+      From: https://translate.google.co.uk/translate?hl=fr&sl=en&tl=fr&u=http%3A%2F%2Fwww.softpanorama.org%2FScripting%2FShellorama%2Fbash_debugging.shtml&anno=2
 *** Zsh
 **** Completion
 ***** using bash's autocomplete with zsh?
