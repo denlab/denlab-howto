@@ -6,15 +6,18 @@
 * Unixes
 ** Linux
 *** Package managers
-    |        | package manager | no sudo        | install | list all installed | remove |
-    |--------+-----------------+----------------+---------+--------------------+--------|
-    | python | pip             | --user         | install | ls                 | ?      |
-    | node   | npm             | --global       | install | ls                 | ?      |
-    | perl   | cpan            | ?              | install | cpan -a            | ?      |
-    | debian | aptitude        | ?              | install | dpkg -l            | purge  |
-    | rhel   | yum             | ?              | install | rpm -qa            | ?      |
-    | groovy | sdk             | ?              | install | ?                  | ?      |
-    | ruby   | gem             | --user-install | install | ?                  | ?      |
+    |        | package manager | no sudo        | install | install         | list all installed | list all                       | remove |   |
+    |        |                 |                |         | version         |                    | installed                      |        |   |
+    |        |                 |                |         |                 |                    | w version                      |        |   |
+    |--------+-----------------+----------------+---------+-----------------+--------------------+--------------------------------+--------+---|
+    | alpine | apk             |                | add     | add <pkg>=<ver> | info               | apk info <pipe> xargs apk info |        |   |
+    | python | pip             | --user         | install |                 | ls                 |                                | ?      |   |
+    | node   | npm             | --global       | install |                 | ls                 |                                | ?      |   |
+    | perl   | cpan            | ?              | install |                 | cpan -a            |                                | ?      |   |
+    | debian | aptitude        | ?              | install |                 | dpkg -l            |                                | purge  |   |
+    | rhel   | yum             | ?              | install |                 | rpm -qa            |                                | ?      |   |
+    | groovy | sdk             | ?              | install |                 | ?                  |                                | ?      |   |
+    | ruby   | gem             | --user-install | install |                 | ?                  |                                | ?      |   |
 **** apk
 ***** equivalent of apt-file search?
 
