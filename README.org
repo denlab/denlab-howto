@@ -1860,16 +1860,37 @@ jq -n '{a: 1, b: {ba: 10, bb: {bba: 42, bbb: 43} }} * {b: {bb: {bba: 49}}}'
      sub(regex; string)
      jq -n '"foo bar" | sub(" "; "x")'
      #+END_SRC
-**** single quote as a integer (to escape it in bash)?
-     #+BEGIN_SRC sh
-     jq -n '([39] | implode) as $quote | $quote'
-     #> "'"
-     #+END_SRC
 **** substring?
      #+BEGIN_SRC sh
      echo foo | jq -R '.[0:1]'
 "f"
      #+END_SRC
+*** Quoting
+**** given a known char I want to encode it in a json string for consumption by jq
+ #+BEGIN_SRC sh
+      char="'"
+      #> 
+      echo "${char}" | jq -R explode
+      #> [39]
+      # Convert the decimal to hex
+      echo "obase=16; 39" | bc 
+      #> 27
+      # Encode the char in the string
+      echo '"\\u0027"' | jq .
+      #> "'"
+      #+END_SRC
+**** Single Quote
+***** single quote as a integer (to escape it in bash)?
+     #+BEGIN_SRC sh
+     jq -n '([39] | implode) as $quote | $quote'
+     #> "'"
+     #+END_SRC
+***** encode a single quote in a string for jq to decode?
+      #+BEGIN_SRC sh
+      # Encode the char in the string
+      echo '"\\u0027"' | jq .
+      #> "'"
+      #+END_SRC
 *** Interop
 **** output a array for bash?
   #+begin_src sh
