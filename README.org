@@ -1939,14 +1939,14 @@ jq -n '
     #+END_SRC
 ** Unicode
 *** Handy emoticon ?
- | thumbs up | 👍  |
- |           | 👏y |
- | speaker   | 🔇  |
- |           | 2🔈 |
- |           | 🔉  |
- |           | 🔊  |
- | warn      | ⚠  |
- |           |    |
+ | thumbs up  | 👍  |
+ |            | 👏y |
+ | speaker    | 🔇  |
+ |            | 2🔈 |
+ |            | 🔉  |
+ |            | 🔊  |
+ | warn       | ⚠  |
+ | full block | █  |
 *** draft
  #+begin_src sh
  ┌┐
