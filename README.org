@@ -837,6 +837,15 @@ $ echo ${refToRefToVar}
       #>        start with an empty environment
 
       #+END_SRC
+***** export bash function?
+     #+BEGIN_SRC bash 
+     f() { echo "I'm f!" ; }
+     export -f f
+     bash -c f
+     #+END_SRC
+
+     #+RESULTS:
+     : I'm f!
 **** generate uuid?
      #+BEGIN_SRC sh
      cat /proc/sys/kernel/random/uuid
