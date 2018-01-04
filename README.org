@@ -1304,7 +1304,33 @@ from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
 | A  | #+ASCII:                          |
 | i  | #+INDEX: line                     |
 | I  | #+INCLUDE: line                   |
-
+*** Babel
+**** "eval is disabled for shell"
+***** add to your init file
+       *use =shell= and not =sh=*
+       #+BEGIN_SRC elisp
+       (org-babel-do-load-languages
+       'org-babel-load-languages
+       '(
+       (js         . t)
+       ;; (sh         . t)
+       (emacs-lisp . t)
+       (shell      . t)
+       (clojure    . t)
+     ))
+       #+END_SRC
+***** in the org mode file
+     #+BEGIN_EXAMPLE 
+     #+BEGIN_SRC sh
+     f() { echo "I'm f!" ; }
+     export -f f
+     bash -c f
+     #+END_SRC
+     #+END_EXAMPLE 
+***** stop emacs
+***** remove the folder =~/.emacs.d/elpa/org-plus-contrib-*=
+***** start emacs
+***** try to eval with =C-c C-c=
 ** install emacs25 on ubuntu16.04?
    #+BEGIN_SRC sh
 cd
