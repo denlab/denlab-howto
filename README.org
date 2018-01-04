@@ -838,7 +838,8 @@ $ echo ${refToRefToVar}
 
       #+END_SRC
 ***** export bash function?
-     #+BEGIN_SRC bash 
+      
+     #+BEGIN_SRC bash :exports both
      f() { echo "I'm f!" ; }
      export -f f
      bash -c f
