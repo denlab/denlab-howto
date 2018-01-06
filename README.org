@@ -22,6 +22,12 @@
 ***** equivalent of apt-file search?
 
 *** Packages
+    
+**** Curl
+***** follow redirects?
+      #+BEGIN_SRC sh
+      curl -L <url>
+      #+END_SRC
 **** Netcat
 ***** simple web server with netcat?
       #+BEGIN_SRC sh
