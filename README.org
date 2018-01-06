@@ -834,6 +834,12 @@ echo "obase=16; 34" | bc
       echo foo >&3
       #+END_SRC
 **** bash pointer variables?
+**** debugging
+***** how to execute a script step by step?
+      Add to your script: 
+      #+BEGIN_SRC sh
+      trap 'echo TRAP ERROR something wrong happened, errcode=$? 1>&2 ; finish' ERR
+      #+END_SRC
 #+BEGIN_SRC sh
      declare varName=foo
      declare -n refToVar=varName
@@ -2008,6 +2014,8 @@ jq -n '
  └┘
  ┌┐┌┐
  └┘└┘
+ ─┐
+ ─┘
  ┌─┐
  └─┘
  ┌──┐
