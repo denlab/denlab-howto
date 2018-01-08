@@ -1521,7 +1521,23 @@ p.waitFor()
 **** Searching
 ***** how to search npm packages (and filter by populariy, ...)?
       http://nipstr.com
+*** how to read all lines from stdin in one go?
+    
+    #+BEGIN_SRC 
+    # install  module get-stdin
+    npm i get-stdin
+    # example
+    cat > highlight.js <<EOF''
+    const getStdin = require('get-stdin');
 
+    getStdin().then(str => {
+    console.log(str);
+    });
+    EOF
+    # run 
+    echo foo | node hightlight.js
+    #> foo
+    #+END_SRC
 ** Regex
 *** Sed
 **** use a backreference without grouping?
