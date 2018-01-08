@@ -1485,38 +1485,40 @@ p.waitFor()
      #+END_SRC
 ** Node
 *** Npm
-**** how to install global packages without sudo?
-     #+begin_src sh
-     #Make a directory for global installations:
-     mkdir ~/.npm-global
-     #Configure npm to use the new directory path:
-     npm config set prefix '~/.npm-global'
-     #Open or create a ~/.profile file and add this line:
-     export PATH=~/.npm-global/bin:$PATH >> ~/.bashrc
-     #Back on the command line, update your system variables:
-     source ~/.profile
-     #+end_src
-     https://docs.npmjs.com/getting-started/fixing-npm-permissions
-**** upgrade npm to latest?
-     #+begin_src sh
-     npm install npm@latest -g
-     #+end_src
-**** color config in npm?
-     Starting point:
-     #+BEGIN_SRC sh
-     npm config set color always
-     #+END_SRC
-**** npm list all config keys?
-     #+BEGIN_SRC sh
-     npm config ls -l
-     #+END_SRC
-     http://nipstr.com/
-**** npm install a module from a git url ?
-     notes, the repo:
-     - must contains a package.json at it's root dir
-     #+BEGIN_SRC sh
-     npm install 'git+ssh://git@github.com:denlab/denlab-examples.git#repo/npm/npmLib' --save
-     #+END_SRC
+**** Cli usage
+***** how to install global packages without sudo?
+      #+begin_src sh
+      #Make a directory for global installations:
+      mkdir ~/.npm-global
+      #Configure npm to use the new directory path:
+      npm config set prefix '~/.npm-global'
+      #Open or create a ~/.profile file and add this line:
+      export PATH=~/.npm-global/bin:$PATH >> ~/.bashrc
+      #Back on the command line, update your system variables:
+      source ~/.profile
+      #+end_src
+      https://docs.npmjs.com/getting-started/fixing-npm-permissions
+***** upgrade npm to latest?
+      #+begin_src sh
+      npm install npm@latest -g
+      #+end_src
+***** color config in npm?
+      Starting point:
+      #+BEGIN_SRC sh
+      npm config set color always
+      #+END_SRC
+***** npm list all config keys?
+      #+BEGIN_SRC sh
+      npm config ls -l
+      #+END_SRC
+      http://nipstr.com/
+***** npm install a module from a git url ?
+      notes, the repo:
+      - must contains a package.json at it's root dir
+      #+BEGIN_SRC sh
+      npm install 'git+ssh://git@github.com:denlab/denlab-examples.git#repo/npm/npmLib' --save
+      #+END_SRC
+**** Searching
 ** Regex
 *** Sed
 **** use a backreference without grouping?
