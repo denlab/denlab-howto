@@ -1519,6 +1519,9 @@ p.waitFor()
       npm install 'git+ssh://git@github.com:denlab/denlab-examples.git#repo/npm/npmLib' --save
       #+END_SRC
 **** Searching
+***** how to search npm packages (and filter by populariy, ...)?
+      http://nipstr.com
+
 ** Regex
 *** Sed
 **** use a backreference without grouping?
