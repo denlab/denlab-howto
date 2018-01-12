@@ -1674,6 +1674,13 @@ $(info - newline: ${\n} has been inserted)
     #+BEGIN_SRC sh
     make -prRn | egrep -v $'(^(#|\t)|=)' | egrep ':' 2> /dev/null | cut -d: -f1 | sort
     #+END_SRC
+*** how do I fail the build if an env var is not defined for a particular target?
+    #+BEGIN_SRC sh
+check-env:
+ifndef cmd
+	$(error cmd is undefined)
+endif
+    #+END_SRC
 ** Lorem ipsum
    |      |        |                                         |
    |------+--------+-----------------------------------------|
