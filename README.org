@@ -667,6 +667,18 @@ set -o
       # stop server
       kill -9 $(cat pid)
       #+END_SRC
+***** here-string with indentation in src but not in output?
+      #+BEGIN_SRC sh
+      cat <<EOF''
+<TAB>hi
+EOF
+      #> <TAB>hi
+      # But: 
+      cat <<-EOF''
+<TAB>hi
+EOF
+      #> hi
+      #+END_SRC
 **** Arrays
 ***** Associative arrays
 ****** declare, print, ...
