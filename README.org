@@ -18,6 +18,14 @@
     | rhel   | yum             | ?              | install |                 | rpm -qa            |                                | ?      |   |
     | groovy | sdk             | ?              | install |                 | ?                  |                                | ?      |   |
     | ruby   | gem             | --user-install | install |                 | ?                  |                                | ?      |   |
+**** find which package manager is used on this machine?
+     #+BEGIN_SRC sh 
+     #!/usr/bin/env bash
+     while read p; do $p --version &> /dev/null && echo $p ; done <<< $'yum\napt\napk'
+     #+END_SRC
+
+     #+RESULTS:
+
 **** apk
 ***** equivalent of apt-file search?
 
