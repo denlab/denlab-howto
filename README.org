@@ -958,6 +958,11 @@ $ echo ${refToRefToVar}
       complete -W 'foo bar baz' cmd
       #> ./cmd b<tab><tab> will show "foo" "bar" "baz"
       #+END_SRC
+***** Copy an existing completion for another command?
+      - From: https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
+      #+BEGIN_SRC sh
+      compdef cmd1=cmd2
+      #+END_SRC
 *** X
 **** copy to system clipboard from the command line?
      #+begin_src sh
