@@ -1866,6 +1866,39 @@ from: https://git-lfs.github.com/
   #=>   "key"
   #=> ]
   #+end_src
+**** recursively find all path leading to a certain value?
+  #+begin_src sh
+
+echo '{
+    "a": {
+      "b": 1,
+      "c": {
+        "d": {
+          "key": 42
+        },
+        "e": 666
+      }
+    }
+  }' | jq 'path(.. | select(. == 42))'
+#> [
+#>   "a",
+#>   "c",
+#>   "d",
+#>   "key"
+#> ]
+  #+end_src
+
+
+
+ | jq 'path (..| .key?//empty)'
+  #=> [
+  #=>   "a",
+  #=>   "c",
+  #=>   "d",
+  #=>   "key"
+  #=> ]
+  #+end_src
+
 
 **** get all the values of an object?
      #+begin_src sh
