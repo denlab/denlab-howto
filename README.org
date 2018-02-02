@@ -2095,6 +2095,7 @@ jq -n '
  | warn       | ⚠  |
  | full block | █  |
 *** draft
+see: https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing
  #+begin_src sh
  ┌┐
  └┘
