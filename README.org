@@ -602,7 +602,6 @@ set -o
 #> errtrace        off
       #+END_SRC
 ***** option so bash export all declared variables?
-      # #+BEGIN_SRC bash :exports both
       #+BEGIN_SRC sh 
       a=1 
       bash -c 'echo "a=$a"'
@@ -887,7 +886,6 @@ $ echo ${refToRefToVar}
       #+END_SRC
 ***** export bash function?
       
-     # #+BEGIN_SRC bash :exports both
      #+BEGIN_SRC sh
      f() { echo "I'm f!" ; }
      export -f f
@@ -1359,19 +1357,19 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
 
 from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
 
-| s  |  #+BEGIN_SRC ... #+END_SRC        |
-| e  | #+BEGIN_EXAMPLE ... #+END_EXAMPLE |
-| q  | #+BEGIN_QUOTE ... #+END_QUOTE     |
-| v  | #+BEGIN_VERSE ... #+END_VERSE     |
-| c  | #+BEGIN_CENTER ... #+END_CENTER   |
-| l  | #+BEGIN_LaTeX ... #+END_LaTeX     |
-| L  | #+LaTeX:                          |
-| h  | #+BEGIN_HTML ... #+END_HTML       |
-| H  | #+HTML:                           |
-| a  | #+BEGIN_ASCII ... #+END_ASCII     |
-| A  | #+ASCII:                          |
-| i  | #+INDEX: line                     |
-| I  | #+INCLUDE: line                   |
+| s  |  =#+BEGIN_SRC ... #+END_SRC=      |
+| e  | =#+BEGIN_EXAMPLE ... #+END_EXAMPLE= |
+| q  | =#+BEGIN_QUOTE ... #+END_QUOTE=   |
+| v  | =#+BEGIN_VERSE ... #+END_VERSE=   |
+| c  | =#+BEGIN_CENTER ... #+END_CENTER= |
+| l  | =#+BEGIN_LaTeX ... #+END_LaTeX=   |
+| L  | =#+LaTeX:=                        |
+| h  | =#+BEGIN_HTML ... #+END_HTML=     |
+| H  | =#+HTML:=                         |
+| a  | =#+BEGIN_ASCII ... #+END_ASCII=   |
+| A  | =#+ASCII:=                        |
+| i  | =#+INDEX: line=                   |
+| I  | =#+INCLUDE: line=                 |
 *** Babel
 **** "eval is disabled for shell"
 ***** add to your init file
