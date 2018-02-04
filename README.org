@@ -42,18 +42,21 @@
       while true; do nc -l 8989 <<< "Hi! the time is now $(date)"; done
       #+END_SRC
 **** Ssh
+***** Ssh Tunnels
+****** ssh tunnels explained
+       https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot
+****** ssh reverse tunnel ?
+
+   #+begin_src sh
+   # from the target machine:
+   ssh -R 2210:localhost:22 bserver.outside.com
+   #+end_src
+   from: https://toic.org/blog/2009/reverse-ssh-port-forwarding/
+
 ***** generate public private key pair
   #+begin_src sh
   ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
   #+end_src
-
-***** ssh reverse tunnel ?
-
-  #+begin_src sh
-  # from the target machine:
-  ssh -R 2210:localhost:22 bserver.outside.com
-  #+end_src
-  from: https://toic.org/blog/2009/reverse-ssh-port-forwarding/
 
 ***** ssh or scp in a script without entering password ?
 
