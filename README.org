@@ -45,6 +45,8 @@
 ***** Ssh Tunnels
 ****** ssh tunnels explained
        https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot
+       [[file://img/ssh-tunnels-explained.png][img]]
+       [[file://img/ssh-tunnels-explained2.png][img2]]
 ****** ssh reverse tunnel ?
 
    #+begin_src sh
