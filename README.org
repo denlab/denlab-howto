@@ -602,17 +602,17 @@ set -o
 #> errtrace        off
       #+END_SRC
 ***** option so bash export all declared variables?
-      #+BEGIN_SRC bash :exports both
+      # #+BEGIN_SRC bash :exports both
+      #+BEGIN_SRC sh 
       a=1 
       bash -c 'echo "a=$a"'
       set -a
       a=1 
       bash -c 'echo "a=$a"'
-      #+END_SRC
+      #> a= 
+      #> a=1 
 
-      #+RESULTS:
-      | a=  |
-      | a=1 |
+      #+END_SRC
 
 **** Stdin/out/err
 ***** redirect file to stdin on the left side?
