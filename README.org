@@ -887,14 +887,14 @@ $ echo ${refToRefToVar}
       #+END_SRC
 ***** export bash function?
       
-     #+BEGIN_SRC bash :exports both
+     # #+BEGIN_SRC bash :exports both
+     #+BEGIN_SRC sh
      f() { echo "I'm f!" ; }
      export -f f
      bash -c f
+     #> I'm f!
      #+END_SRC
 
-     #+RESULTS:
-     : I'm f!
 **** generate uuid?
      #+BEGIN_SRC sh
      cat /proc/sys/kernel/random/uuid
