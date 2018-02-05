@@ -19,7 +19,7 @@
     | groovy | sdk             | ?              | install |                 | ?                  |                                | ?      |   |
     | ruby   | gem             | --user-install | install |                 | ?                  |                                | ?      |   |
 **** find which package manager is used on this machine?
-     #+BEGIN_SRC sh 
+     #+BEGIN_SRC sh
      #!/usr/bin/env bash
      while read p; do $p --version &> /dev/null && echo $p ; done <<< $'yum\napt\napk'
      #+END_SRC
@@ -30,7 +30,7 @@
 ***** equivalent of apt-file search?
 
 *** Packages
-    
+
 **** Curl
 ***** follow redirects?
       #+BEGIN_SRC sh
@@ -514,10 +514,10 @@ from: https://fedoraproject.org/wiki/SysVinit_to_Systemd_Cheatsheet
      - edit the boot options
      - change the line
        - that contains: ... kerne ... quiet splash
-       - remove quiet splash 
+       - remove quiet splash
        - add at the end: init=/bin/bash
      - boot
-     - at the prompt: 
+     - at the prompt:
        #+BEGIN_SRC sh
        mount -o remount,rw /
        mount -o remount,rw /proc
@@ -624,7 +624,7 @@ set -o
       a=1 
       bash -c 'echo "a=$a"'
       set -a
-      a=1 
+      a=1
       bash -c 'echo "a=$a"'
       #> a= 
       #> a=1 
@@ -693,7 +693,7 @@ set -o
 <TAB>hi
 EOF
       #> <TAB>hi
-      # But: 
+      # But:
       cat <<-EOF''
 <TAB>hi
 EOF
@@ -876,7 +876,7 @@ echo "obase=16; 34" | bc
 **** bash pointer variables?
 **** debugging
 ***** how to execute a script step by step?
-      Add to your script: 
+      Add to your script:
       #+BEGIN_SRC sh
       trap 'echo TRAP ERROR something wrong happened, errcode=$? 1>&2 ; finish' ERR
       #+END_SRC
@@ -950,7 +950,7 @@ $ echo ${refToRefToVar}
       | names of all shell variables                                             | =complete= | =-A=    | =variable=  | =cmd1 … cmdN= | =cmd1 … cmdN= | =-v=       |
 **** Debugging
 ***** how to make a bash script stop and print current line before running it?
-      Add to your script: 
+      Add to your script:
       #+BEGIN_SRC sh
       trap '(read -p "[$BASH_SOURCE:$LINENO] $BASH_COMMAND?")' DEBUG
       #+END_SRC
@@ -958,7 +958,7 @@ $ echo ${refToRefToVar}
 **** Variables
 ***** how to test if a variable is defined?
       #+BEGIN_SRC sh
-      if [[ ${varname:-} ]]; then 
+      if [[ ${varname:-} ]]; then
         echo "var is defined"
       else
         echo "var not defined or empt"
@@ -1281,7 +1281,7 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
 ** Misc
 *** use stdin with a container?
     #+BEGIN_SRC sh
-   seq 100 | docker run -i syn synesthesia 1 
+   seq 100 | docker run -i syn synesthesia 1
     #+END_SRC
 * Emacs
 ** file type indicator header for emacs?
@@ -1404,13 +1404,13 @@ from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
      ))
        #+END_SRC
 ***** in the org mode file
-     #+BEGIN_EXAMPLE 
+     #+BEGIN_EXAMPLE
      #+BEGIN_SRC sh
      f() { echo "I'm f!" ; }
      export -f f
      bash -c f
      #+END_SRC
-     #+END_EXAMPLE 
+     #+END_EXAMPLE
 ***** stop emacs
 ***** remove the folder =~/.emacs.d/elpa/org-plus-contrib-*=
 ***** start emacs
@@ -1571,8 +1571,8 @@ p.waitFor()
 ***** how to search npm packages (and filter by populariy, ...)?
       http://nipstr.com
 *** how to read all lines from stdin in one go?
-    
-    #+BEGIN_SRC 
+
+    #+BEGIN_SRC
     # install  module get-stdin
     npm i get-stdin
     # example
@@ -1583,7 +1583,7 @@ p.waitFor()
     console.log(str);
     });
     EOF
-    # run 
+    # run
     echo foo | node hightlight.js
     #> foo
     #+END_SRC
@@ -1719,7 +1719,7 @@ $(info - newline: ${\n} has been inserted)
     #+BEGIN_SRC sh
 check-env:
 ifndef cmd
-	$(error cmd is undefined)
+  $(error cmd is undefined)
 endif
     #+END_SRC
 ** Lorem ipsum
@@ -2040,11 +2040,11 @@ jq -n '{a: 1, b: {ba: 10, bb: {bba: 42, bbb: 43} }} * {b: {bb: {bba: 49}}}'
 **** given a known char I want to encode it in a json string for consumption by jq
  #+BEGIN_SRC sh
       char="'"
-      #> 
+      #>
       echo "${char}" | jq -R explode
       #> [39]
       # Convert the decimal to hex
-      echo "obase=16; 39" | bc 
+      echo "obase=16; 39" | bc
       #> 27
       # Encode the char in the string
       echo '"\\u0027"' | jq .
