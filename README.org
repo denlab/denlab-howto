@@ -509,6 +509,22 @@ from: https://fedoraproject.org/wiki/SysVinit_to_Systemd_Cheatsheet
       set -- domain=mydomain.net
       dig +nocmd ${domain} any +multiline +noall +answer
       #+END_SRC
+**** recover a lost root password at boot with grub
+     - type some keys at boot to display the menu
+     - edit the boot options
+     - change the line
+       - that contains: ... kerne ... quiet splash
+       - remove quiet splash 
+       - add at the end: init=/bin/bash
+     - boot
+     - at the prompt: 
+       #+BEGIN_SRC sh
+       mount -o remount,rw /
+       mount -o remount,rw /proc
+       passwd
+       sync
+       #+END_SRC
+     - reboot
 *** Terminal
 **** Colors
 ***** simple way to color output with grep?
