@@ -1024,13 +1024,20 @@ $ echo ${refToRefToVar}
 ***** ubuntu / debian
       #+begin_src sh
  # add to /etc/environnement
- #LC_ALL=en_US.UTF-8
+ LC_ALL=en_US.UTF-8
  LANG=en_US.UTF-8
 
  sudo locale-gen "en_US.UTF-8"
  sudo dpkg-reconfigure locales
 
       #+end_src
+      *note*: 
+      #+BEGIN_SRC sh
+      
+      [warn] /etc/environment has been deprecated for locale information; use /etc/default/locale for LANG=en_US.UTF-8 instead ... (warning).
+[warn] /etc/environment has been deprecated for locale information; use /etc/default/locale for LC_ALL=en_US.UTF-8 instead ... (warning).
+
+      #+END_SRC
 ***** centos
       #+BEGIN_SRC sh
 cat /etc/environment /etc/environment.bak
@@ -2118,6 +2125,8 @@ jq -n '
  |            | 🔊  |
  | warn       | ⚠  |
  | full block | █  |
+ | cross      | ✘  |
+ |            |    |
 *** draft
 see: https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing
  #+begin_src sh
