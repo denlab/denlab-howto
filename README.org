@@ -594,6 +594,15 @@ setxkbmap -option ctrl:nocaps
       #+BEGIN_SRC sh
       lsof -u jenkins | <grep/cut/jq>
       #+END_SRC
+***** how to do a simple bind mount?
+      
+      #+BEGIN_SRC sh
+      # with mount cmd:
+      mount --bind /src/path /dst/path
+
+      # with /etc/fstab: 
+      /src/path /dst/path none defaults,bind 0 0
+      #+END_SRC
 *** Bash
 **** Tests/Conditionnals
 ***** cheatsheet
