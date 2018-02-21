@@ -605,6 +605,10 @@ setxkbmap -option ctrl:nocaps
       #+END_SRC
 *** Bash
 **** Tests/Conditionnals
+***** ternary operator in bash?
+      #+BEGIN_SRC sh
+      bash -c 'b=5 c=2 && d=3 && let a=b==5?c:d; echo $a'
+      #+END_SRC
 ***** cheatsheet
       |      |          |            |                 |
       |------+----------+------------+-----------------|
