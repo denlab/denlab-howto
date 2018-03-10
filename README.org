@@ -923,7 +923,10 @@ $ echo ${refToRefToVar}
      bash -c f
      #> I'm f!
      #+END_SRC
-
+***** Replace all env var by values in file?
+      #+BEGIN_SRC sh
+      envsubst
+      #+END_SRC
 **** generate uuid?
      #+BEGIN_SRC sh
      cat /proc/sys/kernel/random/uuid
@@ -1517,6 +1520,19 @@ p.waitFor()
      String output = os.toString("UTF8");
      #+end_src
      http://stackoverflow.com/questions/1760654/java-printstream-to-string
+**** timestamp in java ?
+     
+     #+BEGIN_SRC sh
+     import java.text.SimpleDateFormat;
+     SimpleDateFormat sdf sdf = new SimpleDateFormat("yyyyMMdd-HHmmSS");
+     String yyyyMMdd = sdf.format(new java.util.Date());
+
+Reference: 
+Update: the question by The Elite Gentleman is important. If you start with a String , then you should first parse it to obtain the date object from the above example:
+Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
+
+ 
+     #+END_SRC
 *** Gradle
 **** how to create a new project from scratch?
      #+begin_src sh
