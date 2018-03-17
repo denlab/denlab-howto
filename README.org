@@ -2238,7 +2238,7 @@ see: https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing
     - import the wanted module;
 ** CheatSheets
 *** Clojure
-| Emacs | https://github.com/clojure-emacs/cider/blob/master/doc/using_the_repl.md |
+| emacs | cider | https://github.com/clojure-emacs/cider/blob/master/doc/using_the_repl.md |
 * Audio/Video
 ** Visualization
 *** Online visualization of Wikipedia's graph?
