@@ -442,7 +442,8 @@ from: https://fedoraproject.org/wiki/SysVinit_to_Systemd_Cheatsheet
 
    # check if a service is enabled
    #+end_src
-
+****** the hostname keep coming back at its previous state after each restart?
+       Try setting the hostanem in ~/etc/hostname~
 **** User Admin
 ***** how to add a group to a user ?
   #+begin_src sh
