@@ -84,6 +84,30 @@
       -i /etc/ssh/sshd_config                                                                          \
   #+end_src
 
+***** ssh root without password or key?
+     #+BEGIN_SRC sh
+     passwd -d root                               \
+     && sed -r                                    \
+        -e 's/#(PermitEmptyPasswords) no/\1 yes/' \
+        -e 's/#(PasswordAuthentication yes)/\1/'  \
+        -e 's/#(PermitRootLogin).*$/\1 yes/'      \
+        -i /etc/ssh/sshd_config                   \
+     #+END_SRC 
+     - dockerfile: 
+       #+BEGIN_SRC sh
+FROM alpine
+RUN apk update && apk add openssh-server openssh-keygen
+RUN ssh-keygen -A                                                              
+CMD passwd -d root                                                                    \
+    && sed -r                                                                         \
+        -e 's/#(PermitEmptyPasswords) no/\1 yes/'                                     \
+        -e 's/#(PasswordAuthentication yes)/\1/'                                      \
+        -e 's/#(PermitRootLogin).*$/\1 yes/'                                          \
+        -i /etc/ssh/sshd_config                                                       \
+    && egrep 'AllowUsers|PermitRootLogin|PermitEmptyPasswords|PasswordAuthentication' \
+             /etc/ssh/sshd_config                                                     \
+    && /usr/sbin/sshd -D
+       #+END_SRC
 ***** get public key from private key ?
   #+begin_src sh
   ssh-keygen -y -f ~/.ssh/id_rsa
