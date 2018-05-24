@@ -1669,6 +1669,15 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
   # a
   # b c
   #+end_src
+**** join lines of a files two by two? 
+     #+BEGIN_SRC sh
+seq 10  | sed 'N;s/\n/ /'
+1 2
+3 4
+5 6
+7 8
+9 10
+     #+END_SRC
 *** Perl
 **** Multiline search and replace?
      #+begin_src sh
