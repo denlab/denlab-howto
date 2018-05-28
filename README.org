@@ -2274,6 +2274,15 @@ see: https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing
 *** Clojure
 | emacs | cider       | https://github.com/clojure-emacs/cider/blob/master/doc/using_the_repl.md |
 |       | online help | ~C-h f RET cider-repl-mode~                                              |
+** Doc
+*** Markdown
+**** Cheatsheet?
+
+     |       |                           |
+     |-------+---------------------------|
+     | links | =- [RStudio Devtools][1]= |
+     |       |                           |
+
 * Audio/Video
 ** Visualization
 *** Online visualization of Wikipedia's graph?
