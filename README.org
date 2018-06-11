@@ -1381,7 +1381,11 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
      | search string in project | ~helm-project-do-ag~ | ~SPC s a p~ |
      | edit the search results  |                      | ~C-c C-e~   |
      | commit the changes       |                      | ~C-c C-c~   |
-
+*** SearchAndReplace
+**** How to search and replace starting at the cursor position?
+     #+BEGIN_SRC sh
+     :.,$s/\vBEFORE/AFTER/gc
+     #+END_SRC
 ** OrgMode
 *** Tables
 **** pipe in table cells?
