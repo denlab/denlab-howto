@@ -378,6 +378,12 @@ UserKnownHostsFile=/dev/null
       |---------------------------------+-----------+------------------------|
       | print file name with match      | ~-H~      | ~--with-filename~      |
       | print only filename for matches | ~-l~      | ~--files-with-matches~ |
+***** Character class for blanks? 
+      #+BEGIN_SRC sh
+jq -nRr '"1: \t", "2:  "' | egrep '[[:space:]]' | jq -R .
+#> "1: \t"
+#> "2:  "
+      #+END_SRC
 **** Imagemagick
 ***** how to change the quality of a jpeg image?
       #+BEGIN_SRC sh
