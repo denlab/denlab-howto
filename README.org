@@ -283,7 +283,11 @@ UserKnownHostsFile=/dev/null
       #+begin_src sh
       echo 'scale=2 ; 1/3' | bc -l
       #+end_src
-
+**** Tar
+***** list the content of a remote tgz without intermediary files?
+     #+BEGIN_SRC sh
+      curl http://url/to/file.tgz | tar tzfv -
+     #+END_SRC 
 **** Zip
 ***** unzip a single file from archive?
       #+begin_src sh
