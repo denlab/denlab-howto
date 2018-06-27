@@ -751,6 +751,20 @@ EOF
 EOF
       #> hi
       #+END_SRC
+***** File Descriptors
+****** Named File Descriptors
+******* define a named file descriptor to a writable file and write to it? 
+        #+BEGIN_SRC sh
+        # open 
+        exec {filew}>outputfile
+        # write
+        echo foo >&$filew
+        # check 
+        cat outputfile
+        #> foo
+        # close
+        exec {filew}>&-
+        #+END_SRC
 **** Arrays
 ***** Associative arrays
 ****** declare, print, ...
