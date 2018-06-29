@@ -789,6 +789,7 @@ EOF
   #+end_src
   http://stackoverflow.com/questions/19417015/bash-copy-from-one-array-to-another
 ***** Normal arrays
+****** declare/literal/set/getAll/size
       #+begin_src bash
       # declare
       declare -a a
@@ -813,6 +814,23 @@ EOF
        IFS=', ' read -r -a array <<< "a, b, c"
        echo "array=${array[@]}"
        #> array=a b c
+       #+END_SRC
+****** clone an array into another array?
+       #+BEGIN_SRC sh
+       show() { declare | egrep "^${1}=" ; }
+       # declare array a1
+       declare -a a1=( a b )
+       show a1
+       #> a1=([0]="a" [1]="b")
+       declare -a a2=("${a1[@]}")
+       show a2
+       #> a2=([0]="a" [1]="b")
+       # verify it is a clone
+       a2[0]=x
+       show a2
+       #> a2=([0]="x" [1]="b")
+       show a1
+       #> a1=([0]="a" [1]="b")
        #+END_SRC
 **** ssh escape sequence?
  =ENTER, ~, .=
@@ -1625,6 +1643,13 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
      # or
      mvn archetype:generate -Dfilter=maven-archetype-simple
      #+END_SRC
+*** Clojure
+**** Lein
+***** Show dependencies tree?
+      #+BEGIN_SRC sh
+      lein pom
+      mvn dependency:tree -Dverbose=true 
+      #+END_SRC
 ** Node
 *** Npm
 **** Cli usage
