@@ -1158,7 +1158,18 @@ cat /etc/environment          \
      #+BEGIN_SRC sh
      netstat -lntu
      #+END_SRC
-
+**** Proxy
+***** Request with curl through a proxy over ssh ? 
+      #+BEGIN_SRC sh
+      remoteHost=remote.host
+      remoteHostSshPort=22222
+      # Create socks5 proxy on client machine
+      ssh -vvv -D 8123 -f -C -N -p 55555 u@localhost
+      # Request with curl telling him to use the proxy
+      curl -x socks5h://localhost:8123 http://remote.host.com
+      # OR
+      curl --socks5-hostname localhost:8123 http://remote.host.com
+      #+END_SRC
 *** Compression
 **** compress stdin, uncompress to stdout ?
 #+BEGIN_SRC sh
