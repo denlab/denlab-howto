@@ -1881,6 +1881,15 @@ git submodule add -b master [URL to Git repo];
 # update your submodule
 git submodule update --remote
      #+END_SRC
+**** how to deregister a submodule?
+Something that has worked for me: 
+#+BEGIN_SRC sh
+moduleToRemove=modules/toRm
+git rm -f $moduleToRemove
+rm -rf .git/modules/$moduleToRemove
+git clean -fd
+git reset --hard
+#+END_SRC
 *** Tags / branches lifecycle mgmt
 
     | what   | action               | where        | git command                                                                                               |
