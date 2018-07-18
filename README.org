@@ -1184,6 +1184,28 @@ cat /etc/environment          \
      - =/bin=: for booting the os (must fit on a small partition)
      - =/usr/bin=: Normal binaries installed by the package manager
      - =/usr/local/bin=: Was installed after manually compiled (for exemple)
+**** Zfs
+***** Create a new zfs "env" in a file?
+      #+BEGIN_SRC sh
+      zpool list
+      fallocate -l 500M /tmp/zpooltest
+      zpool create testpool /tmp/zpooltest
+      zpool list
+      zfs create testpool/lz4
+      zfs set compression=lz4 testpool/lz4
+      zfs set dedup=on testpool/lz4
+      zpool list
+      #> NAME           SIZE  ALLOC   FREE  EXPANDSZ   FRAG    CAP  DEDUP  HEALTH  ALTROOT
+      #> testpool       480M  1,93M   478M         -    11%     0%  1.00x  ONLINE  -
+      #> zpool-docker   199G   163G  36,0G         -    83%    81%  2.17x  ONLINE  -
+      zfs list testpool
+      #> NAME       USED  AVAIL  REFER  MOUNTPOINT
+      #> testpool   652K   447M    19K  /testpool
+      #+END_SRC
+***** How to destroy a zpool ?
+      #+BEGIN_SRC sh
+      zpool destroy <poolName>
+      #+END_SRC
 ** Solaris
 *** equivalent of linux's =ps aux= ?
 
