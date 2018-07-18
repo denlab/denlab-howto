@@ -1699,6 +1699,14 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
      # or
      mvn archetype:generate -Dfilter=maven-archetype-simple
      #+END_SRC
+**** generate a simple webapp?
+     #+BEGIN_SRC sh
+     mvn archetype:generate                         \
+       -DgroupId=com.mycompany.app                  \
+       -DartifactId=my-app                          \
+       -DarchetypeArtifactId=maven-archetype-webapp \
+       -DinteractiveMode=false
+     #+END_SRC
 *** Clojure
 **** Lein
 ***** Show dependencies tree?
