@@ -1091,6 +1091,14 @@ $ echo ${refToRefToVar}
       #+BEGIN_SRC sh
       gnome-session-quit
       #+END_SRC
+**** Remote
+***** NoMachine NX
+****** How to administrate the NX server?
+       #+BEGIN_SRC sh
+       sudo /usr/NX/bin/nxserver --status
+       sudo /usr/NX/bin/nxserver --stop
+       sudo /usr/NX/bin/nxserver --start
+       #+END_SRC
 *** Converting formats
 **** convert file format table?
      | src   | dst   | command                                                                           |
