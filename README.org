@@ -1186,6 +1186,21 @@ cat /etc/environment          \
      | compress   | echo foobarXgzip > msg.gz |
      | decompress | zcat msg.gz               |
 #+END_SRC
+**** Xz
+***** compress/decompress stdin with xz?
+      #+BEGIN_SRC sh
+      # compress
+      seq 3 | xz > out.xz 
+      # decompress
+      cat out.xz | unxz
+      #> 1
+      #> 2
+      #> 3
+      #+END_SRC
+***** decompress stdin with xz?
+      #+BEGIN_SRC sh
+      
+      #+END_SRC
 *** Fs
 **** difference between =/bin=, =/usr/bin=, =/usr/local/bin=?
      From: https://unix.stackexchange.com/questions/8656/usr-bin-vs-usr-local-bin-on-linux
