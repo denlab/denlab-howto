@@ -1791,6 +1791,26 @@ seq 10  | sed 'N;s/\n/ /'
 7 8
 9 10
      #+END_SRC
+**** add a line before the first line of a file?
+     from: https://unix.stackexchange.com/questions/99350/how-to-insert-text-before-the-first-line-of-a-file
+     #+BEGIN_SRC sh
+     seq 3 > y
+     cat y
+     #> 1
+     #> 2
+     #> 3
+     sed  -i '1i text' y
+      #> text
+     #> 1
+     #> 2
+     #> 3
+     cat y
+history | tail -3
+history | tail -4
+history | tail -10 
+
+     
+     #+END_SRC
 *** Perl
 **** Multiline search and replace?
      #+begin_src sh
