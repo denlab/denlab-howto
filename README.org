@@ -2452,7 +2452,11 @@ see: https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing
      [1]: http://slashdot.org
      [link text itself]: http://www.reddit.com
      #+END_SRC 
-
+**** get values by their path (eg: ["a",1,"b"])?
+     #+BEGIN_SRC sh
+     jq -n '{a: {b: 1}} | getpath(["a","b"])'
+     #> 1
+     #+END_SRC
 * Audio/Video
 ** Visualization
 *** Online visualization of Wikipedia's graph?
