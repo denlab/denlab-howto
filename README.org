@@ -765,6 +765,15 @@ EOF
         # close
         exec {filew}>&-
         #+END_SRC
+***** how to know if stdout is a terminal?
+      #+BEGIN_SRC sh
+      echo -n "stdout is: "
+      if [ -t 1 ]; then 
+        echo "a terminal"
+      else
+        echo "not a terminal"
+      fi
+      #+END_SRC
 **** Arrays
 ***** Associative arrays
 ****** declare, print, ...
