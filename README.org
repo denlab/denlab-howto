@@ -1251,6 +1251,11 @@ cat /etc/environment          \
     #+BEGIN_SRC sh
     ps -Af
     #+END_SRC
+***** How to know the actual amount of ram used by dedup on a particular dataset ? 
+      from: https://serverfault.com/questions/533877/how-large-is-my-zfs-dedupe-table-at-the-moment
+      #+BEGIN_SRC sh
+      sudo zpool status -D zpool-docker | jq -Rr 'capture("^\\s*dedup: DDT entries (?<ddt>[0-9]+)[^0-9]\\s+size (?<sizeOnDisk>[0-9]+) on disk, (?<inCore>[0-9]+) in core$") | map_values(fromjson) | { ramUsedForDedupInMBytes: (.ddt * .inCore / (1024 * 1024))}'
+      #+END_SRC
 * Crypto
 ** Gpg
 *** verify a gpg signed file?
