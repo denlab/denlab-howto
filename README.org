@@ -1750,6 +1750,30 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
       lein pom
       mvn dependency:tree -Dverbose=true 
       #+END_SRC
+**** Language
+***** Macros
+****** Threading
+******* how to use threading macros with functions with different argument position?
+        #+BEGIN_SRC clojure
+        ;; using -> and ->>
+        (-> 4
+          range                            
+          (->> (partition 2                ))
+          (->> (map       (partial into [])))
+          (->> (into      {}               ))
+          (get-in [2])
+        )
+        #> "3"
+        ;; using as->
+        (as-> 4 x 
+          (range                       x) 
+          (partition 2                 x)
+          (map       (partial into []) x)
+          (into      {}                x)
+          (get-in x [2])
+        )
+        #> "3"
+        #+END_SRC
 ** Node
 *** Npm
 **** Cli usage
