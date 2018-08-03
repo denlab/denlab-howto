@@ -1070,6 +1070,12 @@ $ echo ${refToRefToVar}
        #> 1: "foo"
        #> 2: "bar"
        #+END_SRC
+****** print a line accross the terminal?
+       from: http://wiki.bash-hackers.org/commands/builtin/printf
+       #+BEGIN_SRC sh
+       bash -c "l=$(tput cols)"' && printf -v line "%*s" $l && echo ${line// /-}' 
+       #> --------------------------------------------------------------------------------
+       #+END_SRC
 *** Zsh
 **** Completion
 ***** using bash's autocomplete with zsh?
