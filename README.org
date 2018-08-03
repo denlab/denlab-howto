@@ -1060,7 +1060,16 @@ $ echo ${refToRefToVar}
         echo "var not defined or empt"
       fi
       #+END_SRC
-
+**** Text
+***** Printf?
+****** print args, one by line with its position? 
+       from: http://wiki.bash-hackers.org/commands/builtin/printf
+       #+BEGIN_SRC sh
+       printf '"%b"\n' "$0" "$@" | nl -v0 -s": "
+       #> 0: "-zsh"
+       #> 1: "foo"
+       #> 2: "bar"
+       #+END_SRC
 *** Zsh
 **** Completion
 ***** using bash's autocomplete with zsh?
