@@ -1123,6 +1123,34 @@ $ echo ${refToRefToVar}
        sudo /usr/NX/bin/nxserver --stop
        sudo /usr/NX/bin/nxserver --start
        #+END_SRC
+**** Xpra
+*****  xpra quickstart on ubuntu?
+      #+BEGIN_SRC sh
+      # On the server ----------------------------------------------------------
+      ## install xpra
+      sudo aptitude install xpra
+      ## intall xvfb
+      sudo aptitude install xvfb
+      ## use xvfb instead of xorg: 
+      sudo vim /etc/xpra/xpra.conf
+      # comment   the line starting with 'xvfb=Xorg'
+      # UNcomment the line starting with 'xvfb=Xvfb'
+      ## start a session on the display #10 without the deamon (for troubleshooting): 
+      display=10
+      xpra start --daemon=no :${display}
+      # on the client ----------------------------------------------------------
+      ## install xpra
+      sudo aptitude install xpra
+      # attach to the remote session
+      display=10
+      xpra attach ssh/${remoteSshUser}@${remoteSshHost}:${remoteSshPort}/${display}
+      # On the server ----------------------------------------------------------
+      ## start a test app: 
+      DISPLAY=${display} xeyes
+      #> xeyes should open on the client...
+      ## now start a bigger app: 
+      DISPLAY=${display} google-chrome
+      #+END_SRC
 *** Converting formats
 **** convert file format table?
      | src   | dst   | command                                                                           |
