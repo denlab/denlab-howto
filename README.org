@@ -30,396 +30,401 @@
 ***** equivalent of apt-file search?
 
 *** Packages
+    Top level sections as per the 'Section' attribute of =aptitude show <pkg>=.
+**** Web
+***** Curl
+****** follow redirects?
+       #+BEGIN_SRC sh
+       curl -L <url>
+       #+END_SRC
+***** Wget
+****** recursively download for example nexus ?
 
-**** Curl
-***** follow redirects?
-      #+BEGIN_SRC sh
-      curl -L <url>
-      #+END_SRC
-**** Netcat
-***** simple web server with netcat?
-      #+BEGIN_SRC sh
-      while true; do nc -l 8989 <<< "Hi! the time is now $(date)"; done
-      #+END_SRC
-**** Ssh
-***** Ssh Tunnels
-****** ssh tunnels explained
-       https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot
-       [[file://img/ssh-tunnels-explained.png][img]]
-       [[file://img/ssh-tunnels-explained2.png][img2]]
-****** ssh reverse tunnel ?
+    #+begin_src sh
+    wget --header="Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"                  \
+         --header="User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:48.0) Gecko/20100101 Firefox/48.0" \
+         --recursive                                                                                         \
+         -e robots=off                                                                                       \
+         --no-parent                                                                                         \
+         http://nexus-url/x/y/z
+    #+end_src
+**** Net
+***** Netcat
+****** simple web server with netcat?
+       #+BEGIN_SRC sh
+       while true; do nc -l 8989 <<< "Hi! the time is now $(date)"; done
+       #+END_SRC
+***** Ssh
+****** Ssh Tunnels
+******* ssh tunnels explained
+        https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot
+        [[file://img/ssh-tunnels-explained.png][img]]
+        [[file://img/ssh-tunnels-explained2.png][img2]]
+******* ssh reverse tunnel ?
+
+    #+begin_src sh
+    # from the target machine:
+    ssh -R 2210:localhost:22 bserver.outside.com
+    #+end_src
+    from: https://toic.org/blog/2009/reverse-ssh-port-forwarding/
+
+****** generate public private key pair
+   #+begin_src sh
+   ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+   #+end_src
+
+****** ssh or scp in a script without entering password ?
 
    #+begin_src sh
-   # from the target machine:
-   ssh -R 2210:localhost:22 bserver.outside.com
+   expect -c "
+      spawn scp login@somehost.com:/somefile .
+      expect yes/no { send yes\r ; exp_continue }
+      expect password: { send password\r }
+      expect 100%
+      exit
+   "
    #+end_src
-   from: https://toic.org/blog/2009/reverse-ssh-port-forwarding/
 
-***** generate public private key pair
-  #+begin_src sh
-  ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
-  #+end_src
+****** ssh without password or key?
+   #+begin_src sh
+   # remove password for user
+   passwd -d user
+   # sshd: allow empty password
+   sed -r 's/#(PermitEmptyPasswords) no/\1 yes/' -i.bak /etc/ssh/sshd_config
+   # allow login with passwords
+   sed -r                                       \
+       -e 's/#(PasswordAuthentication yes)/\1/' \
+       -i /etc/ssh/sshd_config                                                                          \
+   #+end_src
 
-***** ssh or scp in a script without entering password ?
-
-  #+begin_src sh
-  expect -c "
-     spawn scp login@somehost.com:/somefile .
-     expect yes/no { send yes\r ; exp_continue }
-     expect password: { send password\r }
-     expect 100%
-     exit
-  "
-  #+end_src
-
-***** ssh without password or key?
-  #+begin_src sh
-  # remove password for user
-  passwd -d user
-  # sshd: allow empty password
-  sed -r 's/#(PermitEmptyPasswords) no/\1 yes/' -i.bak /etc/ssh/sshd_config
-  # allow login with passwords
-  sed -r                                       \
-      -e 's/#(PasswordAuthentication yes)/\1/' \
-      -i /etc/ssh/sshd_config                                                                          \
-  #+end_src
-
-***** ssh root without password or key?
-     #+BEGIN_SRC sh
-     passwd -d root                               \
-     && sed -r                                    \
-        -e 's/#(PermitEmptyPasswords) no/\1 yes/' \
-        -e 's/#(PasswordAuthentication yes)/\1/'  \
-        -e 's/#(PermitRootLogin).*$/\1 yes/'      \
-        -i /etc/ssh/sshd_config                   \
-     #+END_SRC 
-     - dockerfile: 
-       #+BEGIN_SRC sh
-FROM alpine
-RUN apk update && apk add openssh-server openssh-keygen
-RUN ssh-keygen -A                                                              
-CMD passwd -d root                                                                    \
-    && sed -r                                                                         \
-        -e 's/#(PermitEmptyPasswords) no/\1 yes/'                                     \
-        -e 's/#(PasswordAuthentication yes)/\1/'                                      \
-        -e 's/#(PermitRootLogin).*$/\1 yes/'                                          \
-        -i /etc/ssh/sshd_config                                                       \
-    && egrep 'AllowUsers|PermitRootLogin|PermitEmptyPasswords|PasswordAuthentication' \
-             /etc/ssh/sshd_config                                                     \
-    && /usr/sbin/sshd -D
-       #+END_SRC
-***** get public key from private key ?
-  #+begin_src sh
-  ssh-keygen -y -f ~/.ssh/id_rsa
-  #+end_src
-
-***** Disable host verification?
-****** for one session
-  #+begin_src sh
-  ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no peter@192.168.0.100
-  #+end_src
-  http://linuxcommando.blogspot.co.uk/2008/10/how-to-disable-ssh-host-key-checking.html
-
-****** for all sessions:
-       in ~~/.ssh/config~:
-       #+BEGIN_SRC sh
-Host 192.168.0.*
-  StrictHostKeyChecking no
-  UserKnownHostsFile=/dev/null
-       #+END_SRC
-****** for all sessions and all hosts:
-       in ~~/.ssh/config~:
-       #+BEGIN_SRC sh
-StrictHostKeyChecking no
-UserKnownHostsFile=/dev/null
-       #+END_SRC
-
-***** how to mount remote fs with sshfs?
-
-      - mount:
-      #+begin_src sh
-      # usage
-      sshfs USERNAME@HOSTNAME_OR_IP:/REMOTE_PATH LOCAL_MOUNT_POINT SSH_OPTIONS
-      # example
-      sshfs sessy@mycomputer:/remote/path /local/path -C -p 9876 -o allow_other
-      #+end_src
-      https://wiki.archlinux.org/index.php/SSHFS
-      - umount:
+****** ssh root without password or key?
+      #+BEGIN_SRC sh
+      passwd -d root                               \
+      && sed -r                                    \
+         -e 's/#(PermitEmptyPasswords) no/\1 yes/' \
+         -e 's/#(PasswordAuthentication yes)/\1/'  \
+         -e 's/#(PermitRootLogin).*$/\1 yes/'      \
+         -i /etc/ssh/sshd_config                   \
+      #+END_SRC 
+      - dockerfile: 
         #+BEGIN_SRC sh
-        fusermount -u <mount-point>
+ FROM alpine
+ RUN apk update && apk add openssh-server openssh-keygen
+ RUN ssh-keygen -A                                                              
+ CMD passwd -d root                                                                    \
+     && sed -r                                                                         \
+         -e 's/#(PermitEmptyPasswords) no/\1 yes/'                                     \
+         -e 's/#(PasswordAuthentication yes)/\1/'                                      \
+         -e 's/#(PermitRootLogin).*$/\1 yes/'                                          \
+         -i /etc/ssh/sshd_config                                                       \
+     && egrep 'AllowUsers|PermitRootLogin|PermitEmptyPasswords|PasswordAuthentication' \
+              /etc/ssh/sshd_config                                                     \
+     && /usr/sbin/sshd -D
         #+END_SRC
-***** copy pub key to remote authorized_keys?
-      #+begin_src sh
-      ssh-copy-id <user>@<host>
-
-      #+end_src
-***** workaround for a ssh slow login on a particular server?
-      Use port forwarding to keep the connection open
-      #+BEGIN_SRC sh
-      remoteUser=user
-      remoteHost=server.com
-      remoteSshPort=22
-      # choose a free port on the client
-      localPort=5555
-      # port forward the remote host ssh
-      ssh -N  -f -L ${localPort}:localhost:${remoteSshPort} ${remoteUser}@${remoteHost}
-      # use the local port forward
-      ssh -p ${localPort} ${remoteUser}@${remoteHost}
-      # close the port forwarding
-      fuser -k -n tcp 5555
-      #+END_SRC
-**** Tmux
-***** how do i detach other client when reattach to session?
-      #+begin_src sh
-  tmux -2 a -dt 0
-      #+end_src
-
-***** compress dir recursive?
-  #+begin_src sh
-  zip -r archive.zip /dir
-  #+end_src
-***** compress dir but exclude a directory ?
-  #+begin_src sh
-  zip -9 -r --exclude=*.svn*  foo.zip [directory-to-compress]
-  #+end_src
-***** reload .tmux.conf?
-      #+BEGIN_SRC sh
-      tmux source-file ~/.tmux.conf
-      #+END_SRC
-***** bindings to install plugins?
-      #+BEGIN_SRC sh
-      <prefix> + I
-      #+END_SRC
-      Note: After an tmux you may need to upgrade plugins too [[bindings to upgrade plugins?][see upgrading]].
-***** bindings to upgrade plugins?
-      - update plugins: ~<prefix> + U
-      - remove plugins not on the list: =<prefix> + alt + u=
-**** Find
-***** find files modified in the last x minutes
-  #+begin_src sh
-  find . -cmin -5
-  #+end_src
-***** find files modified in the last x days
-  #+begin_src sh
-  find . -ctime -5
-  #+end_src
-***** handle filenames with spaces ?
-  #+begin_src sh
-  find . -maxdepth 1 -print0 | while read -d $'\0' d ; do echo $d ; done
-  #+end_src
-  http://www.cyberciti.biz/tips/handling-filenames-with-spaces-in-bash.html
-***** sort files by modified date?
-      #+begin_src sh
-      find -type f -printf '%T@ %p\0' |
-      sort -zk 1nr |
-      sed -z 's/^[^ ]* //' | tr '\0' '\n'
-      #+end_src
-***** find files bigger than x MBytes?
-      #+BEGIN_SRC sh
-      find . -size +500M -exec l {} \;
-      #+END_SRC
-***** find filename with regex?
-      #+BEGIN_SRC sh
-     find . -type f -regextype egrep -regex '.*\.(msg|txt)$$'
-      #+END_SRC
-***** find with logical or?
-      #+BEGIN_SRC sh
-     -name "*.xyz" OR ( -name "*.abc" AND -exec ... )
-      #+END_SRC
-**** Xargs
-***** run a cmd on each line of stdin with xargs?
-  #+begin_src sh
-  echo 'a
-  b
-  c' | xargs -I {} ./f {}
-  #+end_src
-***** use bash function?
-      #+begin_src sh
-      f() { bc; }
-      echo '1 * 1
-      2 * 2
-      3 * 3'                                            \
-      | xargs -i echo "$(declare -f f) ; echo '{}' | f" \
-      | bash
-      #+end_src
-**** Nohup
-***** run nohup?
-      #+BEGIN_SRC sh
-      nohup bash -c "(time bash executeScript 1 input fileOutput > scrOutput) &> timeUse.txt" &
-      #+END_SRC
-
-**** MoreUtils
-***** read / process / write the same file ?
-      - Use:  =sponge=
-      - =sponge= will read stdin and write to specified file. Unlike a shell redirect it will soaks all its input before writing the output file.
-      #+begin_src sh
-      sort f | sponge f
-      #+end_src
-***** instead of xxx use moreutils yyy?
-
-      | cmd       | insteadof                               | use                                                            |
-      |-----------+-----------------------------------------+----------------------------------------------------------------|
-      | =chronic= |                                         | =chronic backup_script.sh=                                     |
-      | =sponge=  | =sort filename= \vert =uniq/ > temp=    | =sort filename= \vert =uniq \vert sponge filename=             |
-      |           | =mv temp filename=                      |                                                                |
-      | =isutf8=  |                                         | =isutf8 filename=                                              |
-      | =ifne=    |                                         | =./script.sh= \vert =ifne less=                                |
-      | =pee=     | =./script.sh= \vert =tee output1 output2= | =./script.sh= \vert =pee 'grep pattern1' 'gzip -c > output.gz'_= |
-      | =ifdata=  | =<parsing ifconfig>=                    |                                                                |
-      | =zrun=    | =diff <(zcat one.gz) <(zcat two.gz)=    | =zrun diff one.gz two.gz=                                      |
-      | =ts=      |                                         | =$ { echo "One" ; sleep 3s ; echo "Two" ; }= \vert =ts=        |
-      | =errno=   |                                         | =$ errno 98=                                                   |
-      | =vipe=    |                                         | =command1= \vert =vipe= \vert =command2=                       |
-      | =vidir=   |                                         | =vidir directory/=                                             |
-      | =combine= | =comm -12 file1 file2=                  | =combine file1 and file2=                                      |
-      |           | =comm -23 fileA fileB=                  | =combine fileA not fileB=                                      |
-      |           | =sort file1 file2= \vert =uniq=         | =combine file1 or file2=                                       |
-      |           | =sort file1 file2= \vert =uniq --unique= | =combine file1 xor file2=                                      |
-
-      See: http://devblog.nestoria.com/post/110168998173/moreutils-basic-unix-tools-that-ought-to-be
-
-**** Bc
-***** float precision?
-      #+begin_src sh
-      echo 'scale=2 ; 1/3' | bc -l
-      #+end_src
-**** Tar
-***** list the content of a remote tgz without intermediary files?
-     #+BEGIN_SRC sh
-      curl http://url/to/file.tgz | tar tzfv -
-     #+END_SRC 
-**** Zip
-***** unzip a single file from archive?
-      #+begin_src sh
-      unzip -p myarchive.zip path/to/zipped/file.txt >file.txt
-      #+end_src
-**** Apt-get
-***** dpkg show all installed files of a .deb?
-
+****** get public key from private key ?
    #+begin_src sh
-   dpkg -L jenkins
+   ssh-keygen -y -f ~/.ssh/id_rsa
    #+end_src
-***** apt-get: what package provide this file?
 
+****** Disable host verification?
+******* for one session
    #+begin_src sh
-   apt-get install apt-file
-   apt-file update
-   apt-file find <file>
+   ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no peter@192.168.0.100
    #+end_src
-***** fix a broken state ?
+   http://linuxcommando.blogspot.co.uk/2008/10/how-to-disable-ssh-host-key-checking.html
 
-   #+begin_src sh
-   sudo apt-get install --fix-broken
-   #+end_src
-***** install a specific version?
-      #+begin_src sh
-      apt-get install my-lib-java=2016.03.30-79 my-lib=2016.03.30-79
-      #+end_src
-***** show version that a package can be upgraded to?
-      #+begin_src sh
-      apt-cache policy google-chrome-stable
-      #+end_src
-***** customize output of dpkg -l?
-      #+BEGIN_SRC sh
-      dpkg-query --show --showformat='${Package}\n'
-      #+END_SRC
-***** Alternative
-****** rebuild alternative for a particular package?
-       Note: there's problably a better way :)
-       But this had worked:
+******* for all sessions:
+        in ~~/.ssh/config~:
+        #+BEGIN_SRC sh
+ Host 192.168.0.*
+   StrictHostKeyChecking no
+   UserKnownHostsFile=/dev/null
+        #+END_SRC
+******* for all sessions and all hosts:
+        in ~~/.ssh/config~:
+        #+BEGIN_SRC sh
+ StrictHostKeyChecking no
+ UserKnownHostsFile=/dev/null
+        #+END_SRC
+
+****** how to mount remote fs with sshfs?
+
+       - mount:
+       #+begin_src sh
+       # usage
+       sshfs USERNAME@HOSTNAME_OR_IP:/REMOTE_PATH LOCAL_MOUNT_POINT SSH_OPTIONS
+       # example
+       sshfs sessy@mycomputer:/remote/path /local/path -C -p 9876 -o allow_other
+       #+end_src
+       https://wiki.archlinux.org/index.php/SSHFS
+       - umount:
+         #+BEGIN_SRC sh
+         fusermount -u <mount-point>
+         #+END_SRC
+****** copy pub key to remote authorized_keys?
+       #+begin_src sh
+       ssh-copy-id <user>@<host>
+
+       #+end_src
+****** workaround for a ssh slow login on a particular server?
+       Use port forwarding to keep the connection open
        #+BEGIN_SRC sh
-        sudo aptitude purge openjdk-8-jdk
-        sudo aptitude install openjdk-8-jdk
+       remoteUser=user
+       remoteHost=server.com
+       remoteSshPort=22
+       # choose a free port on the client
+       localPort=5555
+       # port forward the remote host ssh
+       ssh -N  -f -L ${localPort}:localhost:${remoteSshPort} ${remoteUser}@${remoteHost}
+       # use the local port forward
+       ssh -p ${localPort} ${remoteUser}@${remoteHost}
+       # close the port forwarding
+       fuser -k -n tcp 5555
        #+END_SRC
-**** Rpm
-***** list files installed by a package?
-   #+begin_src sh
-   rpm -ql [packageName]
-   #+end_src
-***** list only names of packages?
-      #+BEGIN_SRC sh
-      rpm -qa --qf "%{NAME}\n"
-      #+END_SRC
-**** Wget
-***** recursively download for example nexus ?
-
-   #+begin_src sh
-   wget --header="Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"                  \
-        --header="User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:48.0) Gecko/20100101 Firefox/48.0" \
-        --recursive                                                                                         \
-        -e robots=off                                                                                       \
-        --no-parent                                                                                         \
-        http://nexus-url/x/y/z
-   #+end_src
-**** NxClient
-***** keyboard issue when connecting with nx ?
-      Try:
-      #+begin_src sh
-      setxkbmap -model evdev -layout us
-      #+end_src
-**** VirtualBox
-***** manually mount a shared folder in a linux guest?
-      #+begin_src sh
-      sudo mount -t vboxsf <sharedFolderName> /path/to/shared/folder/dir
-      #+end_src
-***** host alt-tab when in a guest?
-      =host key=
-      then
-     alt-tab
-***** Windows Hosts
-****** Windows10
-******* VT-x is not available (VERR_VMX_NO_VMX)
-        From:
-
-        - VT-x is not enabled in the BIOS
-        - The CPU doesn't support VT-x
-        - Hyper-V virtualization is enabled in Windows
-        -
-        - Run in command prompt:
+***** Rsync
+****** how to specify the port in rsync?
        #+BEGIN_SRC sh
-       dism.exe /Online /Disable-Feature:Microsoft-Hyper-V
+       rsync -rvz -e 'ssh -p 2222' --progress --remove-sent-files ./dir user@host:/path
        #+END_SRC
-       - And reboot
-**** Grep
-***** cheat sheet
-      |                                 | short opt | long opt               |
-      |---------------------------------+-----------+------------------------|
-      | print file name with match      | ~-H~      | ~--with-filename~      |
-      | print only filename for matches | ~-l~      | ~--files-with-matches~ |
-***** Character class for blanks? 
+**** Admin
+***** Tmux
+****** how do i detach other client when reattach to session?
+       #+begin_src sh
+   tmux -2 a -dt 0
+       #+end_src
+
+****** compress dir recursive?
+   #+begin_src sh
+   zip -r archive.zip /dir
+   #+end_src
+****** compress dir but exclude a directory ?
+   #+begin_src sh
+   zip -9 -r --exclude=*.svn*  foo.zip [directory-to-compress]
+   #+end_src
+****** reload .tmux.conf?
+       #+BEGIN_SRC sh
+       tmux source-file ~/.tmux.conf
+       #+END_SRC
+****** bindings to install plugins?
+       #+BEGIN_SRC sh
+       <prefix> + I
+       #+END_SRC
+       Note: After an tmux you may need to upgrade plugins too [[bindings to upgrade plugins?][see upgrading]].
+****** bindings to upgrade plugins?
+       - update plugins: ~<prefix> + U
+       - remove plugins not on the list: =<prefix> + alt + u=
+***** Apt-get
+****** dpkg show all installed files of a .deb?
+
+    #+begin_src sh
+    dpkg -L jenkins
+    #+end_src
+****** apt-get: what package provide this file?
+
+    #+begin_src sh
+    apt-get install apt-file
+    apt-file update
+    apt-file find <file>
+    #+end_src
+****** fix a broken state ?
+
+    #+begin_src sh
+    sudo apt-get install --fix-broken
+    #+end_src
+****** install a specific version?
+       #+begin_src sh
+       apt-get install my-lib-java=2016.03.30-79 my-lib=2016.03.30-79
+       #+end_src
+****** show version that a package can be upgraded to?
+       #+begin_src sh
+       apt-cache policy google-chrome-stable
+       #+end_src
+****** customize output of dpkg -l?
+       #+BEGIN_SRC sh
+       dpkg-query --show --showformat='${Package}\n'
+       #+END_SRC
+****** Alternative
+******* rebuild alternative for a particular package?
+        Note: there's problably a better way :)
+        But this had worked:
+        #+BEGIN_SRC sh
+         sudo aptitude purge openjdk-8-jdk
+         sudo aptitude install openjdk-8-jdk
+        #+END_SRC
+***** Rpm
+****** list files installed by a package?
+    #+begin_src sh
+    rpm -ql [packageName]
+    #+end_src
+****** list only names of packages?
+       #+BEGIN_SRC sh
+       rpm -qa --qf "%{NAME}\n"
+       #+END_SRC
+**** Utils
+***** Find
+****** find files modified in the last x minutes
+   #+begin_src sh
+   find . -cmin -5
+   #+end_src
+****** find files modified in the last x days
+   #+begin_src sh
+   find . -ctime -5
+   #+end_src
+****** handle filenames with spaces ?
+   #+begin_src sh
+   find . -maxdepth 1 -print0 | while read -d $'\0' d ; do echo $d ; done
+   #+end_src
+   http://www.cyberciti.biz/tips/handling-filenames-with-spaces-in-bash.html
+****** sort files by modified date?
+       #+begin_src sh
+       find -type f -printf '%T@ %p\0' |
+       sort -zk 1nr |
+       sed -z 's/^[^ ]* //' | tr '\0' '\n'
+       #+end_src
+****** find files bigger than x MBytes?
+       #+BEGIN_SRC sh
+       find . -size +500M -exec l {} \;
+       #+END_SRC
+****** find filename with regex?
+       #+BEGIN_SRC sh
+      find . -type f -regextype egrep -regex '.*\.(msg|txt)$$'
+       #+END_SRC
+****** find with logical or?
+       #+BEGIN_SRC sh
+      -name "*.xyz" OR ( -name "*.abc" AND -exec ... )
+       #+END_SRC
+***** Xargs
+****** run a cmd on each line of stdin with xargs?
+   #+begin_src sh
+   echo 'a
+   b
+   c' | xargs -I {} ./f {}
+   #+end_src
+****** use bash function?
+       #+begin_src sh
+       f() { bc; }
+       echo '1 * 1
+       2 * 2
+       3 * 3'                                            \
+       | xargs -i echo "$(declare -f f) ; echo '{}' | f" \
+       | bash
+       #+end_src
+***** Nohup
+****** run nohup?
+       #+BEGIN_SRC sh
+       nohup bash -c "(time bash executeScript 1 input fileOutput > scrOutput) &> timeUse.txt" &
+       #+END_SRC
+
+***** MoreUtils
+****** read / process / write the same file ?
+       - Use:  =sponge=
+       - =sponge= will read stdin and write to specified file. Unlike a shell redirect it will soaks all its input before writing the output file.
+       #+begin_src sh
+       sort f | sponge f
+       #+end_src
+****** instead of xxx use moreutils yyy?
+
+       | cmd       | insteadof                               | use                                                            |
+       |-----------+-----------------------------------------+----------------------------------------------------------------|
+       | =chronic= |                                         | =chronic backup_script.sh=                                     |
+       | =sponge=  | =sort filename= \vert =uniq/ > temp=    | =sort filename= \vert =uniq \vert sponge filename=             |
+       |           | =mv temp filename=                      |                                                                |
+       | =isutf8=  |                                         | =isutf8 filename=                                              |
+       | =ifne=    |                                         | =./script.sh= \vert =ifne less=                                |
+       | =pee=     | =./script.sh= \vert =tee output1 output2= | =./script.sh= \vert =pee 'grep pattern1' 'gzip -c > output.gz'_= |
+       | =ifdata=  | =<parsing ifconfig>=                    |                                                                |
+       | =zrun=    | =diff <(zcat one.gz) <(zcat two.gz)=    | =zrun diff one.gz two.gz=                                      |
+       | =ts=      |                                         | =$ { echo "One" ; sleep 3s ; echo "Two" ; }= \vert =ts=        |
+       | =errno=   |                                         | =$ errno 98=                                                   |
+       | =vipe=    |                                         | =command1= \vert =vipe= \vert =command2=                       |
+       | =vidir=   |                                         | =vidir directory/=                                             |
+       | =combine= | =comm -12 file1 file2=                  | =combine file1 and file2=                                      |
+       |           | =comm -23 fileA fileB=                  | =combine fileA not fileB=                                      |
+       |           | =sort file1 file2= \vert =uniq=         | =combine file1 or file2=                                       |
+       |           | =sort file1 file2= \vert =uniq --unique= | =combine file1 xor file2=                                      |
+
+       See: http://devblog.nestoria.com/post/110168998173/moreutils-basic-unix-tools-that-ought-to-be
+***** Tar
+****** list the content of a remote tgz without intermediary files?
       #+BEGIN_SRC sh
-jq -nRr '"1: \t", "2:  "' | egrep '[[:space:]]' | jq -R .
-#> "1: \t"
-#> "2:  "
-      #+END_SRC
-**** Imagemagick
-***** how to change the quality of a jpeg image?
-      #+BEGIN_SRC sh
-      convert input.png -quality 75 output.jpg
-      #+END_SRC
-**** Rsync
-***** how to specify the port in rsync?
-      #+BEGIN_SRC sh
-      rsync -rvz -e 'ssh -p 2222' --progress --remove-sent-files ./dir user@host:/path
-      #+END_SRC
-**** Comm
-***** comm summary?
-     =comm <(echo $'a\nb') <(echo $'a\nc')=
+       curl http://url/to/file.tgz | tar tzfv -
+      #+END_SRC 
+***** Zip
+****** unzip a single file from archive?
+       #+begin_src sh
+       unzip -p myarchive.zip path/to/zipped/file.txt >file.txt
+       #+end_src
+***** Grep
+****** cheat sheet
+       |                                 | short opt | long opt               |
+       |---------------------------------+-----------+------------------------|
+       | print file name with match      | ~-H~      | ~--with-filename~      |
+       | print only filename for matches | ~-l~      | ~--files-with-matches~ |
+****** Character class for blanks? 
+       #+BEGIN_SRC sh
+ jq -nRr '"1: \t", "2:  "' | egrep '[[:space:]]' | jq -R .
+ #> "1: \t"
+ #> "2:  "
+       #+END_SRC
+***** Comm
+****** comm summary?
+      =comm <(echo $'a\nb') <(echo $'a\nc')=
 
-     | 1 | 2 | 3 |
-     |---+---+---|
-     |   |   | a |
-     | b |   |   |
-     |   | c |   |
+      | 1 | 2 | 3 |
+      |---+---+---|
+      |   |   | a |
+      | b |   |   |
+      |   | c |   |
 
-     - column1: only in FILE1
-     - colukn2: only in FILE2
-     - column3: in FILE1 and FILE2
+      - column1: only in FILE1
+      - colukn2: only in FILE2
+      - column3: in FILE1 and FILE2
 
-**** Other
-***** binary to compare the content of files (all in a but not in b, etc)?
-      =comm=
+****** binary to compare the content of files (all in a but not in b, etc)?
+       =comm=
+**** Math
+***** Bc
+****** float precision?
+       #+begin_src sh
+       echo 'scale=2 ; 1/3' | bc -l
+       #+end_src
+**** X11
+***** NxClient
+****** keyboard issue when connecting with nx ?
+       Try:
+       #+begin_src sh
+       setxkbmap -model evdev -layout us
+       #+end_src
+**** Graphics
+***** Imagemagick
+****** how to change the quality of a jpeg image?
+       #+BEGIN_SRC sh
+       convert input.png -quality 75 output.jpg
+       #+END_SRC
+**** Misc
+***** VirtualBox
+****** manually mount a shared folder in a linux guest?
+       #+begin_src sh
+       sudo mount -t vboxsf <sharedFolderName> /path/to/shared/folder/dir
+       #+end_src
+****** host alt-tab when in a guest?
+       =host key=
+       then
+      alt-tab
+****** Windows Hosts
+******* Windows10
+******** VT-x is not available (VERR_VMX_NO_VMX)
+         From:
 
+         - VT-x is not enabled in the BIOS
+         - The CPU doesn't support VT-x
+         - Hyper-V virtualization is enabled in Windows
+         -
+         - Run in command prompt:
+        #+BEGIN_SRC sh
+        dism.exe /Online /Disable-Feature:Microsoft-Hyper-V
+        #+END_SRC
+        - And reboot
 *** Sysadmin
 **** System Services (systemctl, ...)
 ***** systemd
