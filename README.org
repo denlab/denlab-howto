@@ -192,15 +192,7 @@
        #+begin_src sh
    tmux -2 a -dt 0
        #+end_src
-
-****** compress dir recursive?
-   #+begin_src sh
-   zip -r archive.zip /dir
-   #+end_src
-****** compress dir but exclude a directory ?
-   #+begin_src sh
-   zip -9 -r --exclude=*.svn*  foo.zip [directory-to-compress]
-   #+end_src
+***** Zip
 ****** reload .tmux.conf?
        #+BEGIN_SRC sh
        tmux source-file ~/.tmux.conf
@@ -362,6 +354,14 @@
        #+begin_src sh
        unzip -p myarchive.zip path/to/zipped/file.txt >file.txt
        #+end_src
+****** compress dir recursive?
+****** compress dir but exclude a directory ?
+   #+begin_src sh
+   zip -9 -r --exclude=*.svn*  foo.zip [directory-to-compress]
+   #+end_src
+   #+begin_src sh
+   zip -r archive.zip /dir
+   #+end_src
 ***** Grep
 ****** cheat sheet
        |                                 | short opt | long opt               |
