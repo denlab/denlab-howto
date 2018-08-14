@@ -260,6 +260,14 @@
        #+BEGIN_SRC sh
        rpm -qa --qf "%{NAME}\n"
        #+END_SRC
+***** Ps
+****** list all processes, show only pids?
+       #+BEGIN_SRC sh
+       ps ax -o pid=
+       #> 3409
+       #> 3413
+       #> 3417
+       #+END_SRC
 **** Utils
 ***** Find
 ****** find files modified in the last x minutes
