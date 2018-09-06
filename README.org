@@ -186,6 +186,15 @@
        #+BEGIN_SRC sh
        rsync -rvz -e 'ssh -p 2222' --progress --remove-sent-files ./dir user@host:/path
        #+END_SRC
+****** how to exactly copy a local directory to a remote host (remove extra remote file if necessary) and back ? 
+       #+BEGIN_SRC sh
+       # local -> remote
+       rsync -rvza --progress --delete workspace/ jenkins@localhost:/home/jenkins/workspace
+       # remote -> local
+       rsync -rvza --progress --delete jenkins@localhost:/home/jenkins/workspace/ workspace 
+       
+       
+       #+END_SRC
 **** Admin
 ***** Tmux
 ****** how do i detach other client when reattach to session?
