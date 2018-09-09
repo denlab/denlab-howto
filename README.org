@@ -1035,6 +1035,16 @@ $ echo ${refToRefToVar}
       #+BEGIN_SRC sh
       envsubst
       #+END_SRC
+***** How to make bash source a file before running a command?
+      Use the =BASH_ENV= to tell bash to source a file: 
+     #+BEGIN_SRC sh
+     touch .bashrc
+     echo foo=bar >> .bashrc
+     bash -c 'echo $foo'
+     #> 
+     BASH_ENV=.bashrc bash -c 'echo $foo'
+     #> bar
+    #+END_SRC 
 **** generate uuid?
      #+BEGIN_SRC sh
      cat /proc/sys/kernel/random/uuid
