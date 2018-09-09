@@ -1840,6 +1840,23 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
         )
         #> "3"
         #+END_SRC
+*** Web Servers
+**** Tomcat
+***** manage tomcat programatically ? 
+      #+BEGIN_SRC sh
+# add to TOMCAT_HOME/conf/tomcat-users.xml: 
+<role rolename="manager-gui"/>
+<role rolename="manager-script"/>
+<role rolename="manager-jmx"/>
+<role rolename="manager-status"/>
+<role rolename="admin-gui"/>
+<role rolename="admin-script"/>
+<user username="tomcat" password="tomcat" roles="manager-gui,manager-script,manager-jmx,manager-status,admin-gui,admin-script"/>
+# then:
+curl -v -u tomcat:tomcat http://127.0.0.1:8080/manager/text/list
+      #+END_SRC
+
+
 ** Node
 *** Npm
 **** Cli usage
