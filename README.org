@@ -1842,7 +1842,7 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
         #+END_SRC
 *** Web Servers
 **** Tomcat
-***** manage tomcat programatically ? 
+***** how to configure tomcat so that it can be managed programatically ? 
       #+BEGIN_SRC sh
 # add to TOMCAT_HOME/conf/tomcat-users.xml: 
 <role rolename="manager-gui"/>
@@ -1855,8 +1855,9 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
 # then:
 curl -v -u tomcat:tomcat http://127.0.0.1:8080/manager/text/list
       #+END_SRC
-
-
+***** tomcat rest api doc ?
+      http://tomcat.apache.org/tomcat-7.0-doc/manager-howto.html#List_Currently_Deployed_Applications
+      
 ** Node
 *** Npm
 **** Cli usage
