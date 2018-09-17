@@ -67,6 +67,67 @@
     ssh -R 2210:localhost:22 bserver.outside.com
     #+end_src
     from: https://toic.org/blog/2009/reverse-ssh-port-forwarding/
+****** Passwordless and keyless ssh login
+
+******* ssh without password or key?
+    #+begin_src sh
+    # remove password for user
+    passwd -d user
+    # sshd: allow empty password
+    sed -r 's/#(PermitEmptyPasswords) no/\1 yes/' -i.bak /etc/ssh/sshd_config
+    # allow login with passwords
+    sed -r                                       \
+        -e 's/#(PasswordAuthentication yes)/\1/' \
+        -i /etc/ssh/sshd_config                                                                          \
+    #+end_src
+   
+******* ssh root without password or key?
+       #+BEGIN_SRC sh
+       passwd -d root                               \
+       && sed -r                                    \
+          -e 's/#(PermitEmptyPasswords) no/\1 yes/' \
+          -e 's/#(PasswordAuthentication yes)/\1/'  \
+          -e 's/#(PermitRootLogin).*$/\1 yes/'      \
+          -i /etc/ssh/sshd_config                   \
+       #+END_SRC 
+       - dockerfile: 
+         #+BEGIN_SRC sh
+  FROM alpine
+  RUN apk update && apk add openssh-server openssh-keygen
+  RUN ssh-keygen -A                                                              
+  CMD passwd -d root                                                                    \
+      && sed -r                                                                         \
+          -e 's/#(PermitEmptyPasswords) no/\1 yes/'                                     \
+          -e 's/#(PasswordAuthentication yes)/\1/'                                      \
+          -e 's/#(PermitRootLogin).*$/\1 yes/'                                          \
+          -i /etc/ssh/sshd_config                                                       \
+      && egrep 'AllowUsers|PermitRootLogin|PermitEmptyPasswords|PasswordAuthentication' \
+               /etc/ssh/sshd_config                                                     \
+      && /usr/sbin/sshd -D
+         #+END_SRC
+
+******* working conf for openssh 7.1 on alpine?
+        #+BEGIN_SRC sh
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+SyslogFacility AUTHPRIV
+PermitRootLogin yes
+AuthorizedKeysFile      .ssh/authorized_keys
+PermitEmptyPasswords yes
+PasswordAuthentication yes
+ChallengeResponseAuthentication no
+GSSAPIAuthentication yes
+GSSAPICleanupCredentials no
+UsePAM yes
+X11Forwarding yes
+UsePrivilegeSeparation sandbox          # Default for new installations.
+AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
+AcceptEnv XMODIFIERS
+Subsystem       sftp    /usr/libexec/openssh/sftp-server
+        #+END_SRC
 
 ****** generate public private key pair
    #+begin_src sh
@@ -85,42 +146,6 @@
    "
    #+end_src
 
-****** ssh without password or key?
-   #+begin_src sh
-   # remove password for user
-   passwd -d user
-   # sshd: allow empty password
-   sed -r 's/#(PermitEmptyPasswords) no/\1 yes/' -i.bak /etc/ssh/sshd_config
-   # allow login with passwords
-   sed -r                                       \
-       -e 's/#(PasswordAuthentication yes)/\1/' \
-       -i /etc/ssh/sshd_config                                                                          \
-   #+end_src
-
-****** ssh root without password or key?
-      #+BEGIN_SRC sh
-      passwd -d root                               \
-      && sed -r                                    \
-         -e 's/#(PermitEmptyPasswords) no/\1 yes/' \
-         -e 's/#(PasswordAuthentication yes)/\1/'  \
-         -e 's/#(PermitRootLogin).*$/\1 yes/'      \
-         -i /etc/ssh/sshd_config                   \
-      #+END_SRC 
-      - dockerfile: 
-        #+BEGIN_SRC sh
- FROM alpine
- RUN apk update && apk add openssh-server openssh-keygen
- RUN ssh-keygen -A                                                              
- CMD passwd -d root                                                                    \
-     && sed -r                                                                         \
-         -e 's/#(PermitEmptyPasswords) no/\1 yes/'                                     \
-         -e 's/#(PasswordAuthentication yes)/\1/'                                      \
-         -e 's/#(PermitRootLogin).*$/\1 yes/'                                          \
-         -i /etc/ssh/sshd_config                                                       \
-     && egrep 'AllowUsers|PermitRootLogin|PermitEmptyPasswords|PasswordAuthentication' \
-              /etc/ssh/sshd_config                                                     \
-     && /usr/sbin/sshd -D
-        #+END_SRC
 ****** get public key from private key ?
    #+begin_src sh
    ssh-keygen -y -f ~/.ssh/id_rsa
