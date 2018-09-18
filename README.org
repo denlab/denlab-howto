@@ -1344,6 +1344,34 @@ cat /etc/environment          \
       #+BEGIN_SRC sh
       zpool destroy <poolName>
       #+END_SRC
+*** Distribs
+**** Alpine
+***** Apk
+****** use a http cache for apk ?
+
+       from: https://hub.docker.com/r/vektorlab/apk-cache/
+
+       - Run an apk-cache on port 80 + --add-host: 
+       #+BEGIN_SRC sh
+       # run an apk-cache container
+       docker run -d -p 80:80 --name=apk-cache vektorlab/apk-cache
+       # run container by replacing dl-4.alpinelinux.org: 
+       docker run --add-host dl-cdn.alpinelinux.org:${hostIp} -it alpine:3.6
+       # Alternative if not running on port 80, link the container: 
+       docker run -d -p 80:80 --name=apk-cache vektorlab/apk-cache
+       #+END_SRC
+
+       - Run an apk-cache on any port + link on port 80 + --add-host: 
+       #+BEGIN_SRC sh
+       # run an apk-cache container
+       docker run -d -p 8080:80 --name=apk-cache vektorlab/apk-cache
+       # docker run with link
+       docker run -ti --link apk-cache:dl-4.alpinelinux.org alpine:latest /bin/sh
+       #+END_SRC
+
+       - Run apk-cache on any port + overwrite resolution of dl-4.alpinelinux.org via dnsmasq
+
+*
 ** Solaris
 *** equivalent of linux's =ps aux= ?
 
