@@ -48,6 +48,7 @@
          --no-parent                                                                                         \
          http://nexus-url/x/y/z
     #+end_src
+****** equivalent of curl -sS?
 **** Net
 ***** Netcat
 ****** simple web server with netcat?
@@ -407,6 +408,17 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
  jq -nRr '"1: \t", "2:  "' | egrep '[[:space:]]' | jq -R .
  #> "1: \t"
  #> "2:  "
+       #+END_SRC
+****** match pattern on multiples lines?
+       #+BEGIN_SRC sh
+       seq 4  | grep -Pz '1\n2'
+       #               ||   
+       #               |+-------+ treat input as a set of lines  null terminated
+       #               +-----------+ Perl regex mode
+       #> =1= 
+       #> =2=
+       #>  3
+       #>  4
        #+END_SRC
 ***** Comm
 ****** comm summary?
