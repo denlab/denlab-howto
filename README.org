@@ -227,6 +227,11 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
        #+begin_src sh
    tmux -2 a -dt 0
        #+end_src
+****** create a new session specifying the name?
+       #+BEGIN_SRC sh
+       # create a session named "net'
+       tmux -2 new-session -s net
+       #+END_SRC
 ***** Zip
 ****** reload .tmux.conf?
        #+BEGIN_SRC sh
