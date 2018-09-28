@@ -1405,7 +1405,6 @@ cat /etc/environment          \
 
        - Run apk-cache on any port + overwrite resolution of dl-4.alpinelinux.org via dnsmasq
 
-*
 ** Solaris
 *** equivalent of linux's =ps aux= ?
 
