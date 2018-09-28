@@ -1249,6 +1249,16 @@ $ echo ${refToRefToVar}
 ******* how restart gnome shell?
         - =alt-F2=
         - =r=
+******** Gnome Shell Extensions?
+********* how to manage enabling/disabling gnome shell user extensions (command line)?
+          from: https://askubuntu.com/questions/1029376/how-to-enable-and-disable-gnome-extensions-from-command-line
+          #+BEGIN_SRC sh
+          # are all gnome shell user extensions disabled? 
+          gsettings get org.gnome.shell disable-user-extensions
+          # disable all gnome shell user extensions
+          gsettings set org.gnome.shell disable-user-extensions true
+          #+END_SRC
+          
 *** Converting formats
 **** convert file format table?
      | src   | dst   | command                                                                           |
