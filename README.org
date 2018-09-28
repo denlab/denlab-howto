@@ -1240,6 +1240,14 @@ $ echo ${refToRefToVar}
       ## now start a bigger app: 
       DISPLAY=${display} google-chrome
       #+END_SRC
+**** Window managers
+***** Gnome Shell
+****** how to have cpu,etc montoring in the top bar?
+       - Install system-monitor gnome extension
+       - Can search it through gnome shell search (win key)
+****** how restart gnome shell?
+       - =alt-F2=
+       - =r=
 *** Converting formats
 **** convert file format table?
      | src   | dst   | command                                                                           |
