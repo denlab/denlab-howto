@@ -469,6 +469,10 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
        #+BEGIN_SRC sh
        convert input.png -quality 75 output.jpg
        #+END_SRC
+**** Text
+***** Less
+****** how to search for a tab ? 
+       Enter a literal tab with: =CTRL-v=.
 **** Misc
 ***** VirtualBox
 ****** manually mount a shared folder in a linux guest?
