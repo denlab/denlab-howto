@@ -472,7 +472,7 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
 **** Text
 ***** Less
 ****** how to search for a tab ? 
-       Enter a literal tab with: =CTRL-v=.
+       Enter a literal tab with: =CTRL-v TAB=.
 **** Misc
 ***** VirtualBox
 ****** manually mount a shared folder in a linux guest?
