@@ -1946,6 +1946,22 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
         )
         #> "3"
         #+END_SRC
+***** Functions
+****** Args
+******* optional args with default values using keys?
+        #+BEGIN_SRC clojure
+        (defn hello [& {:keys [salutation name]
+                        :or   {salutation "Hello" name "World"}}]
+          (str salutation " " name))
+        ;; => "#'fapi.jenkins.log-parse/hello"
+        ;;
+        (hello)
+        ;; => "Hello World"
+        (hello :name "John")
+        ;; => "Hello John"
+        (hello :name "John" :salutation "Hi")
+        ;; => "Hi John"
+        #+END_SRC
 *** Web Servers
 **** Tomcat
 ***** how to configure tomcat so that it can be managed programatically ? 
