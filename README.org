@@ -499,7 +499,7 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
         - And reboot
 *** Sysadmin
 **** System Services (systemctl, ...)
-***** systemd
+***** Systemd
 ****** systemd / systemV cheatsheet
 
 from: https://fedoraproject.org/wiki/SysVinit_to_Systemd_Cheatsheet
@@ -512,7 +512,10 @@ from: https://fedoraproject.org/wiki/SysVinit_to_Systemd_Cheatsheet
 | service frobozz reload      | systemctl reload frobozz      | When supported, reloads the config file without interrupting pending operations. |
 | service frobozz condrestart | systemctl condrestart frobozz | Restarts if the service is already running.                                      |
 | service frobozz status      | systemctl status frobozz      | Tells whether a service is currently running.                                    |
-
+****** follow logs of a particular systemd service?
+       #+BEGIN_SRC sh
+       journalctl -fu collectd
+       #+END_SRC
 ***** General Linux
 ****** Linux reload service config
    #+begin_src sh
