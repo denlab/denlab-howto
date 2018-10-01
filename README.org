@@ -622,6 +622,16 @@ from: https://fedoraproject.org/wiki/SysVinit_to_Systemd_Cheatsheet
       - kill them
       - remount
       ref: http://joelinoff.com/blog/?p=356
+***** Swap
+****** manage swap (status, enable, disable)?
+       #+BEGIN_SRC sh
+       # status
+       swapon -s
+       # alloff
+       swapoff -a
+       # allon
+       swapon -a
+       #+END_SRC
 **** Dns
 ***** How to query all the entries of a dns server ?
       #+BEGIN_SRC sh
