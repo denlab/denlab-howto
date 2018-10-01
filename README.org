@@ -1709,6 +1709,9 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
      #+BEGIN_SRC sh
      :.,$s/\vBEFORE/AFTER/gc
      #+END_SRC
+*** Folding
+**** a promising mode? 
+     - hint: =spacemacs/fold-transient-state/evil-close-fold=
 ** OrgMode
 *** Tables
 **** pipe in table cells?
