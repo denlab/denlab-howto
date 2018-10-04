@@ -241,7 +241,7 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
        # create a session named "net'
        tmux -2 new-session -s net
        #+END_SRC
-***** Zip
+
 ****** reload .tmux.conf?
        #+BEGIN_SRC sh
        tmux source-file ~/.tmux.conf
@@ -254,6 +254,18 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
 ****** bindings to upgrade plugins?
        - update plugins: ~<prefix> + U
        - remove plugins not on the list: =<prefix> + alt + u=
+***** Zip
+****** list content of a zip file from stdin? 
+       #+BEGIN_SRC sh
+       curl file://$(pwd)/dir.zip | bsdtar -xvf-
+       #> % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+       #> Dload  Upload   Total   Spent    Left  Speed
+       #> 100  1964  100  1964    0     0  43.5M      0 --:--:-- --:--:-- --:--:-- 43.5M
+       #> x dir/
+       #> x dir/2/
+       #> x dir/2/5/
+       #> x dir/2/5/data
+       #+END_SRC
 ***** Apt-get
 ****** dpkg show all installed files of a .deb?
 
