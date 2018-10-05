@@ -380,7 +380,6 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
        #> 9
        #+END_SRC
 **** Utils
-
 ***** Comm
 ****** comm summary?
       =comm <(echo $'a\nb') <(echo $'a\nc')=
@@ -397,7 +396,6 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
 
 ****** binary to compare the content of files (all in a but not in b, etc)?
        =comm=
-
 
 ***** Find
 ****** find files modified in the last x minutes
@@ -524,7 +522,11 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
        #>  3
        #>  4
        #+END_SRC
-
+***** Tree
+****** print tree with unicode characters?
+       #+BEGIN_SRC sh
+       tree -N
+       #+END_SRC
 **** Web
 ***** Curl
 ****** follow redirects?
