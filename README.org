@@ -321,6 +321,19 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
        #> 3413
        #> 3417
        #+END_SRC
+***** SeLinux
+****** status/enable/disable selinux?
+       #+BEGIN_SRC sh
+       # with the selinux-utils pkg:
+       # for example on debian like systems:
+       aptitude install selinux-utils
+       # get selinux status
+       getenforce
+       # enable
+       setenforce 1
+       # disable
+       setenforce 0
+       #+END_SRC
 **** Utils
 ***** Find
 ****** find files modified in the last x minutes
