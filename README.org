@@ -533,6 +533,10 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
        #+BEGIN_SRC sh
        curl -L <url>
        #+END_SRC
+****** post data from stdin?
+      #+BEGIN_SRC sh
+     cat data.json | curl -H "Content-Type: application/json" -X POST -d @- http://api 
+      #+END_SRC 
 ***** Wget
 ****** recursively download for example nexus ?
 
