@@ -924,6 +924,20 @@ EOF
         echo "not a terminal"
       fi
       #+END_SRC
+***** Printout
+****** Padding
+******* right / left pad with printf?
+        #+BEGIN_SRC sh
+        printf "%40s\n" foo | tr ' ' .
+        #> .....................................foo
+        printf "%-40s\n" foo | tr ' ' .
+        #> foo.....................................
+        #+END_SRC
+******* zero padding numbers?
+        #+BEGIN_SRC sh
+        printf "%05d\n" 99
+        #> 00099
+        #+END_SRC
 **** Arrays
 ***** Associative arrays
 ****** declare, print, ...
@@ -1516,13 +1530,6 @@ cat /etc/environment          \
       #+BEGIN_SRC sh
       sudo zpool status -D zpool-docker | jq -Rr 'capture("^\\s*dedup: DDT entries (?<ddt>[0-9]+)[^0-9]\\s+size (?<sizeOnDisk>[0-9]+) on disk, (?<inCore>[0-9]+) in core$") | map_values(fromjson) | { ramUsedForDedupInMBytes: (.ddt * .inCore / (1024 * 1024))}'
       #+END_SRC
-****** right / left pad with printf?
-       #+BEGIN_SRC sh
-       printf "%40s\n" foo | tr ' ' .
-       #> .....................................foo
-       printf "%-40s\n" foo | tr ' ' .
-       #> foo.....................................
-       #+END_SRC
 * Crypto
 ** Gpg
 *** verify a gpg signed file?
