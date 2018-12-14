@@ -2692,6 +2692,23 @@ jq -n '
     jq -n 'now | todate'
     #> "2017-09-12T18:35:01Z"
     #+END_SRC
+** Lua
+*** Call external command and get stdout?
+   #+BEGIN_SRC sh
+ lua <<< '
+cmd="seq 3"
+f=assert(io.popen(cmd))
+for line in f:lines() do
+  print(line)
+end'
+#> 1
+#> 2
+#> 3
+   #+END_SRC 
+*** Call external command and get stdout and return code?
+    it seems not straighforward to do.
+    Seem to have to implement this by adding some way to get the rc from the command :-(
+
 ** Unicode
 *** Handy emoticon ?
  | thumbs up  | 👍  |
