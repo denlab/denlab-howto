@@ -1511,7 +1511,13 @@ cat /etc/environment          \
        #+END_SRC
 
        - Run apk-cache on any port + overwrite resolution of dl-4.alpinelinux.org via dnsmasq
-
+**** Debian
+***** Old debian GPG invalid signature when apt-get update?
+      Re-import expired pgp keys with:
+      #+BEGIN_SRC sh
+      apt-key list | grep expired |  tr -s ' '  | cut -f2 -d ' ' | cut -f2 -d'/' | sed -r 's/.*/apt-key adv --recv-keys --keyserver keys.gnupg.net &/' | bash -xv
+      
+      #+END_SRC
 ** Solaris
 *** equivalent of linux's =ps aux= ?
 
