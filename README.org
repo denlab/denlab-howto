@@ -2303,6 +2303,30 @@ ifndef cmd
   $(error cmd is undefined)
 endif
     #+END_SRC
+*** how to use a multiline make var in a shell recipe?
+    Export the make var, and use it in the recipe: 
+
+    #+BEGIN_SRC sh 
+make - <<< 'define multiline
+- line1
+- line2
+- line3
+endef
+export multiline
+
+run:
+  @echo
+  @echo "demoMultiLine: "
+  @echo "$$multiline"
+  @echo
+'
+#> 
+#> demoMultiLine:
+#> - line1
+#> - line2
+#> - line3
+#> 
+    #+END_SRC
 ** Lorem ipsum
    |      |        |                                         |
    |------+--------+-----------------------------------------|
