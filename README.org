@@ -2066,6 +2066,29 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
         (hello :name "John" :salutation "Hi")
         ;; => "Hi John"
         #+END_SRC
+***** Var
+****** symbol->var->value?
+       #+BEGIN_SRC clojure
+(def x :foo)
+;; #> #'user/x
+(resolve 'x)
+;; #> #'user/x
+(var-get (resolve 'x))
+;; #> :foo
+       #+END_SRC
+******* in one go: 
+        #+BEGIN_SRC clojure
+        (->> 'x
+             resolve
+             var-get
+        )
+        #+END_SRC
+******* or for conditional evaluation
+        #+BEGIN_SRC clojure
+        (if-let [v (resolve '*dev-mode*)]
+          (if (var-get v)
+            :dostuff))
+        #+END_SRC
 *** Web Servers
 **** Tomcat
 ***** how to configure tomcat so that it can be managed programatically ? 
