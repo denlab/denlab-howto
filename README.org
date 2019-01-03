@@ -1518,6 +1518,14 @@ cat /etc/environment          \
       apt-key list | grep expired |  tr -s ' '  | cut -f2 -d ' ' | cut -f2 -d'/' | sed -r 's/.*/apt-key adv --recv-keys --keyserver keys.gnupg.net &/' | bash -xv
       
       #+END_SRC
+**** Ubuntu
+***** Admin
+****** How to authorize normal user to connect to wifi withouth authenticating as admin ?
+
+       - Using the admin account, connect to the wifi
+       - And in the wifi properties, choose: 
+         - "Make available to others users"
+         - 
 ** Solaris
 *** equivalent of linux's =ps aux= ?
 
