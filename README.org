@@ -488,6 +488,13 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
        |           | =sort file1 file2= \vert =uniq --unique= | =combine file1 xor file2=                                      |
 
        See: http://devblog.nestoria.com/post/110168998173/moreutils-basic-unix-tools-that-ought-to-be
+***** Stat
+****** Custom format with newlines?
+
+       #+BEGIN_SRC sh
+       # use --printf to insert the code sequences
+       stat --printf='%U\n%G\n%C\n%z\n' /var/log/secure
+       #+END_SRC
 ***** Tar
 ****** list the content of a remote tgz without intermediary files?
       #+BEGIN_SRC sh
