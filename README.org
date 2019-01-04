@@ -136,6 +136,7 @@
        setenforce 0
        #+END_SRC
 
+
 **** Graphics
 ***** Imagemagick
 ****** how to change the quality of a jpeg image?
@@ -361,7 +362,6 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
 
 
 
-
 **** Text
 ***** Less
 ****** how to search for a tab ? 
@@ -430,22 +430,29 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
       -name "*.xyz" OR ( -name "*.abc" AND -exec ... )
        #+END_SRC
 
-***** Xargs
-****** run a cmd on each line of stdin with xargs?
-   #+begin_src sh
-   echo 'a
-   b
-   c' | xargs -I {} ./f {}
-   #+end_src
-****** use bash function?
-       #+begin_src sh
-       f() { bc; }
-       echo '1 * 1
-       2 * 2
-       3 * 3'                                            \
-       | xargs -i echo "$(declare -f f) ; echo '{}' | f" \
-       | bash
-       #+end_src
+***** Grep
+****** cheat sheet
+       |                                 | short opt | long opt               |
+       |---------------------------------+-----------+------------------------|
+       | print file name with match      | ~-H~      | ~--with-filename~      |
+       | print only filename for matches | ~-l~      | ~--files-with-matches~ |
+****** Character class for blanks? 
+       #+BEGIN_SRC sh
+ jq -nRr '"1: \t", "2:  "' | egrep '[[:space:]]' | jq -R .
+ #> "1: \t"
+ #> "2:  "
+       #+END_SRC
+****** match pattern on multiples lines?
+       #+BEGIN_SRC sh
+       seq 4  | grep -Pz '1\n2'
+       #               ||   
+       #               |+-------+ treat input as a set of lines  null terminated
+       #               +-----------+ Perl regex mode
+       #> =1= 
+       #> =2=
+       #>  3
+       #>  4
+       #+END_SRC
 ***** Nohup
 ****** run nohup?
        #+BEGIN_SRC sh
@@ -486,6 +493,27 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
       #+BEGIN_SRC sh
        curl http://url/to/file.tgz | tar tzfv -
       #+END_SRC 
+***** Tree
+****** print tree with unicode characters?
+       #+BEGIN_SRC sh
+       tree -N
+       #+END_SRC
+***** Xargs
+****** run a cmd on each line of stdin with xargs?
+   #+begin_src sh
+   echo 'a
+   b
+   c' | xargs -I {} ./f {}
+   #+end_src
+****** use bash function?
+       #+begin_src sh
+       f() { bc; }
+       echo '1 * 1
+       2 * 2
+       3 * 3'                                            \
+       | xargs -i echo "$(declare -f f) ; echo '{}' | f" \
+       | bash
+       #+end_src
 ***** Zip
 ****** unzip a single file from archive?
        #+begin_src sh
@@ -499,34 +527,6 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
    #+begin_src sh
    zip -r archive.zip /dir
    #+end_src
-***** Grep
-****** cheat sheet
-       |                                 | short opt | long opt               |
-       |---------------------------------+-----------+------------------------|
-       | print file name with match      | ~-H~      | ~--with-filename~      |
-       | print only filename for matches | ~-l~      | ~--files-with-matches~ |
-****** Character class for blanks? 
-       #+BEGIN_SRC sh
- jq -nRr '"1: \t", "2:  "' | egrep '[[:space:]]' | jq -R .
- #> "1: \t"
- #> "2:  "
-       #+END_SRC
-****** match pattern on multiples lines?
-       #+BEGIN_SRC sh
-       seq 4  | grep -Pz '1\n2'
-       #               ||   
-       #               |+-------+ treat input as a set of lines  null terminated
-       #               +-----------+ Perl regex mode
-       #> =1= 
-       #> =2=
-       #>  3
-       #>  4
-       #+END_SRC
-***** Tree
-****** print tree with unicode characters?
-       #+BEGIN_SRC sh
-       tree -N
-       #+END_SRC
 **** Web
 ***** Curl
 ****** follow redirects?
