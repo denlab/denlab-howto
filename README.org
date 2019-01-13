@@ -2104,6 +2104,15 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
           (if (var-get v)
             :dostuff))
         #+END_SRC
+***** Destructuring
+****** Nested destructuring with map and seq ?
+        #+BEGIN_SRC clojure
+        (def [s {:todo [:a :b]}])
+        ;; #>
+        (let [{[head & tail] :todo} s]
+          [head tail])
+        ;; #> [:a :b]
+       #+END_SRC
 *** Web Servers
 **** Tomcat
 ***** how to configure tomcat so that it can be managed programatically ? 
