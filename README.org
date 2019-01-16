@@ -571,14 +571,33 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
 
 from: https://fedoraproject.org/wiki/SysVinit_to_Systemd_Cheatsheet
 
-| Sysvinit Command            | Systemd Command               | Notes                                                                            |
-|-----------------------------+-------------------------------+----------------------------------------------------------------------------------|
-| service frobozz start       | systemctl start frobozz       | Used to start a service (not reboot persistent)                                  |
-| service frobozz stop        | systemctl stop frobozz        | Used to stop a service (not reboot persistent)                                   |
-| service frobozz restart     | systemctl restart frobozz     | Used to stop and then start a service                                            |
-| service frobozz reload      | systemctl reload frobozz      | When supported, reloads the config file without interrupting pending operations. |
-| service frobozz condrestart | systemctl condrestart frobozz | Restarts if the service is already running.                                      |
-| service frobozz status      | systemctl status frobozz      | Tells whether a service is currently running.                                    |
+| service                            | Sysvinit Command                   | Systemd Command                                         |
+|------------------------------------+------------------------------------+---------------------------------------------------------|
+| stop                               | =service ${name} stop=             | =systemctl stop        ${name}=                         |
+| start                              | =service ${name} start=            | =systemctl start       ${name}=                         |
+| restart                            | =service ${name} restart=          | =systemctl restart     ${name}=                         |
+| reload conf                        | =service ${name} reload=           | =systemctl reload      ${name}=                         |
+| restart if service already running | =service ${name} condrestart=      | =systemctl condrestart ${name}=                         |
+| status                             | =service ${name} status=           | =systemctl status      ${name}=                         |
+|------------------------------------+------------------------------------+---------------------------------------------------------|
+| enable                             | =chkconfig ${name} on=             | =systemctl enable     ${name}=                          |
+| disable                            | =chkconfig ${name} off=            | =systemctl disable    ${name}=                          |
+| isEnabled?                         | =chkconfig ${name}=                | =systemctl is-enabled ${name}=                          |
+|------------------------------------+------------------------------------+---------------------------------------------------------|
+| reload when created or modififeds  | =chkconfig ${name} --add=          | =systemctl daemon-reload=                               |
+|------------------------------------+------------------------------------+---------------------------------------------------------|
+| list all services                  | =ls /etc/rc.d/init.d/=             | =systemctl=                                             |
+|                                    |                                    | (or) =systemctl list-unit-files --type=service=         |
+|                                    |                                    | (or) =ls /{etc,lib}/systemd/system/*.service=           |
+|------------------------------------+------------------------------------+---------------------------------------------------------|
+| print levels where this service    | =chkconfig --list=                 | =systemctl list-unit-files --type=service=              |
+| is on/off                          |                                    | (or) =ls /etc/systemd/system/*.wants/=                  |
+|------------------------------------+------------------------------------+---------------------------------------------------------|
+| print graphical mode services      | =chkconfig --list \vert grep 5:on= | =systemctl list-dependencies graphical.target=          |
+|------------------------------------+------------------------------------+---------------------------------------------------------|
+| print what level of this service   | =chkconfig ${name} --list=         | =ls /etc/systemd/system/*.wants/${serviceName}.service= |
+|------------------------------------+------------------------------------+---------------------------------------------------------|
+
 ****** follow logs of a particular systemd service?
        #+BEGIN_SRC sh
        journalctl -fu collectd
