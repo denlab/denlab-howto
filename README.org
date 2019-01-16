@@ -590,7 +590,7 @@ from: https://fedoraproject.org/wiki/SysVinit_to_Systemd_Cheatsheet
 |                                    |                                    | (or) =systemctl list-unit-files --type=service=         |
 |                                    |                                    | (or) =ls /{etc,lib}/systemd/system/*.service=           |
 |------------------------------------+------------------------------------+---------------------------------------------------------|
-| print levels where this service    | =chkconfig --list=                 | =systemctl list-unit-files --type=service=              |
+| print levels where this service    | =chkconfig ${name} --list=         | =systemctl list-unit-files --type=service=              |
 | is on/off                          |                                    | (or) =ls /etc/systemd/system/*.wants/=                  |
 |------------------------------------+------------------------------------+---------------------------------------------------------|
 | print graphical mode services      | =chkconfig --list \vert grep 5:on= | =systemctl list-dependencies graphical.target=          |
