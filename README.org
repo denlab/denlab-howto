@@ -2788,6 +2788,23 @@ jq -n '
     jq -n 'now | todate'
     #> "2017-09-12T18:35:01Z"
     #+END_SRC
+*** Other
+**** Undocumented debug options?
+     #+BEGIN_SRC sh
+     jq -n --debug-trace '1'
+     #> 0000 TOP
+     #> 0001 LOADK 1    null
+     #> 0003 RET        1
+     #> 1
+     #> 0003 RET                <backtracking>
+     jq -n --debug-dump-disasm '1'
+     #> 0000 TOP
+     #> 0001 LOADK 1
+     #> 0003 RET
+    #>  
+    #> 1
+    #+END_SRC
+
 ** Lua
 *** Call external command and get stdout?
    #+BEGIN_SRC sh
