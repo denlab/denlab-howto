@@ -1537,6 +1537,10 @@ cat /etc/environment          \
        #+END_SRC
 
        - Run apk-cache on any port + overwrite resolution of dl-4.alpinelinux.org via dnsmasq
+****** add a repo?
+       #+BEGIN_SRC sh
+       echo "http://107.181.185.116/alpine/v3.2/main" >> /etc/apk/repositories; \
+       #+END_SRC
 **** Debian
 ***** Old debian GPG invalid signature when apt-get update?
       Re-import expired pgp keys with:
