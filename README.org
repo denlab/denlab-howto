@@ -2481,6 +2481,12 @@ git reset --hard
     set -- '<regex>'
     git grep "$@" $(git rev-list --all)
     #+end_src
+*** essential git config? 
+    #+BEGIN_SRC sh
+         git config --global color.ui true                \
+      && git config --global user.email "you@example.com" \
+      && git config --global user.name "Your Name"
+    #+END_SRC
 *** config for colors?
     #+BEGIN_SRC sh
     git config --global color.ui true
