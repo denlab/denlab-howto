@@ -1556,6 +1556,23 @@ cat /etc/environment          \
        - And in the wifi properties, choose: 
          - "Make available to others users"
          - 
+*** Backup
+**** Bup
+***** bup essentials?
+      
+      | what?                | cmd                             |
+      |----------------------+---------------------------------|
+      | init bup in curr dir | =bup init=                      |
+      |----------------------+---------------------------------|
+      | local backup         | =bup index $d=                  |
+      | - of   dir : $d      | =bup save -n ${n} ${d}=         |
+      | - with name: $n      |                                 |
+      |----------------------+---------------------------------|
+      | Restore local backup | =bup restore -C ${p} ${n}/${d}= |
+      | - of dir    : $d     |                                 |
+      | - with name : $n     |                                 |
+      | - at path   : $p     |                                 |
+      |----------------------+---------------------------------|
 ** Solaris
 *** equivalent of linux's =ps aux= ?
 
