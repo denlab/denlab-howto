@@ -170,6 +170,15 @@
     ssh -R 2210:localhost:22 bserver.outside.com
     #+end_src
     from: https://toic.org/blog/2009/reverse-ssh-port-forwarding/
+******* ssh tunnel example?
+        
+        +BEGIN_SRC sh
+        localPort=5555                              \
+        remotePort=5555                             \
+        sshStr=jenkins@jenkins-deploy.fircosoft.net \
+          bash -c 'ssh -N  -f -L ${localPort}:localhost:${remotePort} ${sshStr}'        
+        +END_SRC
+        
 ****** Passwordless and keyless ssh login
 
 ******* ssh without password or key?
