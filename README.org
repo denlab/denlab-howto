@@ -1568,20 +1568,27 @@ cat /etc/environment          \
 *** Backup
 **** Bup
 ***** bup essentials?
-      
-      | what?                | cmd                             |
-      |----------------------+---------------------------------|
-      | init bup in curr dir | =bup init=                      |
-      |----------------------+---------------------------------|
-      | local backup         | =bup index $d=                  |
-      | - of   dir : $d      | =bup save -n ${n} ${d}=         |
-      | - with name: $n      |                                 |
-      |----------------------+---------------------------------|
-      | Restore local backup | =bup restore -C ${p} ${n}/${d}= |
-      | - of dir    : $d     |                                 |
-      | - with name : $n     |                                 |
-      | - at path   : $p     |                                 |
-      |----------------------+---------------------------------|
+     
+| category | what?                | cmd                                      |
+|----------+----------------------+------------------------------------------|
+| init     | init bup in curr dir | =bup init=                               |
+|----------+----------------------+------------------------------------------|
+| save     | local backup         | =bup index $d=                           |
+|          | - of   dir : $d      | =bup save -n ${n} ${d}=                  |
+|          | - with name: $n      |                                          |
+|----------+----------------------+------------------------------------------|
+| restore  | Restore local backup | =bup restore -C ${p} ${n}/${d}=          |
+|          | - of dir    : $d     |                                          |
+|          | - with name : $n     |                                          |
+|          | - at path   : $p     |                                          |
+|----------+----------------------+------------------------------------------|
+| list     | list backup          | =bup ls $n=                              |
+|          | - with name: $n      |                                          |
+|----------+----------------------+------------------------------------------|
+| save     | local backup         | =tar cvf $d= <pipe> =bup split -n $n -vv= |
+|          | - of   dir : $d      |                                          |
+|          | - with name: $n      |                                          |
+|----------+----------------------+------------------------------------------|
 ** Solaris
 *** equivalent of linux's =ps aux= ?
 
