@@ -2430,6 +2430,11 @@ run:
 #> - line3
 #> 
     #+END_SRC
+*** selfDoc
+**** how to extract all targets from a Makefile without a make command ? 
+     +BEGIN_SRC sh
+      egrep '^[^. :]+:' < proxy | sed -r -e 's/.*/  - &/' -e 's/://g']
+     +END_SRC
 ** Lorem ipsum
    |      |        |                                         |
    |------+--------+-----------------------------------------|
