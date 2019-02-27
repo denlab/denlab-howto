@@ -885,6 +885,7 @@ set -o
       | err           | out  |  ls 2>&1                       |                |
       | err & out     | pipe |  ls 2>&1 |  grep '.*'          |                |
       |               |      |  ls      |& grep '.*'          | equiv          |
+      | err           | proc |  ls 2> >(grep foo)  '          | equiv          |
       #+END_SRC
 ***** use stdout as a file (with filename) for another cmd?
       #+BEGIN_SRC sh
