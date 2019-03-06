@@ -1616,6 +1616,27 @@ cat /etc/environment          \
        # even more verbose
        rsync -rvza --progress --delete --info=stats2,misc1,flist0 workspace/ jenkins@localhost:/home/jenkins/workspace
        #+END_SRC
+****** Compress / decompress on the fly?
+       +BEGIN_SRC sh
+       # data ------------------------------------------------------------------
+       mkdir d
+       seq 2 > d/f
+       # compress --------------------------------------------------------------
+       tar -cf - d | xz > d.tar.xz
+       # remove orig -----------------------------------------------------------
+       ls
+       #> d  d.tar.xz
+       rm -rf d
+       # uncompress ------------------------------------------------------------
+       unxz < d.tar.xz| tar x
+       # check -----------------------------------------------------------------
+       ls
+       #> d  d.tar.xz
+       cat d/f
+       #> 1
+       #> 2
+       # -----------------------------------------------------------------------
+       +END_SRC
 * Crypto
 ** Gpg
 *** verify a gpg signed file?
