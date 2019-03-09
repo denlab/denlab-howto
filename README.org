@@ -838,6 +838,33 @@ setxkbmap -option ctrl:nocaps
       |------+----------+------------+-----------------|
       | file | is empty | =[ -s a ]= | single brackets |
       |      |          |            |                 |
+***** test files cheatsheet
+      from: https://wiki-dev.bash-hackers.org/commands/classictest
+*For classic test =[ <..> ]=*
+|---------------------+--------------------------------------------------------------------------------------|
+| Operator syntax     | Description                                                                          |
+|---------------------+--------------------------------------------------------------------------------------|
+| -a <FILE>           | True if <FILE> exists. :!: (not recommended, may collide with -a for AND, see below) |
+| -e <FILE>           | True if <FILE> exists.                                                               |
+| -f <FILE>           | True, if <FILE> exists and is a regular file.                                        |
+| -d <FILE>           | True, if <FILE> exists and is a directory.                                           |
+| -c <FILE>           | True, if <FILE> exists and is a character special file.                              |
+| -b <FILE>           | True, if <FILE> exists and is a block special file.                                  |
+| -p <FILE>           | True, if <FILE> exists and is a named pipe (FIFO).                                   |
+| -S <FILE>           | True, if <FILE> exists and is a socket file.                                         |
+| -L <FILE>           | True, if <FILE> exists and is a symbolic link.                                       |
+| -h <FILE>           | True, if <FILE> exists and is a symbolic link.                                       |
+| -g <FILE>           | True, if <FILE> exists and has sgid bit set.                                         |
+| -u <FILE>           | True, if <FILE> exists and has suid bit set.                                         |
+| -r <FILE>           | True, if <FILE> exists and is readable.                                              |
+| -w <FILE>           | True, if <FILE> exists and is writable.                                              |
+| -x <FILE>           | True, if <FILE> exists and is executable.                                            |
+| -s <FILE>           | True, if <FILE> exists and has size bigger than 0 (not empty).                       |
+| -t <fd>             | True, if file descriptor <fd> is open and refers to a terminal.                      |
+| <FILE1> -nt <FILE2> | True, if <FILE1> is newer than <FILE2> (mtime). :!:                                  |
+| <FILE1> -ot <FILE2> | True, if <FILE1> is older than <FILE2> (mtime). :!:                                  |
+| <FILE1> -ef <FILE2> | True, if <FILE1> and <FILE2> refer to the same device and inode numbers. :!:         |
+|---------------------+--------------------------------------------------------------------------------------|
 **** Looping
 ***** loop over cmd output with while?
       #+BEGIN_SRC sh
