@@ -1639,6 +1639,12 @@ cat /etc/environment          \
        +END_SRC
 * Crypto
 ** Gpg
+*** How to encrypt symmetric stdin without X (Inappropriate ioctl for device)?
+    #+BEGIN_SRC sh
+    # Workaround:
+    ( export GPG_TTY=$(tty) && tar czv f | gpg --symmetric  > f.gpg )
+    #+END_SRC
+
 *** verify a gpg signed file?
     #+BEGIN_SRC sh
     gpg --verify file.gpg file
