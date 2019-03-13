@@ -1593,6 +1593,13 @@ cat /etc/environment          \
        - And in the wifi properties, choose: 
          - "Make available to others users"
          - 
+***** 18.04
+****** X
+******* Normal alt-tab?
+        From: https://askubuntu.com/questions/1036248/how-to-separate-opened-windows-in-alttab-switcher-in-ubuntu-18-04
+        - Go to =Settings > Devices > Keyboard=.
+        - Choose: "Switch windows"
+        - Assign 'alt-tab' to it
 *** Backup
 **** Bup
 ***** bup essentials?
