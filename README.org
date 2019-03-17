@@ -1872,6 +1872,16 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
     #+BEGIN_SRC sh
    seq 100 | docker run -i syn synesthesia 1
     #+END_SRC
+* Vim
+** Yaml
+*** Folding yaml in vim?
+    from: https://lornajane.net/posts/2018/vim-settings-for-working-with-yaml
+    Starting point, put in your =~/.vimrc=: 
+    #+BEGIN_SRC sh
+   " add yaml stuffs
+   au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
+   autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab 
+    #+END_SRC
 * Emacs
 ** file type indicator header for emacs?
 #+begin_src sh
