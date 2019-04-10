@@ -319,7 +319,7 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
        fuser -k -n tcp 5555
        #+END_SRC
 ***** Openssl
-****** generate a self certificate for localhost?
+****** generate a self certificate for localhost (without prompt)?
        from: https://letsencrypt.org/docs/certificates-for-localhost/
        #+BEGIN_SRC sh
        openssl req -x509 -out localhost.crt -keyout localhost.key \
@@ -327,11 +327,6 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
   -subj '/CN=localhost' -extensions EXT -config <( \
    printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
        #+END_SRC
-****** generate a self certificate without interactive prompt?
-       from: https://raymii.org/s/snippets/OpenSSL_generate_CSR_non-interactive.html
-       +BEGIN_SRC sh
-       openssl req -nodes -newkey rsa:2048 -keyout private.key -out CSR.csr -subj "/C=NL/ST=Zuid Holland/L=Rotterdam/O=Sparkling Network/OU=IT Department/CN=ssl.raymii.org"
-       +END_SRC
 ***** Rsync
 ****** how to specify the port in rsync?
        #+BEGIN_SRC sh
