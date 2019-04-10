@@ -514,6 +514,10 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
       #+BEGIN_SRC sh
        curl http://url/to/file.tgz | tar tzfv -
       #+END_SRC 
+****** send tar compressed archive to stdout?
+       #+BEGIN_SRC sh
+       seq 3 > x && tar czv x > x.tgz
+       #+END_SRC
 ***** Tree
 ****** print tree with unicode characters?
        #+BEGIN_SRC sh
