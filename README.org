@@ -2084,6 +2084,13 @@ process.in.eachLine { line ->
 p.consumeProcessOutput()
 p.waitFor()
      #+END_SRC
+**** groovy pprint datastructure?
+     from: https://gist.github.com/esycat/6410360
+    #+BEGIN_SRC sh
+import static groovy.json.JsonOutput.*
+def config = ['test': 'lalala']
+println prettyPrint(toJson(config))
+    #+END_SRC
 *** Java
 **** Create an object with the same behavior than System.out (for testing output)?
      #+begin_src java
