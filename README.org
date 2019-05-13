@@ -3114,6 +3114,14 @@ see: https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing
      jq -n '{a: {b: 1}} | getpath(["a","b"])'
      #> 1
      #+END_SRC
+** CI
+*** Jenkins
+**** RestApi 
+***** Jenkins Rest Api Essentials? 
+      #+BEGIN_SRC sh 
+        curl "$JENKINS_HOST/api/json?depth=1&tree=jobs[name,lastBuild[building]]{1,10000}"
+        # for all jenkins jobs: get the name and the last build status (building or not)"
+      #+END_SRC
 * Audio/Video
 ** Visualization
 *** Online visualization of Wikipedia's graph?
