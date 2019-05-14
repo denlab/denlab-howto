@@ -3149,9 +3149,9 @@ withPool{
      #+END_SRC
 ***** with xstream (handle cycles)
      #+BEGIN_SRC java
-      @Grab(group='com.thoughtworks.xstream', module='xstream', version='1.4.11.1')
-      import com.thoughtworks.xstream.XStream
-      (new XStream()).toXML(this)
+       @Grab(group='com.thoughtworks.xstream', module='xstream', version='1.4.11.1')
+       import com.thoughtworks.xstream.XStream
+       (new XStream()).toXML(this)
      #+END_SRC
 ****** Demo with cycles
      #+BEGIN_SRC java
@@ -3170,6 +3170,15 @@ withPool{
        n.children = n
        println(new XStream().toXML([n,m]))
      #+END_SRC
+***** with xstream: json
+    #+BEGIN_SRC java
+      @Grab(group='com.thoughtworks.xstream', module='xstream', version='1.4.11.1')
+      import com.thoughtworks.xstream.XStream
+      import com.thoughtworks.xstream.io.json.*
+      println(new XStream(new com.thoughtworks.xstream.io.json.JsonHierarchicalStreamDriver()).toXML(this))
+     #+END_SRC
+
+    #+END_SRC
 * Audio/Video
 ** Visualization
 *** Online visualization of Wikipedia's graph?
