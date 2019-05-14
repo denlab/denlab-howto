@@ -3137,6 +3137,39 @@ withPool{
     println((1..3).collectParallel {it * 2})
 }
      #+END_SRC
+**** dump nested object as json/xml ?
+***** native but do not handle cycles
+     #+BEGIN_SRC java
+       // stackoverflow if cycle
+       groovy.json.JsonOutput.toJson(this)
+       // cycle handled
+       @Grab(group='com.thoughtworks.xstream', module='xstream', version='1.4.11.1')
+       import com.thoughtworks.xstream.XStream
+       (new XStream()).toXML(this)
+     #+END_SRC
+***** with xstream (handle cycles)
+     #+BEGIN_SRC java
+      @Grab(group='com.thoughtworks.xstream', module='xstream', version='1.4.11.1')
+      import com.thoughtworks.xstream.XStream
+      (new XStream()).toXML(this)
+     #+END_SRC
+****** Demo with cycles
+     #+BEGIN_SRC java
+       class Node {
+           def    value
+           Node[] children
+           Node(value, children) {
+               this.value = value
+               this.children = children
+           }
+       }
+       @Grab(group='com.thoughtworks.xstream', module='xstream', version='1.4.11.1')
+       import com.thoughtworks.xstream.XStream
+       def n=new Node("n",null)
+       def m=new Node("n", n)
+       n.children = n
+       println(new XStream().toXML([n,m]))
+     #+END_SRC
 * Audio/Video
 ** Visualization
 *** Online visualization of Wikipedia's graph?
