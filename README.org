@@ -341,6 +341,16 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
        
        
        #+END_SRC
+***** Openvpn
+****** list and connect with openvpn from cli?
+******** with nmanager
+       #+BEGIN_SRC sh
+       # list the connections
+       nmcli con show
+       # get the nome of a connection
+       con=openvpn
+       nmcli con up id $con
+       #+END_SRC
 **** Misc
 ***** VirtualBox
 ****** manually mount a shared folder in a linux guest?
