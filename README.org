@@ -328,6 +328,21 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
    -subj '/CN=localhost' -extensions EXT -config <( \
     printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
         #+END_SRC
+******* How to add root cert to an Ubuntu install?
+        #+BEGIN_SRC sh
+cat <<EOF''
+:                                            \
+&& set -xveuo pipefail                       \
+&& certFile=<pathToCertFile>.crt             \
+&& d=/usr/local/share/ca-certificates        \
+&& sudo cp $certFile $d                      \
+&& sudo update-ca-certificates               \
+&&
+:
+EOF
+) \
+| bash 
+        #+END_SRC
 ***** Rsync
 ****** how to specify the port in rsync?
        #+BEGIN_SRC sh
