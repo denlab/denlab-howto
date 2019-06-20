@@ -1608,6 +1608,9 @@ cat /etc/environment          \
        #+BEGIN_SRC sh
        echo "http://107.181.185.116/alpine/v3.2/main" >> /etc/apk/repositories; \
        #+END_SRC
+****** how to install telnet on alpine ???
+       #+BEGIN_SRC sh
+       #+END_SRC
 **** Debian
 ***** Old debian GPG invalid signature when apt-get update?
       Re-import expired pgp keys with:
