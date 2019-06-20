@@ -2290,6 +2290,12 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
        (with-open [rdr (clojure.java.io/reader "/etc/passwd")]
          (count (line-seq rdr)))
       #+END_SRC
+***** Strings
+****** Regexes
+******* named groups search and replace in Clojure?
+        #+BEGIN_SRC clj
+        (str/replace "a b c " #"^(?<w1>\w+) (?<w2>\w+) (?<w3>\w+) *$" "${w2}")
+        #+END_SRC
 *** Web Servers
 **** Tomcat
 ***** how to configure tomcat so that it can be managed programatically ? 
