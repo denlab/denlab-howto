@@ -1447,7 +1447,11 @@ $ echo ${refToRefToVar}
            # disable all gnome shell user extensions
            gsettings set org.gnome.shell disable-user-extensions true
            #+END_SRC
-          
+**** Xdg-open
+***** choose browser to use with xdg-open?
+      #+BEGIN_SRC sh
+        xdg-settings set default-web-browser google-chrome.desktop
+      #+END_SRC
 *** Converting formats
 **** convert file format table?
      | src   | dst   | command                                                                           |
