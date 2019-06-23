@@ -3086,7 +3086,19 @@ cb'  \
     #>  
     #> 1
     #+END_SRC
-
+**** Syntax
+***** Liberal Object notation?
+      #+BEGIN_SRC sh
+      # can leave comma after last object:
+      jq -n '.
+| {
+    a: 1, 
+    b: 2, 
+  }
+'
+#> {"a":1,"b":2}
+      # Note: do not seems to works wtih arrays ...
+      #+END_SRC
 ** Lua
 *** Call external command and get stdout?
    #+BEGIN_SRC sh
