@@ -337,8 +337,8 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
           && d=/usr/local/share/ca-certificates        \
           && sudo cp $certFile $d                      \
           && sudo update-ca-certificates               \
-          && sudo systemctl restart docker             \
           && sudo systemctl daemon-reload              \
+          && sudo systemctl restart docker             \
           &&                                           \
           :
           EOF
