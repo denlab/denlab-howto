@@ -330,18 +330,20 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
         #+END_SRC
 ******* How to add root cert to an Ubuntu install?
         #+BEGIN_SRC sh
-cat <<EOF''
-:                                            \
-&& set -xveuo pipefail                       \
-&& certFile=<pathToCertFile>.crt             \
-&& d=/usr/local/share/ca-certificates        \
-&& sudo cp $certFile $d                      \
-&& sudo update-ca-certificates               \
-&&
-:
-EOF
-) \
-| bash 
+          cat <<EOF''
+          :                                            \
+          && set -xveuo pipefail                       \
+          && certFile=<pathToCertFile>.crt             \
+          && d=/usr/local/share/ca-certificates        \
+          && sudo cp $certFile $d                      \
+          && sudo update-ca-certificates               \
+          && sudo systemctl restart docker             \
+          && sudo systemctl daemon-reload              \
+          &&                                           \
+          :
+          EOF
+          ) \
+          | bash 
         #+END_SRC
 ***** Rsync
 ****** how to specify the port in rsync?
