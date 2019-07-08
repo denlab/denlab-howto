@@ -3242,6 +3242,16 @@ withPool{
      #+END_SRC
 
     #+END_SRC
+**** legacy jobs
+***** job-dsl plugin
+****** Example job-dsl for matrix project?
+       #+BEGIN_SRC sh
+         matrixJob('a') {
+             axes  {text ("x", "a","b") }
+             steps {shell('echo x: $x') }
+         }
+       #+END_SRC
+
 * Audio/Video
 ** Visualization
 *** Online visualization of Wikipedia's graph?
