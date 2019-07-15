@@ -2710,6 +2710,11 @@ from: https://git-lfs.github.com/
      #+BEGIN_SRC sh
      git diff --stat --names-only HEAD^^..HEAD^
      #+END_SRC
+*** Syntax
+**** Reference Nthieme commit from HEAD?
+     #+BEGIN_SRC sh
+     git checkout HEAD@{30}
+     #+END_SRC
 ** Jq
 *** Finding
 **** recursively find a value by key?
