@@ -2978,6 +2978,18 @@ jq -n '
     jq -n 'now | todate'
     #> "2017-09-12T18:35:01Z"
     #+END_SRC
+**** Convert Unix epoch time in second to human readable?
+       #+BEGIN_SRC sh
+         # There may be more direct way..
+         jql -n '
+           .
+           | 1565108215
+           | gmtime
+           | strftime("%Y-%m-%dT%H:%M:%SZ")
+         '
+         #> "2019-08-06T16:16:55Z"
+       #+END_SRC
+
 *** Other
 **** Undocumented debug options?
      #+BEGIN_SRC sh
@@ -3258,7 +3270,8 @@ withPool{
          }
        #+END_SRC
 
-* Audio/Video
+       
+     * Audio/Video
 ** Visualization
 *** Online visualization of Wikipedia's graph?
  - http://tools.medialab.sciences-po.fr/seealsology/
