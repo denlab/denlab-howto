@@ -860,6 +860,12 @@ setxkbmap -option ctrl:nocaps
       # with /etc/fstab: 
       /src/path /dst/path none defaults,bind 0 0
       #+END_SRC
+**** RemoteFs
+***** How to mount a remote nfs drive on a linux host?
+      #+BEGIN_SRC sh
+      mount -t nfs {remote_pc_address}:/remote/dir /some/local/dir
+      #+END_SRC
+      
 *** Bash
 **** Tests/Conditionnals
 ***** ternary operator in bash?
