@@ -366,6 +366,9 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
           ) \
           | bash 
         #+END_SRC
+******* best explaination of "everything derive from the root ca key"?
+        https://serverfault.com/questions/306345/certification-authority-root-certificate-expiry-and-renewal
+        
 ***** Rsync
 ****** how to specify the port in rsync?
        #+BEGIN_SRC sh
