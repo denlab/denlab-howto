@@ -319,6 +319,26 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
        # close the port forwarding
        fuser -k -n tcp 5555
        #+END_SRC
+****** copy between two ssh hosts without intermediary copy?
+       
+       #+BEGIN_SRC sh
+:                                         \
+&& srcDir=srcdir                          \
+&& dstSsh=user@host                       \
+&& dstParentDir=/tmp                      \
+&& tar cav "$srcDir"                      \
+   | gzip                                 \
+   | ssh "$dstSsh"                        \
+       "                                  \
+         bash -euo pipefail -xvc '        \
+           gunzip                         \
+           | tar -xvf- -C ${dstParentDir} \
+         '                                \
+       "                                  \
+&&                                        \
+:
+       #+END_SRC
+       
 ***** Openssl
 ****** SslCerts
 ******* generate a self certificate for localhost (without prompt)?
