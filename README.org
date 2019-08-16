@@ -1614,6 +1614,13 @@ cat /etc/environment          \
       #+BEGIN_SRC sh
       zpool destroy <poolName>
       #+END_SRC
+**** AccessControl
+***** Set read right reccursive for all files and and dir in a given dir?
+      #+BEGIN_SRC sh
+dir=/path/to                                    
+&& find "$dir" -type f -print0 | xargs -0 chmod 744 \
+&& find "$dir" -type d -print0 | xargs -0 chmod 755
+      #+END_SRC
 *** Distribs
 **** Alpine
 ***** Apk
