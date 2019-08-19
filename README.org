@@ -2995,7 +2995,20 @@ jq -n '
 #>  }
 #>
      #+END_SRC
-
+**** Comma in function args
+***** given a list of strings and a list of regexes, for each string check wether it matches all the given regexes or not 
+      #+BEGIN_SRC sh
+jq -R <<< 'ac
+ab
+cb'  \
+'.
+| [test("a","b")]
+| all
+'
+#> false
+#> true
+#> false
+      #+END_SRC
 *** Convert
 **** TODO element to array?
 **** convert an array to a map?
