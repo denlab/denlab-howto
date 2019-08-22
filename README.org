@@ -383,6 +383,10 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
        
        
        #+END_SRC
+****** rsync and trailing slash behavior?
+       Only matter for the source dir:
+       - if there is a trainling slash, means: copy the content of the dir
+       - without trailing slash mean copy the directory
 ***** Openvpn
 ****** list and connect with openvpn from cli?
 ******** with nmanager
