@@ -1680,6 +1680,12 @@ dir=/path/to
         - Go to =Settings > Devices > Keyboard=.
         - Choose: "Switch windows"
         - Assign 'alt-tab' to it
+****** uninstall snap?
+       from: https://stackoverflow.com/questions/50322306/how-to-remove-snap-store-from-ubuntu 
+       #+BEGIN_SRC sh
+       sudo apt autoremove --purge snapd
+       #+END_SRC
+
 *** Backup
 **** Bup
 ***** bup essentials?
