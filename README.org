@@ -338,7 +338,10 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
 &&                                        \
 :
        #+END_SRC
-       
+****** disable host has in known_hosts?
+       #+BEGIN_SRC sh
+       HashKnownHosts=false
+       #+END_SRC
 ***** Openssl
 ****** SslCerts
 ******* generate a self certificate for localhost (without prompt)?
