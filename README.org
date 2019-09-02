@@ -406,6 +406,12 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
 host google.com
 #> google.com has address 172.217.17.78
        #+END_SRC
+****** Get hostname from ip?
+       #+BEGIN_SRC sh
+         nslookup $ip domain.com
+         #> <ip> name = <domain>
+       #+END_SRC
+
 **** Misc
 ***** VirtualBox
 ****** manually mount a shared folder in a linux guest?
