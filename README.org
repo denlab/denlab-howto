@@ -1400,6 +1400,12 @@ $ echo ${refToRefToVar}
        bash -c "l=$(tput cols)"' && printf -v line "%*s" $l && echo ${line// /-}' 
        #> --------------------------------------------------------------------------------
        #+END_SRC
+**** Commands
+***** List all possible commands (including functions)?
+    #+BEGIN_SRC sh
+      # also works for zsh
+      compgen -c
+    #+END_SRC
 *** Zsh
 **** Completion
 ***** using bash's autocomplete with zsh?
