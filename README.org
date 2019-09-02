@@ -400,6 +400,12 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
        con=openvpn
        nmcli con up id $con
        #+END_SRC
+***** Dns
+****** Get ip from hostname?
+       #+BEGIN_SRC sh
+host google.com
+#> google.com has address 172.217.17.78
+       #+END_SRC
 **** Misc
 ***** VirtualBox
 ****** manually mount a shared folder in a linux guest?
