@@ -907,7 +907,11 @@ setxkbmap -option ctrl:nocaps
       #+BEGIN_SRC sh
       mount -t nfs {remote_pc_address}:/remote/dir /some/local/dir
       #+END_SRC
-      
+**** VirtualFs
+***** How to get the load with /proc?
+      #+BEGIN_SRC sh
+cat /proc/loadavg
+      #+END_SRC
 *** Bash
 **** Tests/Conditionnals
 ***** ternary operator in bash?
