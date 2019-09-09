@@ -342,6 +342,13 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
        #+BEGIN_SRC sh
        HashKnownHosts=false
        #+END_SRC
+****** Non interactive sftp session with non pubkey password?
+       #+BEGIN_SRC sh 
+       sshpass -e -- sftp -oBatchMode=no -b - user@host << !
+             get /path/to/file
+             bye
+         !
+       #+END_SRC
 ***** Openssl
 ****** SslCerts
 ******* generate a self certificate for localhost (without prompt)?
