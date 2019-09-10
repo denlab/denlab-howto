@@ -1650,6 +1650,17 @@ cat /etc/environment          \
       #+BEGIN_SRC sh
       zpool destroy <poolName>
       #+END_SRC
+***** How to add new devices to an exising pool?
+      #+BEGIN_SRC sh
+      # List already used devices
+      sudo zpool status
+      # check availavble devices
+      lsblk
+      # add a device to the pool
+      sudo zpool add zpool-docker /dev/sde
+      # list again to check it has been taken into account
+      sudo zpool add zpool-docker /dev/sde
+      #+END_SRC
 **** AccessControl
 ***** Set read right reccursive for all files and and dir in a given dir?
       #+BEGIN_SRC sh
