@@ -1800,6 +1800,10 @@ dir=/path/to
        #> 2
        # -----------------------------------------------------------------------
        +END_SRC
+****** How to display the actual configuration of the ssh command?
+     #+BEGIN_SRC sh
+     ssh user@host -G
+     #+END_SRC_
 * Crypto
 ** Gpg
 *** How to encrypt symmetric stdin without X (Inappropriate ioctl for device)?
