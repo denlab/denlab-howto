@@ -647,6 +647,13 @@ host google.com
          http://nexus-url/x/y/z
     #+end_src
 ****** equivalent of curl -sS?
+***** Nginx
+****** Check config syntax?
+       #+BEGIN_SRC sh
+       /usr/nginx/sbin/nginx -t -c /usr/nginx/conf/nginx.conf
+       /usr/nginx/sbin/nginx -t 
+       #+END_SRC
+       
 **** X11
 ***** NxClient
 ****** keyboard issue when connecting with nx ?
