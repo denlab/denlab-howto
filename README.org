@@ -3410,3 +3410,11 @@ withPool{
     out=newfile
     avconv -ss $start -t $duration -i $in -codec copy $out
     #+END_SRC
+**** Stop an unstoppable build?
+     #+BEGIN_SRC sh
+     # with jenkins cli (groovysh or groovy): 
+jobName='jobName'
+jobNum=111
+jenkins.model.Jenkins.instance.getItemByFullName(jobName).getBuildByNumber(jobNum).finish(hudson.model.Result.ABORTED,new java.io.IOException("Aborting build")
+
+     #+END_SRC
