@@ -1811,6 +1811,13 @@ dir=/path/to
      #+BEGIN_SRC sh
      ssh user@host -G
      #+END_SRC_
+****** Signal to control nginx at runtime?
+       #+BEGIN_SRC sh
+quit – Shut down gracefully
+reload – Reload the configuration file
+reopen – Reopen log files
+stop – Shut down immediately (fast shutdown)
+       #+END_SRC
 * Crypto
 ** Gpg
 *** How to encrypt symmetric stdin without X (Inappropriate ioctl for device)?
