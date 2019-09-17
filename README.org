@@ -927,6 +927,16 @@ setxkbmap -option ctrl:nocaps
 cat /proc/loadavg
       #+END_SRC
 *** Bash
+**** Non interactive
+***** Use alises in non interactive bash?
+      #+BEGIN_SRC sh
+        shopt | egrep expand_aliases
+        #> expand_aliases  off
+        shopt -s expand_aliases
+        #>
+        shopt | egrep expand_aliases
+        expand_aliases  on
+      #+END_SRC
 **** Tests/Conditionnals
 ***** ternary operator in bash?
       #+BEGIN_SRC sh
