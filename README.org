@@ -2085,6 +2085,13 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
     instead of the traditional ~C-u~
     ~SPC u~
 *** Project
+**** =helm-project-do-ag= how to filter by file types?
+     - Example, searching for: 
+       - =*.clj= files
+       - containing =defn=
+     ~SPC s a p~
+     ~--clojure defn~ 
+     
 **** search and replace in project?
      |                          |                      |             |
      |--------------------------+----------------------+-------------|
