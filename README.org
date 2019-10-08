@@ -1412,6 +1412,13 @@ $ echo ${refToRefToVar}
         echo "var not defined or empt"
       fi
       #+END_SRC
+      - Another way from [[https://wiki-dev.bash-hackers.org/scripting/posparams][bash hackers]]:
+        #+BEGIN_SRC sh
+          if [ ${x+defined} ]; then echo "x is not defined"; \
+                               else echo "x is defined (may be blank)"; \
+          fi \
+          ;
+        #+END_SRC
 **** Text
 ***** Printf?
 ****** print args, one by line with its position? 
