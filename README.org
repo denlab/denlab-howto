@@ -2857,6 +2857,11 @@ from: https://git-lfs.github.com/
      #+BEGIN_SRC sh
      git checkout HEAD@{30}
      #+END_SRC
+*** Colors
+**** git colors=always?
+     #+BEGIN_SRC sh
+git -c color.status=always status
+     #+END_SRC
 ** Jq
 *** Finding
 **** recursively find a value by key?
