@@ -937,51 +937,305 @@ cat /proc/loadavg
         shopt | egrep expand_aliases
         expand_aliases  on
       #+END_SRC
-**** Tests/Conditionnals
-***** ternary operator in bash?
+**** Interactive use
+***** Complete
+****** bash completion cheat sheet?
+       | complete on                                                              | cmd        | options |             |               | for what?     | short form |
+       |--------------------------------------------------------------------------+------------+---------+-------------+---------------+---------------+------------|
+       | remove                                                                   | =complete= | =-r=    |             |               | all           |            |
+       |                                                                          | =complete= | =-r=    |             | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       |--------------------------------------------------------------------------+------------+---------+-------------+---------------+---------------+------------|
+       | complete on alias names                                                  | =complete= | =-A=    | =alias=     | =cmd1 … cmdN= | =cmd1 … cmdN= | =-a=       |
+       |--------------------------------------------------------------------------+------------+---------+-------------+---------------+---------------+------------|
+       | array variable names                                                     | =complete= | =-A=    | =arrayvar=  | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | readline key binding names                                               | =complete= | =-A=    | =binding=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | names of shell builtin commands                                          | =complete= | =-A=    | =builtin=   | =cmd1 … cmdN= | =cmd1 … cmdN= | =-b=       |
+       | command names                                                            | =complete= | =-A=    | =command=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | directory names                                                          | =complete= | =-A=    | =directory= | =cmd1 … cmdN= | =cmd1 … cmdN= | =-d=       |
+       | disabled shell builtins                                                  | =complete= | =-A=    | =disabled=  | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | enabled shell builtins                                                   | =complete= | =-A=    | =enabled=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | names of exported shell variables                                        | =complete= | =-A=    | =export=    | =cmd1 … cmdN= | =cmd1 … cmdN= | =-e=       |
+       | file names                                                               | =complete= | =-A=    | =file=      | =cmd1 … cmdN= | =cmd1 … cmdN= | =-f=       |
+       | names of shell functions                                                 | =complete= | =-A=    | =function=  | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | group names                                                              | =complete= | =-A=    | =group=     | =cmd1 … cmdN= | =cmd1 … cmdN= | =-g=       |
+       | help topics accepted by the help builtin                                 | =complete= | =-A=    | =helptopic= | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | hostnames as taken from the file specifed by the HOSTFILE shell variable | =complete= | =-A=    | =hostname=  | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | job names                                                                | =complete= | =-A=    | =job=       | =cmd1 … cmdN= | =cmd1 … cmdN= | =-j=       |
+       | shell reserved words                                                     | =complete= | =-A=    | =keyword=   | =cmd1 … cmdN= | =cmd1 … cmdN= | =-k=       |
+       | names of running jobs                                                    | =complete= | =-A=    | =running=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | service names                                                            | =complete= | =-A=    | =service=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | valid args for the -o option of the set builtin                          | =complete= | =-A=    | =setopt=    | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | shell option names as accepted by the shopt builtin                      | =complete= | =-A=    | =shopt=     | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | signal names                                                             | =complete= | =-A=    | =signal=    | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | names of stopped jobs                                                    | =complete= | =-A=    | =stopped=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | user names                                                               | =complete= | =-A=    | =user=      | =cmd1 … cmdN= | =cmd1 … cmdN= | =-u=       |
+       | names of all shell variables                                             | =complete= | =-A=    | =variable=  | =cmd1 … cmdN= | =cmd1 … cmdN= | =-v=       |
+**** Common tasks
+***** generate random string?
+  #+begin_src sh
+  #!/bin/bash
+  # bash generate random alphanumeric string
+  #
+
+  # bash generate random 32 character alphanumeric string (upper and lowercase) and
+  NEW_UUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+
+  # bash generate random 32 character alphanumeric string (lowercase only)
+  cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1
+
+  # Random numbers in a range, more randomly distributed than $RANDOM which is not
+  # very random in terms of distribution of numbers.
+
+  # bash generate random number between 0 and 9
+  cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | head --bytes 1
+
+  # bash generate random number between 0 and 99
+  NUMBER=$(cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | sed -e 's/^0*//' | head --bytes 2)
+  if [ "$NUMBER" == "" ]; then
+    NUMBER=0
+  fi
+
+  # bash generate random number between 0 and 999
+  NUMBER=$(cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | sed -e 's/^0*//' | head --bytes 3)
+  if [ "$NUMBER" == "" ]; then
+    NUMBER=0
+  fi
+  #+end_src
+  https://gist.github.com/earthgecko/3089509
+***** decimal / hex (and opposite) conversion?
+  #+begin_src sh
+ # decimal to hex
+ echo "obase=16; 34" | bc
+ # hex to decimal
+  echo $((0xa))
+  # 10
+  #+end_src
+***** redirect output in variable?
+  "must read" about the differents techniques of redirection: http://stackoverflow.com/questions/13763942/bash-why-piping-input-to-read-only-works-when-fed-into-while-read-const
+***** stop on error (even in subshell)?
+  It seems that bash disable -e in subshells.
+  A workaround: set -e explicitly at the start of each subshell
+***** loop over args?
+      #+begin_src sh
+      for var in "$@"
+      do
+        echo "$var"
+      done
+      #+end_src
+      http://stackoverflow.com/questions/255898/how-to-iterate-over-arguments-in-a-bash-script
+***** parse a string as args
+      #+begin_src sh
+      How to process the following list of pairs: "Mercury 36" "Venus 67" "Earth 93"  "Mars 142" "Jupiter 483"?
+      (note no =IFS= set)
+      #+begin_src sh
+      #!/usr/bin/env bash
+      set -euo pipefail
+
+      for planet in "Mercury 36" "Venus 67"
+      do
+        set -- $planet
+        echo "\$1=$1"
+        echo "\$2=$2"
+      done
+      # outputs
+      #
+      # $1=Mercury
+      # $2=36
+      # $1=Venus
+      # $2=67
+      #+end_src
+***** How to save a script params (before doing modifications like shift, ..)?
+      #+begin_src sh
+      # save with
+      original_params=("$@")
+      # use the copy with
+      echo "${original_params[@]}"
+      #+end_src
+***** generate uuid?
       #+BEGIN_SRC sh
-      bash -c 'b=5 c=2 && d=3 && let a=b==5?c:d; echo $a'
+      cat /proc/sys/kernel/random/uuid
+      #> aa6bc854-9eab-43cd-986d-d2318bf4a845
       #+END_SRC
-***** cheatsheet
-      |      |          |            |                 |
-      |------+----------+------------+-----------------|
-      | file | is empty | =[ -s a ]= | single brackets |
-      |      |          |            |                 |
-***** test files cheatsheet
-      from: https://wiki-dev.bash-hackers.org/commands/classictest
-*For classic test =[ <..> ]=*
-|---------------------+--------------------------------------------------------------------------------------|
-| Operator syntax     | Description                                                                          |
-|---------------------+--------------------------------------------------------------------------------------|
-| -a <FILE>           | True if <FILE> exists. :!: (not recommended, may collide with -a for AND, see below) |
-| -e <FILE>           | True if <FILE> exists.                                                               |
-| -f <FILE>           | True, if <FILE> exists and is a regular file.                                        |
-| -d <FILE>           | True, if <FILE> exists and is a directory.                                           |
-| -c <FILE>           | True, if <FILE> exists and is a character special file.                              |
-| -b <FILE>           | True, if <FILE> exists and is a block special file.                                  |
-| -p <FILE>           | True, if <FILE> exists and is a named pipe (FIFO).                                   |
-| -S <FILE>           | True, if <FILE> exists and is a socket file.                                         |
-| -L <FILE>           | True, if <FILE> exists and is a symbolic link.                                       |
-| -h <FILE>           | True, if <FILE> exists and is a symbolic link.                                       |
-| -g <FILE>           | True, if <FILE> exists and has sgid bit set.                                         |
-| -u <FILE>           | True, if <FILE> exists and has suid bit set.                                         |
-| -r <FILE>           | True, if <FILE> exists and is readable.                                              |
-| -w <FILE>           | True, if <FILE> exists and is writable.                                              |
-| -x <FILE>           | True, if <FILE> exists and is executable.                                            |
-| -s <FILE>           | True, if <FILE> exists and has size bigger than 0 (not empty).                       |
-| -t <fd>             | True, if file descriptor <fd> is open and refers to a terminal.                      |
-| <FILE1> -nt <FILE2> | True, if <FILE1> is newer than <FILE2> (mtime). :!:                                  |
-| <FILE1> -ot <FILE2> | True, if <FILE1> is older than <FILE2> (mtime). :!:                                  |
-| <FILE1> -ef <FILE2> | True, if <FILE1> and <FILE2> refer to the same device and inode numbers. :!:         |
-|---------------------+--------------------------------------------------------------------------------------|
-**** Looping
-***** loop over cmd output with while?
-      #+BEGIN_SRC sh
-     iseq 3 | while read l; do echo ">$l"; done
-     #> >1
-     #> >2
-     #> >3
-      #+END_SRC
+***** List all possible commands (including functions)?
+    #+BEGIN_SRC sh
+      # also works for zsh
+      compgen -c
+    #+END_SRC
+**** Programming
+***** Misc      
+****** bash pointer variables?
+***** Control flow
+****** Tests/Conditionnals
+******* ternary operator in bash?
+        #+BEGIN_SRC sh
+        bash -c 'b=5 c=2 && d=3 && let a=b==5?c:d; echo $a'
+        #+END_SRC
+******* cheatsheet
+        |      |          |            |                 |
+        |------+----------+------------+-----------------|
+        | file | is empty | =[ -s a ]= | single brackets |
+        |      |          |            |                 |
+******* test files cheatsheet
+        from: https://wiki-dev.bash-hackers.org/commands/classictest
+  *For classic test =[ <..> ]=*
+  |---------------------+--------------------------------------------------------------------------------------|
+  | Operator syntax     | Description                                                                          |
+  |---------------------+--------------------------------------------------------------------------------------|
+  | -a <FILE>           | True if <FILE> exists. :!: (not recommended, may collide with -a for AND, see below) |
+  | -e <FILE>           | True if <FILE> exists.                                                               |
+  | -f <FILE>           | True, if <FILE> exists and is a regular file.                                        |
+  | -d <FILE>           | True, if <FILE> exists and is a directory.                                           |
+  | -c <FILE>           | True, if <FILE> exists and is a character special file.                              |
+  | -b <FILE>           | True, if <FILE> exists and is a block special file.                                  |
+  | -p <FILE>           | True, if <FILE> exists and is a named pipe (FIFO).                                   |
+  | -S <FILE>           | True, if <FILE> exists and is a socket file.                                         |
+  | -L <FILE>           | True, if <FILE> exists and is a symbolic link.                                       |
+  | -h <FILE>           | True, if <FILE> exists and is a symbolic link.                                       |
+  | -g <FILE>           | True, if <FILE> exists and has sgid bit set.                                         |
+  | -u <FILE>           | True, if <FILE> exists and has suid bit set.                                         |
+  | -r <FILE>           | True, if <FILE> exists and is readable.                                              |
+  | -w <FILE>           | True, if <FILE> exists and is writable.                                              |
+  | -x <FILE>           | True, if <FILE> exists and is executable.                                            |
+  | -s <FILE>           | True, if <FILE> exists and has size bigger than 0 (not empty).                       |
+  | -t <fd>             | True, if file descriptor <fd> is open and refers to a terminal.                      |
+  | <FILE1> -nt <FILE2> | True, if <FILE1> is newer than <FILE2> (mtime). :!:                                  |
+  | <FILE1> -ot <FILE2> | True, if <FILE1> is older than <FILE2> (mtime). :!:                                  |
+  | <FILE1> -ef <FILE2> | True, if <FILE1> and <FILE2> refer to the same device and inode numbers. :!:         |
+  |---------------------+--------------------------------------------------------------------------------------|
+****** Looping
+******* loop over cmd output with while?
+        #+BEGIN_SRC sh
+       iseq 3 | while read l; do echo ">$l"; done
+       #> >1
+       #> >2
+       #> >3
+        #+END_SRC
+******* c style for loop?
+    #+begin_src sh
+    for ((i=0;i<3;i++)); do
+      echo $i
+    done
+    #+end_src
+****** switch case ?
+       #+begin_src sh
+   while [[ $# -gt 0 ]]; do
+       case "$1" in
+           *:*          ) hostport=(${1//:/ }); shift 1 ;;
+                --child ) CHILD=1             ; shift 1 ;;
+           -q | --quiet ) QUIET=1             ; shift 1 ;;
+           -s | --strict) STRICT=1            ; shift 1 ;;
+           --host=*     ) HOST="${1#*=}"      ; shift 1 ;;
+           --help       ) usage               ; shift 1 ;;
+           *            ) unknownArg "$1"     ; shift 1 ;;
+       esac
+   done
+       #+end_src
+***** Types
+****** Datastructures
+******* Arrays
+******** Associative arrays
+********* declare, print, ...
+     #+begin_src sh
+     # declare
+     declare -A m=( [red]='0;31' [green]='0;32' )
+     # print keys
+     echo "keys=${!m[@]}"
+     # print all
+     declare | grep colorsCodes
+     # iterate
+     for i in "${!array[@]}"
+     do
+       echo "key  : $i"
+       echo "value: ${array[$i]}"
+     done
+     #+end_src
+********* copy ?
+     #+begin_src sh
+     declare -A arr=([this]=hello [\'that\']=world [theother]='and "goodbye"!')
+     declare -A newarr
+     for idx in "${!arr[@]}"; do
+         newarr[$idx]=${arr[$idx]}
+     done
+
+     diff <(echo "$temp") <(declare -p newarr | sed 's/newarr=/arr=/')
+     # no output
+     #+end_src
+     http://stackoverflow.com/questions/19417015/bash-copy-from-one-array-to-another
+******** Normal arrays
+********* declare/literal/set/getAll/size
+         #+begin_src bash
+         # declare
+         declare -a a
+         # literal
+         a=(a b c)
+         # set
+         a[0]=x
+         # get all
+         echo ${a[*]}
+         # size
+         echo "size=${#a[@]}"
+         #+end_src
+********* access empty array?
+
+          #+BEGIN_SRC sh
+          declare -a a=()
+          echo -n a=
+          echo ${a[@} + "${a[@]}"}
+          #+END_SRC
+********* parse string to array?
+          #+BEGIN_SRC sh
+          IFS=', ' read -r -a array <<< "a, b, c"
+          echo "array=${array[@]}"
+          #> array=a b c
+          #+END_SRC
+********* clone an array into another array?
+          #+BEGIN_SRC sh
+          show() { declare | egrep "^${1}=" ; }
+          # declare array a1
+          declare -a a1=( a b )
+          show a1
+          #> a1=([0]="a" [1]="b")
+          declare -a a2=("${a1[@]}")
+          show a2
+          #> a2=([0]="a" [1]="b")
+          # verify it is a clone
+          a2[0]=x
+          show a2
+          #> a2=([0]="x" [1]="b")
+          show a1
+          #> a1=([0]="a" [1]="b")
+          #+END_SRC
+****** Strings
+******* bash strings cheat sheet?
+
+   | what        | how                                          | example |
+   |-------------+----------------------------------------------+---------|
+   | size        | =${#str}=                                    |         |
+   | substring   | =${str:pos}=                                 |         |
+   | substring   | =${str:pos:length}=                          |         |
+   |             |                                              |         |
+   | char to int | =printf '%d\n' "'y"=                         |         |
+   | int to char | =printf "\x$(printf %x 65)"=                 |         |
+   | replace all | =bash -c 'x=abcabc; echo ${x//b/z} # axcaxc= |         |
+   |             |                                              |         |
+******* Syntax
+******** ssh escape sequence?
+     =ENTER, ~, .=
+******* Printf?
+******** print args, one by line with its position? 
+         from: http://wiki.bash-hackers.org/commands/builtin/printf
+         #+BEGIN_SRC sh
+         printf '"%b"\n' "$0" "$@" | nl -v0 -s": "
+         #> 0: "-zsh"
+         #> 1: "foo"
+         #> 2: "bar"
+         #+END_SRC
+******** print a line accross the terminal?
+         from: http://wiki.bash-hackers.org/commands/builtin/printf
+         #+BEGIN_SRC sh
+         bash -c "l=$(tput cols)"' && printf -v line "%*s" $l && echo ${line// /-}' 
+         #> --------------------------------------------------------------------------------
+         #+END_SRC
 **** Bash options
 ***** How to get the values of errexit etc (set by set -e ...)?
       #+BEGIN_SRC sh
@@ -1003,313 +1257,175 @@ set -o
       #> a=1 
 
       #+END_SRC
+**** Files and Redirections
+***** Stdin/out/err
+****** redirect file to stdin on the left side?
+       see: http://www.tldp.org/LDP/abs/html/io-redirection.html
+       #+BEGIN_SRC sh
+       < input-file command > output-file
+       # non standard
+       #+END_SRC
+****** redirecting stdout, stderr
+       #+BEGIN_SRC sh
+       | redirect from | to   | cmd                            | notes          |
+       |---------------+------+--------------------------------+----------------|
+       | out           | err  |  ls 1>&2                       |                |
+       | out & err     | file |  ls &>   file                  |                |
+       |               |      |  ls >    file 2>&1             | for older bash |
+       | err           | out  |  ls 2>&1                       |                |
+       | err & out     | pipe |  ls 2>&1 |  grep '.*'          |                |
+       |               |      |  ls      |& grep '.*'          | equiv          |
+       | err           | proc |  ls 2> >(grep foo)  '          | equiv          |
+       #+END_SRC
+****** use stdout as a file (with filename) for another cmd?
+       #+BEGIN_SRC sh
+       cmd <(cat f)
+       #+END_SRC
+****** swap stdout and stderr?
+       =cmd 3>&1 1>&2 2>&3=
+      #+BEGIN_SRC sh
+      $ f() { (echo out) && (echo err 1>&2); }
+      $ f
+   out
+   err
+      $ s() { sed "s/.*/=$1>&<$1=/"; }
+      $ f | s 1
+   err
+   =1>out<1=
+      $ (f 3>&1 1>&2 2>&3) | s 1
+   out
+   =1>err<1=
+      $ ((f 3>&1 1>&2 2>&3) | s 1) | s 2
+   out
+   =2>=1>err<1=<2=
+      $ (((f 3>&1 1>&2 2>&3) | s 1) 3>&1 1>&2 2>&3) | s 2
+   =2>out<2=
+   =1>err<1=
+      #+END_SRC
+****** write to stdin of a backround process?
+       see: https://serverfault.com/questions/188936/writing-to-stdin-of-background-process
+       #+BEGIN_SRC sh
+       # create server
+       mkfifo in
+       cat > in &
+       echo $! > pid
+       cat in | sed 's/.*/changed> &/' &
+       # use server
+       echo foo > in
+       # stop server
+       kill -9 $(cat pid)
+       #+END_SRC
+****** here-string with indentation in src but not in output?
+       #+BEGIN_SRC sh
+       cat <<EOF''
+ <TAB>hi
+ EOF
+       #> <TAB>hi
+       # But:
+       cat <<-EOF''
+ <TAB>hi
+ EOF
+       #> hi
+       #+END_SRC
+****** File Descriptors
+******* Named File Descriptors
+******** define a named file descriptor to a writable file and write to it? 
+         #+BEGIN_SRC sh
+         # open 
+         exec {filew}>outputfile
+         # write
+         echo foo >&$filew
+         # check 
+         cat outputfile
+         #> foo
+         # close
+         exec {filew}>&-
+         #+END_SRC
+****** how to know if stdout is a terminal?
+       #+BEGIN_SRC sh
+       echo -n "stdout is: "
+       if [ -t 1 ]; then 
+         echo "a terminal"
+       else
+         echo "not a terminal"
+       fi
+       #+END_SRC
+****** Printout
+******* Padding
+******** right / left pad with printf?
+         #+BEGIN_SRC sh
+         printf "%40s\n" foo | tr ' ' .
+         #> .....................................foo
+         printf "%-40s\n" foo | tr ' ' .
+         #> foo.....................................
+         #+END_SRC
+******** zero padding numbers?
+         #+BEGIN_SRC sh
+         printf "%05d\n" 99
+         #> 00099
+         #+END_SRC
+***** Tmp files
+****** "delete while still open" trick to be sure a file will be deleted?
+       from: https://unix.stackexchange.com/questions/181937/how-create-a-temporary-file-in-shell-script
+       #+BEGIN_SRC sh
+       tmpfile=$(mktemp /tmp/abc-script.XXXXXX)
+       exec 3>"$tmpfile"
+       rm "$tmpfile"
+       : ...
+       echo foo >&3
+       #+END_SRC
+**** Env
+***** how to run a command with the env cleared?
+      #+BEGIN_SRC sh
+      env -i bash -c env
+      #>        -i, --ignore-environment
+      #>        start with an empty environment
 
-**** Stdin/out/err
-***** redirect file to stdin on the left side?
-      see: http://www.tldp.org/LDP/abs/html/io-redirection.html
-      #+BEGIN_SRC sh
-      < input-file command > output-file
-      # non standard
       #+END_SRC
-***** redirecting stdout, stderr
-      #+BEGIN_SRC sh
-      | redirect from | to   | cmd                            | notes          |
-      |---------------+------+--------------------------------+----------------|
-      | out           | err  |  ls 1>&2                       |                |
-      | out & err     | file |  ls &>   file                  |                |
-      |               |      |  ls >    file 2>&1             | for older bash |
-      | err           | out  |  ls 2>&1                       |                |
-      | err & out     | pipe |  ls 2>&1 |  grep '.*'          |                |
-      |               |      |  ls      |& grep '.*'          | equiv          |
-      | err           | proc |  ls 2> >(grep foo)  '          | equiv          |
-      #+END_SRC
-***** use stdout as a file (with filename) for another cmd?
-      #+BEGIN_SRC sh
-      cmd <(cat f)
-      #+END_SRC
-***** swap stdout and stderr?
-      =cmd 3>&1 1>&2 2>&3=
+***** export bash function?
+      
      #+BEGIN_SRC sh
-     $ f() { (echo out) && (echo err 1>&2); }
-     $ f
-  out
-  err
-     $ s() { sed "s/.*/=$1>&<$1=/"; }
-     $ f | s 1
-  err
-  =1>out<1=
-     $ (f 3>&1 1>&2 2>&3) | s 1
-  out
-  =1>err<1=
-     $ ((f 3>&1 1>&2 2>&3) | s 1) | s 2
-  out
-  =2>=1>err<1=<2=
-     $ (((f 3>&1 1>&2 2>&3) | s 1) 3>&1 1>&2 2>&3) | s 2
-  =2>out<2=
-  =1>err<1=
+     f() { echo "I'm f!" ; }
+     export -f f
+     bash -c f
+     #> I'm f!
      #+END_SRC
-***** write to stdin of a backround process?
-      see: https://serverfault.com/questions/188936/writing-to-stdin-of-background-process
+***** Replace all env var by values in file?
       #+BEGIN_SRC sh
-      # create server
-      mkfifo in
-      cat > in &
-      echo $! > pid
-      cat in | sed 's/.*/changed> &/' &
-      # use server
-      echo foo > in
-      # stop server
-      kill -9 $(cat pid)
+      envsubst
       #+END_SRC
-***** here-string with indentation in src but not in output?
+***** how to make bash source a file before running a command?
+      Use the =BASH_ENV= to tell bash to source a file: 
+     #+BEGIN_SRC sh
+     touch .bashrc
+     echo foo=bar >> .bashrc
+     bash -c 'echo $foo'
+     #> 
+     BASH_ENV=.bashrc bash -c 'echo $foo'
+     #> bar
+    #+END_SRC 
+***** how to test if a variable is defined?
       #+BEGIN_SRC sh
-      cat <<EOF''
-<TAB>hi
-EOF
-      #> <TAB>hi
-      # But:
-      cat <<-EOF''
-<TAB>hi
-EOF
-      #> hi
-      #+END_SRC
-***** File Descriptors
-****** Named File Descriptors
-******* define a named file descriptor to a writable file and write to it? 
-        #+BEGIN_SRC sh
-        # open 
-        exec {filew}>outputfile
-        # write
-        echo foo >&$filew
-        # check 
-        cat outputfile
-        #> foo
-        # close
-        exec {filew}>&-
-        #+END_SRC
-***** how to know if stdout is a terminal?
-      #+BEGIN_SRC sh
-      echo -n "stdout is: "
-      if [ -t 1 ]; then 
-        echo "a terminal"
+      if [[ ${varname:-} ]]; then
+        echo "var is defined"
       else
-        echo "not a terminal"
+        echo "var not defined or empt"
       fi
       #+END_SRC
-***** Printout
-****** Padding
-******* right / left pad with printf?
+      - Another way from [[https://wiki-dev.bash-hackers.org/scripting/posparams][bash hackers]]:
         #+BEGIN_SRC sh
-        printf "%40s\n" foo | tr ' ' .
-        #> .....................................foo
-        printf "%-40s\n" foo | tr ' ' .
-        #> foo.....................................
+          if [ ${x+defined} ]; then echo "x is not defined"; \
+                               else echo "x is defined (may be blank)"; \
+          fi \
+          ;
         #+END_SRC
-******* zero padding numbers?
-        #+BEGIN_SRC sh
-        printf "%05d\n" 99
-        #> 00099
-        #+END_SRC
-**** Arrays
-***** Associative arrays
-****** declare, print, ...
-  #+begin_src sh
-  # declare
-  declare -A m=( [red]='0;31' [green]='0;32' )
-  # print keys
-  echo "keys=${!m[@]}"
-  # print all
-  declare | grep colorsCodes
-  # iterate
-  for i in "${!array[@]}"
-  do
-    echo "key  : $i"
-    echo "value: ${array[$i]}"
-  done
-  #+end_src
-****** copy ?
-  #+begin_src sh
-  declare -A arr=([this]=hello [\'that\']=world [theother]='and "goodbye"!')
-  declare -A newarr
-  for idx in "${!arr[@]}"; do
-      newarr[$idx]=${arr[$idx]}
-  done
-
-  diff <(echo "$temp") <(declare -p newarr | sed 's/newarr=/arr=/')
-  # no output
-  #+end_src
-  http://stackoverflow.com/questions/19417015/bash-copy-from-one-array-to-another
-***** Normal arrays
-****** declare/literal/set/getAll/size
-      #+begin_src bash
-      # declare
-      declare -a a
-      # literal
-      a=(a b c)
-      # set
-      a[0]=x
-      # get all
-      echo ${a[*]}
-      # size
-      echo "size=${#a[@]}"
-      #+end_src
-****** access empty array?
-
-       #+BEGIN_SRC sh
-       declare -a a=()
-       echo -n a=
-       echo ${a[@} + "${a[@]}"}
-       #+END_SRC
-****** parse string to array?
-       #+BEGIN_SRC sh
-       IFS=', ' read -r -a array <<< "a, b, c"
-       echo "array=${array[@]}"
-       #> array=a b c
-       #+END_SRC
-****** clone an array into another array?
-       #+BEGIN_SRC sh
-       show() { declare | egrep "^${1}=" ; }
-       # declare array a1
-       declare -a a1=( a b )
-       show a1
-       #> a1=([0]="a" [1]="b")
-       declare -a a2=("${a1[@]}")
-       show a2
-       #> a2=([0]="a" [1]="b")
-       # verify it is a clone
-       a2[0]=x
-       show a2
-       #> a2=([0]="x" [1]="b")
-       show a1
-       #> a1=([0]="a" [1]="b")
-       #+END_SRC
-**** ssh escape sequence?
- =ENTER, ~, .=
-**** c style for loop?
- #+begin_src sh
- for ((i=0;i<3;i++)); do
-   echo $i
- done
- #+end_src
-**** Bash Strings
-***** bash strings cheat sheet?
-
- | what        | how                                          | example |
- |-------------+----------------------------------------------+---------|
- | size        | =${#str}=                                    |         |
- | substring   | =${str:pos}=                                 |         |
- | substring   | =${str:pos:length}=                          |         |
- |             |                                              |         |
- | char to int | =printf '%d\n' "'y"=                         |         |
- | int to char | =printf "\x$(printf %x 65)"=                 |         |
- | replace all | =bash -c 'x=abcabc; echo ${x//b/z} # axcaxc= |         |
- |             |                                              |         |
-**** generate random string?
- #+begin_src sh
- #!/bin/bash
- # bash generate random alphanumeric string
- #
-
- # bash generate random 32 character alphanumeric string (upper and lowercase) and
- NEW_UUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
-
- # bash generate random 32 character alphanumeric string (lowercase only)
- cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1
-
- # Random numbers in a range, more randomly distributed than $RANDOM which is not
- # very random in terms of distribution of numbers.
-
- # bash generate random number between 0 and 9
- cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | head --bytes 1
-
- # bash generate random number between 0 and 99
- NUMBER=$(cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | sed -e 's/^0*//' | head --bytes 2)
- if [ "$NUMBER" == "" ]; then
-   NUMBER=0
- fi
-
- # bash generate random number between 0 and 999
- NUMBER=$(cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | sed -e 's/^0*//' | head --bytes 3)
- if [ "$NUMBER" == "" ]; then
-   NUMBER=0
- fi
- #+end_src
- https://gist.github.com/earthgecko/3089509
-**** decimal / hex (and opposite) conversion?
- #+begin_src sh
-# decimal to hex
-echo "obase=16; 34" | bc
-# hex to decimal
- echo $((0xa))
- # 10
- #+end_src
-**** redirect output in variable?
- "must read" about the differents techniques of redirection: http://stackoverflow.com/questions/13763942/bash-why-piping-input-to-read-only-works-when-fed-into-while-read-const
-**** stop on error (even in subshell)?
- It seems that bash disable -e in subshells.
- A workaround: set -e explicitly at the start of each subshell
-**** switch case ?
-     #+begin_src sh
- while [[ $# -gt 0 ]]; do
-     case "$1" in
-         *:*          ) hostport=(${1//:/ }); shift 1 ;;
-              --child ) CHILD=1             ; shift 1 ;;
-         -q | --quiet ) QUIET=1             ; shift 1 ;;
-         -s | --strict) STRICT=1            ; shift 1 ;;
-         --host=*     ) HOST="${1#*=}"      ; shift 1 ;;
-         --help       ) usage               ; shift 1 ;;
-         *            ) unknownArg "$1"     ; shift 1 ;;
-     esac
- done
-     #+end_src
-**** loop over args?
-     #+begin_src sh
-     for var in "$@"
-     do
-       echo "$var"
-     done
-     #+end_src
-     http://stackoverflow.com/questions/255898/how-to-iterate-over-arguments-in-a-bash-script
-**** parse a string as args
-     #+begin_src sh
-     How to process the following list of pairs: "Mercury 36" "Venus 67" "Earth 93"  "Mars 142" "Jupiter 483"?
-     (note no =IFS= set)
-     #+begin_src sh
-     #!/usr/bin/env bash
-     set -euo pipefail
-
-     for planet in "Mercury 36" "Venus 67"
-     do
-       set -- $planet
-       echo "\$1=$1"
-       echo "\$2=$2"
-     done
-     # outputs
-     #
-     # $1=Mercury
-     # $2=36
-     # $1=Venus
-     # $2=67
-     #+end_src
-**** How to save a script params (before doing modifications like shift, ..)?
-     #+begin_src sh
-     # save with
-     original_params=("$@")
-     # use the copy with
-     echo "${original_params[@]}"
-     #+end_src
-**** Tmp files
-***** "delete while still open" trick to be sure a file will be deleted?
-      from: https://unix.stackexchange.com/questions/181937/how-create-a-temporary-file-in-shell-script
+**** Debugging
+***** how to make a bash script stop and print current line before running it?
+      Add to your script:
       #+BEGIN_SRC sh
-      tmpfile=$(mktemp /tmp/abc-script.XXXXXX)
-      exec 3>"$tmpfile"
-      rm "$tmpfile"
-      : ...
-      echo foo >&3
+      trap '(read -p "[$BASH_SOURCE:$LINENO] $BASH_COMMAND?")' DEBUG
       #+END_SRC
-**** bash pointer variables?
-**** debugging
+      From: https://translate.google.co.uk/translate?hl=fr&sl=en&tl=fr&u=http%3A%2F%2Fwww.softpanorama.org%2FScripting%2FShellorama%2Fbash_debugging.shtml&anno=2
 ***** how to execute a script step by step?
       Add to your script:
       #+BEGIN_SRC sh
@@ -1329,118 +1445,6 @@ $ declare -n refToRefToVar=refToVar
 $ echo ${refToRefToVar}
 #> foo
 #+END_SRC
-**** Env
-***** How to run a command with the env cleared?
-      #+BEGIN_SRC sh
-      env -i bash -c env
-      #>        -i, --ignore-environment
-      #>        start with an empty environment
-
-      #+END_SRC
-***** export bash function?
-      
-     #+BEGIN_SRC sh
-     f() { echo "I'm f!" ; }
-     export -f f
-     bash -c f
-     #> I'm f!
-     #+END_SRC
-***** Replace all env var by values in file?
-      #+BEGIN_SRC sh
-      envsubst
-      #+END_SRC
-***** How to make bash source a file before running a command?
-      Use the =BASH_ENV= to tell bash to source a file: 
-     #+BEGIN_SRC sh
-     touch .bashrc
-     echo foo=bar >> .bashrc
-     bash -c 'echo $foo'
-     #> 
-     BASH_ENV=.bashrc bash -c 'echo $foo'
-     #> bar
-    #+END_SRC 
-**** generate uuid?
-     #+BEGIN_SRC sh
-     cat /proc/sys/kernel/random/uuid
-     #> aa6bc854-9eab-43cd-986d-d2318bf4a845
-     #+END_SRC
-**** Complete
-***** bash completion cheat sheet?
-      | complete on                                                              | cmd        | options |             |               | for what?     | short form |
-      |--------------------------------------------------------------------------+------------+---------+-------------+---------------+---------------+------------|
-      | remove                                                                   | =complete= | =-r=    |             |               | all           |            |
-      |                                                                          | =complete= | =-r=    |             | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-      |--------------------------------------------------------------------------+------------+---------+-------------+---------------+---------------+------------|
-      | complete on alias names                                                  | =complete= | =-A=    | =alias=     | =cmd1 … cmdN= | =cmd1 … cmdN= | =-a=       |
-      |--------------------------------------------------------------------------+------------+---------+-------------+---------------+---------------+------------|
-      | array variable names                                                     | =complete= | =-A=    | =arrayvar=  | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-      | readline key binding names                                               | =complete= | =-A=    | =binding=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-      | names of shell builtin commands                                          | =complete= | =-A=    | =builtin=   | =cmd1 … cmdN= | =cmd1 … cmdN= | =-b=       |
-      | command names                                                            | =complete= | =-A=    | =command=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-      | directory names                                                          | =complete= | =-A=    | =directory= | =cmd1 … cmdN= | =cmd1 … cmdN= | =-d=       |
-      | disabled shell builtins                                                  | =complete= | =-A=    | =disabled=  | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-      | enabled shell builtins                                                   | =complete= | =-A=    | =enabled=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-      | names of exported shell variables                                        | =complete= | =-A=    | =export=    | =cmd1 … cmdN= | =cmd1 … cmdN= | =-e=       |
-      | file names                                                               | =complete= | =-A=    | =file=      | =cmd1 … cmdN= | =cmd1 … cmdN= | =-f=       |
-      | names of shell functions                                                 | =complete= | =-A=    | =function=  | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-      | group names                                                              | =complete= | =-A=    | =group=     | =cmd1 … cmdN= | =cmd1 … cmdN= | =-g=       |
-      | help topics accepted by the help builtin                                 | =complete= | =-A=    | =helptopic= | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-      | hostnames as taken from the file specifed by the HOSTFILE shell variable | =complete= | =-A=    | =hostname=  | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-      | job names                                                                | =complete= | =-A=    | =job=       | =cmd1 … cmdN= | =cmd1 … cmdN= | =-j=       |
-      | shell reserved words                                                     | =complete= | =-A=    | =keyword=   | =cmd1 … cmdN= | =cmd1 … cmdN= | =-k=       |
-      | names of running jobs                                                    | =complete= | =-A=    | =running=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-      | service names                                                            | =complete= | =-A=    | =service=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-      | valid args for the -o option of the set builtin                          | =complete= | =-A=    | =setopt=    | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-      | shell option names as accepted by the shopt builtin                      | =complete= | =-A=    | =shopt=     | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-      | signal names                                                             | =complete= | =-A=    | =signal=    | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-      | names of stopped jobs                                                    | =complete= | =-A=    | =stopped=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-      | user names                                                               | =complete= | =-A=    | =user=      | =cmd1 … cmdN= | =cmd1 … cmdN= | =-u=       |
-      | names of all shell variables                                             | =complete= | =-A=    | =variable=  | =cmd1 … cmdN= | =cmd1 … cmdN= | =-v=       |
-**** Debugging
-***** how to make a bash script stop and print current line before running it?
-      Add to your script:
-      #+BEGIN_SRC sh
-      trap '(read -p "[$BASH_SOURCE:$LINENO] $BASH_COMMAND?")' DEBUG
-      #+END_SRC
-      From: https://translate.google.co.uk/translate?hl=fr&sl=en&tl=fr&u=http%3A%2F%2Fwww.softpanorama.org%2FScripting%2FShellorama%2Fbash_debugging.shtml&anno=2
-**** Variables
-***** how to test if a variable is defined?
-      #+BEGIN_SRC sh
-      if [[ ${varname:-} ]]; then
-        echo "var is defined"
-      else
-        echo "var not defined or empt"
-      fi
-      #+END_SRC
-      - Another way from [[https://wiki-dev.bash-hackers.org/scripting/posparams][bash hackers]]:
-        #+BEGIN_SRC sh
-          if [ ${x+defined} ]; then echo "x is not defined"; \
-                               else echo "x is defined (may be blank)"; \
-          fi \
-          ;
-        #+END_SRC
-**** Text
-***** Printf?
-****** print args, one by line with its position? 
-       from: http://wiki.bash-hackers.org/commands/builtin/printf
-       #+BEGIN_SRC sh
-       printf '"%b"\n' "$0" "$@" | nl -v0 -s": "
-       #> 0: "-zsh"
-       #> 1: "foo"
-       #> 2: "bar"
-       #+END_SRC
-****** print a line accross the terminal?
-       from: http://wiki.bash-hackers.org/commands/builtin/printf
-       #+BEGIN_SRC sh
-       bash -c "l=$(tput cols)"' && printf -v line "%*s" $l && echo ${line// /-}' 
-       #> --------------------------------------------------------------------------------
-       #+END_SRC
-**** Commands
-***** List all possible commands (including functions)?
-    #+BEGIN_SRC sh
-      # also works for zsh
-      compgen -c
-    #+END_SRC
 *** Zsh
 **** Completion
 ***** using bash's autocomplete with zsh?
