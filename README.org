@@ -1261,6 +1261,11 @@ set -o
       #> a=1 
 
       #+END_SRC
+***** Bash config files
+****** Order of loading of bash init files?
+       - See diagram: https://blog.flowblok.id.au/2013-02/shell-startup-scripts.html
+       - graphviz code repo: =hg clone https://bitbucket.org/flowblok/shell-startup=
+       [[img/shell-startup.png]]
 **** Files and Redirections
 ***** Stdin/out/err
 ****** redirect file to stdin on the left side?
