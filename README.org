@@ -353,6 +353,15 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
              bye
          !
        #+END_SRC
+****** How to view actual ssh config (system wide + user config + cmdline/env)?
+       #+BEGIN_SRC sh
+ssh -G localhost
+#> hostname localhost
+#> port 22
+#> addressfamily any
+#> batchmode no
+#> (...) 
+       #+END_SRC
 ***** Openssl
 ****** SslCerts
 ******* generate a self certificate for localhost (without prompt)?
