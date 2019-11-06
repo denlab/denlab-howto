@@ -2370,6 +2370,10 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
        #+BEGIN_SRC clj
        (ns-unalias (find-ns 'user.ns) 'alias)
        #+END_SRC
+****** List all ns?
+       #+BEGIN_SRC clojure
+       (all-ns)
+       #+END_SRC
 ***** Strings
 ****** ByteArrayInputStream to string?
        Use =slurp=:
