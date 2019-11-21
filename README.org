@@ -2566,6 +2566,32 @@ from (
 ;;> | 1 |
 ;;> | 2 |
       #+END_SRC
+***** Concatenate two tables?
+     - with union (with duplicate rows elimination):
+#+BEGIN_SRC sql
+select * from (VALUES (1, 'c'), (1, 'a')) t(b,a)
+union
+select * from (VALUES (1, 'c'), (1, 'a')) t(b,a)
+;;> | :b | :a |
+;;> |----+----|
+;;> |  1 |  a |
+;;> |  1 |  c |
+ #+END_SRC
+
+
+     - with UNION ALL (no dup check):
+ #+BEGIN_SRC sql
+select * from (VALUES (1, 'c'), (1, 'a')) t(b,a)
+union all
+select * from (VALUES (1, 'c'), (1, 'a')) t(b,a)
+;;> | :b | :a |
+;;> |----+----|
+;;> |  1 |  c |
+;;> |  1 |  a |
+;;> |  1 |  c |
+;;> |  1 |  a |
+ #+END_SRC
+
 *** PostgreSQL
 ***** Posgresql cheatsheet?
 | descr                  | sql                    |
