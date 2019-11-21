@@ -2515,17 +2515,36 @@ where
 ***** group by concatenate string?
       - postgresql > 9:
 #+BEGIN_SRC sql
+  ,#+BEGIN_SRC sql
   select t.id, string_agg(t.c, ', ')
   from (
     VALUES
-      (1, '10')
-    , (1, '20')
+      (1, 'c')
+    , (1, 'a')
+    , (1, 'b')
     , (2, '30')
   ) t(id, c)
   group by t.id
 ;;> | :id | :string_agg |
 ;;> |-----+-------------|
-;;> |   1 |      10, 20 |
+;;> |   1 |     c, a, b |
+;;> |   2 |          30 |
+#+END_SRC
+     
+- also possible to order the order:
+#+BEGIN_SRC sql
+select t.id, string_agg(t.c, ', ' order by t.c)
+from (
+  VALUES
+    (1, 'c')
+  , (1, 'a')
+  , (1, 'b')
+  , (2, '30')
+) t(id, c)
+group by t.id
+;;> | :id | :string_agg |
+;;> |-----+-------------|
+;;> |   1 |     a, b, c |
 ;;> |   2 |          30 |
 #+END_SRC
 **** Other
