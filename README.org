@@ -2511,6 +2511,26 @@ where
   and created >   ('2019-01-02 09:00:00'::timestamp)
   and created <=  ('2019-01-02 09:00:00'::timestamp + '1 day'::interval)
       #+END_SRC
+**** Other
+***** Pseudo table in sql?
+      postgresql and others:
+      | a |
+      |---|
+      | 1 |
+      | 2 |
+      #+BEGIN_SRC sql
+select * 
+from (
+  VALUES
+    (1)
+  , (2)
+) t(a)
+;;> | a |
+;;> |---|
+;;> | 1 |
+;;> | 2 |
+      #+END_SRC
+*** PostgreSQL
 ***** Posgresql cheatsheet?
 | descr                  | sql                    |
 |------------------------+------------------------|
