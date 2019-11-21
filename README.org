@@ -2491,7 +2491,18 @@ curl -v -u tomcat:tomcat http://127.0.0.1:8080/manager/text/list
       #+END_SRC
 ***** tomcat rest api doc ?
       http://tomcat.apache.org/tomcat-7.0-doc/manager-howto.html#List_Currently_Deployed_Applications
-      
+** Databases
+*** Sql
+**** DateTime
+***** Sql: how to select rows where a field date is greater than...?
+      Cast a string to a date type.
+      Ex in Postgresqldb:
+      #+BEGIN_SRC sql
+select * from table 
+where 
+  true
+  and created >  ('2019-01-02 09:00:00'::timestamp)
+      #+END_SRC
 ** Node
 *** Npm
 **** Cli usage
