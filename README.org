@@ -2511,6 +2511,10 @@ where
   and created >   ('2019-01-02 09:00:00'::timestamp)
   and created <=  ('2019-01-02 09:00:00'::timestamp + '1 day'::interval)
       #+END_SRC
+***** Posgresql cheatsheet?
+| descr                  | sql                    |
+|------------------------+------------------------|
+| get postgresql version | =SHOW server_version;= |
 
 ** Node
 *** Npm
