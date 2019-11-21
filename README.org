@@ -2511,6 +2511,23 @@ where
   and created >   ('2019-01-02 09:00:00'::timestamp)
   and created <=  ('2019-01-02 09:00:00'::timestamp + '1 day'::interval)
       #+END_SRC
+**** GroupBy
+***** group by concatenate string?
+      - postgresql > 9:
+#+BEGIN_SRC sql
+  select t.id, string_agg(t.c, ', ')
+  from (
+    VALUES
+      (1, '10')
+    , (1, '20')
+    , (2, '30')
+  ) t(id, c)
+  group by t.id
+;;> | :id | :string_agg |
+;;> |-----+-------------|
+;;> |   1 |      10, 20 |
+;;> |   2 |          30 |
+#+END_SRC
 **** Other
 ***** Pseudo table in sql?
       postgresql and others:
