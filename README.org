@@ -2503,6 +2503,15 @@ where
   true
   and created >  ('2019-01-02 09:00:00'::timestamp)
       #+END_SRC
+***** Sql: how to select rows where a field date is in [<date> ; <date> + 1 day]? 
+      #+BEGIN_SRC sql
+select * from table 
+where 
+  true
+  and created >   ('2019-01-02 09:00:00'::timestamp)
+  and created <=  ('2019-01-02 09:00:00'::timestamp + '1 day'::interval)
+      #+END_SRC
+
 ** Node
 *** Npm
 **** Cli usage
