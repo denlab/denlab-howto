@@ -2336,7 +2336,8 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
 ***** simple
 
      #+begin_src sh
-     mvn dependency:get -Dartifact=org.springframework:spring-instrument:3.2.3.RELEASE
+     # Note: -U always update remote releases and snapshot repositoryies
+     mvn -U dependency:get -Dartifact=org.springframework:spring-instrument:3.2.3.RELEASE
      #+end_src
 
      See: http://stackoverflow.com/questions/7110114/how-to-simply-download-a-jar-using-maven
