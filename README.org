@@ -2414,6 +2414,17 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
         )
         #> "3"
         #+END_SRC
+******* how to use ->> with fns args mixed at the beginning and and?
+        #+BEGIN_SRC clojure
+          (let [s {}] 
+            (map  str
+              (assoc s :k :v)))
+          #> ("[:k :v]")
+          (->> {}
+            (#(assoc % :k :v))
+            (map str))
+          #> ("[:k :v]")
+        #+END_SRC
 ***** Functions
 ****** Args
 ******* optional args with default values using keys?
