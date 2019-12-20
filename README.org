@@ -3198,6 +3198,18 @@ jq -n '{a: 1, b: {ba: 10, bb: {bba: 42, bbb: 43} }} * {b: {bb: {bba: 49}}}'
      sub(regex; string)
      jq -n '"foo bar" | sub(" "; "x")'
      #+END_SRC
+**** jq regex search and replace with backreferences
+     #+BEGIN_SRC sh
+jq -n ' .
+| "foo"
+| gsub(
+    "^(?<pre>.*)(?<n>o)(?<post>.*)$"
+  ;
+     "\(.pre) - \(.n) - \(.post)"
+  )
+'
+#> "fo - o - "
+     #+END_SRC
 **** substring?
      #+BEGIN_SRC sh
      echo foo | jq -R '.[0:1]'
