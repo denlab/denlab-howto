@@ -2239,6 +2239,12 @@ make
 # install
 sudo checkinstall
    #+END_SRC
+* Web
+** Browsers
+*** Firefox
+**** Disable images loading?
+     go to about:config
+     firefox_profile.set_preference('permissions.default.image', 2)
 * Programming
 ** JVM ecosystem
 *** Groovy
