@@ -2721,6 +2721,17 @@ history | tail -10
 
      
      #+END_SRC
+**** output lines from regex to N line after it?
+     
+     #+BEGIN_SRC sh
+seq 1 100 \
+| sed -rn '/40/,+3 p'
+#> 40
+#> 41
+#> 42
+#> 43
+     #+END_SRC
+
 *** Perl
 **** Multiline search and replace?
      #+begin_src sh
