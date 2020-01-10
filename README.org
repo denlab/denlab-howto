@@ -3657,3 +3657,8 @@ echo foo bar baz \
 | egrep '(?:foo)? bar'
 foo bar baz
         #+END_SRC
+** Repositories
+*** Nexus
+**** V2
+***** self hosted api doc for nexus v2?
+      $NEXUS_URL/nexus-restlet1x-plugin/default/docs/index.html
