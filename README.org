@@ -667,7 +667,20 @@ host google.com
        /usr/nginx/sbin/nginx -t -c /usr/nginx/conf/nginx.conf
        /usr/nginx/sbin/nginx -t 
        #+END_SRC
-       
+***** Lynx
+****** html to text by piping to lynx?
+#+BEGIN_SRC sh
+curl -L --fail -sS 'https://duckduckgo.com?q=lynx' \
+| lynx --dump --stdin
+#> [...] 
+#> 
+#> [1]DuckDuckGo
+#> lynx________________ [BUTTON Input] (not implemented)_ S
+#> REFRESH(0 sec): [2]file://localhost/html?q=lynx
+#> 
+#> You are being redirected to the non-JavaScript site.
+#> [...]
+#+END_SRC
 **** X11
 ***** NxClient
 ****** keyboard issue when connecting with nx ?
