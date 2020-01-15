@@ -2567,6 +2567,7 @@ group by t.id
 #+END_SRC
 **** Other
 ***** Pseudo table in sql?
+      their called value tables
       postgresql and others:
       | a |
       |---|
