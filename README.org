@@ -1659,6 +1659,10 @@ cat /etc/environment          \
       # OR
       curl --socks5-hostname localhost:8123 http://remote.host.com
       #+END_SRC
+**** how to list all open ports and their associated processes?
+     #+BEGIN_SRC sh
+     sudo netstat -lntp
+     #+END_SRC
 *** Compression
 **** compress stdin, uncompress to stdout ?
 #+BEGIN_SRC sh
