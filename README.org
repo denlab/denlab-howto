@@ -2505,6 +2505,12 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
         #+BEGIN_SRC clj
         (str/replace "a b c " #"^(?<w1>\w+) (?<w2>\w+) (?<w3>\w+) *$" "${w2}")
         #+END_SRC
+***** Classpath
+****** slurp a resource in the classpath?
+       #+BEGIN_SRC clojure
+       (require '[clojure.java.io :as io])
+       (slurp (io/resource "some_project_name/foo.txt"))
+       #+END_SRC
 *** Web Servers
 **** Tomcat
 ***** how to configure tomcat so that it can be managed programatically ? 
