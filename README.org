@@ -3686,3 +3686,16 @@ foo bar baz
 **** V2
 ***** self hosted api doc for nexus v2?
       $NEXUS_URL/nexus-restlet1x-plugin/default/docs/index.html
+*** Monitoring
+**** how to connect jconsole to a jvm running in a remote docker container?
+     - In the container: Change the start of your java app to include those properties:
+#+BEGIN_SRC sh
+         -Dcom.sun.management.jmxremote  \
+         -Dcom.sun.management.jmxremote.port=8888 \
+         -Dcom.sun.management.jmxremote.rmi.port=8888 \
+         -Djava.rmi.server.hostname=$(DOCKER_HOST:?)     \
+         -Dcom.sun.management.jmxremote.ssl=false  \
+         -Dcom.sun.management.jmxremote.authenticate=false  \
+#+END_SRC
+     - on the machine where jconsole is running, start a new connection on =$DOCKER_SERVER:8888=
+
