@@ -149,7 +149,12 @@ df if=/dev/sda of=/dev/sdb status=progress
        #+BEGIN_SRC sh
        convert input.png -quality 75 output.jpg
        #+END_SRC
-
+***** Ffmpeg
+****** How to get only the 1st n minutes of videos?
+       #+BEGIN_SRC sh
+set -- i.mp4
+ffmpeg -i "$1" -ss 0 -t 60 -c copy "${1/./.prev.}"
+#+END_SRC
 **** Math
 ***** Bc
 ****** float precision?
