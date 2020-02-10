@@ -1289,6 +1289,21 @@ set -o
       #> a=1 
 
       #+END_SRC
+***** option to glob also hidden files?
+      #+BEGIN_SRC sh
+ls -Alrth
+   #> total 1,0K
+   #> -rw-r--r-- 1 u u 0 fvr. 10 19:37 .a
+   #> -rw-r--r-- 1 u u 0 fvr. 10 19:37 a
+ls *
+   #> a
+shopt -s dotglob && ls *
+   #> a
+   #> .als -Alrth
+   #> total 1,0K
+   #> -rw-r--r-- 1 u u 0 fvr. 10 19:37 .a
+   #> -rw-r--r-- 1 u u 0 fvr. 10 19:37 a
+      #+END_SRC
 ***** Bash config files
 ****** Order of loading of bash init files?
        - See diagram: https://blog.flowblok.id.au/2013-02/shell-startup-scripts.html
