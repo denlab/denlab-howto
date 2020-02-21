@@ -2958,9 +2958,12 @@ git reset --hard
     | tag    | push                 |              | =git push origin <tag_name>=                                                                              |
     | tag    | delete               | local        | =git tag -d <tagName>=                                                                                    |
     | tag    | delete               | remote       | =git push --delete origin <tagName>=                                                                      |
-    | branch | delete               |              | =git push origin --delete feature/example=                                                                |
+    |--------+----------------------+--------------+-----------------------------------------------------------------------------------------------------------|
+    | branch | delete               | local        | =git branch -d feature/example=                                                                           |
+    | branch | delete               | remote       | =git push origin --delete feature/example=                                                                |
     | branch | push && set upstream |              | =git push origin --set-upstream new-branch=                                                               |
     | branch | rename               | local/remote | =git branch -m $oldName $newName && git push origin :$oldName && git push --set-upstream origin $newName= |
+    |--------+----------------------+--------------+-----------------------------------------------------------------------------------------------------------|
     #+TBLFM: $4=git tag <tagName> <commit>
 *** rm a big file from history?
  #+begin_src sh
