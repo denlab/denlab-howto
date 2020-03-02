@@ -610,6 +610,15 @@ host google.com
        #+BEGIN_SRC sh
        seq 3 > x && tar czv x > x.tgz
        #+END_SRC
+****** recompress without intermediary files?
+       don't know how to do it with regular target
+       but there's a solution with bsdtar
+***** Bsdtar
+****** recompress without intermediary files?
+       #+BEGIN_SRC sh
+         bsdtar -cJf - @- < a.tar.lzo > a.tar.xz
+       #+END_SRC
+
 ***** Tree
 ****** print tree with unicode characters?
        #+BEGIN_SRC sh
