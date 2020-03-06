@@ -3080,6 +3080,14 @@ from: https://git-lfs.github.com/
      #+BEGIN_SRC sh
 git -c color.status=always status
      #+END_SRC
+*** hacks
+**** how to git diff even if the repo do not have an empty init commit?
+     Use the magic sha1: 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+     Event if only one commit in a repo (without a base empty commmit), 
+     #+BEGIN_SRC sh
+       git diff 4b825d..HEAD 
+       #> will return the correct diff
+     #+END_SRC
 ** Jq
 *** Finding
 **** recursively find a value by key?
