@@ -2538,6 +2538,12 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
         #+BEGIN_SRC clj
         (str/replace "a b c " #"^(?<w1>\w+) (?<w2>\w+) (?<w3>\w+) *$" "${w2}")
         #+END_SRC
+******* string to regex?
+       #+BEGIN_SRC clojure 
+ (str/replace "foo" (re-pattern "o") "z")
+#> "fzz"
+
+       #+END_SRC
 ***** Classpath
 ****** slurp a resource in the classpath?
        #+BEGIN_SRC clojure
