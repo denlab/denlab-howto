@@ -1535,6 +1535,20 @@ $ echo ${refToRefToVar}
      # disbale it
      xrandr --output LVDS1 --off
      #+END_SRC
+**** force X resolution when an external monitor is not detected?
+     #+BEGIN_SRC sh
+# check the current display and resolutions:
+xrandr
+# calculate the modeline
+( export x=1920 y=1080 freq=60 && cvt $x $y $freq)
+#> # 1920x1080 59.96 Hz (CVT 2.07M9) hsync: 67.16 kHz; pclk: 173.00 MHz
+#> Modeline "1920x1080_60.00"  173.00  1920 2048 2248 2576  1080 1083 1088 1120 -hsync +vsync
+# take the ouput and feed it to xrandr to create the new modeline:
+xrandr --newmode 1920x960_60.00 152.00  1920 2032 2232 2544  960 963 973 996 -hsync +vsync
+# add it to the output
+xrandr --addmode DP-2 1920x960_60.00                                  
+# in monitors setup choose the new reolution
+#+END_SRC
 **** Fonts
 ***** List fonts?
       #+BEGIN_SRC sh
