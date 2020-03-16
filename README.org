@@ -2564,6 +2564,10 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
        (require '[clojure.java.io :as io])
        (slurp (io/resource "some_project_name/foo.txt"))
        #+END_SRC
+***** Generate uuid
+      #+BEGIN_SRC clojure
+      (str (java.util.UUID/randomUUID))
+      #+BEGIN_END
 *** Web Servers
 **** Tomcat
 ***** how to configure tomcat so that it can be managed programatically ? 
