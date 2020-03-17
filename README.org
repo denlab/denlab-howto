@@ -6,20 +6,21 @@
 * Unixes
 ** Linux
 *** Package managers
-    |        | package manager | no sudo        | install                | install         | list all installed        | list all                       | list           | remove                     |   |
-    |        |                 |                |                        | version         |                           | installed                      | avail          |                            |   |
-    |        |                 |                |                        |                 |                           | w version                      | versions       |                            |   |
-    |        |                 |                |                        |                 |                           |                                | of pkg         |                            |   |
-    |--------+-----------------+----------------+------------------------+-----------------+---------------------------+--------------------------------+----------------+----------------------------+---|
-    | alpine | apk             |                | add                    | add <pkg>=<ver> | info                      | apk info <pipe> xargs apk info | apk info <pkg> |                            |   |
-    | python | pip             | --user         | install                |                 | ls                        |                                |                | ?                          |   |
-    | node   | npm             | --global       | install                |                 | ls                        |                                |                | ?                          |   |
-    | perl   | cpan            | ?              | install                |                 | cpan -a                   |                                |                | ?                          |   |
-    | debian | aptitude        | ?              | install                |                 | dpkg -l                   |                                |                | purge                      |   |
-    | rhel   | yum             | ?              | install                |                 | rpm -qa                   |                                |                | ?                          |   |
-    | groovy | sdk             | ?              | install                |                 | ?                         |                                |                | ?                          |   |
-    | ruby   | gem             | --user-install | install                |                 | ?                         |                                |                | ?                          |   |
-    | nix    |                 |                | nix-env -i -v "${pkg}" |                 | nix-env -qa --description |                                |                | nix-env --uninstall "$pkg" |   |
+    |        | package manager | no sudo        | install                | install         | list all installed        | list all                       | list                  | remove                     |   |
+    |        |                 |                |                        | version         |                           | installed                      | avail                 |                            |   |
+    |        |                 |                |                        |                 |                           | w version                      | versions              |                            |   |
+    |        |                 |                |                        |                 |                           |                                | of pkg                |                            |   |
+    |--------+-----------------+----------------+------------------------+-----------------+---------------------------+--------------------------------+-----------------------+----------------------------+---|
+    | alpine | apk             |                | add                    | add <pkg>=<ver> | info                      | apk info <pipe> xargs apk info | apk info <pkg>        |                            |   |
+    | python | pip             | --user         | install                |                 | ls                        |                                |                       | ?                          |   |
+    | node   | npm             | --global       | install                |                 | ls                        |                                |                       | ?                          |   |
+    | perl   | cpan            | ?              | install                |                 | cpan -a                   |                                |                       | ?                          |   |
+    | debian | aptitude        | ?              | install                |                 | dpkg -l                   |                                |                       | purge                      |   |
+    | debian | apt             | ?              | install                |                 | dpkg -l                   |                                | apt-cache policy $pkg | purge                      |   |
+    | rhel   | yum             | ?              | install                |                 | rpm -qa                   |                                |                       | ?                          |   |
+    | groovy | sdk             | ?              | install                |                 | ?                         |                                |                       | ?                          |   |
+    | ruby   | gem             | --user-install | install                |                 | ?                         |                                |                       | ?                          |   |
+    | nix    |                 |                | nix-env -i -v "${pkg}" |                 | nix-env -qa --description |                                |                       | nix-env --uninstall "$pkg" |   |
 **** find which package manager is used on this machine?
      #+BEGIN_SRC sh
      #!/usr/bin/env bash
