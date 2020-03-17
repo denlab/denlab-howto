@@ -164,6 +164,11 @@ ffmpeg -i "$1" -ss 0 -t 60 -c copy "${1/./.prev.}"
        #+end_src
 
 **** Net
+***** General
+****** Count all current tcp connection on linux host?
+       #+BEGIN_SRC sh
+      wc -l /proc/net/tcp
+#+END_SRC
 ***** Netcat
 ****** simple web server with netcat?
        #+BEGIN_SRC sh
