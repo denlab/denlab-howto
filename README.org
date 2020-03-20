@@ -2575,7 +2575,15 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
 ***** Generate uuid
       #+BEGIN_SRC clojure
       (str (java.util.UUID/randomUUID))
-      #+BEGIN_END
+      #+END_SRC
+***** Exceptions
+****** try/catch/finally? 
+#+BEGIN_SRC clojure
+(try (/ 1 0)
+  (catch Throwable e (.printStackTrace e))
+  (finally (prn :always-run)))
+#+END_SRC
+
 *** Web Servers
 **** Tomcat
 ***** how to configure tomcat so that it can be managed programatically ? 
