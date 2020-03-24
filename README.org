@@ -2149,6 +2149,12 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
    #+end_src
 
 ** Spacemacs
+*** Install
+**** "No public key for 066DAFCB81E42C40" ?
+   #+begin_src sh
+   gpg --homedir ~/.emacs.d/elpa/gnupg --receive-keys 066DAFCB81E42C40
+   #+end_src
+
 *** evil cheat sheet?
 
 | what                                               |                       | cmds                  | example                  |
