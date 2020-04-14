@@ -156,6 +156,9 @@ df if=/dev/sda of=/dev/sdb status=progress
 set -- i.mp4
 ffmpeg -i "$1" -ss 0 -t 60 -c copy "${1/./.prev.}"
 #+END_SRC
+****** Record desktop?
+#+begin_src dot 
+ffmpeg -i output2.m4v -vf "scale=(trunc(iw/4)*4)/4:(trunc(ih/4)*4)/4" video.mp4
 **** Math
 ***** Bc
 ****** float precision?
