@@ -2184,6 +2184,11 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
 *** run a command and get the output in the current buffer?
 **** Emacs
     ~C-u M-! <shell-command>~
+**** fix error when installing spacemacs: "No such file or directory, evil"?
+    May be a simply missing gpg elpa key:
+    #+BEGIN_SRC sh
+    gpg --homedir ~/.emacs.d/elpa/gnupg --receive-keys 066DAFCB81E42C40
+    #+END_SRC 
 **** Spacemacs (evil mode)
      ~SPC u SPC ! <shell-command>~
 *** Universal argument in spacemacs (evil mode)?
