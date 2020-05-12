@@ -3430,6 +3430,13 @@ cb'  \
 #> true
 #> false
       #+END_SRC
+**** clojure's reductions equivalent in jq?
+     #+BEGIN_SRC sh
+     # ex: infinite fibonacci sequence from an infinite seq of integers:
+seq 0 Infinity                                                                        \
+| jql -cn 'foreach ( inputs , null) as $l ( [1,1] ; [$l, .[0] + $l]?//empty ; .[1])'  \
+| head | xargs
+     #+END_SRC
 *** Convert
 **** TODO element to array?
 **** convert an array to a map?
