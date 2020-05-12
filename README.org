@@ -976,6 +976,25 @@ setxkbmap -option ctrl:nocaps
       #+BEGIN_SRC sh
 cat /proc/loadavg
       #+END_SRC
+**** Processes
+***** How to find how are connected by pipes running processes?
+      #+BEGIN_SRC sh
+# draft - draft - draft - draft - draft - draft - draft - draft - draft - draft - 
+seq Infinity | sed -r 's/^/> /' | pv -qlL1 > /tmp/o
+#> ^Z
+#> [1]+  Stopped                 seq Infinity | sed -r 's/^/> /' | pv -qlL1 > /tmp/o
+bg
+#> [1]+ seq Infinity | sed -r 's/^/> /' | pv -qlL1 > /tmp/o &
+tail -f /tmp/o
+#> > 1
+#> > 2
+#> ^C
+declare pRe && pRe="$(pgrep -fa '(seq|pv|sed)' | cut -f1 -d' ' | xargs | sed -r -e 's/ /|/g' -e 's/.*/(&1)/')"
+lsof  | egrep "$pRe" | egrep -v '^(lsof|grep)' |  egrep '(^C|FIFO)' | tr -s ' ' | tr ' ' '\t' | cut -f 1,2,4,8,9 | sort -k 4,3 | jq -R . | jq -s '. | map(split("\t")) ' | jq -cr 'sort_by(.[3],.[2]) | group_by(.[3])' | jq -cr '.[] | select(length == 2)  | (.[0][0]) as $p1 | (.[1][0]) as $p2 | "\($p2) -> \($p1)"'
+#> seq -> sed
+#> sed -> pv
+# draft - draft - draft - draft - draft - draft - draft - draft - draft - draft - 
+      #+END_SRC
 *** Bash
 **** Non interactive
 ***** Use alises in non interactive bash?
