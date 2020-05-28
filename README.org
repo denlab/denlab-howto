@@ -2505,8 +2505,60 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
       mvn dependency:tree -Dverbose=true 
       #+END_SRC
 **** Language
-***** Macros
-****** Threading
+***** Protocols
+****** Full example of protocole usage for fast & simple polymorphic dispatch on a single type?
+       #+BEGIN_SRC clj
+;; pro ns ----------------------------------------------------------------------
+
+(ns pro
+  (:require [clj-time.format :as tf]
+            [clj-time.coerce :as tc])
+  (:import [org.joda.time DateTime]
+           [java.util Date]))
+
+;; Define the interface
+(defprotocol XmlNode
+  (as-xml [this]))
+
+;; Define implementation that are dispached on existing types
+;; Protocols can be extended to existing types and user defined types
+(extend-protocol XmlNode
+  Integer  (as-xml [this] (str this))
+  String   (as-xml [this] (identity this))
+  Date     (as-xml [this] (.format (java.text.SimpleDateFormat. "yyyy-MM-dd HH:mm:ss") this))
+  DateTime (as-xml [this] (->> this
+                               tc/to-long
+                               (#(/ % 1000))
+                               long)))
+
+;; And even on your own custom types
+(defrecord User [^Integer id ^String name ^java.util.Date dob])
+
+(extend-protocol XmlNode
+  User
+  (as-xml [this] (str "<user>"
+                      "<id>" (as-xml (:id this)) "</id>"
+                      "<name>" (as-xml (:name this)) "</name>"
+                      "<dob>" (as-xml (:dob this)) "</dob>"
+                      "</user>")))
+
+;; pro-test ns ----------------------------------------------------------------------
+
+(ns pro-test
+  (:require [pro :refer :all]
+            [clojure.test :refer :all]
+            [clj-time.core :as t]))
+
+(deftest as-xml-test 
+ (testing "int"            (is (= "1"                   (as-xml (int             1            )))))
+ (testing "joda-time"      (is (= 1577836800            (as-xml (t/date-time     2020         )))))
+ (testing "java.util.date" (is (= "2001-09-09 01:46:40" (as-xml (java.util.Date. 1000000000000)))))
+ (testing "User"           (is (= "<user><id>0</id><name>john</name><dob>473385600</dob></user>" 
+                                                        (as-xml (->User "0" "john" (t/date-time 1985)))))))
+
+# +END_SRC
+* **** Macros
+* ***** Threading
 ******* how to use threading macros with functions with different argument position?
         #+BEGIN_SRC clojure
         ;; using -> and ->>
@@ -2555,6 +2607,17 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
         (hello :name "John" :salutation "Hi")
         ;; => "Hi John"
         #+END_SRC
+***** Ns
+****** Alias
+******* How to remove an alias to a ns?
+#+BEGIN_SRC clj
+        (let [ns-sym 'fapi.jira.sql.hicosql.explore
+            alias-sym 'jsqlh
+](-> ns-sym
+           find-ns
+           (ns-unalias  alias-sym)
+           ))
+#+END_SRC
 ***** Var
 ****** symbol->var->value?
        #+BEGIN_SRC clojure
