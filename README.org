@@ -2509,6 +2509,12 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
       lein pom
       mvn dependency:tree -Dverbose=true 
       #+END_SRC
+***** Connect to an existing nrepl process?
+#+BEGIN_SRC sh
+lein repl :connect localhost:7888
+#+END_SRC
+     
+
 **** Language
 ***** Protocols
 ****** Full example of protocole usage for fast & simple polymorphic dispatch on a single type?
