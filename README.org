@@ -1804,6 +1804,11 @@ cat /etc/environment          \
       # list again to check it has been taken into account
       sudo zpool add zpool-docker /dev/sde
       #+END_SRC
+***** How to view the dedup and compression properties of pools?
+      #+BEGIN_SRC sh
+      # a starting point: 
+      sudo zfs list -o devices,type,mountpoint,compressratio,refcompressratio,compression,dedup
+      #+END_SRC
 **** AccessControl
 ***** Set read right reccursive for all files and and dir in a given dir?
       #+BEGIN_SRC sh
