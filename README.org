@@ -59,7 +59,7 @@
        - update plugins: ~<prefix> + U
        - remove plugins not on the list: =<prefix> + alt + u=
 ***** Zip
-****** list content of a zip file from stdin? 
+****** list content of a zip file from stdin?
        #+BEGIN_SRC sh
        curl file://$(pwd)/dir.zip | bsdtar -xvf-
        #> % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -157,7 +157,7 @@ set -- i.mp4
 ffmpeg -i "$1" -ss 0 -t 60 -c copy "${1/./.prev.}"
 #+END_SRC
 ****** Record desktop?
-#+begin_src dot 
+#+begin_src dot
 ffmpeg -i output2.m4v -vf "scale=(trunc(iw/4)*4)/4:(trunc(ih/4)*4)/4" video.mp4
 **** Math
 ***** Bc
@@ -191,14 +191,14 @@ ffmpeg -i output2.m4v -vf "scale=(trunc(iw/4)*4)/4:(trunc(ih/4)*4)/4" video.mp4
     #+end_src
     from: https://toic.org/blog/2009/reverse-ssh-port-forwarding/
 ******* ssh tunnel example?
-        
+
         +BEGIN_SRC sh
         localPort=5555                              \
         remotePort=5555                             \
         sshStr=jenkins@jenkins-deploy.fircosoft.net \
-          bash -c 'ssh -N  -f -L ${localPort}:localhost:${remotePort} ${sshStr}'        
+          bash -c 'ssh -N  -f -L ${localPort}:localhost:${remotePort} ${sshStr}'
         +END_SRC
-        
+
 ****** Passwordless and keyless ssh login
 
 ******* ssh without password or key?
@@ -212,7 +212,7 @@ ffmpeg -i output2.m4v -vf "scale=(trunc(iw/4)*4)/4:(trunc(ih/4)*4)/4" video.mp4
         -e 's/#(PasswordAuthentication yes)/\1/' \
         -i /etc/ssh/sshd_config                                                                          \
     #+end_src
-   
+
 ******* ssh root without password or key?
        #+BEGIN_SRC sh
        passwd -d root                               \
@@ -221,12 +221,12 @@ ffmpeg -i output2.m4v -vf "scale=(trunc(iw/4)*4)/4:(trunc(ih/4)*4)/4" video.mp4
           -e 's/#(PasswordAuthentication yes)/\1/'  \
           -e 's/#(PermitRootLogin).*$/\1 yes/'      \
           -i /etc/ssh/sshd_config                   \
-       #+END_SRC 
-       - dockerfile: 
+       #+END_SRC
+       - dockerfile:
          #+BEGIN_SRC sh
   FROM alpine
   RUN apk update && apk add openssh-server openssh-keygen
-  RUN ssh-keygen -A                                                              
+  RUN ssh-keygen -A
   CMD passwd -d root                                                                    \
       && sed -r                                                                         \
           -e 's/#(PermitEmptyPasswords) no/\1 yes/'                                     \
@@ -325,7 +325,7 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
        fuser -k -n tcp 5555
        #+END_SRC
 ****** copy between two ssh hosts without intermediary copy?
-       
+
        #+BEGIN_SRC sh
 :                                         \
 && srcDir=srcdir                          \
@@ -348,7 +348,7 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
        HashKnownHosts=false
        #+END_SRC
 ****** Non interactive sftp session with non pubkey password?
-       #+BEGIN_SRC sh 
+       #+BEGIN_SRC sh
        sshpass -e -- sftp -oBatchMode=no -b - user@host << !
              get /path/to/file
              bye
@@ -361,7 +361,7 @@ ssh -G localhost
 #> port 22
 #> addressfamily any
 #> batchmode no
-#> (...) 
+#> (...)
        #+END_SRC
 ****** Sshfs
 ******* how to mount remote fs with sshfs?
@@ -374,7 +374,7 @@ ssh -G localhost
         sshfs sessy@mycomputer:/remote/path /local/path -C -p 9876 -o allow_other
         #+end_src
         https://wiki.archlinux.org/index.php/SSHFS
-        - umount: [[how to umount a mounted sshfs?]] 
+        - umount: [[how to umount a mounted sshfs?]]
 ******* how to umount a mounted sshfs?
         #+begin_src sh
         fusermount -u  /path/to
@@ -410,24 +410,24 @@ Removal
           :
           EOF
           ) \
-          | bash 
+          | bash
         #+END_SRC
 ******* best explaination of "everything derive from the root ca key"?
         https://serverfault.com/questions/306345/certification-authority-root-certificate-expiry-and-renewal
-        
+
 ***** Rsync
 ****** how to specify the port in rsync?
        #+BEGIN_SRC sh
        rsync -rvz -e 'ssh -p 2222' --progress --remove-sent-files ./dir user@host:/path
        #+END_SRC
-****** how to exactly copy a local directory to a remote host (remove extra remote file if necessary) and back ? 
+****** how to exactly copy a local directory to a remote host (remove extra remote file if necessary) and back ?
        #+BEGIN_SRC sh
        # local -> remote
        rsync -rvza --progress --delete workspace/ jenkins@localhost:/home/jenkins/workspace
        # remote -> local
-       rsync -rvza --progress --delete jenkins@localhost:/home/jenkins/workspace/ workspace 
-       
-       
+       rsync -rvza --progress --delete jenkins@localhost:/home/jenkins/workspace/ workspace
+
+
        #+END_SRC
 ****** rsync and trailing slash behavior?
        Only matter for the source dir:
@@ -479,7 +479,7 @@ host google.com
         dism.exe /Online /Disable-Feature:Microsoft-Hyper-V
         #+END_SRC
         - And reboot
-       
+
 
 
 
@@ -487,7 +487,7 @@ host google.com
 
 **** Text
 ***** Less
-****** how to search for a tab ? 
+****** how to search for a tab ?
        Enter a literal tab with: =CTRL-v TAB=.
 ***** Tail
 ****** skip the N first lines of input with tail?
@@ -559,7 +559,7 @@ host google.com
        |---------------------------------+-----------+------------------------|
        | print file name with match      | ~-H~      | ~--with-filename~      |
        | print only filename for matches | ~-l~      | ~--files-with-matches~ |
-****** Character class for blanks? 
+****** Character class for blanks?
        #+BEGIN_SRC sh
  jq -nRr '"1: \t", "2:  "' | egrep '[[:space:]]' | jq -R .
  #> "1: \t"
@@ -568,10 +568,10 @@ host google.com
 ****** match pattern on multiples lines?
        #+BEGIN_SRC sh
        seq 4  | grep -Pz '1\n2'
-       #               ||   
+       #               ||
        #               |+-------+ treat input as a set of lines  null terminated
        #               +-----------+ Perl regex mode
-       #> =1= 
+       #> =1=
        #> =2=
        #>  3
        #>  4
@@ -622,7 +622,7 @@ host google.com
 ****** list the content of a remote tgz without intermediary files?
       #+BEGIN_SRC sh
        curl http://url/to/file.tgz | tar tzfv -
-      #+END_SRC 
+      #+END_SRC
 ****** send tar compressed archive to stdout?
        #+BEGIN_SRC sh
        seq 3 > x && tar czv x > x.tgz
@@ -678,8 +678,8 @@ host google.com
        #+END_SRC
 ****** post data from stdin?
       #+BEGIN_SRC sh
-     cat data.json | curl -H "Content-Type: application/json" -X POST -d @- http://api 
-      #+END_SRC 
+     cat data.json | curl -H "Content-Type: application/json" -X POST -d @- http://api
+      #+END_SRC
 ***** Wget
 ****** recursively download for example nexus ?
 
@@ -696,19 +696,19 @@ host google.com
 ****** Check config syntax?
        #+BEGIN_SRC sh
        /usr/nginx/sbin/nginx -t -c /usr/nginx/conf/nginx.conf
-       /usr/nginx/sbin/nginx -t 
+       /usr/nginx/sbin/nginx -t
        #+END_SRC
 ***** Lynx
 ****** html to text by piping to lynx?
 #+BEGIN_SRC sh
 curl -L --fail -sS 'https://duckduckgo.com?q=lynx' \
 | lynx --dump --stdin
-#> [...] 
-#> 
+#> [...]
+#>
 #> [1]DuckDuckGo
 #> lynx________________ [BUTTON Input] (not implemented)_ S
 #> REFRESH(0 sec): [2]file://localhost/html?q=lynx
-#> 
+#>
 #> You are being redirected to the non-JavaScript site.
 #> [...]
 #+END_SRC
@@ -966,12 +966,12 @@ setxkbmap -option ctrl:nocaps
       lsof -u jenkins | <grep/cut/jq>
       #+END_SRC
 ***** how to do a simple bind mount?
-      
+
       #+BEGIN_SRC sh
       # with mount cmd:
       mount --bind /src/path /dst/path
 
-      # with /etc/fstab: 
+      # with /etc/fstab:
       /src/path /dst/path none defaults,bind 0 0
       #+END_SRC
 **** RemoteFs
@@ -987,7 +987,7 @@ cat /proc/loadavg
 **** Processes
 ***** How to find how are connected by pipes running processes?
       #+BEGIN_SRC sh
-# draft - draft - draft - draft - draft - draft - draft - draft - draft - draft - 
+# draft - draft - draft - draft - draft - draft - draft - draft - draft - draft -
 seq Infinity | sed -r 's/^/> /' | pv -qlL1 > /tmp/o
 #> ^Z
 #> [1]+  Stopped                 seq Infinity | sed -r 's/^/> /' | pv -qlL1 > /tmp/o
@@ -1001,7 +1001,7 @@ declare pRe && pRe="$(pgrep -fa '(seq|pv|sed)' | cut -f1 -d' ' | xargs | sed -r 
 lsof  | egrep "$pRe" | egrep -v '^(lsof|grep)' |  egrep '(^C|FIFO)' | tr -s ' ' | tr ' ' '\t' | cut -f 1,2,4,8,9 | sort -k 4,3 | jq -R . | jq -s '. | map(split("\t")) ' | jq -cr 'sort_by(.[3],.[2]) | group_by(.[3])' | jq -cr '.[] | select(length == 2)  | (.[0][0]) as $p1 | (.[1][0]) as $p2 | "\($p2) -> \($p1)"'
 #> seq -> sed
 #> sed -> pv
-# draft - draft - draft - draft - draft - draft - draft - draft - draft - draft - 
+# draft - draft - draft - draft - draft - draft - draft - draft - draft - draft -
       #+END_SRC
 ***** Autossh
 ****** How to keep a ssh sesssion open with autossh?
@@ -1153,7 +1153,7 @@ lsof  | egrep "$pRe" | egrep -v '^(lsof|grep)' |  egrep '(^C|FIFO)' | tr -s ' ' 
       compgen -c
     #+END_SRC
 **** Programming
-***** Misc      
+***** Misc
 ****** bash pointer variables?
 ***** Control flow
 ****** Tests/Conditionnals
@@ -1313,7 +1313,7 @@ lsof  | egrep "$pRe" | egrep -v '^(lsof|grep)' |  egrep '(^C|FIFO)' | tr -s ' ' 
 ******** ssh escape sequence?
      =ENTER, ~, .=
 ******* Printf?
-******** print args, one by line with its position? 
+******** print args, one by line with its position?
          from: http://wiki.bash-hackers.org/commands/builtin/printf
          #+BEGIN_SRC sh
          printf '"%b"\n' "$0" "$@" | nl -v0 -s": "
@@ -1324,7 +1324,7 @@ lsof  | egrep "$pRe" | egrep -v '^(lsof|grep)' |  egrep '(^C|FIFO)' | tr -s ' ' 
 ******** print a line accross the terminal?
          from: http://wiki.bash-hackers.org/commands/builtin/printf
          #+BEGIN_SRC sh
-         bash -c "l=$(tput cols)"' && printf -v line "%*s" $l && echo ${line// /-}' 
+         bash -c "l=$(tput cols)"' && printf -v line "%*s" $l && echo ${line// /-}'
          #> --------------------------------------------------------------------------------
          #+END_SRC
 **** Bash options
@@ -1338,14 +1338,14 @@ set -o
 #> errtrace        off
       #+END_SRC
 ***** option so bash export all declared variables?
-      #+BEGIN_SRC sh 
-      a=1 
+      #+BEGIN_SRC sh
+      a=1
       bash -c 'echo "a=$a"'
       set -a
       a=1
       bash -c 'echo "a=$a"'
-      #> a= 
-      #> a=1 
+      #> a=
+      #> a=1
 
       #+END_SRC
 ***** option to glob also hidden files?
@@ -1440,13 +1440,13 @@ shopt -s dotglob && ls *
        #+END_SRC
 ****** File Descriptors
 ******* Named File Descriptors
-******** define a named file descriptor to a writable file and write to it? 
+******** define a named file descriptor to a writable file and write to it?
          #+BEGIN_SRC sh
-         # open 
+         # open
          exec {filew}>outputfile
          # write
          echo foo >&$filew
-         # check 
+         # check
          cat outputfile
          #> foo
          # close
@@ -1455,7 +1455,7 @@ shopt -s dotglob && ls *
 ****** how to know if stdout is a terminal?
        #+BEGIN_SRC sh
        echo -n "stdout is: "
-       if [ -t 1 ]; then 
+       if [ -t 1 ]; then
          echo "a terminal"
        else
          echo "not a terminal"
@@ -1494,7 +1494,7 @@ shopt -s dotglob && ls *
 
       #+END_SRC
 ***** export bash function?
-      
+
      #+BEGIN_SRC sh
      f() { echo "I'm f!" ; }
      export -f f
@@ -1506,15 +1506,15 @@ shopt -s dotglob && ls *
       envsubst
       #+END_SRC
 ***** how to make bash source a file before running a command?
-      Use the =BASH_ENV= to tell bash to source a file: 
+      Use the =BASH_ENV= to tell bash to source a file:
      #+BEGIN_SRC sh
      touch .bashrc
      echo foo=bar >> .bashrc
      bash -c 'echo $foo'
-     #> 
+     #>
      BASH_ENV=.bashrc bash -c 'echo $foo'
      #> bar
-    #+END_SRC 
+    #+END_SRC
 ***** how to test if a variable is defined?
       #+BEGIN_SRC sh
       if [[ ${varname:-} ]]; then
@@ -1596,7 +1596,7 @@ xrandr
 # take the ouput and feed it to xrandr to create the new modeline:
 xrandr --newmode 1920x960_60.00 152.00  1920 2032 2232 2544  960 963 973 996 -hsync +vsync
 # add it to the output
-xrandr --addmode DP-2 1920x960_60.00                                  
+xrandr --addmode DP-2 1920x960_60.00
 # in monitors setup choose the new reolution
 #+END_SRC
 **** Fonts
@@ -1625,11 +1625,11 @@ xrandr --addmode DP-2 1920x960_60.00
       sudo aptitude install xpra
       ## intall xvfb
       sudo aptitude install xvfb
-      ## use xvfb instead of xorg: 
+      ## use xvfb instead of xorg:
       sudo vim /etc/xpra/xpra.conf
       # comment   the line starting with 'xvfb=Xorg'
       # UNcomment the line starting with 'xvfb=Xvfb'
-      ## start a session on the display #10 without the deamon (for troubleshooting): 
+      ## start a session on the display #10 without the deamon (for troubleshooting):
       display=10
       xpra start --daemon=no :${display}
       # on the client ----------------------------------------------------------
@@ -1639,10 +1639,10 @@ xrandr --addmode DP-2 1920x960_60.00
       display=10
       xpra attach ssh/${remoteSshUser}@${remoteSshHost}:${remoteSshPort}/${display}
       # On the server ----------------------------------------------------------
-      ## start a test app: 
+      ## start a test app:
       DISPLAY=${display} xeyes
       #> xeyes should open on the client...
-      ## now start a bigger app: 
+      ## now start a bigger app:
       DISPLAY=${display} google-chrome
       #+END_SRC
 **** Window managers
@@ -1663,7 +1663,7 @@ xrandr --addmode DP-2 1920x960_60.00
 ********** how to manage enabling/disabling gnome shell user extensions (command line)?
            from: https://askubuntu.com/questions/1029376/how-to-enable-and-disable-gnome-extensions-from-command-line
            #+BEGIN_SRC sh
-           # are all gnome shell user extensions disabled? 
+           # are all gnome shell user extensions disabled?
            gsettings get org.gnome.shell disable-user-extensions
            # disable all gnome shell user extensions
            gsettings set org.gnome.shell disable-user-extensions true
@@ -1700,9 +1700,9 @@ xrandr --addmode DP-2 1920x960_60.00
  sudo dpkg-reconfigure locales
 
       #+end_src
-      *note*: 
+      *note*:
       #+BEGIN_SRC sh
-      
+
       [warn] /etc/environment has been deprecated for locale information; use /etc/default/locale for LANG=en_US.UTF-8 instead ... (warning).
 [warn] /etc/environment has been deprecated for locale information; use /etc/default/locale for LC_ALL=en_US.UTF-8 instead ... (warning).
 
@@ -1741,7 +1741,7 @@ cat /etc/environment          \
      netstat -lntu
      #+END_SRC
 **** Proxy
-***** Request with curl through a proxy over ssh ? 
+***** Request with curl through a proxy over ssh ?
       #+BEGIN_SRC sh
       remoteHost=remote.host
       remoteHostSshPort=22222
@@ -1773,7 +1773,7 @@ cat /etc/environment          \
 ***** compress/decompress stdin with xz?
       #+BEGIN_SRC sh
       # compress
-      seq 3 | xz > out.xz 
+      seq 3 | xz > out.xz
       # decompress
       cat out.xz | unxz
       #> 1
@@ -1782,7 +1782,7 @@ cat /etc/environment          \
       #+END_SRC
 ***** decompress stdin with xz?
       #+BEGIN_SRC sh
-      
+
       #+END_SRC
 *** Fs
 **** difference between =/bin=, =/usr/bin=, =/usr/local/bin=?
@@ -1828,23 +1828,23 @@ cat /etc/environment          \
       # a starting point: 
       sudo zfs list -o devices,type,mountpoint,compressratio,refcompressratio,compression,dedup
       #+END_SRC
-***** Snaphot clones, etc 
+***** Snaphot clones, etc
       from: https://www.howtoforge.com/tutorial/how-to-use-snapshots-clones-and-replication-in-zfs-on-linux/
       #+BEGIN_SRC sh
-      # #### Given you havea datapool, eg created with: 
-          zpool create datapool mirror /dev/sdb /dev/sdc 
+      # #### Given you havea datapool, eg created with:
+          zpool create datapool mirror /dev/sdb /dev/sdc
           #>
           zpool list
           #> NAME       SIZE  ALLOC   FREE  EXPANDSZ   FRAG    CAP  DEDUP  HEALTH  ALTROOT
           datapool  1.98G    65K  1.98G         -     0%     0%  1.00x  ONLINE  -
-      # #### and a zfs filesystem created for exeample with: 
+      # #### and a zfs filesystem created for exeample with:
           zfs create datapool/docs -o mountpoint=/docs
           #>
           zfs list -r datapool
           #> NAME            USED  AVAIL  REFER  MOUNTPOINT
           #> datapool       93.5K  1.92G    19K  /datapool
           #> datapool/docs    19K  1.92G    19K  /docs
-      # ### you can create a snapshot with : 
+      # ### you can create a snapshot with :
           zfs snapshot datapool/docs@version1
           zfs list -t snapshot
           #> NAME                     USED  AVAIL  REFER  MOUNTPOINT
@@ -1853,7 +1853,7 @@ cat /etc/environment          \
 **** AccessControl
 ***** Set read right reccursive for all files and and dir in a given dir?
       #+BEGIN_SRC sh
-dir=/path/to                                    
+dir=/path/to
 && find "$dir" -type f -print0 | xargs -0 chmod 744 \
 && find "$dir" -type d -print0 | xargs -0 chmod 755
       #+END_SRC
@@ -1864,17 +1864,17 @@ dir=/path/to
 
        from: https://hub.docker.com/r/vektorlab/apk-cache/
 
-       - Run an apk-cache on port 80 + --add-host: 
+       - Run an apk-cache on port 80 + --add-host:
        #+BEGIN_SRC sh
        # run an apk-cache container
        docker run -d -p 80:80 --name=apk-cache vektorlab/apk-cache
-       # run container by replacing dl-4.alpinelinux.org: 
+       # run container by replacing dl-4.alpinelinux.org:
        docker run --add-host dl-cdn.alpinelinux.org:${hostIp} -it alpine:3.6
-       # Alternative if not running on port 80, link the container: 
+       # Alternative if not running on port 80, link the container:
        docker run -d -p 80:80 --name=apk-cache vektorlab/apk-cache
        #+END_SRC
 
-       - Run an apk-cache on any port + link on port 80 + --add-host: 
+       - Run an apk-cache on any port + link on port 80 + --add-host:
        #+BEGIN_SRC sh
        # run an apk-cache container
        docker run -d -p 8080:80 --name=apk-cache vektorlab/apk-cache
@@ -1895,16 +1895,16 @@ dir=/path/to
       Re-import expired pgp keys with:
       #+BEGIN_SRC sh
       apt-key list | grep expired |  tr -s ' '  | cut -f2 -d ' ' | cut -f2 -d'/' | sed -r 's/.*/apt-key adv --recv-keys --keyserver keys.gnupg.net &/' | bash -xv
-      
+
       #+END_SRC
 **** Ubuntu
 ***** Admin
 ****** How to authorize normal user to connect to wifi withouth authenticating as admin ?
 
        - Using the admin account, connect to the wifi
-       - And in the wifi properties, choose: 
+       - And in the wifi properties, choose:
          - "Make available to others users"
-         - 
+         -
 ***** 18.04
 ****** X
 ******* Normal alt-tab?
@@ -1913,7 +1913,7 @@ dir=/path/to
         - Choose: "Switch windows"
         - Assign 'alt-tab' to it
 ****** uninstall snap?
-       from: https://stackoverflow.com/questions/50322306/how-to-remove-snap-store-from-ubuntu 
+       from: https://stackoverflow.com/questions/50322306/how-to-remove-snap-store-from-ubuntu
        #+BEGIN_SRC sh
        sudo apt autoremove --purge snapd
        #+END_SRC
@@ -1921,7 +1921,7 @@ dir=/path/to
 *** Backup
 **** Bup
 ***** bup essentials?
-     
+
 | category | what?                | cmd                                      |
 |----------+----------------------+------------------------------------------|
 | init     | init bup in curr dir | =bup init=                               |
@@ -1955,13 +1955,13 @@ dir=/path/to
     #+BEGIN_SRC sh
     ps -Af
     #+END_SRC
-***** How to know the actual amount of ram used by dedup on a particular dataset ? 
+***** How to know the actual amount of ram used by dedup on a particular dataset ?
       from: https://serverfault.com/questions/533877/how-large-is-my-zfs-dedupe-table-at-the-moment
       #+BEGIN_SRC sh
       sudo zpool status -D zpool-docker | jq -Rr 'capture("^\\s*dedup: DDT entries (?<ddt>[0-9]+)[^0-9]\\s+size (?<sizeOnDisk>[0-9]+) on disk, (?<inCore>[0-9]+) in core$") | map_values(fromjson) | { ramUsedForDedupInMBytes: (.ddt * .inCore / (1024 * 1024))}'
       #+END_SRC
 ****** common rsync flags?
-       
+
        #+BEGIN_SRC sh
        # to copy exactly (like above) plus more feedback:
        rsync -rvza --progress --delete --info=progress2 workspace/ jenkins@localhost:/home/jenkins/workspace
@@ -2207,11 +2207,11 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
 ** Yaml
 *** Folding yaml in vim?
     from: https://lornajane.net/posts/2018/vim-settings-for-working-with-yaml
-    Starting point, put in your =~/.vimrc=: 
+    Starting point, put in your =~/.vimrc=:
     #+BEGIN_SRC sh
    " add yaml stuffs
    au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
-   autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab 
+   autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
     #+END_SRC
 * Emacs
 ** file type indicator header for emacs?
@@ -2261,7 +2261,7 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
     May be a simply missing gpg elpa key:
     #+BEGIN_SRC sh
     gpg --homedir ~/.emacs.d/elpa/gnupg --receive-keys 066DAFCB81E42C40
-    #+END_SRC 
+    #+END_SRC
 **** Spacemacs (evil mode)
      ~SPC u SPC ! <shell-command>~
 *** Universal argument in spacemacs (evil mode)?
@@ -2269,12 +2269,12 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
     ~SPC u~
 *** Project
 **** =helm-project-do-ag= how to filter by file types?
-     - Example, searching for: 
+     - Example, searching for:
        - =*.clj= files
        - containing =defn=
      ~SPC s a p~
-     ~--clojure defn~ 
-     
+     ~--clojure defn~
+
 **** search and replace in project?
      |                          |                      |             |
      |--------------------------+----------------------+-------------|
@@ -2287,7 +2287,7 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
      :.,$s/\vBEFORE/AFTER/gc
      #+END_SRC
 *** Folding
-**** a promising mode? 
+**** a promising mode?
      - hint: =spacemacs/fold-transient-state/evil-close-fold=
 ** OrgMode
 *** Tables
@@ -2466,17 +2466,17 @@ println prettyPrint(toJson(config))
      #+end_src
      http://stackoverflow.com/questions/1760654/java-printstream-to-string
 **** timestamp in java ?
-     
+
      #+BEGIN_SRC sh
      import java.text.SimpleDateFormat;
      SimpleDateFormat sdf sdf = new SimpleDateFormat("yyyyMMdd-HHmmSS");
      String yyyyMMdd = sdf.format(new java.util.Date());
 
-Reference: 
+Reference:
 Update: the question by The Elite Gentleman is important. If you start with a String , then you should first parse it to obtain the date object from the above example:
 Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
 
- 
+
      #+END_SRC
 *** Gradle
 **** how to create a new project from scratch?
@@ -2539,7 +2539,7 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
        Use =slurp=:
        #+BEGIN_SRC clojure
          (let [s "foo"
-              sb (java.io.ByteArrayInputStream. (.getBytes s)) 
+              sb (java.io.ByteArrayInputStream. (.getBytes s))
               ]
           (slurp sb))
        #> "foo"
@@ -2548,7 +2548,7 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
 ***** Show dependencies tree?
       #+BEGIN_SRC sh
       lein pom
-      mvn dependency:tree -Dverbose=true 
+      mvn dependency:tree -Dverbose=true
       #+END_SRC
 ***** Connect to an existing nrepl process?
 #+BEGIN_SRC sh
@@ -2615,7 +2615,7 @@ lein repl :connect localhost:7888
         #+BEGIN_SRC clojure
         ;; using -> and ->>
         (-> 4
-          range                            
+          range
           (->> (partition 2                ))
           (->> (map       (partial into [])))
           (->> (into      {}               ))
@@ -2623,8 +2623,8 @@ lein repl :connect localhost:7888
         )
         #> "3"
         ;; using as->
-        (as-> 4 x 
-          (range                       x) 
+        (as-> 4 x
+          (range                       x)
           (partition 2                 x)
           (map       (partial into []) x)
           (into      {}                x)
@@ -2634,7 +2634,7 @@ lein repl :connect localhost:7888
         #+END_SRC
 ******* how to use ->> with fns args mixed at the beginning and and?
         #+BEGIN_SRC clojure
-          (let [s {}] 
+          (let [s {}]
             (map  str
               (assoc s :k :v)))
           #> ("[:k :v]")
@@ -2680,7 +2680,7 @@ lein repl :connect localhost:7888
 (var-get (resolve 'x))
 ;; #> :foo
        #+END_SRC
-******* in one go: 
+******* in one go:
         #+BEGIN_SRC clojure
         (->> 'x
              resolve
@@ -2715,7 +2715,7 @@ lein repl :connect localhost:7888
         (str/replace "a b c " #"^(?<w1>\w+) (?<w2>\w+) (?<w3>\w+) *$" "${w2}")
         #+END_SRC
 ******* string to regex?
-       #+BEGIN_SRC clojure 
+       #+BEGIN_SRC clojure
  (str/replace "foo" (re-pattern "o") "z")
 #> "fzz"
 
@@ -2733,7 +2733,7 @@ lein repl :connect localhost:7888
       (str (java.util.UUID/randomUUID))
       #+END_SRC
 ***** Exceptions
-****** try/catch/finally? 
+****** try/catch/finally?
 #+BEGIN_SRC clojure
 (try (/ 1 0)
   (catch Throwable e (.printStackTrace e))
@@ -2742,9 +2742,9 @@ lein repl :connect localhost:7888
 
 *** Web Servers
 **** Tomcat
-***** how to configure tomcat so that it can be managed programatically ? 
+***** how to configure tomcat so that it can be managed programatically ?
       #+BEGIN_SRC sh
-# add to TOMCAT_HOME/conf/tomcat-users.xml: 
+# add to TOMCAT_HOME/conf/tomcat-users.xml:
 <role rolename="manager-gui"/>
 <role rolename="manager-script"/>
 <role rolename="manager-jmx"/>
@@ -2764,15 +2764,15 @@ curl -v -u tomcat:tomcat http://127.0.0.1:8080/manager/text/list
       Cast a string to a date type.
       Ex in Postgresqldb:
       #+BEGIN_SRC sql
-select * from table 
-where 
+select * from table
+where
   true
   and created >  ('2019-01-02 09:00:00'::timestamp)
       #+END_SRC
-***** Sql: how to select rows where a field date is in [<date> ; <date> + 1 day]? 
+***** Sql: how to select rows where a field date is in [<date> ; <date> + 1 day]?
       #+BEGIN_SRC sql
-select * from table 
-where 
+select * from table
+where
   true
   and created >   ('2019-01-02 09:00:00'::timestamp)
   and created <=  ('2019-01-02 09:00:00'::timestamp + '1 day'::interval)
@@ -2796,7 +2796,7 @@ where
 ;;> |   1 |     c, a, b |
 ;;> |   2 |          30 |
 #+END_SRC
-     
+
 - also possible to order the order:
 #+BEGIN_SRC sql
 select t.id, string_agg(t.c, ', ' order by t.c)
@@ -2822,7 +2822,7 @@ group by t.id
       | 1 |
       | 2 |
       #+BEGIN_SRC sql
-select * 
+select *
 from (
   VALUES
     (1)
@@ -2941,7 +2941,7 @@ select * from (VALUES (1, 'c'), (1, 'a')) t(b,a)
   # a
   # b c
   #+end_src
-**** join lines of a files two by two? 
+**** join lines of a files two by two?
      #+BEGIN_SRC sh
 seq 10  | sed 'N;s/\n/ /'
 1 2
@@ -2966,12 +2966,12 @@ seq 10  | sed 'N;s/\n/ /'
      cat y
 history | tail -3
 history | tail -4
-history | tail -10 
+history | tail -10
 
-     
+
      #+END_SRC
 **** output lines from regex to N line after it?
-     
+
      #+BEGIN_SRC sh
 seq 1 100 \
 | sed -rn '/40/,+3 p'
@@ -3096,9 +3096,9 @@ ifndef cmd
 endif
     #+END_SRC
 *** how to use a multiline make var in a shell recipe?
-    Export the make var, and use it in the recipe: 
+    Export the make var, and use it in the recipe:
 
-    #+BEGIN_SRC sh 
+    #+BEGIN_SRC sh
 make - <<< 'define multiline
 - line1
 - line2
@@ -3112,15 +3112,15 @@ run:
   @echo "$$multiline"
   @echo
 '
-#> 
+#>
 #> demoMultiLine:
 #> - line1
 #> - line2
 #> - line3
-#> 
+#>
     #+END_SRC
 *** selfDoc
-**** how to extract all targets from a Makefile without a make command ? 
+**** how to extract all targets from a Makefile without a make command ?
      +BEGIN_SRC sh
       egrep '^[^. :]+:' < proxy | sed -r -e 's/.*/  - &/' -e 's/://g']
      +END_SRC
@@ -3146,7 +3146,7 @@ git submodule add -b master [URL to Git repo];
 git submodule update --remote
      #+END_SRC
 **** how to deregister a submodule?
-Something that has worked for me: 
+Something that has worked for me:
 #+BEGIN_SRC sh
 moduleToRemove=modules/toRm
 git rm -f $moduleToRemove
@@ -3211,7 +3211,7 @@ git reset --hard
     set -- '<regex>'
     git grep "$@" $(git rev-list --all)
     #+end_src
-*** essential git config? 
+*** essential git config?
     #+BEGIN_SRC sh
          git config --global color.ui true                \
       && git config --global user.email "you@example.com" \
@@ -3279,9 +3279,9 @@ git -c color.status=always status
 *** hacks
 **** how to git diff even if the repo do not have an empty init commit?
      Use the magic sha1: 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-     Event if only one commit in a repo (without a base empty commmit), 
+     Event if only one commit in a repo (without a base empty commmit),
      #+BEGIN_SRC sh
-       git diff 4b825d..HEAD 
+       git diff 4b825d..HEAD
        #> will return the correct diff
      #+END_SRC
 ** Jq
@@ -3540,7 +3540,7 @@ jq -n '
 #>
      #+END_SRC
 **** Comma in function args
-***** given a list of strings and a list of regexes, for each string check wether it matches all the given regexes or not 
+***** given a list of strings and a list of regexes, for each string check wether it matches all the given regexes or not
       #+BEGIN_SRC sh
 jq -R <<< 'ac
 ab
@@ -3615,7 +3615,7 @@ jq -n '.
      #> 0000 TOP
      #> 0001 LOADK 1
      #> 0003 RET
-    #>  
+    #>
     #> 1
     #+END_SRC
 **** Syntax
@@ -3624,8 +3624,8 @@ jq -n '.
       # can leave comma after last object:
       jq -n '.
 | {
-    a: 1, 
-    b: 2, 
+    a: 1,
+    b: 2,
   }
 '
 #> {"a":1,"b":2}
@@ -3643,7 +3643,7 @@ end'
 #> 1
 #> 2
 #> 3
-   #+END_SRC 
+   #+END_SRC
 *** Call external command and get stdout and return code?
     it seems not straighforward to do.
     Seem to have to implement this by adding some way to get the rc from the command :-(
@@ -3724,12 +3724,12 @@ see: https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing
 **** check / uncheck marks?
      #+BEGIN_SRC sh
      🗹 DONE stuff done
-     ☐ TODO stuff todo 
+     ☐ TODO stuff todo
      #+END_SRC
-     - alternative: 
+     - alternative:
        #+BEGIN_SRC sh
-       ☑ 
-       
+       ☑
+
        #+END_SRC
 **** more check marks?
 
@@ -3756,18 +3756,18 @@ see: https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing
      | 🗴     | U+1F5F4                  | BALLOT SCRIPT X                                    |
      | 🞩      | U+1F7A9                  | LIGHT SALTIRE                                      |
      |        |                          |                                                    |
-     | ×	    | U+00D7	                 | MULTIPLICATION SIGN (z notation Cartesian product) |
-     | ╳	    | U+2573	                 | BOX DRAWINGS LIGHT DIAGONAL CROSS                  |
-     | ☓	    | U+2613	                 | SALTIRE (St Andrew's Cross)                        |
-     | ✕	    | U+2715	                 | MULTIPLICATION X                                   |
-     | ✖	    | U+2716	                 | HEAVY MULTIPLICATION X                             |
-     | ❌	   | U+274C	                 | CROSS MARK                                         |
-     | ❎	   | U+274E	                 | NEGATIVE SQUARED CROSS MARK                        |
-     | ⨉	    | U+2A09	                 | N-ARY TIMES OPERATOR                               |
-     | ⨯	    | U+2A2F	                 | VECTOR OR CROSS PRODUCT                            |
-     | 🗙	   | U+1F5D9                  | 	CANCELLATION X                                   |
-     | 🗴	   | U+1F5F4                  | 	BALLOT SCRIPT X                                  |
-     | 🞩	    | U+1F7A9                  | 	LIGHT SALTIRE                                    |
+     | ×      | U+00D7                   | MULTIPLICATION SIGN (z notation Cartesian product) |
+     | ╳      | U+2573                   | BOX DRAWINGS LIGHT DIAGONAL CROSS                  |
+     | ☓      | U+2613                   | SALTIRE (St Andrew's Cross)                        |
+     | ✕      | U+2715                   | MULTIPLICATION X                                   |
+     | ✖      | U+2716                   | HEAVY MULTIPLICATION X                             |
+     | ❌    | U+274C                  | CROSS MARK                                         |
+     | ❎    | U+274E                  | NEGATIVE SQUARED CROSS MARK                        |
+     | ⨉      | U+2A09                   | N-ARY TIMES OPERATOR                               |
+     | ⨯      | U+2A2F                   | VECTOR OR CROSS PRODUCT                            |
+     | 🗙    | U+1F5D9                  |   CANCELLATION X                                   |
+     | 🗴    | U+1F5F4                  |   BALLOT SCRIPT X                                  |
+     | 🞩      | U+1F7A9                  |  LIGHT SALTIRE                                    |
      #+END_SRC
 *** colored utf8 chars
 **** all
@@ -3786,12 +3786,12 @@ see: https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing
 | 10100-10150: | ❴❵❶❷❸❹❺❻❼❽❾❿➀➁➂➃➄➅➆➇➈➉➊➋➌➍➎➏➐➑➒➓➔➕➖➗➘➙➚➛➜➝➞➟➠➡➢➣➤➥          |
 | 10150-10200: | ➦➧➨➩➪➫➬➭➮➯➰➱➲➳➴➵➶➷➸➹➺➻➼➽➾➿⟀⟁⟂⟃⟄⟅⟆⟇⟈⟉⟊⟋⟌⟍⟎⟏⟐⟑⟒⟓⟔⟕⟖⟗           |
 |--------------+----------------------------------------------------------------|
-**** zodiac 
-     ♈♉♊♋♌♍♎♏⛎♐♑♒♓    
-**** zodiac unambiguous 
-     ♈♉♌♎⛎♐♑♒♓    
-**** zodiac even more unambiguous 
-     ♈♉♌♎⛎♐♒    
+**** zodiac
+     ♈♉♊♋♌♍♎♏⛎♐♑♒♓
+**** zodiac unambiguous
+     ♈♉♌♎⛎♐♑♒♓
+**** zodiac even more unambiguous
+     ♈♉♌♎⛎♐♒
 
 ** Jira
 *** Jira webapp keyboard shortcut cheat sheet
@@ -3834,8 +3834,8 @@ see: https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing
 
      Or leave it empty and use the [link text itself].
 
-     URLs and URLs in angle brackets will automatically get turned into links. 
-     http://www.example.com or <http://www.example.com> and sometimes 
+     URLs and URLs in angle brackets will automatically get turned into links.
+     http://www.example.com or <http://www.example.com> and sometimes
      example.com (but not on Github, for example).
 
      Some text to show that the reference links can follow later.
@@ -3843,7 +3843,7 @@ see: https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing
      [arbitrary case-insensitive reference text]: https://www.mozilla.org
      [1]: http://slashdot.org
      [link text itself]: http://www.reddit.com
-     #+END_SRC 
+     #+END_SRC
 **** get values by their path (eg: ["a",1,"b"])?
      #+BEGIN_SRC sh
      jq -n '{a: {b: 1}} | getpath(["a","b"])'
@@ -3851,13 +3851,13 @@ see: https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing
      #+END_SRC
 ** CI
 *** Jenkins
-**** RestApi 
-***** Jenkins Rest Api Essentials? 
-      #+BEGIN_SRC sh 
+**** RestApi
+***** Jenkins Rest Api Essentials?
+      #+BEGIN_SRC sh
         curl "$JENKINS_HOST/api/json?depth=1&tree=jobs[name,lastBuild[building]]{1,10000}"
         # for all jenkins jobs: get the name and the last build status (building or not)"
       #+END_SRC
-**** parallel map in groovy? 
+**** parallel map in groovy?
      #+BEGIN_SRC java
 @Grab('org.codehaus.gpars:gpars:1.2.1')
 import static groovyx.gpars.GParsPool.withPool
@@ -3917,7 +3917,7 @@ withPool{
          }
        #+END_SRC
 
-       
+
      * Audio/Video
 ** Visualization
 *** Online visualization of Wikipedia's graph?
@@ -3934,7 +3934,7 @@ withPool{
     #+END_SRC
 **** Stop an unstoppable build?
      #+BEGIN_SRC sh
-     # with jenkins cli (groovysh or groovy): 
+     # with jenkins cli (groovysh or groovy):
 jobName='jobName'
 jobNum=111
 jenkins.model.Jenkins.instance.getItemByFullName(jobName).getBuildByNumber(jobNum).finish(hudson.model.Result.ABORTED,new java.io.IOException("Aborting build")
@@ -3964,4 +3964,3 @@ foo bar baz
          -Dcom.sun.management.jmxremote.authenticate=false  \
 #+END_SRC
      - on the machine where jconsole is running, start a new connection on =$DOCKER_SERVER:8888=
-
