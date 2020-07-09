@@ -1003,6 +1003,20 @@ lsof  | egrep "$pRe" | egrep -v '^(lsof|grep)' |  egrep '(^C|FIFO)' | tr -s ' ' 
 #> sed -> pv
 # draft - draft - draft - draft - draft - draft - draft - draft - draft - draft - 
       #+END_SRC
+***** Autossh
+****** How to keep a ssh sesssion open with autossh?
+       Exemple from:  https://wiki.gentoo.org/wiki/Autossh
+       #+BEGIN_SRC sh
+       # ssh on port 222, setup a sock proxy on port 999
+       autossh                         \
+           -M 0                        \
+           -p 222                      \
+           -N                          \
+           -D 9999                     \
+           -o "ServerAliveInterval 45" \
+           -o "ServerAliveCountMax 2" username@myserver
+       #+END_SRC
+
 *** Bash
 **** Non interactive
 ***** Use alises in non interactive bash?
