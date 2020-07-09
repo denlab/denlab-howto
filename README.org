@@ -1756,6 +1756,11 @@ cat /etc/environment          \
      #+BEGIN_SRC sh
      sudo netstat -lntp
      #+END_SRC
+**** Mtu
+***** temporary change the mtu of a network interface?
+      #+BEGIN_SRC sh
+      ifconfig eth0 mtu 9000
+      #+END_SRC
 *** Compression
 **** compress stdin, uncompress to stdout ?
 #+BEGIN_SRC sh
