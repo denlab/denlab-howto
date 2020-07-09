@@ -1809,6 +1809,28 @@ cat /etc/environment          \
       # a starting point: 
       sudo zfs list -o devices,type,mountpoint,compressratio,refcompressratio,compression,dedup
       #+END_SRC
+***** Snaphot clones, etc 
+      from: https://www.howtoforge.com/tutorial/how-to-use-snapshots-clones-and-replication-in-zfs-on-linux/
+      #+BEGIN_SRC sh
+      # #### Given you havea datapool, eg created with: 
+          zpool create datapool mirror /dev/sdb /dev/sdc 
+          #>
+          zpool list
+          #> NAME       SIZE  ALLOC   FREE  EXPANDSZ   FRAG    CAP  DEDUP  HEALTH  ALTROOT
+          datapool  1.98G    65K  1.98G         -     0%     0%  1.00x  ONLINE  -
+      # #### and a zfs filesystem created for exeample with: 
+          zfs create datapool/docs -o mountpoint=/docs
+          #>
+          zfs list -r datapool
+          #> NAME            USED  AVAIL  REFER  MOUNTPOINT
+          #> datapool       93.5K  1.92G    19K  /datapool
+          #> datapool/docs    19K  1.92G    19K  /docs
+      # ### you can create a snapshot with : 
+          zfs snapshot datapool/docs@version1
+          zfs list -t snapshot
+          #> NAME                     USED  AVAIL  REFER  MOUNTPOINT
+          #> datapool/docs@version1      0      -  19.5K  -
+      #+End_src
 **** AccessControl
 ***** Set read right reccursive for all files and and dir in a given dir?
       #+BEGIN_SRC sh
