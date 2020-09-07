@@ -3,6 +3,8 @@
 #+MACRO: pipe @@html:&#124;@@
 #+MACRO: pipeAnd @@html:&#124;&amp;@@
 
+#+OPTIONS: toc:99
+
 * Unixes
 ** Linux
 *** Package managers
