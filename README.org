@@ -2923,6 +2923,17 @@ select * from (VALUES (1, 'c'), (1, 'a')) t(b,a)
     #> foo
     #+END_SRC
 ** Regex
+*** General
+**** regex cheatsheet?
+     from: https://www.regular-expressions.info/refadv.html
+     |                     |                |
+     |---------------------+----------------|
+     | negative lookahead  | =(?!<regex>)=  |
+     | lookahead           | =(?=<regex>)=  |
+     | lookbehind          | =(?<=<regex>)= |
+     | negative lookbehind | =(?<!<regex>)= |
+     |---------------------+----------------|
+
 *** Sed
 **** use a backreference without grouping?
   #+begin_src sh
