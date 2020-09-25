@@ -143,7 +143,7 @@
 ***** Dd
       Show progress with dd?
       #+BEGIN_SRC sh
-df if=/dev/sda of=/dev/sdb status=progress
+dd if=/dev/sda of=/dev/sdb status=progress
       #+END_SRC
 
 **** Graphics
