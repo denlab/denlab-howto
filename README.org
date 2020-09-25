@@ -976,6 +976,19 @@ setxkbmap -option ctrl:nocaps
       # with /etc/fstab:
       /src/path /dst/path none defaults,bind 0 0
       #+END_SRC
+***** Disks
+****** Disks caches
+******* how do I clear the disk caches in Linux?
+        From https://www.tecmint.com/clear-ram-memory-cache-buffer-and-swap-space-on-linux/
+
+        #+BEGIN_SRC sh
+        # clear PageCache only
+        sync; echo 1 > /proc/sys/vm/drop_caches
+        # clear dentries and inodes
+        sync; echo 2 > /proc/sys/vm/drop_caches
+        # clear page cache, dentries and inodes (not on production!)
+        sync; echo 3 > /proc/sys/vm/drop_caches 
+        #+END_SRC
 **** RemoteFs
 ***** How to mount a remote nfs drive on a linux host?
       #+BEGIN_SRC sh
