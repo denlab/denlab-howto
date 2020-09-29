@@ -556,6 +556,14 @@ host google.com
        #+END_SRC
 
 ***** Grep
+****** Non capturing group?
+        Use: -(?:)-
+        #+BEGIN_SRC sh
+echo foo bar baz \
+| egrep '(?:foo)? bar'
+foo bar baz
+        #+END_SRC
+
 ****** cheat sheet
        |                                 | short opt | long opt               |
        |---------------------------------+-----------+------------------------|
@@ -3966,13 +3974,6 @@ jobNum=111
 jenkins.model.Jenkins.instance.getItemByFullName(jobName).getBuildByNumber(jobNum).finish(hudson.model.Result.ABORTED,new java.io.IOException("Aborting build")
 
      #+END_SRC
-******* Non capturing group?
-        Use: -(?:)-
-        #+BEGIN_SRC sh
-echo foo bar baz \
-| egrep '(?:foo)? bar'
-foo bar baz
-        #+END_SRC
 ** Repositories
 *** Nexus
 **** V2
