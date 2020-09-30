@@ -180,6 +180,8 @@ ffmpeg -i output2.m4v -vf "scale=(trunc(iw/4)*4)/4:(trunc(ih/4)*4)/4" video.mp4
        while true; do nc -l 8989 <<< "Hi! the time is now $(date)"; done
        #+END_SRC
 ***** Ssh
+****** How to check the *actual* configuration of a sshd server?
+        check the *actual* configuration of the dst server with: =ssh sshd -T=
 ****** Ssh Tunnels
 ******* ssh tunnels explained
         https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot
