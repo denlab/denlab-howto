@@ -202,6 +202,11 @@ ffmpeg -i output2.m4v -vf "scale=(trunc(iw/4)*4)/4:(trunc(ih/4)*4)/4" video.mp4
         sshStr=jenkins@jenkins-deploy.fircosoft.net \
           bash -c 'ssh -N  -f -L ${localPort}:localhost:${remotePort} ${sshStr}'
         +END_SRC
+******* ssh tunnel socks "channel 2: open failed: administratively prohibited: open failed"
+        - make sure the destination ssh server has config in =/etc/ssh/sshd_config=: 
+        =AllowTcpForwarding all=q
+        =PermitOpen any=
+        - check the *actual* configuration of the dst server with: =ssh sshd -T=
 
 ****** Passwordless and keyless ssh login
 
