@@ -1004,6 +1004,11 @@ setxkbmap -option ctrl:nocaps
         # clear page cache, dentries and inodes (not on production!)
         sync; echo 3 > /proc/sys/vm/drop_caches 
         #+END_SRC
+***** Images
+****** Copy an img file to a disk with bad blocks?
+       #+BEGIN_SRC sh
+       sudo ddrescue  -r3 2020-08-20-raspios-buster-armhf-full.img -d -f /dev/sdX ddrescuemapfile
+       #+END_SRC
 **** RemoteFs
 ***** How to mount a remote nfs drive on a linux host?
       #+BEGIN_SRC sh
