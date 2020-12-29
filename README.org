@@ -2579,6 +2579,11 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
           (slurp sb))
        #> "foo"
        #+END_SRC
+****** Convert a string to a regex?
+       #+BEGIN_SRC clojure
+       (re-pattern "a.*b")
+       #+END_SRC
+
 **** Lein
 ***** Show dependencies tree?
       #+BEGIN_SRC sh
