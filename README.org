@@ -2760,6 +2760,11 @@ lein repl :connect localhost:7888
 #> "fzz"
 
        #+END_SRC
+***** repeat expression between n and m?
+      #+BEGIN_SRC clojure
+      (clojure.string/replace "chute" #"^c{0,3}ute$" "chute")
+      #> "chute"
+      #+END_SRC
 *** Classpath
 **** slurp a resource in the classpath?
      #+BEGIN_SRC clojure
