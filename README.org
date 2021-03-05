@@ -3995,7 +3995,6 @@ withPool{
        #+END_SRC
 
 
-     * Audio/Video
 ** Visualization
 *** Online visualization of Wikipedia's graph?
  - http://tools.medialab.sciences-po.fr/seealsology/
