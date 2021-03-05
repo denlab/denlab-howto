@@ -3812,43 +3812,39 @@ see: https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing
 
      from: https://en.wikipedia.org/wiki/X_mark
 
-| Symbol | Unicode Code point (hex) | Name                                               |
-| ☐      | U+2610                   | BALLOT BOX (checkbox)                              |
-| ☒      | U+2612                   | BALLOT BOX WITH X (square with cross)              |
-| ✗      | U+2717                   | BALLOT X (cross)                                   |
+| Symbol | Unicode Code point (hex) | Name                                  |
+| ☐      | U+2610                   | BALLOT BOX (checkbox)                 |
+| ☒      | U+2612                   | BALLOT BOX WITH X (square with cross) |
+| ✗      | U+2717                   | BALLOT X (cross)                      |
 | ✘      | U+2718                   | HEAVY BALLOT X (bold cross)                        |
-|        |                          |                                                    |
-
-|--------+--------------------------+----------------------------------------------------|
-| Symbol | Unicode Code point (hex) | Name                                               |
-|        |                          |                                                    |
-| ✅     |                          | checked                                            |
-| ×      | U+00D7                   | MULTIPLICATION SIGN (z notation Cartesian product) |
-| ╳      | U+2573                   | BOX DRAWINGS LIGHT DIAGONAL CROSS                  |
-| ☓      | U+2613                   | SALTIRE (St Andrew's Cross)                        |
-| ✕      | U+2715                   | MULTIPLICATION X                                   |
-| ✖      | U+2716                   | HEAVY MULTIPLICATION X                             |
-| ❌     | U+274C                   | CROSS MARK                                         |
-| ❎     | U+274E                   | NEGATIVE SQUARED CROSS MARK                        |
-| ⨉      | U+2A09                   | N-ARY TIMES OPERATOR                               |
-| ⨯      | U+2A2F                   | VECTOR OR CROSS PRODUCT                            |
-| 🗙      | U+1F5D9                  | CANCELLATION X                                     |
-| 🗴      | U+1F5F4                  | BALLOT SCRIPT X                                    |
-| 🞩      | U+1F7A9                  | LIGHT SALTIRE                                      |
-|        |                          |                                                    |
-| ×      | U+00D7                   | MULTIPLICATION SIGN (z notation Cartesian product) |
-| ╳      | U+2573                   | BOX DRAWINGS LIGHT DIAGONAL CROSS                  |
-| ☓      | U+2613                   | SALTIRE (St Andrew's Cross)                        |
-| ✕      | U+2715                   | MULTIPLICATION X                                   |
-| ✖      | U+2716                   | HEAVY MULTIPLICATION X                             |
-| ❌     | U+274C                   | CROSS MARK                                         |
-| ❎     | U+274E                   | NEGATIVE SQUARED CROSS MARK                        |
-| ⨉      | U+2A09                   | N-ARY TIMES OPERATOR                               |
-| ⨯      | U+2A2F                   | VECTOR OR CROSS PRODUCT                            |
-| 🗙      | U+1F5D9                  | CANCELLATION X                                     |
-| 🗴      | U+1F5F4                  | BALLOT SCRIPT X                                    |
-| 🞩      | U+1F7A9                  | LIGHT SALTIRE                                      |
-|--------+--------------------------+----------------------------------------------------|
+|        |                          |                                       |
+     #+BEGIN_SRC sh
+     | Symbol | Unicode Code point (hex) | Name                                               |
+     | ×      | U+00D7                   | MULTIPLICATION SIGN (z notation Cartesian product) |
+     | ╳      | U+2573                   | BOX DRAWINGS LIGHT DIAGONAL CROSS                  |
+     | ☓      | U+2613                   | SALTIRE (St Andrew's Cross)                        |
+     | ✕      | U+2715                   | MULTIPLICATION X                                   |
+     | ✖      | U+2716                   | HEAVY MULTIPLICATION X                             |
+     | ❌     | U+274C                   | CROSS MARK                                         |
+     | ❎     | U+274E                   | NEGATIVE SQUARED CROSS MARK                        |
+     | ⨉      | U+2A09                   | N-ARY TIMES OPERATOR                               |
+     | ⨯      | U+2A2F                   | VECTOR OR CROSS PRODUCT                            |
+     | 🗙     | U+1F5D9                  | CANCELLATION X                                     |
+     | 🗴     | U+1F5F4                  | BALLOT SCRIPT X                                    |
+     | 🞩      | U+1F7A9                  | LIGHT SALTIRE                                      |
+     |        |                          |                                                    |
+     | ×      | U+00D7                   | MULTIPLICATION SIGN (z notation Cartesian product) |
+     | ╳      | U+2573                   | BOX DRAWINGS LIGHT DIAGONAL CROSS                  |
+     | ☓      | U+2613                   | SALTIRE (St Andrew's Cross)                        |
+     | ✕      | U+2715                   | MULTIPLICATION X                                   |
+     | ✖      | U+2716                   | HEAVY MULTIPLICATION X                             |
+     | ❌    | U+274C                  | CROSS MARK                                         |
+     | ❎    | U+274E                  | NEGATIVE SQUARED CROSS MARK                        |
+     | ⨉      | U+2A09                   | N-ARY TIMES OPERATOR                               |
+     | ⨯      | U+2A2F                   | VECTOR OR CROSS PRODUCT                            |
+     | 🗙    | U+1F5D9                  |   CANCELLATION X                                   |
+     | 🗴    | U+1F5F4                  |   BALLOT SCRIPT X                                  |
+     | 🞩      | U+1F7A9                  |  LIGHT SALTIRE                                    |
      #+END_SRC
 *** colored utf8 chars
 **** all
