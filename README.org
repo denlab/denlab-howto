@@ -3821,6 +3821,7 @@ see: https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing
 |        |                          |                                       |
      #+BEGIN_SRC sh
      | Symbol | Unicode Code point (hex) | Name                                               |
+     |--------+--------------------------+----------------------------------------------------|
      | ×      | U+00D7                   | MULTIPLICATION SIGN (z notation Cartesian product) |
      | ╳      | U+2573                   | BOX DRAWINGS LIGHT DIAGONAL CROSS                  |
      | ☓      | U+2613                   | SALTIRE (St Andrew's Cross)                        |
