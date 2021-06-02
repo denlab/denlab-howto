@@ -2259,6 +2259,17 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
      #+BEGIN_SRC sh
      docker history opensuse/portus:2.3.5 --format '{{json . }}'
      #+END_SRC
+** DockerDistribs
+*** RancherOs
+**** How to switch the default console to ubuntu?
+
+     Source: https://rancher.com/docs/os/v1.2/en/configuration/switching-consoles/
+     #+BEGIN_SRC sh
+     # List available consoles
+     sudo ros console list
+     # Switch to another console
+     sudo ros console switch ubuntu
+     #+END_SRC
 * Vim
 ** Yaml
 *** Folding yaml in vim?
