@@ -4045,3 +4045,17 @@ jenkins.model.Jenkins.instance.getItemByFullName(jobName).getBuildByNumber(jobNu
          -Dcom.sun.management.jmxremote.authenticate=false  \
 #+END_SRC
      - on the machine where jconsole is running, start a new connection on =$DOCKER_SERVER:8888=
+* Db
+** timeserie db
+*** influxdb
+**** flux
+***** flux query example?
+
+#+BEGIN_SRC sh
+from(bucket: "telegraf")
+  |> range(start: -12h)
+  |> filter(fn: (r) => r._measurement == "system" and r._field  =~ /load(1|5|15)$/ )
+  |> aggregateWindow(every: 10s, fn: mean)
+  |> group(columns: ["_field"], mode: "by")
+#+END_SRC
+ 
