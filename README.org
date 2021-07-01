@@ -3,7 +3,7 @@
 #+MACRO: pipe @@html:&#124;@@
 #+MACRO: pipeAnd @@html:&#124;&amp;@@
 
-#+OPTIONS: toc:99
+#+OPTIONS: toc:0
 
 * Unixes
 ** Linux
