@@ -1031,10 +1031,17 @@ setxkbmap -option ctrl:nocaps
        sudo ddrescue  -r3 2020-08-20-raspios-buster-armhf-full.img -d -f /dev/sdX ddrescuemapfile
        #+END_SRC
 **** RemoteFs
-***** How to mount a remote nfs drive on a linux host?
-      #+BEGIN_SRC sh
-      mount -t nfs {remote_pc_address}:/remote/dir /some/local/dir
-      #+END_SRC
+***** nfs
+****** How to mount a remote nfs drive on a linux host?
+       #+BEGIN_SRC sh
+       mount -t nfs {remote_pc_address}:/remote/dir /some/local/dir
+       #+END_SRC
+****** List all nfs share of a remote nfs server?
+       #+BEGIN_SRC sh
+       showmount my.nfs.server.com 
+       #+END_SRC
+       Can be found in package (on debian like): =nfs-common=
+
 **** VirtualFs
 ***** How to get the load with /proc?
       #+BEGIN_SRC sh
