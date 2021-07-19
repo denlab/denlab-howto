@@ -469,6 +469,18 @@ host google.com
 ****** Windows host
 ******* Linux Guest
 ******** How to disable HyperV so VBox can run correctly?
+*** Hardware
+**** Sound
+***** Troubleshoot sound in Linux/Ubuntu ?
+
+      Source: https://help.ubuntu.com/community/SoundTroubleshootingProcedure
+
+      #+BEGIN_SRC sh
+        ( set -xv && killall pulseaudio; pulseaudio -k  ; rm -r ~/.config/pulse/* ; rm -r ~/.pulse* ) 
+        sleep 10
+        pulseaudio --start
+      #+END_SRC
+      
 ** Windows
 *** Disable hyperV for vbox?
     - open a windows cmd.exe as admin
