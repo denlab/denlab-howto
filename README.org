@@ -626,6 +626,11 @@ foo bar baz
        #>  3
        #>  4
        #+END_SRC
+***** Tr 
+******  remove all non printable characters from a file with tr ?
+       #+BEGIN_SRC sh
+       tr -cd '[:print:]' < file > newfile
+       #+END_SRC
 ***** Nohup
 ****** run nohup?
        #+BEGIN_SRC sh
