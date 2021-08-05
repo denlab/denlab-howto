@@ -181,6 +181,9 @@ ss
 # or 
 netstat
 #+END_SRC
+****** List all ssh connections on a linux host?
+#+BEGIN_SRC sh
+ss | grep ssh 
 #+END_SRC
 ***** Netcat
 ****** simple web server with netcat?
