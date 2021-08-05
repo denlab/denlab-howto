@@ -442,6 +442,12 @@ Removal
        Only matter for the source dir:
        - if there is a trainling slash, means: copy the content of the dir
        - without trailing slash mean copy the directory
+****** List all tcp connections on a linux host?
+#+BEGIN_SRC sh
+ss
+# or 
+netstat
+#+END_SRC
 ***** Openvpn
 ****** list and connect with openvpn from cli?
 ******** with nmanager
