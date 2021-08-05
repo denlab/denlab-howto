@@ -171,8 +171,16 @@ ffmpeg -i output2.m4v -vf "scale=(trunc(iw/4)*4)/4:(trunc(ih/4)*4)/4" video.mp4
 **** Net
 ***** General
 ****** Count all current tcp connection on linux host?
+
        #+BEGIN_SRC sh
-      wc -l /proc/net/tcp
+       wc -l /proc/net/tcp
+       #+END_SRC
+****** List all tcp connections on a linux host?
+#+BEGIN_SRC sh
+ss
+# or 
+netstat
+#+END_SRC
 #+END_SRC
 ***** Netcat
 ****** simple web server with netcat?
@@ -442,12 +450,6 @@ Removal
        Only matter for the source dir:
        - if there is a trainling slash, means: copy the content of the dir
        - without trailing slash mean copy the directory
-****** List all tcp connections on a linux host?
-#+BEGIN_SRC sh
-ss
-# or 
-netstat
-#+END_SRC
 ***** Openvpn
 ****** list and connect with openvpn from cli?
 ******** with nmanager
