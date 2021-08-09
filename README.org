@@ -179,12 +179,12 @@ ffmpeg -i output2.m4v -vf "scale=(trunc(iw/4)*4)/4:(trunc(ih/4)*4)/4" video.mp4
 ****** List all tcp connections on a linux host?
 #+BEGIN_SRC sh
 ss
-# or 
+# or
 netstat
 #+END_SRC
 ****** List all ssh connections on a linux host?
 #+BEGIN_SRC sh
-ss | grep ssh 
+ss | grep ssh
 #+END_SRC
 ***** Netcat
 ****** simple web server with netcat?
@@ -215,7 +215,7 @@ ss | grep ssh
           bash -c 'ssh -N  -f -L ${localPort}:localhost:${remotePort} ${sshStr}'
         +END_SRC
 ******* ssh tunnel socks "channel 2: open failed: administratively prohibited: open failed"
-        - make sure the destination ssh server has config in =/etc/ssh/sshd_config=: 
+        - make sure the destination ssh server has config in =/etc/ssh/sshd_config=:
         =AllowTcpForwarding all=q
         =PermitOpen any=
         - check the *actual* configuration of the dst server with: =ssh sshd -T=
@@ -488,11 +488,11 @@ host google.com
       Source: https://help.ubuntu.com/community/SoundTroubleshootingProcedure
 
       #+BEGIN_SRC sh
-        ( set -xv && killall pulseaudio; pulseaudio -k  ; rm -r ~/.config/pulse/* ; rm -r ~/.pulse* ) 
+        ( set -xv && killall pulseaudio; pulseaudio -k  ; rm -r ~/.config/pulse/* ; rm -r ~/.pulse* )
         sleep 10
         pulseaudio --start
       #+END_SRC
-      
+
 ** Windows
 *** Disable hyperV for vbox?
     - open a windows cmd.exe as admin
@@ -638,7 +638,7 @@ foo bar baz
        #>  3
        #>  4
        #+END_SRC
-***** Tr 
+***** Tr
 ******  remove all non printable characters from a file with tr ?
        #+BEGIN_SRC sh
        tr -cd '[:print:]' < file > newfile
@@ -1052,7 +1052,7 @@ setxkbmap -option ctrl:nocaps
         # clear dentries and inodes
         sync; echo 2 > /proc/sys/vm/drop_caches
         # clear page cache, dentries and inodes (not on production!)
-        sync; echo 3 > /proc/sys/vm/drop_caches 
+        sync; echo 3 > /proc/sys/vm/drop_caches
         #+END_SRC
 ***** Images
 ****** Copy an img file to a disk with bad blocks?
@@ -1067,7 +1067,7 @@ setxkbmap -option ctrl:nocaps
        #+END_SRC
 ****** List all nfs share of a remote nfs server?
        #+BEGIN_SRC sh
-       showmount my.nfs.server.com 
+       showmount my.nfs.server.com
        #+END_SRC
        Can be found in package (on debian like): =nfs-common=
 
@@ -1917,7 +1917,7 @@ cat /etc/environment          \
       #+END_SRC
 ***** How to view the dedup and compression properties of pools?
       #+BEGIN_SRC sh
-      # a starting point: 
+      # a starting point:
       sudo zfs list -o devices,type,mountpoint,compressratio,refcompressratio,compression,dedup
       #+END_SRC
 ***** Snaphot clones, etc
@@ -2502,10 +2502,10 @@ sudo checkinstall
      go to about:config
      firefox_profile.set_preference('permissions.default.image', 2)
 *** Chrome
-**** How to keep a Chrome background active (eg: for avoiding sessions timeouts)? 
+**** How to keep a Chrome background active (eg: for avoiding sessions timeouts)?
 ***** Possible option1: Use Chrome build-in =ctrl-shift-click=
-****** STARTED 1) use the buit-in chrome shortcut [0/1]  
-    
+****** STARTED 1) use the buit-in chrome shortcut [0/1]
+
       =ctrl-click= on link open a link in another background.
       =ctrl-shift-click= open a link in another tag *and keep it active*.
 ******* STARTED to be verified
@@ -2513,9 +2513,9 @@ sudo checkinstall
         It seems to work be needs to be used for a few days to be definitvely validated
 ***** TODO Possible option2: Use an extension like =Tab Reloader=
 https://chrome.google.com/webstore/detail/tab-reloader-page-auto-re/dejobinhdiimklegodgbmbifijpppopn
-****** TODO to check 
+****** TODO to check
 
-      
+
 * Programming
 ** JVM ecosystem
 *** Groovy
@@ -2677,7 +2677,7 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
 #+BEGIN_SRC sh
 lein repl :connect localhost:7888
 #+END_SRC
-     
+
 
 **** Language
 ***** Protocols
@@ -2724,11 +2724,11 @@ lein repl :connect localhost:7888
             [clojure.test :refer :all]
             [clj-time.core :as t]))
 
-(deftest as-xml-test 
+(deftest as-xml-test
  (testing "int"            (is (= "1"                   (as-xml (int             1            )))))
  (testing "joda-time"      (is (= 1577836800            (as-xml (t/date-time     2020         )))))
  (testing "java.util.date" (is (= "2001-09-09 01:46:40" (as-xml (java.util.Date. 1000000000000)))))
- (testing "User"           (is (= "<user><id>0</id><name>john</name><dob>473385600</dob></user>" 
+ (testing "User"           (is (= "<user><id>0</id><name>john</name><dob>473385600</dob></user>"
                                                         (as-xml (->User "0" "john" (t/date-time 1985)))))))
 
 # +END_SRC
@@ -4109,4 +4109,3 @@ from(bucket: "telegraf")
   |> aggregateWindow(every: 10s, fn: mean)
   |> group(columns: ["_field"], mode: "by")
 #+END_SRC
- 
