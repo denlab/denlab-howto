@@ -2,6 +2,7 @@
 #+STARTUP: hidestars
 #+MACRO: pipe @@html:&#124;@@
 #+MACRO: pipeAnd @@html:&#124;&amp;@@
+#+TODO: TODO(t) STARTED(s) WAITING(w) | DONE(d) CANCELED(c)
 
 #+OPTIONS: toc:0
 
@@ -2500,6 +2501,21 @@ sudo checkinstall
 **** Disable images loading?
      go to about:config
      firefox_profile.set_preference('permissions.default.image', 2)
+*** Chrome
+**** How to keep a Chrome background active (eg: for avoiding sessions timeouts)? 
+***** Possible option1: Use Chrome build-in =ctrl-shift-click=
+****** STARTED 1) use the buit-in chrome shortcut [0/1]  
+    
+      =ctrl-click= on link open a link in another background.
+      =ctrl-shift-click= open a link in another tag *and keep it active*.
+******* STARTED to be verified
+
+        It seems to work be needs to be used for a few days to be definitvely validated
+***** TODO Possible option2: Use an extension like =Tab Reloader=
+https://chrome.google.com/webstore/detail/tab-reloader-page-auto-re/dejobinhdiimklegodgbmbifijpppopn
+****** TODO to check 
+
+      
 * Programming
 ** JVM ecosystem
 *** Groovy
