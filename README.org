@@ -4046,6 +4046,12 @@ see: https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing
         curl "$JENKINS_HOST/api/json?depth=1&tree=jobs[name,lastBuild[building]]{1,10000}"
         # for all jenkins jobs: get the name and the last build status (building or not)"
       #+END_SRC
+***** JSON
+****** Get all build result with time of particulatar job?
+       #+BEGIN_SRC sh
+       j.jsonapi '/job/DevOps/job/maintenance/job/nexus/job/nexus-auto-restart/api/json?tree=builds[*]{1}'       
+       #+END_SRC
+***** XML
 **** parallel map in groovy?
      #+BEGIN_SRC java
 @Grab('org.codehaus.gpars:gpars:1.2.1')
