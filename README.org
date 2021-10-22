@@ -2795,7 +2795,12 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
 
  # +END_SRC
 **** Js
+**** Babasha
+***** Parse a date in babashka?
       #+BEGIN_SRC sh
+       (java.time.LocalDateTime/parse "2019-12-18T16:01:41.485")
+      #+END_SRC]
+      
 *** Macros
 **** Threading
 ***** how to use threading macros with functions with different argument position?
