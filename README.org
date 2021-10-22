@@ -2794,141 +2794,141 @@ lein repl :connect localhost:7888
                                                         (as-xml (->User "0" "john" (t/date-time 1985)))))))
 
 # +END_SRC
-** Macros
-*** Threading
-**** how to use threading macros with functions with different argument position?
-     #+BEGIN_SRC clojure
-     ;; using -> and ->>
-     (-> 4
-       range
-       (->> (partition 2                ))
-       (->> (map       (partial into [])))
-       (->> (into      {}               ))
-       (get-in [2])
-     )
-     #> "3"
-     ;; using as->
-     (as-> 4 x
-       (range                       x)
-       (partition 2                 x)
-       (map       (partial into []) x)
-       (into      {}                x)
-       (get-in x [2])
-     )
-     #> "3"
-     #+END_SRC
-**** how to use ->> with fns args mixed at the beginning and and?
-     #+BEGIN_SRC clojure
-       (let [s {}]
-         (map  str
-           (assoc s :k :v)))
-       #> ("[:k :v]")
-       (->> {}
-         (#(assoc % :k :v))
-         (map str))
-       #> ("[:k :v]")
-     #+END_SRC
-*** Functions
-**** Args
-***** optional args with default values using keys?
+*** Macros
+**** Threading
+***** how to use threading macros with functions with different argument position?
       #+BEGIN_SRC clojure
-      (defn hello [& {:keys [salutation name]
-                      :or   {salutation "Hello" name "World"}}]
-        (str salutation " " name))
-      ;; => "#'fapi.jenkins.log-parse/hello"
-      ;;
-      (hello)
-      ;; => "Hello World"
-      (hello :name "John")
-      ;; => "Hello John"
-      (hello :name "John" :salutation "Hi")
-      ;; => "Hi John"
-      #+END_SRC
-*** Ns
-**** Alias
-***** How to remove an alias to a ns?
-#+BEGIN_SRC clj
-        (let [ns-sym 'fapi.jira.sql.hicosql.explore
-            alias-sym 'jsqlh
-](-> ns-sym
-           find-ns
-           (ns-unalias  alias-sym)
-           ))
-#+END_SRC
-*** Var
-**** symbol->var->value?
-       #+BEGIN_SRC clojure
-(def x :foo)
-;; #> #'user/x
-(resolve 'x)
-;; #> #'user/x
-(var-get (resolve 'x))
-;; #> :foo
-       #+END_SRC
-***** in one go:
-      #+BEGIN_SRC clojure
-      (->> 'x
-           resolve
-           var-get
+      ;; using -> and ->>
+      (-> 4
+        range
+        (->> (partition 2                ))
+        (->> (map       (partial into [])))
+        (->> (into      {}               ))
+        (get-in [2])
       )
+      #> "3"
+      ;; using as->
+      (as-> 4 x
+        (range                       x)
+        (partition 2                 x)
+        (map       (partial into []) x)
+        (into      {}                x)
+        (get-in x [2])
+      )
+      #> "3"
       #+END_SRC
-***** or for conditional evaluation
+***** how to use ->> with fns args mixed at the beginning and and?
       #+BEGIN_SRC clojure
-      (if-let [v (resolve '*dev-mode*)]
-        (if (var-get v)
-          :dostuff))
+        (let [s {}]
+          (map  str
+            (assoc s :k :v)))
+        #> ("[:k :v]")
+        (->> {}
+          (#(assoc % :k :v))
+          (map str))
+        #> ("[:k :v]")
       #+END_SRC
-*** Destructuring
-**** Nested destructuring with map and seq ?
-      #+BEGIN_SRC clojure
-      (def [s {:todo [:a :b]}])
-      ;; #>
-      (let [{[head & tail] :todo} s]
-        [head tail])
-      ;; #> [:a :b]
-     #+END_SRC
-*** Files
-**** Read a file line by line?
-    #+BEGIN_SRC clj
-     (with-open [rdr (clojure.java.io/reader "/etc/passwd")]
-       (count (line-seq rdr)))
-    #+END_SRC
-*** Strings
-**** Regexes
-***** named groups search and replace in Clojure?
-      #+BEGIN_SRC clj
-      (str/replace "a b c " #"^(?<w1>\w+) (?<w2>\w+) (?<w3>\w+) *$" "${w2}")
-      #+END_SRC
-***** string to regex?
+**** Functions
+***** Args
+****** optional args with default values using keys?
        #+BEGIN_SRC clojure
- (str/replace "foo" (re-pattern "o") "z")
-#> "fzz"
-
+       (defn hello [& {:keys [salutation name]
+                       :or   {salutation "Hello" name "World"}}]
+         (str salutation " " name))
+       ;; => "#'fapi.jenkins.log-parse/hello"
+       ;;
+       (hello)
+       ;; => "Hello World"
+       (hello :name "John")
+       ;; => "Hello John"
+       (hello :name "John" :salutation "Hi")
+       ;; => "Hi John"
        #+END_SRC
-***** repeat expression between n and m?
-      #+BEGIN_SRC clojure
-      (clojure.string/replace "chute" #"^c{0,3}ute$" "chute")
-      #> "chute"
+**** Ns
+***** Alias
+****** How to remove an alias to a ns?
+ #+BEGIN_SRC clj
+         (let [ns-sym 'fapi.jira.sql.hicosql.explore
+             alias-sym 'jsqlh
+ ](-> ns-sym
+            find-ns
+            (ns-unalias  alias-sym)
+            ))
+ #+END_SRC
+**** Var
+***** symbol->var->value?
+        #+BEGIN_SRC clojure
+ (def x :foo)
+ ;; #> #'user/x
+ (resolve 'x)
+ ;; #> #'user/x
+ (var-get (resolve 'x))
+ ;; #> :foo
+        #+END_SRC
+****** in one go:
+       #+BEGIN_SRC clojure
+       (->> 'x
+            resolve
+            var-get
+       )
+       #+END_SRC
+****** or for conditional evaluation
+       #+BEGIN_SRC clojure
+       (if-let [v (resolve '*dev-mode*)]
+         (if (var-get v)
+           :dostuff))
+       #+END_SRC
+**** Destructuring
+***** Nested destructuring with map and seq ?
+       #+BEGIN_SRC clojure
+       (def [s {:todo [:a :b]}])
+       ;; #>
+       (let [{[head & tail] :todo} s]
+         [head tail])
+       ;; #> [:a :b]
       #+END_SRC
-*** Classpath
-**** slurp a resource in the classpath?
-     #+BEGIN_SRC clojure
-     (require '[clojure.java.io :as io])
-     (slurp (io/resource "some_project_name/foo.txt"))
+**** Files
+***** Read a file line by line?
+     #+BEGIN_SRC clj
+      (with-open [rdr (clojure.java.io/reader "/etc/passwd")]
+        (count (line-seq rdr)))
      #+END_SRC
-*** Java interop
-**** Get all parents classes of an instance ?
-*** Generate uuid
-    #+BEGIN_SRC clojure
-    (str (java.util.UUID/randomUUID))
-    #+END_SRC
-*** Exceptions
-**** try/catch/finally?
-#+BEGIN_SRC clojure
-(try (/ 1 0)
-  (catch Throwable e (.printStackTrace e))
-  (finally (prn :always-run)))
-#+END_SRC
+**** Strings
+***** Regexes
+****** named groups search and replace in Clojure?
+       #+BEGIN_SRC clj
+       (str/replace "a b c " #"^(?<w1>\w+) (?<w2>\w+) (?<w3>\w+) *$" "${w2}")
+       #+END_SRC
+****** string to regex?
+        #+BEGIN_SRC clojure
+  (str/replace "foo" (re-pattern "o") "z")
+ #> "fzz"
+
+        #+END_SRC
+****** repeat expression between n and m?
+       #+BEGIN_SRC clojure
+       (clojure.string/replace "chute" #"^c{0,3}ute$" "chute")
+       #> "chute"
+       #+END_SRC
+**** Classpath
+***** slurp a resource in the classpath?
+      #+BEGIN_SRC clojure
+      (require '[clojure.java.io :as io])
+      (slurp (io/resource "some_project_name/foo.txt"))
+      #+END_SRC
+**** Java interop
+***** Get all parents classes of an instance ?
+**** Generate uuid
+     #+BEGIN_SRC clojure
+     (str (java.util.UUID/randomUUID))
+     #+END_SRC
+**** Exceptions
+***** try/catch/finally?
+ #+BEGIN_SRC clojure
+ (try (/ 1 0)
+   (catch Throwable e (.printStackTrace e))
+   (finally (prn :always-run)))
+ #+END_SRC
 
 *** Web Servers
 **** Tomcat
@@ -3864,31 +3864,31 @@ end'
 *** draft
 see: https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing
  #+begin_src sh
- ┌┐
- └┘
- ┌┐┌┐
- └┘└┘
- ─┐
- ─┘
- ┌─┐
- └─┘
- ┌──┐
- │  │
- └──┘
- ┌──────┐
- │      │
- │      │
- └──────┘
- ╭──────╮
- │      │
- │      │
- ╰──────╯
- ╭─╮
- ╰─╯
-
- ┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌
- └┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘
-
+   ┌┐
+   └┘
+   ┌┐┌┐
+   └┘└┘
+   ─┐
+   ─┘
+   ┌─┐
+   └─┘
+   ┌──┐
+   │  │
+   └──┘
+   ┌──────┐
+   │      │
+   │      │
+   └──────┘
+   ╭──────╮
+   │      │
+   │      │
+   ╰──────╯
+   ╭─╮
+   ╰─╯
+   
+   ┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌
+   └┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘
+   
  #+end_src
 *** use char by its code ?
 *** unicode number in circle
