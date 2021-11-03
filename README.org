@@ -2058,6 +2058,13 @@ dir=/path/to
 
       #+END_SRC
 **** Ubuntu
+***** X
+****** Disable Wayland to use Xorg instead?
+       #+BEGIN_SRC sh
+       Edit =/etc/gdm3/custom.conf=
+       change:  :WaylandEnable=true:
+       by    :  :WaylandEnable=false:
+       #+END_SRC
 ***** Admin
 ****** How to authorize normal user to connect to wifi withouth authenticating as admin ?
 
