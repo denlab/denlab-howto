@@ -3899,7 +3899,7 @@ end'
     it seems not straighforward to do.
     Seem to have to implement this by adding some way to get the rc from the command :-(
 
-** Unicode
+** LuaUnicode
 *** Handy emoticon ?
  | thumbs up  | 👍  |
  |            | 👏y |
