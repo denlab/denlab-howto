@@ -3252,6 +3252,12 @@ seq 1 100 \
        #+BEGIN_SRC sh
        pip3 <cmd>
        #+END_SRC
+**** How to install pip for python 2 ?
+     #+BEGIN_SRC sh
+       sudo apt update
+       curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
+       sudo python2 get-pip.py
+     #+END_SRC
 **** pip completion on the command line?
      #+BEGIN_SRC sh
      pip completion --bash >> ~/.profile
