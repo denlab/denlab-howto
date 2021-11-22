@@ -2916,7 +2916,24 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
  ;; #> #'user/x
  (var-get (resolve 'x))
  ;; #> :foo
+          (def x :foo)
+          ;; #> #'user/x
+          (resolve 'x)
+          ;; #> #'user/x
+          (var-get (resolve 'x))
+          ;; #> :foo
         #+END_SRC
+****** alternative:
+
+        #+BEGIN_SRC clojure
+          (def s #'mysym)
+          (->> s
+               symbol
+              name) 
+          #> "f" 
+     #+END_SRC
+
+        
 ****** in one go:
        #+BEGIN_SRC clojure
        (->> 'x
