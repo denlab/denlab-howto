@@ -2846,6 +2846,63 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
        (java.time.LocalDateTime/parse "2019-12-18T16:01:41.485")
       #+END_SRC]
       
+**** Processes
+***** Portable way (clj jvm and babashka) to consume a process output lazily?
+#+BEGIN_SRC clj
+  ;; ========== begin aken from Raynes conch librray 0.8.0 low_level.clj ==========
+(defn proc
+  "Spin off another process. Returns the process's input stream,
+  output stream, and err stream as a map of :in, :out, and :err keys
+  If passed the optional :dir and/or :env keyword options, the dir
+  and enviroment will be set to what you specify. If you pass
+  :verbose and it is true, commands will be printed. If it is set to
+  :very, environment variables passed, dir, and the command will be
+  printed. If passed the :clear-env keyword option, then the process
+  will not inherit its environment from its parent process."
+  [& args]
+  (let [[cmd args] (split-with (complement keyword?) args)
+        args (apply hash-map args)
+        builder (ProcessBuilder. (into-array String cmd))
+        env (.environment builder)]
+    (when (:clear-env args)
+      (.clear env))
+    (doseq [[k v] (:env args)]
+      (.put env k v))
+    (when-let [dir (:dir args)]
+      (.directory builder (io/file dir)))
+    (when (:verbose args) (apply println cmd))
+    (when (= :very (:verbose args))
+      (when-let [env (:env args)] (prn env))
+      (when-let [dir (:dir args)] (prn dir)))
+    (when (:redirect-err args)
+      (.redirectErrorStream builder true))
+    (let [process (.start builder)]
+      {:out (.getInputStream process)
+       :in  (.getOutputStream process)
+       :err (.getErrorStream process)
+       :process process})))
+;; ========== begin aken from Raynes conch libraray ==========
+
+(defn proc-lazy [& prog] "Return a lazy seq which is the output (potentially infinite) on stdout of the given program.
+Add the process to the meta (to dispose it later for example)."
+  (let [proc (apply proc prog)
+        out  (:out proc)
+        rdr  (clojure.java.io/reader out)
+        seq  (with-meta  (line-seq rdr) {:proc proc})]
+    seq))
+
+(println "defining s")
+(time (def s (proc-lazy "bash" "-c" "seq Infinity | pv -qlL1")))
+
+(println "taking 1 from s")
+(time (pp/pprint (take 1 s)))
+
+(println "taking 10 from s")
+(time (pp/pprint (take 10 s)))
+
+
+#+END_SRC
+      
 *** Macros
 **** Threading
 ***** how to use threading macros with functions with different argument position?
