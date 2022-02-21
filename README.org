@@ -2847,7 +2847,9 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
       #+END_SRC]
       
 **** Processes
-***** Portable way (clj jvm and babashka) to consume a process output lazily?
+
+***** Process output of a cmd lazily?
+****** Pure clojure (works with Clojure JVM + Babashka)
 #+BEGIN_SRC clj
   ;; ========== begin aken from Raynes conch librray 0.8.0 low_level.clj ==========
 (defn proc
@@ -2903,6 +2905,18 @@ Add the process to the meta (to dispose it later for example)."
 
 #+END_SRC
       
+****** Using babashka process lib
+#+BEGIN_SRC sh
+    : ' -*- clojure -*- ' \
+    && bb -o '
+       (require (quote [babashka.process :as process]))
+       (->> (process/process ["bash" "-c" "seq Infinity | pv -qlL1"] )
+         :out
+         (io/reader)
+         line-seq )
+           '
+#+END_SRC
+
 *** Macros
 **** Threading
 ***** how to use threading macros with functions with different argument position?
