@@ -2775,18 +2775,6 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
         (re-pattern "a.*b")
         #+END_SRC
 
-***** Lein
-****** Show dependencies tree?
-       #+BEGIN_SRC sh
-       lein pom
-       mvn dependency:tree -Dverbose=true
-       #+END_SRC
-****** Connect to an existing nrepl process?
- #+BEGIN_SRC sh
- lein repl :connect localhost:7888
- #+END_SRC
-
-***** Language
 ****** Protocols
 ******* Full example of protocole usage for fast & simple polymorphic dispatch on a single type?
         #+BEGIN_SRC clj
@@ -2839,6 +2827,17 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
                                                          (as-xml (->User "0" "john" (t/date-time 1985)))))))
 
  # +END_SRC
+***** Lein
+****** Show dependencies tree?
+       #+BEGIN_SRC sh
+       lein pom
+       mvn dependency:tree -Dverbose=true
+       #+END_SRC
+****** Connect to an existing nrepl process?
+ #+BEGIN_SRC sh
+ lein repl :connect localhost:7888
+ #+END_SRC
+
 **** Js
 **** Babasha
 ***** Parse a date in babashka?
