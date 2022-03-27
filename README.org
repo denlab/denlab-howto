@@ -2827,6 +2827,22 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
                                                          (as-xml (->User "0" "john" (t/date-time 1985)))))))
 
  # +END_SRC
+****** Modulo/quotient/reminder?
+#+BEGIN_SRC sh
+(mod 5 2)
+#> 1
+(quot 5 2)
+#> 2
+(rem 5 2)
+#> 1
+(let [a     5
+      b     2
+      q     (quot a b)
+      r     (rem r b)
+      q*b+r (+ (* q b) r)]
+ (= q*b+r a))
+#> true
+#+END_SRC
 ***** Lein
 ****** Show dependencies tree?
        #+BEGIN_SRC sh
