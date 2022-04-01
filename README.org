@@ -2853,6 +2853,20 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
  lein repl :connect localhost:7888
  #+END_SRC
 
+***** Bloody java.time dates
+****** java.time formatting and parsing nanosecond precision dates with UTC timezone?
+#+BEGIN_SRC sh
+        (let [s     "2022-04-01T11:28:54.939753328Z"
+              fmt   (java.time.format.DateTimeFormatter/ofPattern "yyyy-MM-dd\u0027T\u0027HH:mm:ss.n\u0027Z\u0027")
+              s>d   (.parse fmt s)
+              s>d>s (.format fmt s>d)]
+            (pprint {:s s :s>d s>d :s>d>s s>d>s}))
+      #> {
+      #>   :s     "2022-04-01T11:28:54.939753328Z",
+      #>   :s>d   #object[java.time.format.Parsed 0x694ea25d "{},ISO resolved to 2022-04-01T11:28:54.939753328"],
+      #>   :s>d>s "2022-04-01T11:28:54.939753328Z"
+      #> }
+#+END_SRC
 **** Js
 **** Babasha
 ***** Parse a date in babashka?
