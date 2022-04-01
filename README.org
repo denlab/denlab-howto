@@ -2748,20 +2748,19 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
        -DinteractiveMode=false
      #+END_SRC
 *** Clojure
-**** Jvm
-***** Dev
-****** Repl
-******* Change the alias of a ns in a ns def (Alias <alias> already exists in namespace <ns>,etc)?
+**** Dev
+***** Repl
+****** Change the alias of a ns in a ns def (Alias <alias> already exists in namespace <ns>,etc)?
         If the ns is: =user.ns= and the alias is =alias=:
         #+BEGIN_SRC clj
         (ns-unalias (find-ns 'user.ns) 'alias)
         #+END_SRC
-******* List all ns?
+****** List all ns?
         #+BEGIN_SRC clojure
         (all-ns)
         #+END_SRC
-****** Strings
-******* ByteArrayInputStream to string?
+***** Strings
+****** ByteArrayInputStream to string?
         Use =slurp=:
         #+BEGIN_SRC clojure
           (let [s "foo"
@@ -2770,13 +2769,13 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
            (slurp sb))
         #> "foo"
         #+END_SRC
-******* Convert a string to a regex?
+****** Convert a string to a regex?
         #+BEGIN_SRC clojure
         (re-pattern "a.*b")
         #+END_SRC
 
-****** Protocols
-******* Full example of protocole usage for fast & simple polymorphic dispatch on a single type?
+***** Protocols
+****** Full example of protocole usage for fast & simple polymorphic dispatch on a single type?
         #+BEGIN_SRC clj
  ;; pro ns ----------------------------------------------------------------------
 
@@ -2827,7 +2826,7 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
                                                          (as-xml (->User "0" "john" (t/date-time 1985)))))))
 
  # +END_SRC
-****** Modulo/quotient/reminder?
+***** Modulo/quotient/reminder?
 #+BEGIN_SRC sh
 (mod 5 2)
 #> 1
@@ -2932,9 +2931,9 @@ Add the process to the meta (to dispose it later for example)."
            '
 #+END_SRC
 
-*** Macros
-**** Threading
-***** how to use threading macros with functions with different argument position?
+***** Macros
+****** Threading
+******* how to use threading macros with functions with different argument position?
       #+BEGIN_SRC clojure
       ;; using -> and ->>
       (-> 4
@@ -2955,7 +2954,7 @@ Add the process to the meta (to dispose it later for example)."
       )
       #> "3"
       #+END_SRC
-***** how to use ->> with fns args mixed at the beginning and and?
+******* how to use ->> with fns args mixed at the beginning and and?
       #+BEGIN_SRC clojure
         (let [s {}]
           (map  str
@@ -2966,9 +2965,9 @@ Add the process to the meta (to dispose it later for example)."
           (map str))
         #> ("[:k :v]")
       #+END_SRC
-**** Functions
-***** Args
-****** optional args with default values using keys?
+****** Functions
+******* Args
+******** optional args with default values using keys?
        #+BEGIN_SRC clojure
        (defn hello [& {:keys [salutation name]
                        :or   {salutation "Hello" name "World"}}]
@@ -2982,9 +2981,9 @@ Add the process to the meta (to dispose it later for example)."
        (hello :name "John" :salutation "Hi")
        ;; => "Hi John"
        #+END_SRC
-**** Ns
-***** Alias
-****** How to remove an alias to a ns?
+****** Ns
+******* Alias
+******** How to remove an alias to a ns?
  #+BEGIN_SRC clj
          (let [ns-sym 'fapi.jira.sql.hicosql.explore
              alias-sym 'jsqlh
@@ -2993,8 +2992,8 @@ Add the process to the meta (to dispose it later for example)."
             (ns-unalias  alias-sym)
             ))
  #+END_SRC
-**** Var
-***** symbol->var->value?
+****** Var
+******* symbol->var->value?
         #+BEGIN_SRC clojure
  (def x :foo)
  ;; #> #'user/x
@@ -3009,7 +3008,7 @@ Add the process to the meta (to dispose it later for example)."
           (var-get (resolve 'x))
           ;; #> :foo
         #+END_SRC
-****** alternative:
+******** alternative:
 
         #+BEGIN_SRC clojure
           (def s #'mysym)
@@ -3020,21 +3019,21 @@ Add the process to the meta (to dispose it later for example)."
      #+END_SRC
 
         
-****** in one go:
+******** in one go:
        #+BEGIN_SRC clojure
        (->> 'x
             resolve
             var-get
        )
        #+END_SRC
-****** or for conditional evaluation
+******** or for conditional evaluation
        #+BEGIN_SRC clojure
        (if-let [v (resolve '*dev-mode*)]
          (if (var-get v)
            :dostuff))
        #+END_SRC
-**** Destructuring
-***** Nested destructuring with map and seq ?
+****** Destructuring
+******* Nested destructuring with map and seq ?
        #+BEGIN_SRC clojure
        (def [s {:todo [:a :b]}])
        ;; #>
@@ -3042,43 +3041,43 @@ Add the process to the meta (to dispose it later for example)."
          [head tail])
        ;; #> [:a :b]
       #+END_SRC
-**** Files
-***** Read a file line by line?
+****** Files
+******* Read a file line by line?
      #+BEGIN_SRC clj
       (with-open [rdr (clojure.java.io/reader "/etc/passwd")]
         (count (line-seq rdr)))
      #+END_SRC
-**** Strings
-***** Regexes
-****** named groups search and replace in Clojure?
+****** Strings
+******* Regexes
+******** named groups search and replace in Clojure?
        #+BEGIN_SRC clj
        (str/replace "a b c " #"^(?<w1>\w+) (?<w2>\w+) (?<w3>\w+) *$" "${w2}")
        #+END_SRC
-****** string to regex?
+******** string to regex?
         #+BEGIN_SRC clojure
   (str/replace "foo" (re-pattern "o") "z")
  #> "fzz"
 
         #+END_SRC
-****** repeat expression between n and m?
+******** repeat expression between n and m?
        #+BEGIN_SRC clojure
        (clojure.string/replace "chute" #"^c{0,3}ute$" "chute")
        #> "chute"
        #+END_SRC
-**** Classpath
-***** slurp a resource in the classpath?
+****** Classpath
+******* slurp a resource in the classpath?
       #+BEGIN_SRC clojure
       (require '[clojure.java.io :as io])
       (slurp (io/resource "some_project_name/foo.txt"))
       #+END_SRC
-**** Java interop
-***** Get all parents classes of an instance ?
-**** Generate uuid
+****** Java interop
+******* Get all parents classes of an instance ?
+****** Generate uuid
      #+BEGIN_SRC clojure
      (str (java.util.UUID/randomUUID))
      #+END_SRC
-**** Exceptions
-***** try/catch/finally?
+****** Exceptions
+******* try/catch/finally?
  #+BEGIN_SRC clojure
  (try (/ 1 0)
    (catch Throwable e (.printStackTrace e))
