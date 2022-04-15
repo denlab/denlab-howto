@@ -163,7 +163,7 @@ dd if=/dev/sda of=/dev/sdb status=progress
 
 ***** User/groups management
 ****** Users's group management command
-       
+
        |--------------+------------------------+--------+----------------------------+-----------------------------------------------------|
        | Subject      | Action                 | Object | Command                    | Notes                                               |
        |--------------+------------------------+--------+----------------------------+-----------------------------------------------------|
@@ -177,14 +177,14 @@ dd if=/dev/sda of=/dev/sdb status=progress
        |              | rm                     |        | =groupdel $g=              |                                                     |
        |              | add with uid           |        | =sudo groupadd -g $gid $g= |                                                     |
        |--------------+------------------------+--------+----------------------------+-----------------------------------------------------|
-      
+
       # add a group
 sudo groupadd $g
 # add a group specifying its group id
 sudo groupadd -g $gid $g
- 
+
 **** Graphics
-     
+
 ***** Imagemagick
 ****** how to change the quality of a jpeg image?
        #+BEGIN_SRC sh
@@ -473,7 +473,7 @@ Removal
 ******* best explaination of "everything derive from the root ca key"?
         https://serverfault.com/questions/306345/certification-authority-root-certificate-expiry-and-renewal
 ******* Generate a self signed ca cert and key, and a cert and key for a how that works on the command line and chrome?
-        from: https://stackoverflow.com/questions/7580508/getting-chrome-to-accept-self-signed-localhost-certificate 
+        from: https://stackoverflow.com/questions/7580508/getting-chrome-to-accept-self-signed-localhost-certificate
         Response: With only 5 openssl commands, you can accomplish this.
         #+BEGIN_SRC sh
        ######################
@@ -520,8 +520,8 @@ Import the CA cert at "File > Import file", then also find it in the list, right
 Add extendedKeyUsage=serverAuth,clientAuth below basicConstraints=CA:FALSE, and make sure you set the "CommonName" to the same as $NAME when it's asking for setup
 You can check your work to ensure that the certificate is built correctly:
 
-openssl verify -CAfile myCA.pem -verify_hostname bar.mydomain.com mydomain.com.crt 
-        #+END_SRC 
+openssl verify -CAfile myCA.pem -verify_hostname bar.mydomain.com mydomain.com.crt
+        #+END_SRC
 ***** Rsync
 ****** how to specify the port in rsync?
        #+BEGIN_SRC sh
@@ -784,7 +784,7 @@ foo bar baz
        don't know how to do it with regular target
        but there's a solution with bsdtar
 ****** Specify arbitrary order of files in tar file?
-       
+
 ***** Bsdtar
 ****** recompress without intermediary files?
        #+BEGIN_SRC sh
@@ -1974,11 +1974,11 @@ cat /etc/environment          \
 ***** Create a new zfs "env" in a file?
       #+BEGIN_SRC sh
         zpool list
-        
+
         fallocate -l 500M /tmp/zpooltest
         # or
         truncate -s 500M /tmp/zpooltest
-        
+
         zpool create testpool /tmp/zpooltest
         zpool list
         zfs create testpool/lz4
@@ -2855,25 +2855,45 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
 
 ***** Bloody java.time dates
 ****** java.time formatting and parsing nanosecond precision dates with UTC timezone?
-#+BEGIN_SRC sh
-        (let [s     "2022-04-01T11:28:54.939753328Z"
-              fmt   (java.time.format.DateTimeFormatter/ofPattern "yyyy-MM-dd\u0027T\u0027HH:mm:ss.n\u0027Z\u0027")
-              s>d   (.parse fmt s)
-              s>d>s (.format fmt s>d)]
-            (pprint {:s s :s>d s>d :s>d>s s>d>s}))
-      #> {
-      #>   :s     "2022-04-01T11:28:54.939753328Z",
-      #>   :s>d   #object[java.time.format.Parsed 0x694ea25d "{},ISO resolved to 2022-04-01T11:28:54.939753328"],
-      #>   :s>d>s "2022-04-01T11:28:54.939753328Z"
-      #> }
+#+BEGIN_SRC clojure
+    (let [s     "2022-04-01T11:28:54.939753328Z"
+          fmt   (java.time.format.DateTimeFormatter/ofPattern "yyyy-MM-dd\u0027T\u0027HH:mm:ss.n\u0027Z\u0027")
+          s>d   (.parse fmt s)
+          s>d>s (.format fmt s>d)]
+        (pprint {:s s :s>d s>d :s>d>s s>d>s}))
+  #>
+  '{
+     :s     "2022-04-01T11:28:54.939753328Z",
+     :s>d   #object[java.time.format.Parsed 0x694ea25d "{},ISO resolved to 2022-04-01T11:28:54.939753328"],
+     :s>d>s "2022-04-01T11:28:54.939753328Z"
+   }
 #+END_SRC
+
+******* conversion from seconds from epoch to DateTime:
+#+BEGIN_SRC clojure
+  (let [sec     (long (System/currentTimeMillis))
+        sec-fmt (format "%1$tFT%1$tT.%1$tNZ" sec)
+        fmt     (java.time.format.DateTimeFormatter/ofPattern "yyyy-MM-dd\u0027T\u0027HH:mm:ss.n\u0027Z\u0027")
+        dt      (.parse fmt sec-fmt)]
+
+  (->> (with-map sec sec-fmt dt)
+       pprint))
+  #=>
+  {
+    :sec     1650058483005,
+    :sec-fmt "2022-04-15T23:34:43.005000000Z",
+    :dt      #object[java.time.format.Parsed 0x3e9829cb "{},ISO resolved to 2022-04-15T23:34:43.005"]
+  }
+#+END_SRC
+
+
 **** Js
 **** Babasha
 ***** Parse a date in babashka?
       #+BEGIN_SRC sh
        (java.time.LocalDateTime/parse "2019-12-18T16:01:41.485")
       #+END_SRC]
-      
+
 **** Processes
 
 ***** Process output of a cmd lazily?
@@ -2932,7 +2952,7 @@ Add the process to the meta (to dispose it later for example)."
 
 
 #+END_SRC
-      
+
 ****** Using babashka process lib
 #+BEGIN_SRC sh
     : ' -*- clojure -*- ' \
@@ -3028,11 +3048,11 @@ Add the process to the meta (to dispose it later for example)."
           (def s #'mysym)
           (->> s
                symbol
-              name) 
-          #> "f" 
+              name)
+          #> "f"
      #+END_SRC
 
-        
+
 ******** in one go:
        #+BEGIN_SRC clojure
        (->> 'x
@@ -4041,7 +4061,7 @@ end'
 
 *** arrows
 #+BEGIN_SRC sh
-     	  0	1	2	3	4	5	6	7	8	9	A	B	C	D	E	F
+        0	1	2	3	4	5	6	7	8	9	A	B	C	D	E	F
 U+219x	←	↑	→	↓	↔	↕	↖	↗	↘	↙	↚	↛	↜	↝	↞	↟
 U+21Ax	↠	↡	↢	↣	↤	↥	↦	↧	↨	↩	↪	↫	↬	↭	↮	↯
 U+21Bx	↰	↱	↲	↳	↴	↵	↶	↷	↸	↹	↺	↻	↼	↽	↾	↿
@@ -4074,10 +4094,10 @@ see: https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing
    ╰──────╯
    ╭─╮
    ╰─╯
-   
+
    ┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌
    └┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘
-   
+
  #+end_src
 *** use char by its code ?
 *** unicode number in circle
@@ -4251,7 +4271,7 @@ see: https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing
 ***** JSON
 ****** Get all build result with time of particulatar job?
        #+BEGIN_SRC sh
-       j.jsonapi '/job/DevOps/job/maintenance/job/nexus/job/nexus-auto-restart/api/json?tree=builds[*]{1}'       
+       j.jsonapi '/job/DevOps/job/maintenance/job/nexus/job/nexus-auto-restart/api/json?tree=builds[*]{1}'
        #+END_SRC
 ***** XML
 **** parallel map in groovy?
