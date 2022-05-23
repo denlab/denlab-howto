@@ -2499,9 +2499,16 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
 *** Folding
 **** a promising mode?
      - hint: =spacemacs/fold-transient-state/evil-close-fold=
-** OrgMode
-*** Tables
-**** pipe in table cells?
+*** Misc
+**** Exit emacs mode (holy mode) entered by error?
+
+    Exit holy mode:
+
+    |                            | in holy mode | in evil mode |
+    |----------------------------+--------------+--------------|
+    | spacemacs/toggle-holy-mode | =M-m t E e=  | =SPC t E e=  |
+    |                            |              |              |
+
 ***** pipe in table with code block
       - create the table in org mode
       | x    | l               |
