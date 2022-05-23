@@ -1242,6 +1242,12 @@ lsof  | egrep "$pRe" | egrep -v '^(lsof|grep)' |  egrep '(^C|FIFO)' | tr -s ' ' 
        | user names                                                               | =complete= | =-A=    | =user=      | =cmd1 … cmdN= | =cmd1 … cmdN= | =-u=       |
        | names of all shell variables                                             | =complete= | =-A=    | =variable=  | =cmd1 … cmdN= | =cmd1 … cmdN= | =-v=       |
 **** Common tasks
+
+***** Random
+****** Generate a lot of (pseudo) random data faster than /dev/urandom?
+#+BEGIN_SRC
+openssl enc -aes-256-ctr -pass pass:"$(head -c128 /dev/urandom | base64)" -nosalt < /dev/zero | pv > randomfile.bin
+#+END_SRC
 ***** generate random string?
   #+begin_src sh
   #!/bin/bash
