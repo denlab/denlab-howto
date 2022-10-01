@@ -61,6 +61,13 @@
 ****** bindings to upgrade plugins?
        - update plugins: ~<prefix> + U
        - remove plugins not on the list: =<prefix> + alt + u=
+****** use another shell as the default (ex: zsh instead of bash)
+
+      In the tmux config file (example: =$HOME/.tmux.conf=)
+       #+BEGIN_SRC sh
+       set -g default-command /usr/local/bin/zsh
+       #+END_SRC
+
 ***** Zip
 ****** list content of a zip file from stdin?
        #+BEGIN_SRC sh
