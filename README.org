@@ -6,7 +6,6 @@
 #+STARTUP: shrink
 
 
-#+OPTIONS: toc:5
 
 * Unixes
 ** Linux
@@ -1298,7 +1297,25 @@ openssl enc -aes-256-ctr -pass pass:"$(head -c128 /dev/urandom | base64)" -nosal
   "must read" about the differents techniques of redirection: http://stackoverflow.com/questions/13763942/bash-why-piping-input-to-read-only-works-when-fed-into-while-read-const
 ***** stop on error (even in subshell)?
   It seems that bash disable -e in subshells.
-  A workaround: set -e explicitly at the start of each subshell
+****** workaround1: set -e explicitly for each subshell
+  #+begin_src sh
+  set -e explicitly at the start of each subshell
+  #+end_src
+****** workaround2: write shell script with '&&'
+       Write each commands as a binary and:
+   #+begin_src sh
+     :        \
+     && cmd1  \
+     && cmd 2 \
+     && cmd 3 \
+     ;
+  #+end_src
+****** workaround3: write shell script with '||'
+   #+begin_src sh
+     cmd1 || false
+     cmd2 || false
+     cmd3 || false
+  #+end_src
 ***** loop over args?
       #+begin_src sh
       for var in "$@"
