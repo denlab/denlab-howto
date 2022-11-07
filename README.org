@@ -2064,6 +2064,18 @@ cat /etc/environment          \
           #> NAME                     USED  AVAIL  REFER  MOUNTPOINT
           #> datapool/docs@version1      0      -  19.5K  -
       #+End_src
+***** Send/receive
+****** How to do send a whole pool to another pool?
+#+BEGIN_SRC sh
+  # initial
+  ssh src-host 'sudo zfs send -v -R -I srcpool@snap' | sudo zfs receive -v -Fdu dstpool
+  # incremental
+  ssh src-host 'sudo zfs send -v -R -I srcpool@snap srcpool@snap2' | sudo zfs receive -v -Fdu datapool-mir
+
+#+END_SRC
+
+
+
 **** AccessControl
 ***** Set read right reccursive for all files and and dir in a given dir?
       #+BEGIN_SRC sh
