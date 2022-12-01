@@ -2962,6 +2962,14 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
 #+END_SRC
 
 
+****** current LocalDateTime?
+java.time.LocalDateTime/now
+
+****** convert LocalDateTime to ZonedDateTime utc?
+(def ldt (java.time.LocalDateTime/now))
+(def zdt (ldt.atZone(java.time.ZoneId/of "UTC")))
+
+
 **** Js
 **** Babasha
 ***** Parse a date in babashka?
