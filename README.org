@@ -202,6 +202,28 @@ set -- i.mp4
 ffmpeg -i "$1" -ss 0 -t 60 -c copy "${1/./.prev.}"
 #+END_SRC
 ****** Record desktop?
+Depends on the OS. see https://trac.ffmpeg.org/wiki/Capture/Desktop
+******* linux
+ffmpeg -video_size 1024x768 -framerate 25 -f x11grab -i :0.0+100,200 output.mp4
+******* windows
+******** directshow
+ffmpeg -f dshow -i video="screen-capture-recorder" output.mkv
+******** built-in gdi screengrabber
+********* all displays
+ffmpeg -f gdigrab -framerate 30 -i desktop output.mkv
+********* region
+ffmpeg -f gdigrab -framerate 30 -offset_x 10 -offset_y 20 -video_size 640x480 -show_region 1 -i desktop output.mkv
+********* window
+ffmpeg -f gdigrab -framerate 30 -i title=Calculator output.mkv
+********* hw encoding
+ffmpeg -f gdigrab -framerate 30 -i desktop -c:v h264_nvenc -qp 0 output.mkv
+
+
+
+
+
+
+
 #+begin_src dot
 ffmpeg -i output2.m4v -vf "scale=(trunc(iw/4)*4)/4:(trunc(ih/4)*4)/4" video.mp4
 **** Math
