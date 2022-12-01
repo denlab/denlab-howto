@@ -470,6 +470,11 @@ ssh -G localhost
          sshfs -o reconnect,compression=yes,transform_symlinks,ServerAliveInterval=45,ServerAliveCountMax=2,ssh_command='autossh -M 0' username@server:/ /mnt/remote"
 Removal
          #+end_src
+****** alpine ssh send_pubkey_test: no mutual signature algorithm ?
+
+Depending on the actual algorithm avail on the server, a workaround would look like:
+ssh -o PubkeyAcceptedKeyTypes=+ssh-rsa $server
+
 ***** Openssl
 ****** SslCerts
 ******* generate a self certificate for localhost (without prompt)?
