@@ -2101,6 +2101,10 @@ cat /etc/environment          \
 #+END_SRC
 
 
+***** How to list all devices of a pool?
+#+BEGIN_SRC sh
+sudo zpool list  -v -L
+#+END_SRC
 
 **** AccessControl
 ***** Set read right reccursive for all files and and dir in a given dir?
