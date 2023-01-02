@@ -2180,7 +2180,9 @@ dir=/path/to
        #+BEGIN_SRC sh
        sudo apt autoremove --purge snapd
        #+END_SRC
-
+**** Raspberry Pi
+***** Install docker on Raspberry Pi 4?
+https://docs.docker.com/engine/install/debian/#install-using-the-convenience-script
 *** Backup
 **** Bup
 ***** bup essentials?
