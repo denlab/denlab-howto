@@ -2028,6 +2028,12 @@ cat /etc/environment          \
      - =/usr/bin=: Normal binaries installed by the package manager
      - =/usr/local/bin=: Was installed after manually compiled (for exemple)
 **** Zfs
+***** Dedup
+****** Size RAM for online dedup ?
+A random web page:
+"
+For every TB of pool data, you should expect 5 GB of dedup table data, assuming an average block size of 64K.
+"
 ***** Create a new zfs "env" in a file?
       #+BEGIN_SRC sh
         zpool list
@@ -2098,7 +2104,19 @@ cat /etc/environment          \
   ssh src-host 'sudo zfs send -v -R -I srcpool@snap' | sudo zfs receive -v -Fdu dstpool
   # incremental
   ssh src-host 'sudo zfs send -v -R -I srcpool@snap srcpool@snap2' | sudo zfs receive -v -Fdu datapool-mir
+#+END_SRC
 
+In one case I was only able to send the initial with:
+#+BEGIN_SRC sh
+  # initial
+  ssh src-host 'sudo zfs send -v -R -I srcpool srcpool@snap' | sudo zfs receive -v -Fdu dstpool
+#+END_SRC
+
+****** How to to send a whole pool with dedup=on to another pool but with dedup=off?
+#+BEGIN_SRC sh
+    # initial
+    ssh src-host 'sudo zfs send -v -R -I srcpool srcpool@snap' \
+        | sudo zfs receive -o dedup=off -v -Fdu dstpool
 #+END_SRC
 
 
