@@ -1911,6 +1911,15 @@ xrandr --addmode DP-2 1920x960_60.00
         xdg-settings set default-web-browser google-chrome.desktop
       #+END_SRC
 *** Converting formats
+**** Converting human readable <-> bytes
+On linux, onw way is numfmt
+#+BEGIN_SRC sh
+echo 1K | numfmt --from=iec
+#> 1024
+#+END_SRC
+More Options here:Q https://unix.stackexchange.com/questions/44040/a-standard-tool-to-convert-a-byte-count-into-human-kib-mib-etc-like-du-ls1
+
+
 **** convert file format table?
      | src   | dst   | command                                                                           |
      |-------+-------+-----------------------------------------------------------------------------------|
