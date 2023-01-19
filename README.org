@@ -9,6 +9,13 @@
 
 * Unixes
 ** Linux
+
+*** Misc
+**** Removed /dev/null how to remake it?
+mknod /dev/null c 1 3
+chmod 666 /dev/null
+
+
 *** Package managers
     | distrib  | pkg manager | no sudo          | inst                     | inst ver          | list all installed          | list all installed w ver         | list avail vers of pkg           | rm                           |
     |----------+-------------+------------------+--------------------------+-------------------+-----------------------------+----------------------------------+----------------------------------+------------------------------|
