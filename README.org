@@ -2141,6 +2141,26 @@ In one case I was only able to send the initial with:
 sudo zpool list  -v -L
 #+END_SRC
 
+***** Grow a zfs pool when a device has grown?
+      #+BEGIN_SRC sh
+        # Let's the the growed device is sdx
+        dev=sdx
+        pool=poolx
+        # rescan scsci
+        ls /sys/class/scsi_device/                                               \
+        | xargs -i -n1 echo 'echo 1 > /sys/class/scsi_device/{}/device/rescan' \
+        | bash -xveuo pipefail
+        # inform kernel
+        partprobe
+        # zfs online -e
+        zfs online -e $pool $dev
+
+        # WARN, may need to re-run several time partprobe/zfs online fot make it work
+
+        partprobe
+        zfs online -e $pool $dev
+#+END_SRC
+
 **** AccessControl
 ***** Set read right reccursive for all files and and dir in a given dir?
       #+BEGIN_SRC sh
