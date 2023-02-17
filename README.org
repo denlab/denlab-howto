@@ -4440,6 +4440,48 @@ see: https://en.wikipedia.org/wiki/List_of_U│nicode_characters#Box_Drawing
      jq -n '{a: {b: 1}} | getpath(["a","b"])'
      #> 1
      #+END_SRC
+**** Bitbucket flavored markdown
+***** How do I create a link to the same page in Bitbucket flavored markdown?
+
+- create link with: ~<a name="section"></a>~
+- create anchor with: ~<a name="section"></a>~
+- example:
+#+BEGIN_SRC markdown
+# main
+
+## chapter 1
+
+[link to chapter 4](#section)
+
+- lorem ipsum
+- lorem ipsum
+- lorem ipsum
+- lorem ipsum
+
+## chapter 2
+
+- lorem ipsum
+- lorem ipsum
+- lorem ipsum
+- lorem ipsum
+
+## chapter 3
+
+- lorem ipsum
+- lorem ipsum
+- lorem ipsum
+- lorem ipsum
+
+## chapter 4
+
+<a name="section"></a>
+- lorem ipsum
+- lorem ipsum
+- lorem ipsum
+- lorem ipsum
+#+END_SRC
+
+
 ** CI
 *** Jenkins
 **** RestApi
@@ -4553,6 +4595,7 @@ jenkins.model.Jenkins.instance.getItemByFullName(jobName).getBuildByNumber(jobNu
          -Dcom.sun.management.jmxremote.authenticate=false  \
 #+END_SRC
      - on the machine where jconsole is running, start a new connection on =$DOCKER_SERVER:8888=
+
 * Db
 ** timeserie db
 *** influxdb
