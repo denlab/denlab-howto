@@ -4,6 +4,7 @@
 #+MACRO: pipeAnd @@html:&#124;&amp;@@
 #+TODO: TODO(t) STARTED(s) WAITING(w) | DONE(d) CANCELED(c)
 #+STARTUP: shrink
+#+OPTIONS: num:0 whn:2 toc:4 H:3
 
 
 
@@ -2773,6 +2774,42 @@ sudo checkinstall
 https://chrome.google.com/webstore/detail/tab-reloader-page-auto-re/dejobinhdiimklegodgbmbifijpppopn
 ****** TODO to check
 
+* Videos
+** Youtube
+**** How do I send a link to a youtube video specifing the resolution?
+
+****** Solution from stackoverflow
+
+From: https://stackoverflow.com/questions/23145257/is-there-a-way-to-link-someone-to-a-youtube-vieo-in-hd-1080p-quality
+
+  #+begin_src sh
+  Yes there is
+  :
+
+  https://www.youtube.com/embed/kObNpTFPV5c?vq=hd1440
+  https://www.youtube.com/embed/kObNpTFPV5c?vq=hd1080
+  etc...
+  Options are:
+
+  Code for 1440: vq=hd1440
+  Code for 1080: vq=hd1080
+  Code for 720: vq=hd720
+  Code for 480p: vq=large
+  Code for 360p: vq=medium
+  Code for 240p: vq=small
+  #+end_src
+
+***** In other words
+
+- send the link of your video in the following form:
+  - https://www.youtube.com/embed/${videoCode}?vq=${qualityCode}
+  - where:
+    - ~videoCode~: Is the YouTube code of your video
+    - ~qualityCode~: The code specifing the quality you need (see above for the table code -> resolution)
+  - for example:
+    - If my my ~vieoCode~ is  ~EOoM2ooJICc~
+    - And the quality I want is ~1440~ (correspondihg code: ~hd1440~)
+    - The url will be: https://www.youtube.com/embed/EOoM2ooJICc?vq=hd1440
 
 * Programming
 ** JVM ecosystem
