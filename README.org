@@ -3075,6 +3075,22 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
 #+END_SRC
 
 
+****** simple date formating like '16/Mar/2023' ?
+#+BEGIN_SRC sh
+  bb -o '
+(let
+  [
+    date-str "2023/Mar/16"
+    sec (long (System/currentTimeMillis))
+    fmt (java.time.format.DateTimeFormatter/ofPattern "yyyy/MMM/dd")
+    parsed (.parse fmt date-str)
+  ]
+  (pprint {:date-str date-str :parsed parsed} )
+  )
+'
+
+#+END_SRC
+
 ****** current LocalDateTime?
 java.time.LocalDateTime/now
 
