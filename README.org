@@ -4622,6 +4622,27 @@ jenkins.model.Jenkins.instance.getItemByFullName(jobName).getBuildByNumber(jobNu
 *** Online visualization of Wikipedia's graph?
  - http://tools.medialab.sciences-po.fr/seealsology/
  - http://seealso.org/
+*** Graphviz's dot language?
+**** Example of colorscheme usage?
+#+BEGIN_SRC sh
+  .hexl-wrapped
+  :wq
+  :wq
+  :wq
+#+END_SRC
+
+#+BEGIN_SRC sh
+digraph G {
+  node [style="rounded,filled", colorscheme="set28",shape=rectangle,colorscheme="pastel28";];
+  a [fillcolor=1];
+  b [fillcolor=2];
+  c [fillcolor=3];
+  d [fillcolor=4];
+  e [fillcolor=5];
+  a -> b,c;
+  c -> e,f;
+}
+#+END_SRC
 ** Video editing
 *** how to copy part of a video?
     #+BEGIN_SRC sh
