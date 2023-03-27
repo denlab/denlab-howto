@@ -155,7 +155,12 @@ chmod 666 /dev/null
        setenforce 0
        #+END_SRC
 ***** Dd
-      Show progress with dd?
+****** Typical dd invocation to copy a partition disk ?
+#+BEGIN_SRC sh
+  dd if=/dev/ad0 of=/dev/ad1 bs=64M conv=noerror
+#+END_SRC
+******  Show progress with dd?
+
       #+BEGIN_SRC sh
 dd if=/dev/sda of=/dev/sdb status=progress
       #+END_SRC
