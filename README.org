@@ -829,7 +829,14 @@ foo bar baz
 ****** recompress without intermediary files?
        don't know how to do it with regular target
        but there's a solution with bsdtar
+****** tar: archive files name coming from stdin?
+#+BEGIN_SRC sh
+  find a -type f | tar cvf a.tgz -T -
+#+END_SRC
+
+
 ****** Specify arbitrary order of files in tar file?
+
 
 ***** Bsdtar
 ****** recompress without intermediary files?
