@@ -2214,6 +2214,11 @@ dir=/path/to
 ****** how to install telnet on alpine ???
        #+BEGIN_SRC sh
        #+END_SRC
+****** repo key rotated? (UNTRUSTED signature when =apk add=)?
+#+BEGIN_SRC sh
+  # add the new key
+  apk add -X https://dl-cdn.alpinelinux.org/alpine/v3.14/main -u alpine-keys
+#+END_SRC
 **** Debian
 ***** Old debian GPG invalid signature when apt-get update?
       Re-import expired pgp keys with:
