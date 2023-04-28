@@ -2063,6 +2063,15 @@ A random web page:
 "
 For every TB of pool data, you should expect 5 GB of dedup table data, assuming an average block size of 64K.
 "
+****** Current RAM usage for dedup on a particular zfs pool?
+See: https://serverfault.com/questions/533877/how-large-is-my-zfs-dedupe-table-at-the-moment
+#+BEGIN_SRC sh
+  zpool status -D  tank
+#>  (...)
+#> dedup: DDT entries 10811910, size 475B on disk, 153B in core
+  jq -cn '10811910 * 153 | . / (1024 * 1024 * 1024) | {gb: .}'
+#> {"gb":1.5406145062297583}
+#+END_SRC
 ***** Create a new zfs "env" in a file?
       #+BEGIN_SRC sh
         zpool list
