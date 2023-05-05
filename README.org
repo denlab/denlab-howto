@@ -3395,6 +3395,32 @@ Add the process to the meta (to dispose it later for example)."
    (finally (prn :always-run)))
  #+END_SRC
 
+**** Java interop
+***** Start a clojure repl server from java?
+One way
+- Set the System property:
+  - =clojure.server.repl="{:port 5555 :accept clojure.core.server/repl}"=
+  - then load the class clojure.lang.RT
+  - Example:
+  #+BEGIN_SRC sh
+    cp="src"                                                                                         \
+    && cp+=":/home/u/.m2/repository/org/clojure/clojure/1.11.1/clojure-1.11.1.jar"                   \
+    && cp+=":/home/u/.m2/repository/org/clojure/core.specs.alpha/0.2.62/core.specs.alpha-0.2.62.jar" \
+    && cp+=":/home/u/.m2/repository/org/clojure/spec.alpha/0.3.218/spec.alpha-0.3.218.jar"           \
+    && java                                                                                          \
+         -Dclojure.server.repl="{:port 5555 :accept clojure.core.server/repl}"                       \
+         -Dclojure.basis=.cpcache/4055944946.basis                                                   \
+         -classpath "$cp"                                                                            \
+         'clojure.main'                                                                              \
+           -e '(println "Running server on port 5555") @(promise)'
+    # then connec to the repl with:
+    telnet localhost 5555
+    # or
+    rlwrap telnet localhost 5555
+  #+END_SRC
+  - Then connect to the repl with:
+
+
 *** Web Servers
 **** Tomcat
 ***** how to configure tomcat so that it can be managed programatically ?
