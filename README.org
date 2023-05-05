@@ -2027,6 +2027,24 @@ cat /etc/environment          \
       #+BEGIN_SRC sh
       ifconfig eth0 mtu 9000
       #+END_SRC
+**** Wifi
+***** Connect to wifi with via command line?
+****** Using nmcli
+#+BEGIN_SRC sh
+  # Get the identifier of the  wifi device
+  nmcli dev status
+  # here wxxx
+  # List the wifi access points for this device
+  nmcli dev wifi list ifname wxxx
+  # Choose the wifi access point to connect to
+  # here ssidxxx
+  # Connect to it with your device
+  # here the password is passxxx
+  sudo nmcli dev wifi connect ssidxxx password passxxx ifname wxxx
+  # check it is working
+  nmcli dev status
+#+END_SRC
+
 *** Compression
 **** compress stdin, uncompress to stdout ?
 #+BEGIN_SRC sh
