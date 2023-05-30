@@ -134,13 +134,22 @@ chmod 666 /dev/null
        rpm -qa --qf "%{NAME}\n"
        #+END_SRC
 ***** Ps
-****** list all processes, show only pids?
+******* list all processes, show only pids?
        #+BEGIN_SRC sh
        ps ax -o pid=
        #> 3409
        #> 3413
        #> 3417
        #+END_SRC
+******* ps: List processes with their elapsed running time ?
+
+#+BEGIN_SRC sh
+  ps a   -o pid,state,tname,time,etime,command
+  #> PID S TTY          TIME     ELAPSED COMMAND
+  #> 8728 S pts/2    00:00:02       48:45 -zsh
+  #> 1248 R pts/2    00:00:00       00:00  \_ ps af -o pid,state,tname,time,etime,command
+  #> 23774 R pts/0    00:16:13       25:50 sha256sum
+#+END_SRC
 ***** SeLinux
 ****** status/enable/disable selinux?
        #+BEGIN_SRC sh
