@@ -634,6 +634,13 @@ host google.com
         pulseaudio --start
       #+END_SRC
 
+**** Ubuntu/Debian change the machine uuid (useful when the dhcp id is derived from it) ?
+
+from: https://bugs.launchpad.net/ubuntu/+source/cloud-init/+bug/1563951
+
+#+BEGIN_SRC sh
+   # once per instance remove /etc/machine-id and run systemd-machine-id-setup
+#+END_SRC
 ** Windows
 *** Disable hyperV for vbox?
     - open a windows cmd.exe as admin
