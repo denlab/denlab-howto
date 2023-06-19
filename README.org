@@ -2874,6 +2874,11 @@ From: https://stackoverflow.com/questions/23145257/is-there-a-way-to-link-someon
 * Programming
 ** JVM ecosystem
 *** Groovy
+**** Misc
+***** Get the Groovy version from within a Groovy script/class?
+#+BEGIN_SRC sh
+  println GroovySystem.version
+#+END_SRC
 **** pipeline oriented programming in groovy like Clojure's threading macro?
   #+begin_src java
   Collection.metaClass.or = { Closure c -> delegate.collect c }
