@@ -2408,13 +2408,18 @@ stop – Shut down immediately (fast shutdown)
     #+BEGIN_SRC sh
     gpg --verify file.gpg file
     #+END_SRC
-*** how to import a gpg public key?
+*** how to dw a gpg public key from ubuntu key server?
     #+BEGIN_SRC sh
     keyId=7C207910
     keyFingerprint='28D3 BED8 51FD F3AB 57FE F93C 2335 87A4 7C20 7910'
     gpg --keyserver keyserver.ubuntu.com --recv $keyId
     gpg --list-keys --with-fingerprint $keyId | tr -s ' ' | grep "${keyFingerprint}"
     #+END_SRC
+    sometimes behind firewalls:
+   #+BEGIN_SRC sh
+   gpg --keyid-format long --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0x8EF0A9D3F274FCE7
+   #+END_SRC
+
 * Non-unixes
 ** Ms windows
 *** Vsphere
