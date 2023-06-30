@@ -982,6 +982,11 @@ from: https://fedoraproject.org/wiki/SysVinit_to_Systemd_Cheatsheet
        #+BEGIN_SRC sh
        journalctl -fu collectd
        #+END_SRC
+****** restart network on systemd?
+Depends, on recent installation, may work:
+#+BEGIN_SRC sh
+  systemctl restart systemd-networkd
+#+END_SRC
 ***** General Linux
 ****** Linux reload service config
    #+begin_src sh
