@@ -2200,6 +2200,25 @@ In one case I was only able to send the initial with:
         | sudo zfs receive -o dedup=off -v -Fdu dstpool
 #+END_SRC
 
+****** zfs partial send / receive ?
+from: https://unix.stackexchange.com/questions/343675/zfs-on-linux-send-receive-resume-on-poor-bad-ssh-connection
+#+begin_src sh
+  # on the receiving end
+  nc -l 9090 | pv -s 100G | sudo zfs receive -s -v -Fdu tank
+  # on the sending
+  sudo zfs send -v -R -I tank tank@v1 \
+      | pv -s 100G \
+      | nc $receiveHost 9090
+  # if the transfer fails
+  ## on the receiving end
+  sudo zfs get all tank/dataset
+  ## get the resume token
+  grep receive_resume_token
+  ## on the send machine
+  sudo zfs send -v -t $token -R -I tank tank@v1 \
+      | pv -s 100G                              \
+      | nc $receiveHost 9090
+#+end_src
 
 ***** How to list all devices of a pool?
 #+BEGIN_SRC sh
