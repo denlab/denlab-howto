@@ -2847,6 +2847,11 @@ make
 # install
 sudo checkinstall
    #+END_SRC
+** Org-Mode
+*** key binding to insert a code block?
+- Type:
+=<s>=
+- Then complete (eg: =M-/=)
 * Web
 ** Browsers
 *** Firefox
