@@ -18,18 +18,18 @@ chmod 666 /dev/null
 
 
 *** Package managers
-    | distrib  | pkg manager | no sudo          | inst                     | inst ver          | list all installed          | list all installed w ver         | list avail vers of pkg           | rm                           |
-    |----------+-------------+------------------+--------------------------+-------------------+-----------------------------+----------------------------------+----------------------------------+------------------------------|
-    | =alpine= | =apk=       |                  | =add=                    | =add <pkg>=<ver>= | =info=                      | =apk info <pipe> xargs apk info= | =apk info <pkg>=                 |                              |
-    | =python= | =pip=       | =--user=         | =install=                |                   | =ls=                        |                                  |                                  | =?=                          |
-    | =node=   | =npm=       | =--global=       | =install=                |                   | =ls=                        |                                  |                                  | =?=                          |
-    | =perl=   | =cpan=      | =?=              | =install=                |                   | =cpan -a=                   |                                  |                                  | =?=                          |
-    | =debian= | =aptitude=  | =?=              | =install=                |                   | =dpkg -l=                   |                                  |                                  | =purge=                      |
-    | =debian= | =apt=       | =?=              | =install=                |                   | =dpkg -l=                   |                                  | =apt-cache policy $pkg=          | =apt purge=                  |
-    | =rhel=   | =yum=       | =?=              | =install=                |                   | =rpm -qa=                   |                                  | =yum --showduplicates list $pkg= | =?=                          |
-    | =groovy= | =sdk=       | =?=              | =install=                |                   | =?=                         |                                  |                                  | =?=                          |
-    | =ruby=   | =gem=       | =--user-install= | =install=                |                   | =?=                         |                                  |                                  | =?=                          |
-    | =nix==   |             |                  | =nix-env -i -v "${pkg}"= |                   | =nix-env -qa --description= |                                  |                                  | =nix-env --uninstall "$pkg"= |
+    | distrib  | pkg manager | no sudo          | inst                     | inst ver          | list all installed          | list all installed w ver         | list avail vers of pkg           | list files of pkg | rm                           |
+    |----------+-------------+------------------+--------------------------+-------------------+-----------------------------+----------------------------------+----------------------------------+-------------------+------------------------------|
+    | =alpine= | =apk=       |                  | =add=                    | =add <pkg>=<ver>= | =info=                      | =apk info <pipe> xargs apk info= | =apk info <pkg>=                 | =apk -L $p=       |                              |
+    | =python= | =pip=       | =--user=         | =install=                |                   | =ls=                        |                                  |                                  |                   | =?=                          |
+    | =node=   | =npm=       | =--global=       | =install=                |                   | =ls=                        |                                  |                                  |                   | =?=                          |
+    | =perl=   | =cpan=      | =?=              | =install=                |                   | =cpan -a=                   |                                  |                                  |                   | =?=                          |
+    | =debian= | =aptitude=  | =?=              | =install=                |                   | =dpkg -l=                   |                                  |                                  | =dpkg -L $p=      | =purge=                      |
+    | =debian= | =apt=       | =?=              | =install=                |                   | =dpkg -l=                   |                                  | =apt-cache policy $pkg=          |                   | =apt purge=                  |
+    | =rhel=   | =yum=       | =?=              | =install=                |                   | =rpm -qa=                   |                                  | =yum --showduplicates list $pkg= |                   | =?=                          |
+    | =groovy= | =sdk=       | =?=              | =install=                |                   | =?=                         |                                  |                                  |                   | =?=                          |
+    | =ruby=   | =gem=       | =--user-install= | =install=                |                   | =?=                         |                                  |                                  |                   | =?=                          |
+    | =nix==   |             |                  | =nix-env -i -v "${pkg}"= |                   | =nix-env -qa --description= |                                  |                                  |                   | =nix-env --uninstall "$pkg"= |
 **** find which package manager is used on this machine?
      #+BEGIN_SRC sh
      #!/usr/bin/env bash
