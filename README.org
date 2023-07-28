@@ -2312,6 +2312,15 @@ dir=/path/to
        - And in the wifi properties, choose:
          - "Make available to others users"
          -
+***** prevent snapd for ever installing?
+from: https://askubuntu.com/questions/1345385/how-can-i-stop-apt-from-installing-snap-packages
+#+begin_src
+# purge snapd
+apt purge snapd
+# holdit
+apt-mark hold snapd
+#+end_src
+
 ***** 18.04
 ****** X
 ******* Normal alt-tab?
