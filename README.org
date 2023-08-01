@@ -2309,6 +2309,18 @@ dir=/path/to
       apt-key list | grep expired |  tr -s ' '  | cut -f2 -d ' ' | cut -f2 -d'/' | sed -r 's/.*/apt-key adv --recv-keys --keyserver keys.gnupg.net &/' | bash -xv
 
       #+END_SRC
+      Or try with an ubuntu keyserver (and port 80 to go through firewalls):
+      #+begin_src sh
+      apt-key list \
+          | grep expired                                                                        \
+          | tr -s ' '                                                                           \
+          | cut -f2 -d ' '                                                                      \
+          | cut -f2 -d'/'                                                                       \
+          | sed -r 's|.*|apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80  &|' \
+          | bash -xv \
+      ;
+      #+end_src
+
 **** Ubuntu
 ***** X
 ****** Disable Wayland to use Xorg instead?
