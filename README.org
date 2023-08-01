@@ -621,6 +621,18 @@ host google.com
          #> <ip> name = <domain>
        #+END_SRC
 
+***** Network analysis
+****** Ngrep
+******* Ngrep example?
+#+begin_src sh
+ngrep -l -W byline -d eth0 src host.com  and dst port 80
+  #               `-l` Line buffered output
+  #        `-W byline` Output suitable for HTTP
+  #          `-d eth0` Listen on interface eth0
+  #     `src host.com` Match only incomming traffic from host.com
+  #           `dst 80` Match only traffic going to port 80
+#+end_src
+
 **** Misc
 ***** VirtualBox
 ****** Windows host
