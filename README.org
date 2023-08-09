@@ -638,6 +638,15 @@ ngrep -l -W byline -d eth0 src host.com  and dst port 80
 ****** Windows host
 ******* Linux Guest
 ******** How to disable HyperV so VBox can run correctly?
+******** How to correctly install guestAdditon on ubuntu22.04?
+#+begin_src sh
+     # First how to check if installed properly:
+   for i in status status-kernel status-user; do sudo /sbin/rcvboxadd $i ; done
+     # the vobxadd installer needs:
+  sudo apt-get install build-essential gcc make perl dkms
+  #  not finished yet ! ;)
+#+end_src
+
 *** Hardware
 **** Sound
 ***** Troubleshoot sound in Linux/Ubuntu ?
