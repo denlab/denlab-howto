@@ -188,7 +188,26 @@ dd if=/dev/sda of=/dev/sdb status=progress
 ;
 #+END_SRC
 
-***** User/groups management
+***** Security
+****** Other
+******* list recent ssh connection on a host?
+#+begin_src sh
+last
+#+end_src
+****** SeLinux
+****** status/enable/disable selinux?
+       #+BEGIN_SRC sh
+       # with the selinux-utils pkg:
+       # for example on debian like systems:
+       aptitude install selinux-utils
+       # get selinux status
+       getenforce
+       # enable
+       setenforce 1
+       # disable
+       setenforce 0
+       #+END_SRC
+****** User/groups management
 ****** Users's group management command
 
        |--------------+------------------------+--------+----------------------------+-----------------------------------------------------|
