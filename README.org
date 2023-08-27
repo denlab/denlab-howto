@@ -2715,6 +2715,11 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
    #+end_src
 
 ** Spacemacs
+*** Clojure
+**** Tests
+***** Switch between implementation and test in Spacemacs Clojure?
+- Keybinding: =<SPC> p a=
+- Function: projectile-switch-between-implementation-and-test
 *** Install
 **** "No public key for 066DAFCB81E42C40" ?
    #+begin_src sh
