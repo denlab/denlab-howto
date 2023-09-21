@@ -1217,9 +1217,12 @@ setxkbmap -option ctrl:nocaps
  2       2
  3       3
  #+end_src
-**** show which key is pressed?
+**** show which key is pressed in a terminal?
+- showkey
+- if in a ssh session
  #+begin_src sh
-
+   sudo apt install ncurses-examples
+   /usr/lib/ncurses/examples/demo_altkeys
  #+end_src
 **** get the number of rows and colums?
      #+begin_src sh
