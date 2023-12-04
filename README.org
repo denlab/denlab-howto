@@ -657,6 +657,7 @@ ngrep -l -W byline -d eth0 src host.com  and dst port 80
 ****** Windows host
 ******* Linux Guest
 ******** How to disable HyperV so VBox can run correctly?
+
 ******** How to correctly install guestAdditon on ubuntu22.04?
 #+begin_src sh
      # First how to check if installed properly:
@@ -665,6 +666,31 @@ ngrep -l -W byline -d eth0 src host.com  and dst port 80
   sudo apt-get install build-essential gcc make perl dkms
   #  not finished yet ! ;)
 #+end_src
+
+******** How to correctly install guestAdditon on debian12?
+********* Hint1
+#+begin_src sh
+  # First how to check if installed properly:
+  for i in status status-kernel status-user; do sudo /sbin/rcvboxadd $i ; done
+
+  # the vobxadd installer needs:
+  # the vbox installer *may* need
+  sudo apt-get install dkms build-essential linux-headers-`uname -r`
+
+  # if  status-kernel report a missing vboxsf module
+  #   then try:
+  modprobe vboxsf
+  # and status-kernel again
+  # if working, permanently load the module by adding
+  # vboxsf to /etc/modules
+
+  # after that at boot, vbox seems to be ok, at least acording to status status-kernel status-user
+#+end_src
+********* Hint2
+Also it seems to help to uninstall vbox (with /usr/sbin/vbox-uninstall-guest-additions)
+And reinstall it again
+********* Hint3
+Beware of not enought video memory, it can impact the resolution of the vm
 
 *** Hardware
 **** Sound
