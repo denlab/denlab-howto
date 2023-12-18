@@ -2377,7 +2377,19 @@ dir=/path/to
           | bash -xv \
       ;
       #+end_src
+***** Bookworm
+****** how to install java8 on Debian Bookworm?
 
+Best solution found yet:
+- enable (if necessary) the debian non-free repo
+- install nvidia-openjdk-8-jre: ~apt install nvidia-openjdk-8-jre~
+- disable (if necessary) the debian non-free repo
+
+https://packages.debian.org/bookworm/nvidia-openjdk-8-jre
+
+And switch between old/new java with:
+~update-alternatives --config java~
+~update-alternatives --config javac~
 **** Ubuntu
 ***** X
 ****** Disable Wayland to use Xorg instead?
