@@ -4769,21 +4769,21 @@ digraph G {
 #+END_SRC
 
 *** Handy unicode(utf8) chars?
-***** Handy emoticon ?
- | thumbs up  | 👍  |
- |            | 👏y |
- | speaker    | 🔇  |
- |            | 2🔈 |
- |            | 🔉  |
- |            | 🔊  |
- | warn       | ⚠   |
- | full block | █   |
- | cross      | ✘   |
- | arrow      | ↘   |
- |            |     |
 
+**** Handy emoticon ?
+ |-----------------------------+-----------------+---|
+ | pay attention               | 🖐 👉 👈 👇 👆 ⚠ |   |
+ | thumbs up                   | 👍              |   |
+ | applause                    | 👏y             |   |
+ | speaker                     | 🔇              |   |
+ | speaker sound none/high/low | 🔈  🔉   🔊     |   |
+ | warn                        | ⚠               |   |
+ | full block                  | █               |   |
+ | cross                       | ✘               |   |
+ | arrow                       | ↘               |   |
+ |-----------------------------+-----------------+---|
 
-***** arrows
+**** arrows
 #+BEGIN_SRC sh
         0	1	2	3	4	5	6	7	8	9	A	B	C	D	E	F
 U+219x	←	↑	→	↓	↔	↕	↖	↗	↘	↙	↚	↛	↜	↝	↞	↟
@@ -4794,7 +4794,7 @@ U+21Dx	⇐	⇑	⇒	⇓	⇔	⇕	⇖	⇗	⇘	⇙	⇚	⇛	⇜	⇝	⇞	⇟
 U+21Ex	⇠	⇡	⇢	⇣	⇤	⇥	⇦	⇧	⇨	⇩	⇪	⇫	⇬	⇭	⇮	⇯
 U+21Fx	⇰	⇱	⇲	⇳	⇴	⇵	⇶	⇷	⇸	⇹	⇺	⇻	⇼	⇽	⇾	⇿
 #+END_SRC
-***** draft
+**** draft
 see: https://en.wikipedia.org/wiki/List_of_U│nicode_characters#Box_Drawing
  #+begin_src sh                             │
       ┌┐
@@ -4826,7 +4826,7 @@ see: https://en.wikipedia.org/wiki/List_of_U│nicode_characters#Box_Drawing
    ║        ║
    ╚════════╝
  #+end_src
-****** boxes
+***** boxes
 
 | ┌──────┐ | ╭──────╮ | ╭┈┈┈┈┈┈╮ |
 | │      │ | │      │ | ┊      ┊ |
@@ -4843,8 +4843,8 @@ see: https://en.wikipedia.org/wiki/List_of_U│nicode_characters#Box_Drawing
 | ▒      ▒ | ▓      ▓ | █      █ |
 | ▒▒▒▒▒▒▒▒ | ▓▓▓▓▓▓▓▓ | ████████ |
 
-***** use char by its code ?
-***** unicode number in circle
+**** use char by its code ?
+**** unicode number in circle
 
  |  1 | ① | ❶ | ⬤ |
  |  2 | ② | ❷ |   |
@@ -4866,16 +4866,16 @@ see: https://en.wikipedia.org/wiki/List_of_U│nicode_characters#Box_Drawing
  | 18 | ⑱ |   |   |
  | 19 | ⑲ |   |   |
  | 20 | ⑳ |   |   |
-***** lambda
+**** lambda
     #+begin_src sh
     λ
     #+end_src
-***** elipsis?
+**** elipsis?
     #+begin_src sh
     …
     #+end_src
-***** Checkmarks
-****** check / uncheck marks?
+**** Checkmarks
+***** check / uncheck marks?
      #+BEGIN_SRC sh
      🗹 DONE stuff done
      ☐ TODO stuff todo
@@ -4885,7 +4885,7 @@ see: https://en.wikipedia.org/wiki/List_of_U│nicode_characters#Box_Drawing
        ☑
 
        #+END_SRC
-****** more check marks?
+***** more check marks?
 
      from: https://en.wikipedia.org/wiki/X_mark
 
@@ -4924,8 +4924,13 @@ see: https://en.wikipedia.org/wiki/List_of_U│nicode_characters#Box_Drawing
      | 🗴      | U+1F5F4                  |   BALLOT SCRIPT X                                  |
      | 🞩      | U+1F7A9                  |  LIGHT SALTIRE                                     |
      #+END_SRC
-***** colored utf8 chars
-****** all
+**** colored utf8 chars
+***** some cool
+|--------+----|
+| 127752 | 🌈 |
+| 127744 | 🌀 |
+|--------+----|
+***** some
 |--------------+----------------------------------------------------------------|
 |              | 01234567891111111111233333333344444444445555555556             |
 |              | ..........0123456789012345678901234567891234567890             |
@@ -4941,11 +4946,11 @@ see: https://en.wikipedia.org/wiki/List_of_U│nicode_characters#Box_Drawing
 | 10100-10150: | ❴❵❶❷❸❹❺❻❼❽❾❿➀➁➂➃➄➅➆➇➈➉➊➋➌➍➎➏➐➑➒➓➔➕➖➗➘➙➚➛➜➝➞➟➠➡➢➣➤➥          |
 | 10150-10200: | ➦➧➨➩➪➫➬➭➮➯➰➱➲➳➴➵➶➷➸➹➺➻➼➽➾➿⟀⟁⟂⟃⟄⟅⟆⟇⟈⟉⟊⟋⟌⟍⟎⟏⟐⟑⟒⟓⟔⟕⟖⟗           |
 |--------------+----------------------------------------------------------------|
-****** zodiac
+***** zodiac
      ♈♉♊♋♌♍♎♏⛎♐♑♒♓
-****** zodiac unambiguous
+***** zodiac unambiguous
      ♈♉♌♎⛎♐♑♒♓
-****** zodiac even more unambiguous
+***** zodiac even more unambiguous
      ♈♉♌♎⛎♐♒
 
 * Db
