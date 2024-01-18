@@ -4525,188 +4525,6 @@ end'
     it seems not straighforward to do.
     Seem to have to implement this by adding some way to get the rc from the command :-(
 
-** LuaUnicode
-*** Handy emoticon ?
- | thumbs up  | 👍  |
- |            | 👏y |
- | speaker    | 🔇  |
- |            | 2🔈 |
- |            | 🔉  |
- |            | 🔊  |
- | warn       | ⚠   |
- | full block | █   |
- | cross      | ✘   |
- | arrow      | ↘   |
- |            |     |
-
-
-
-*** arrows
-#+BEGIN_SRC sh
-        0	1	2	3	4	5	6	7	8	9	A	B	C	D	E	F
-U+219x	←	↑	→	↓	↔	↕	↖	↗	↘	↙	↚	↛	↜	↝	↞	↟
-U+21Ax	↠	↡	↢	↣	↤	↥	↦	↧	↨	↩	↪	↫	↬	↭	↮	↯
-U+21Bx	↰	↱	↲	↳	↴	↵	↶	↷	↸	↹	↺	↻	↼	↽	↾	↿
-U+21Cx	⇀	⇁	⇂	⇃	⇄	⇅	⇆	⇇	⇈	⇉	⇊	⇋	⇌	⇍	⇎	⇏
-U+21Dx	⇐	⇑	⇒	⇓	⇔	⇕	⇖	⇗	⇘	⇙	⇚	⇛	⇜	⇝	⇞	⇟
-U+21Ex	⇠	⇡	⇢	⇣	⇤	⇥	⇦	⇧	⇨	⇩	⇪	⇫	⇬	⇭	⇮	⇯
-U+21Fx	⇰	⇱	⇲	⇳	⇴	⇵	⇶	⇷	⇸	⇹	⇺	⇻	⇼	⇽	⇾	⇿
-#+END_SRC
-*** draft
-see: https://en.wikipedia.org/wiki/List_of_U│nicode_characters#Box_Drawing
- #+begin_src sh                             │
-      ┌┐
-      └┘
-      ┌┐┌┐
-      └┘└┘
-      ─┐
-      ─┘
-      ┌─┐
-      └─┘
-      ┌──┐
-      │  │
-      └──┘
-      ╭─╮
-      ╰─╯
-
-
-
-
-      ┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌
-      └┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘
-   ─
-   ─
-   ═ ║ ╒ ╓ ╔ ╕ ╖ ╗ ╘ ╙ ╚ ╛ ╜ ╝ ╞ ╟ ╠ ╡ ╢ ╣ ╤ ╥ ╦ ╧ ╨ ╩ ╪ ╫ ╬
-   p
-   ╔════════╗
-   ║        ║
-   ║        ║
-   ║        ║
-   ╚════════╝
- #+end_src
-**** boxes
-
-| ┌──────┐ | ╭──────╮ | ╭┈┈┈┈┈┈╮ |
-| │      │ | │      │ | ┊      ┊ |
-| │      │ | │      │ | ┊      ┊ |
-| └──────┘ | ╰──────╯ | ╰┈┈┈┈┈┈╯ |
-|----------+----------+----------|
-| ╭╍╍╍╍╍╍╮ | ▛▀▀▀▀▀▀▜ | ░░░░░░░░ |
-| ┇      ┇ | ▌      ▐ | ░      ░ |
-| ┇      ┇ | ▌      ▐ | ░      ░ |
-| ╰╍╍╍╍╍╍╯ | ▙▄▄▄▄▄▄▟ | ░░░░░░░░ |
-|----------+----------+----------|
-| ▒▒▒▒▒▒▒▒ | ▓▓▓▓▓▓▓▓ | ████████ |
-| ▒      ▒ | ▓      ▓ | █      █ |
-| ▒      ▒ | ▓      ▓ | █      █ |
-| ▒▒▒▒▒▒▒▒ | ▓▓▓▓▓▓▓▓ | ████████ |
-
-
-*** use char by its code ?
-*** unicode number in circle
-
- |  1 | ① | ❶ | ⬤ |
- |  2 | ② | ❷ |   |
- |  3 | ③ | ❸ |   |
- |  4 | ④ | ❹ |   |
- |  5 | ⑤ | ❺ |   |
- |  6 | ⑥ | ❻ |   |
- |  7 | ⑦ | ❼ |   |
- |  8 | ⑧ | ❽ |   |
- |  9 | ⑨ | ❾ |   |
- | 10 | ⑩ | ❿ |   |
- | 11 | ⑪ |   |   |
- | 12 | ⑫ |   |   |
- | 13 | ⑬ |   |   |
- | 14 | ⑭ |   |   |
- | 15 | ⑮ |   |   |
- | 16 | ⑯ |   |   |
- | 17 | ⑰ |   |   |
- | 18 | ⑱ |   |   |
- | 19 | ⑲ |   |   |
- | 20 | ⑳ |   |   |
-*** lambda
-    #+begin_src sh
-    λ
-    #+end_src
-*** elipsis?
-    #+begin_src sh
-    …
-    #+end_src
-*** Checkmarks
-**** check / uncheck marks?
-     #+BEGIN_SRC sh
-     🗹 DONE stuff done
-     ☐ TODO stuff todo
-     #+END_SRC
-     - alternative:
-       #+BEGIN_SRC sh
-       ☑
-
-       #+END_SRC
-**** more check marks?
-
-     from: https://en.wikipedia.org/wiki/X_mark
-
-| Symbol | Unicode Code point (hex) | Name                                  |
-|--------+--------------------------+---------------------------------------|
-| ☐      | U+2610                   | BALLOT BOX (checkbox)                 |
-| ☒      | U+2612                   | BALLOT BOX WITH X (square with cross) |
-| ✗      | U+2717                   | BALLOT X (cross)                      |
-| ✘      | U+2718                   | HEAVY BALLOT X (bold cross)           |
-|        |                          |                                       |
-     #+BEGIN_SRC sh
-     | Symbol | Unicode Code point (hex) | Name                                               |
-     |--------+--------------------------+----------------------------------------------------|
-     | ×      | U+00D7                   | MULTIPLICATION SIGN (z notation Cartesian product) |
-     | ╳      | U+2573                   | BOX DRAWINGS LIGHT DIAGONAL CROSS                  |
-     | ☓      | U+2613                   | SALTIRE (St Andrew's Cross)                        |
-     | ✕      | U+2715                   | MULTIPLICATION X                                   |
-     | ✖      | U+2716                   | HEAVY MULTIPLICATION X                             |
-     | ❌     | U+274C                   | CROSS MARK                                         |
-     | ❎     | U+274E                   | NEGATIVE SQUARED CROSS MARK                        |
-     | ⨉      | U+2A09                   | N-ARY TIMES OPERATOR                               |
-     | ⨯      | U+2A2F                   | VECTOR OR CROSS PRODUCT                            |
-     | 🗙      | U+1F5D9                  | CANCELLATION X                                     |
-     | 🗴      | U+1F5F4                  | BALLOT SCRIPT X                                    |
-     | 🞩      | U+1F7A9                  | LIGHT SALTIRE                                      |
-     | ×      | U+00D7                   | MULTIPLICATION SIGN (z notation Cartesian product) |
-     | ╳      | U+2573                   | BOX DRAWINGS LIGHT DIAGONAL CROSS                  |
-     | ☓      | U+2613                   | SALTIRE (St Andrew's Cross)                        |
-     | ✕      | U+2715                   | MULTIPLICATION X                                   |
-     | ✖      | U+2716                   | HEAVY MULTIPLICATION X                             |
-     | ❌     | U+274C                   | CROSS MARK                                         |
-     | ❎     | U+274E                   | NEGATIVE SQUARED CROSS MARK                        |
-     | ⨉      | U+2A09                   | N-ARY TIMES OPERATOR                               |
-     | ⨯      | U+2A2F                   | VECTOR OR CROSS PRODUCT                            |
-     | 🗙      | U+1F5D9                  |   CANCELLATION X                                   |
-     | 🗴      | U+1F5F4                  |   BALLOT SCRIPT X                                  |
-     | 🞩      | U+1F7A9                  |  LIGHT SALTIRE                                     |
-     #+END_SRC
-*** colored utf8 chars
-**** all
-|--------------+----------------------------------------------------------------|
-|              | 01234567891111111111233333333344444444445555555556             |
-|              | ..........0123456789012345678901234567891234567890             |
-|--------------+----------------------------------------------------------------|
-|   9700-9750: | ◤◥◦◧◨◩◪◫◬◭◮◯◰◱◲◳◴◵◶◷◸◹◺◻◼◽◾◿☀☁☂☃☄★☆☇☈☉☊☋☌☍☎☏☐☑☒☓☔☕         |
-|   9750-9800: | ☖☗☘☙☚☛☜☝☞☟☠☡☢☣☤☥☦☧☨☩☪☫☬☭☮☯☰☱☲☳☴☵☶☷☸☹☺☻☼☽☾☿♀♁♂♃♄♅♆♇             |
-|   9800-9850: | ♈♉♊♋♌♍♎♏♐♑♒♓♔♕♖♗♘♙♚♛♜♝♞♟♠♡♢♣♤♥♦♧♨♩♪♫♬♭♮♯♰♱♲♳♴♵♶♷♸♹ |
-|   9850-9900: | ♺♻♼♽♾♿⚀⚁⚂⚃⚄⚅⚆⚇⚈⚉⚊⚋⚌⚍⚎⚏⚐⚑⚒⚓⚔⚕⚖⚗⚘⚙⚚⚛⚜⚝⚞⚟⚠⚡⚢⚣⚤⚥⚦⚧⚨⚩⚪⚫        |
-|   9900-9950: | ⚬⚭⚮⚯⚰⚱⚲⚳⚴⚵⚶⚷⚸⚹⚺⚻⚼⚽⚾⚿⛀⛁⛂⛃⛄⛅⛆⛇⛈⛉⛊⛋⛌⛍⛎⛏⛐⛑⛒⛓⛔⛕⛖⛗⛘⛙⛚⛛⛜⛝       |
-|  9950-10000: | ⛞⛟⛠⛡⛢⛣⛤⛥⛦⛧⛨⛩⛪⛫⛬⛭⛮⛯⛰⛱⛲⛳⛴⛵⛶⛷⛸⛹⛺⛻⛼⛽⛾⛿✀✁✂✃✄✅✆✇✈✉✊✋✌✍✎✏    |
-| 10000-10050: | ✐✑✒✓✔✕✖✗✘✙✚✛✜✝✞✟✠✡✢✣✤✥✦✧✨✩✪✫✬✭✮✯✰✱✲✳✴✵✶✷✸✹✺✻✼✽✾✿❀❁            |
-| 10050-10100: | ❂❃❄❅❆❇❈❉❊❋❌❍❎❏❐❑❒❓❔❕❖❗❘❙❚❛❜❝❞❟❠❡❢❣❤❥❦❧❨❩❪❫❬❭❮❯❰❱❲❳       |
-| 10100-10150: | ❴❵❶❷❸❹❺❻❼❽❾❿➀➁➂➃➄➅➆➇➈➉➊➋➌➍➎➏➐➑➒➓➔➕➖➗➘➙➚➛➜➝➞➟➠➡➢➣➤➥          |
-| 10150-10200: | ➦➧➨➩➪➫➬➭➮➯➰➱➲➳➴➵➶➷➸➹➺➻➼➽➾➿⟀⟁⟂⟃⟄⟅⟆⟇⟈⟉⟊⟋⟌⟍⟎⟏⟐⟑⟒⟓⟔⟕⟖⟗           |
-|--------------+----------------------------------------------------------------|
-**** zodiac
-     ♈♉♊♋♌♍♎♏⛎♐♑♒♓
-**** zodiac unambiguous
-     ♈♉♌♎⛎♐♑♒♓
-**** zodiac even more unambiguous
-     ♈♉♌♎⛎♐♒
-
 ** Jira
 *** Jira webapp keyboard shortcut cheat sheet
     | action                           | shortcut |
@@ -4939,6 +4757,189 @@ digraph G {
          -Dcom.sun.management.jmxremote.authenticate=false  \
 #+END_SRC
      - on the machine where jconsole is running, start a new connection on =$DOCKER_SERVER:8888=
+
+
+* Terminal (cli)
+** Unicode(UTF8)
+*** Handy unicode(utf8) chars?
+***** Handy emoticon ?
+ | thumbs up  | 👍  |
+ |            | 👏y |
+ | speaker    | 🔇  |
+ |            | 2🔈 |
+ |            | 🔉  |
+ |            | 🔊  |
+ | warn       | ⚠   |
+ | full block | █   |
+ | cross      | ✘   |
+ | arrow      | ↘   |
+ |            |     |
+
+
+***** arrows
+#+BEGIN_SRC sh
+        0	1	2	3	4	5	6	7	8	9	A	B	C	D	E	F
+U+219x	←	↑	→	↓	↔	↕	↖	↗	↘	↙	↚	↛	↜	↝	↞	↟
+U+21Ax	↠	↡	↢	↣	↤	↥	↦	↧	↨	↩	↪	↫	↬	↭	↮	↯
+U+21Bx	↰	↱	↲	↳	↴	↵	↶	↷	↸	↹	↺	↻	↼	↽	↾	↿
+U+21Cx	⇀	⇁	⇂	⇃	⇄	⇅	⇆	⇇	⇈	⇉	⇊	⇋	⇌	⇍	⇎	⇏
+U+21Dx	⇐	⇑	⇒	⇓	⇔	⇕	⇖	⇗	⇘	⇙	⇚	⇛	⇜	⇝	⇞	⇟
+U+21Ex	⇠	⇡	⇢	⇣	⇤	⇥	⇦	⇧	⇨	⇩	⇪	⇫	⇬	⇭	⇮	⇯
+U+21Fx	⇰	⇱	⇲	⇳	⇴	⇵	⇶	⇷	⇸	⇹	⇺	⇻	⇼	⇽	⇾	⇿
+#+END_SRC
+***** draft
+see: https://en.wikipedia.org/wiki/List_of_U│nicode_characters#Box_Drawing
+ #+begin_src sh                             │
+      ┌┐
+      └┘
+      ┌┐┌┐
+      └┘└┘
+      ─┐
+      ─┘
+      ┌─┐
+      └─┘
+      ┌──┐
+      │  │
+      └──┘
+      ╭─╮
+      ╰─╯
+
+
+
+
+      ┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌┐┌
+      └┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘└┘
+   ─
+   ─
+   ═ ║ ╒ ╓ ╔ ╕ ╖ ╗ ╘ ╙ ╚ ╛ ╜ ╝ ╞ ╟ ╠ ╡ ╢ ╣ ╤ ╥ ╦ ╧ ╨ ╩ ╪ ╫ ╬
+   p
+   ╔════════╗
+   ║        ║
+   ║        ║
+   ║        ║
+   ╚════════╝
+ #+end_src
+****** boxes
+
+| ┌──────┐ | ╭──────╮ | ╭┈┈┈┈┈┈╮ |
+| │      │ | │      │ | ┊      ┊ |
+| │      │ | │      │ | ┊      ┊ |
+| └──────┘ | ╰──────╯ | ╰┈┈┈┈┈┈╯ |
+|----------+----------+----------|
+| ╭╍╍╍╍╍╍╮ | ▛▀▀▀▀▀▀▜ | ░░░░░░░░ |
+| ┇      ┇ | ▌      ▐ | ░      ░ |
+| ┇      ┇ | ▌      ▐ | ░      ░ |
+| ╰╍╍╍╍╍╍╯ | ▙▄▄▄▄▄▄▟ | ░░░░░░░░ |
+|----------+----------+----------|
+| ▒▒▒▒▒▒▒▒ | ▓▓▓▓▓▓▓▓ | ████████ |
+| ▒      ▒ | ▓      ▓ | █      █ |
+| ▒      ▒ | ▓      ▓ | █      █ |
+| ▒▒▒▒▒▒▒▒ | ▓▓▓▓▓▓▓▓ | ████████ |
+
+***** use char by its code ?
+***** unicode number in circle
+
+ |  1 | ① | ❶ | ⬤ |
+ |  2 | ② | ❷ |   |
+ |  3 | ③ | ❸ |   |
+ |  4 | ④ | ❹ |   |
+ |  5 | ⑤ | ❺ |   |
+ |  6 | ⑥ | ❻ |   |
+ |  7 | ⑦ | ❼ |   |
+ |  8 | ⑧ | ❽ |   |
+ |  9 | ⑨ | ❾ |   |
+ | 10 | ⑩ | ❿ |   |
+ | 11 | ⑪ |   |   |
+ | 12 | ⑫ |   |   |
+ | 13 | ⑬ |   |   |
+ | 14 | ⑭ |   |   |
+ | 15 | ⑮ |   |   |
+ | 16 | ⑯ |   |   |
+ | 17 | ⑰ |   |   |
+ | 18 | ⑱ |   |   |
+ | 19 | ⑲ |   |   |
+ | 20 | ⑳ |   |   |
+***** lambda
+    #+begin_src sh
+    λ
+    #+end_src
+***** elipsis?
+    #+begin_src sh
+    …
+    #+end_src
+***** Checkmarks
+****** check / uncheck marks?
+     #+BEGIN_SRC sh
+     🗹 DONE stuff done
+     ☐ TODO stuff todo
+     #+END_SRC
+     - alternative:
+       #+BEGIN_SRC sh
+       ☑
+
+       #+END_SRC
+****** more check marks?
+
+     from: https://en.wikipedia.org/wiki/X_mark
+
+| Symbol | Unicode Code point (hex) | Name                                  |
+|--------+--------------------------+---------------------------------------|
+| ☐      | U+2610                   | BALLOT BOX (checkbox)                 |
+| ☒      | U+2612                   | BALLOT BOX WITH X (square with cross) |
+| ✗      | U+2717                   | BALLOT X (cross)                      |
+| ✘      | U+2718                   | HEAVY BALLOT X (bold cross)           |
+|        |                          |                                       |
+     #+BEGIN_SRC sh
+     | Symbol | Unicode Code point (hex) | Name                                               |
+     |--------+--------------------------+----------------------------------------------------|
+     | ×      | U+00D7                   | MULTIPLICATION SIGN (z notation Cartesian product) |
+     | ╳      | U+2573                   | BOX DRAWINGS LIGHT DIAGONAL CROSS                  |
+     | ☓      | U+2613                   | SALTIRE (St Andrew's Cross)                        |
+     | ✕      | U+2715                   | MULTIPLICATION X                                   |
+     | ✖      | U+2716                   | HEAVY MULTIPLICATION X                             |
+     | ❌     | U+274C                   | CROSS MARK                                         |
+     | ❎     | U+274E                   | NEGATIVE SQUARED CROSS MARK                        |
+     | ⨉      | U+2A09                   | N-ARY TIMES OPERATOR                               |
+     | ⨯      | U+2A2F                   | VECTOR OR CROSS PRODUCT                            |
+     | 🗙      | U+1F5D9                  | CANCELLATION X                                     |
+     | 🗴      | U+1F5F4                  | BALLOT SCRIPT X                                    |
+     | 🞩      | U+1F7A9                  | LIGHT SALTIRE                                      |
+     | ×      | U+00D7                   | MULTIPLICATION SIGN (z notation Cartesian product) |
+     | ╳      | U+2573                   | BOX DRAWINGS LIGHT DIAGONAL CROSS                  |
+     | ☓      | U+2613                   | SALTIRE (St Andrew's Cross)                        |
+     | ✕      | U+2715                   | MULTIPLICATION X                                   |
+     | ✖      | U+2716                   | HEAVY MULTIPLICATION X                             |
+     | ❌     | U+274C                   | CROSS MARK                                         |
+     | ❎     | U+274E                   | NEGATIVE SQUARED CROSS MARK                        |
+     | ⨉      | U+2A09                   | N-ARY TIMES OPERATOR                               |
+     | ⨯      | U+2A2F                   | VECTOR OR CROSS PRODUCT                            |
+     | 🗙      | U+1F5D9                  |   CANCELLATION X                                   |
+     | 🗴      | U+1F5F4                  |   BALLOT SCRIPT X                                  |
+     | 🞩      | U+1F7A9                  |  LIGHT SALTIRE                                     |
+     #+END_SRC
+***** colored utf8 chars
+****** all
+|--------------+----------------------------------------------------------------|
+|              | 01234567891111111111233333333344444444445555555556             |
+|              | ..........0123456789012345678901234567891234567890             |
+|--------------+----------------------------------------------------------------|
+|   9700-9750: | ◤◥◦◧◨◩◪◫◬◭◮◯◰◱◲◳◴◵◶◷◸◹◺◻◼◽◾◿☀☁☂☃☄★☆☇☈☉☊☋☌☍☎☏☐☑☒☓☔☕         |
+|   9750-9800: | ☖☗☘☙☚☛☜☝☞☟☠☡☢☣☤☥☦☧☨☩☪☫☬☭☮☯☰☱☲☳☴☵☶☷☸☹☺☻☼☽☾☿♀♁♂♃♄♅♆♇             |
+|   9800-9850: | ♈♉♊♋♌♍♎♏♐♑♒♓♔♕♖♗♘♙♚♛♜♝♞♟♠♡♢♣♤♥♦♧♨♩♪♫♬♭♮♯♰♱♲♳♴♵♶♷♸♹ |
+|   9850-9900: | ♺♻♼♽♾♿⚀⚁⚂⚃⚄⚅⚆⚇⚈⚉⚊⚋⚌⚍⚎⚏⚐⚑⚒⚓⚔⚕⚖⚗⚘⚙⚚⚛⚜⚝⚞⚟⚠⚡⚢⚣⚤⚥⚦⚧⚨⚩⚪⚫        |
+|   9900-9950: | ⚬⚭⚮⚯⚰⚱⚲⚳⚴⚵⚶⚷⚸⚹⚺⚻⚼⚽⚾⚿⛀⛁⛂⛃⛄⛅⛆⛇⛈⛉⛊⛋⛌⛍⛎⛏⛐⛑⛒⛓⛔⛕⛖⛗⛘⛙⛚⛛⛜⛝       |
+|  9950-10000: | ⛞⛟⛠⛡⛢⛣⛤⛥⛦⛧⛨⛩⛪⛫⛬⛭⛮⛯⛰⛱⛲⛳⛴⛵⛶⛷⛸⛹⛺⛻⛼⛽⛾⛿✀✁✂✃✄✅✆✇✈✉✊✋✌✍✎✏    |
+| 10000-10050: | ✐✑✒✓✔✕✖✗✘✙✚✛✜✝✞✟✠✡✢✣✤✥✦✧✨✩✪✫✬✭✮✯✰✱✲✳✴✵✶✷✸✹✺✻✼✽✾✿❀❁            |
+| 10050-10100: | ❂❃❄❅❆❇❈❉❊❋❌❍❎❏❐❑❒❓❔❕❖❗❘❙❚❛❜❝❞❟❠❡❢❣❤❥❦❧❨❩❪❫❬❭❮❯❰❱❲❳       |
+| 10100-10150: | ❴❵❶❷❸❹❺❻❼❽❾❿➀➁➂➃➄➅➆➇➈➉➊➋➌➍➎➏➐➑➒➓➔➕➖➗➘➙➚➛➜➝➞➟➠➡➢➣➤➥          |
+| 10150-10200: | ➦➧➨➩➪➫➬➭➮➯➰➱➲➳➴➵➶➷➸➹➺➻➼➽➾➿⟀⟁⟂⟃⟄⟅⟆⟇⟈⟉⟊⟋⟌⟍⟎⟏⟐⟑⟒⟓⟔⟕⟖⟗           |
+|--------------+----------------------------------------------------------------|
+****** zodiac
+     ♈♉♊♋♌♍♎♏⛎♐♑♒♓
+****** zodiac unambiguous
+     ♈♉♌♎⛎♐♑♒♓
+****** zodiac even more unambiguous
+     ♈♉♌♎⛎♐♒
 
 * Db
 ** timeserie db
