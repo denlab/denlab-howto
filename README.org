@@ -4761,6 +4761,13 @@ digraph G {
 
 * Terminal (cli)
 ** Unicode(UTF8)
+*** How can I search by name for unicode char on the command line?
+- Could use unipicker: https://github.com/jeremija/unipicker
+- Install with:
+#+BEGIN_SRC shell
+  nix-env -iA nixpkgs.unipicker
+#+END_SRC
+
 *** Handy unicode(utf8) chars?
 ***** Handy emoticon ?
  | thumbs up  | 👍  |
