@@ -2390,6 +2390,33 @@ https://packages.debian.org/bookworm/nvidia-openjdk-8-jre
 And switch between old/new java with:
 ~update-alternatives --config java~
 ~update-alternatives --config javac~
+****** Fresh install of bookworm 12.5 via cd.iso apt update fails !?
+#+BEGIN_SRC shell
+    apt update
+
+    #> Err:1 http://security.debian.org/debian-security bookworm-security/main amd64 libuv1 amd64 1.44.2-1+deb12u1
+    #> 503  Service Unavailable [IP: 199.232.58.132 80]
+    #> Err:2 http://security.debian.org/debian-security bookworm-security/main amd64 bind9-host amd64 1:9.18.24-1
+#+END_SRC
+Solved it using https://wiki.debian.org/SourcesList
+#+BEGIN_SRC shell
+    echo 'deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
+  deb-src http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
+
+  deb http://deb.debian.org/debian-security/ bookworm-security main contrib non-free non-free-firmware
+  deb-src http://deb.debian.org/debian-security/ bookworm-security main contrib non-free non-free-firmware
+
+  deb http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware
+  deb-src http://deb.debian.org/debian bookworm-updates main contrib non-free non-free-firmware' \
+         > /etc/apt/sources.list
+    # then the ususal
+    apt update
+    apt upgrade
+    # worked fine !
+
+
+#+END_SRC
+
 **** Ubuntu
 ***** X
 ****** Disable Wayland to use Xorg instead?
