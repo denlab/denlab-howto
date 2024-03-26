@@ -4983,6 +4983,24 @@ see: https://en.wikipedia.org/wiki/List_of_U│nicode_characters#Box_Drawing
      ♈♉♌♎⛎♐♒
 
 * Db
+** sqlite
+*** sqlite3
+**** import
+***** How do I import a csv from stdin with field containing '"' into a sqlite3 db (non interactively)?
+#+BEGIN_SRC shell
+    # this is valid csv:
+    echo '"a","b"
+  "c""","d"
+  "e""e","ffff"
+  "gg""gg", "hhhhhh"'
+  # import it in sqlite3
+     echo '"a","b"
+  "c""","d"' \
+          | sqlite3 /tmp/.db -csv -cmd ".import '| cat' tt"
+  # let's check the content of the table tt
+     sqlite3 /tmp/.db 'select * from tt'
+     #> "c""" d
+#+END_SRC
 ** timeserie db
 *** influxdb
 **** flux
