@@ -3021,6 +3021,15 @@ sudo checkinstall
 https://chrome.google.com/webstore/detail/tab-reloader-page-auto-re/dejobinhdiimklegodgbmbifijpppopn
 ****** TODO to check
 
+*** Chromium
+**** Run chromium diagnostics?
+#+BEGIN_SRC shell
+  chromium --diagnostics
+#+END_SRC
+**** Chromium crashes on startup, any hint?
+- Run =chrome --diagnostics=
+- look for the size of $HOME/.config/chromium
+- I had a case of a webworker cache dir huge (4gb), deleting it fix the problem
 * Videos
 ** Youtube
 **** How do I send a link to a youtube video specifing the resolution?
