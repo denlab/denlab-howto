@@ -3001,6 +3001,10 @@ sudo checkinstall
 - Type:
 =<s>=
 - Then complete (eg: =M-/=)
+*** How to track time spen on TODO STARTED DONE?
+    - start clock in with: org-clock-in
+    - stop clock with    : org-clock-out
+    - when you pass the task  as DONE: org mode will inster the total time spent
 * Web
 ** Browsers
 *** Firefox
