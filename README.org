@@ -4,20 +4,818 @@
 #+MACRO: pipeAnd @@html:&#124;&amp;@@
 #+TODO: TODO(t) STARTED(s) WAITING(w) | DONE(d) CANCELED(c)
 #+STARTUP: shrink
-#+OPTIONS: num:0 whn:2 toc:4 H:3
+#+OPTIONS: num:0 whn:2 toc:999 H:999
 
+My personal howto for things I know I knew, but keep forgetting 😸
 
+Also serve:
+- Large org-mode real world test
+- A Rough log of my computer-related interests over time (with the Git history)
 
-* Unixes
+* Operating Systems
 ** Linux
+*** Shells
+**** Bash
+***** Non interactive
+****** Use alises in non interactive bash?
+      #+BEGIN_SRC sh
+        shopt | egrep expand_aliases
+        #> expand_aliases  off
+        shopt -s expand_aliases
+        #>
+        shopt | egrep expand_aliases
+        expand_aliases  on
+      #+END_SRC
+***** Interactive use
+****** Complete
+******* bash completion cheat sheet?
+       | complete on                                                              | cmd        | options |             |               | for what?     | short form |
+       |--------------------------------------------------------------------------+------------+---------+-------------+---------------+---------------+------------|
+       | remove                                                                   | =complete= | =-r=    |             |               | all           |            |
+       |                                                                          | =complete= | =-r=    |             | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       |--------------------------------------------------------------------------+------------+---------+-------------+---------------+---------------+------------|
+       | complete on alias names                                                  | =complete= | =-A=    | =alias=     | =cmd1 … cmdN= | =cmd1 … cmdN= | =-a=       |
+       |--------------------------------------------------------------------------+------------+---------+-------------+---------------+---------------+------------|
+       | array variable names                                                     | =complete= | =-A=    | =arrayvar=  | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | readline key binding names                                               | =complete= | =-A=    | =binding=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | names of shell builtin commands                                          | =complete= | =-A=    | =builtin=   | =cmd1 … cmdN= | =cmd1 … cmdN= | =-b=       |
+       | command names                                                            | =complete= | =-A=    | =command=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | directory names                                                          | =complete= | =-A=    | =directory= | =cmd1 … cmdN= | =cmd1 … cmdN= | =-d=       |
+       | disabled shell builtins                                                  | =complete= | =-A=    | =disabled=  | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | enabled shell builtins                                                   | =complete= | =-A=    | =enabled=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | names of exported shell variables                                        | =complete= | =-A=    | =export=    | =cmd1 … cmdN= | =cmd1 … cmdN= | =-e=       |
+       | file names                                                               | =complete= | =-A=    | =file=      | =cmd1 … cmdN= | =cmd1 … cmdN= | =-f=       |
+       | names of shell functions                                                 | =complete= | =-A=    | =function=  | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | group names                                                              | =complete= | =-A=    | =group=     | =cmd1 … cmdN= | =cmd1 … cmdN= | =-g=       |
+       | help topics accepted by the help builtin                                 | =complete= | =-A=    | =helptopic= | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | hostnames as taken from the file specifed by the HOSTFILE shell variable | =complete= | =-A=    | =hostname=  | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | job names                                                                | =complete= | =-A=    | =job=       | =cmd1 … cmdN= | =cmd1 … cmdN= | =-j=       |
+       | shell reserved words                                                     | =complete= | =-A=    | =keyword=   | =cmd1 … cmdN= | =cmd1 … cmdN= | =-k=       |
+       | names of running jobs                                                    | =complete= | =-A=    | =running=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | service names                                                            | =complete= | =-A=    | =service=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | valid args for the -o option of the set builtin                          | =complete= | =-A=    | =setopt=    | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | shell option names as accepted by the shopt builtin                      | =complete= | =-A=    | =shopt=     | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | signal names                                                             | =complete= | =-A=    | =signal=    | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | names of stopped jobs                                                    | =complete= | =-A=    | =stopped=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
+       | user names                                                               | =complete= | =-A=    | =user=      | =cmd1 … cmdN= | =cmd1 … cmdN= | =-u=       |
+       | names of all shell variables                                             | =complete= | =-A=    | =variable=  | =cmd1 … cmdN= | =cmd1 … cmdN= | =-v=       |
+***** Common tasks
 
-*** Misc
-**** Removed /dev/null how to remake it?
-mknod /dev/null c 1 3
-chmod 666 /dev/null
+****** Random
+******* Generate a lot of (pseudo) random data faster than /dev/urandom?
+#+BEGIN_SRC
+openssl enc -aes-256-ctr -pass pass:"$(head -c128 /dev/urandom | base64)" -nosalt < /dev/zero | pv > randomfile.bin
+#+END_SRC
+****** generate random string?
+  #+begin_src sh
+  #!/bin/bash
+  # bash generate random alphanumeric string
+  #
 
+  # bash generate random 32 character alphanumeric string (upper and lowercase) and
+  NEW_UUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 
-*** Package managers
+  # bash generate random 32 character alphanumeric string (lowercase only)
+  cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1
+
+  # Random numbers in a range, more randomly distributed than $RANDOM which is not
+  # very random in terms of distribution of numbers.
+
+  # bash generate random number between 0 and 9
+  cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | head --bytes 1
+
+  # bash generate random number between 0 and 99
+  NUMBER=$(cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | sed -e 's/^0*//' | head --bytes 2)
+  if [ "$NUMBER" == "" ]; then
+    NUMBER=0
+  fi
+
+  # bash generate random number between 0 and 999
+  NUMBER=$(cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | sed -e 's/^0*//' | head --bytes 3)
+  if [ "$NUMBER" == "" ]; then
+    NUMBER=0
+  fi
+  #+end_src
+  https://gist.github.com/earthgecko/3089509
+****** decimal / hex (and opposite) conversion?
+  #+begin_src sh
+ # decimal to hex
+ echo "obase=16; 34" | bc
+ # hex to decimal
+  echo $((0xa))
+  # 10
+  #+end_src
+****** redirect output in variable?
+  "must read" about the differents techniques of redirection: http://stackoverflow.com/questions/13763942/bash-why-piping-input-to-read-only-works-when-fed-into-while-read-const
+****** stop on error (even in subshell)?
+  It seems that bash disable -e in subshells.
+******* workaround1: set -e explicitly for each subshell
+  #+begin_src sh
+  set -e explicitly at the start of each subshell
+  #+end_src
+******* workaround2: write shell script with '&&'
+       Write each commands as a binary and:
+   #+begin_src sh
+     :        \
+     && cmd1  \
+     && cmd 2 \
+     && cmd 3 \
+     ;
+  #+end_src
+******* workaround3: write shell script with '||'
+   #+begin_src sh
+     cmd1 || false
+     cmd2 || false
+     cmd3 || false
+  #+end_src
+****** loop over args?
+      #+begin_src sh
+      for var in "$@"
+      do
+        echo "$var"
+      done
+      #+end_src
+      http://stackoverflow.com/questions/255898/how-to-iterate-over-arguments-in-a-bash-script
+****** parse a string as args
+      #+begin_src sh
+      How to process the following list of pairs: "Mercury 36" "Venus 67" "Earth 93"  "Mars 142" "Jupiter 483"?
+      (note no =IFS= set)
+      #+begin_src sh
+      #!/usr/bin/env bash
+      set -euo pipefail
+
+      for planet in "Mercury 36" "Venus 67"
+      do
+        set -- $planet
+        echo "\$1=$1"
+        echo "\$2=$2"
+      done
+      # outputs
+      #
+      # $1=Mercury
+      # $2=36
+      # $1=Venus
+      # $2=67
+      #+end_src
+****** How to save a script params (before doing modifications like shift, ..)?
+      #+begin_src sh
+      # save with
+      original_params=("$@")
+      # use the copy with
+      echo "${original_params[@]}"
+      #+end_src
+****** generate uuid?
+      #+BEGIN_SRC sh
+      cat /proc/sys/kernel/random/uuid
+      #> aa6bc854-9eab-43cd-986d-d2318bf4a845
+      #+END_SRC
+****** List all possible commands (including functions)?
+    #+BEGIN_SRC sh
+      # also works for zsh
+      compgen -c
+    #+END_SRC
+***** Programming
+****** Misc
+******* bash pointer variables?
+****** Control flow
+******* Tests/Conditionnals
+******** ternary operator in bash?
+        #+BEGIN_SRC sh
+        bash -c 'b=5 c=2 && d=3 && let a=b==5?c:d; echo $a'
+        #+END_SRC
+******** cheatsheet
+        |      |          |            |                 |
+        |------+----------+------------+-----------------|
+        | file | is empty | =[ -s a ]= | single brackets |
+        |      |          |            |                 |
+******** test files cheatsheet
+        from: https://wiki-dev.bash-hackers.org/commands/classictest
+  *For classic test =[ <..> ]=*
+  |---------------------+--------------------------------------------------------------------------------------|
+  | Operator syntax     | Description                                                                          |
+  |---------------------+--------------------------------------------------------------------------------------|
+  | -a <FILE>           | True if <FILE> exists. :!: (not recommended, may collide with -a for AND, see below) |
+  | -e <FILE>           | True if <FILE> exists.                                                               |
+  | -f <FILE>           | True, if <FILE> exists and is a regular file.                                        |
+  | -d <FILE>           | True, if <FILE> exists and is a directory.                                           |
+  | -c <FILE>           | True, if <FILE> exists and is a character special file.                              |
+  | -b <FILE>           | True, if <FILE> exists and is a block special file.                                  |
+  | -p <FILE>           | True, if <FILE> exists and is a named pipe (FIFO).                                   |
+  | -S <FILE>           | True, if <FILE> exists and is a socket file.                                         |
+  | -L <FILE>           | True, if <FILE> exists and is a symbolic link.                                       |
+  | -h <FILE>           | True, if <FILE> exists and is a symbolic link.                                       |
+  | -g <FILE>           | True, if <FILE> exists and has sgid bit set.                                         |
+  | -u <FILE>           | True, if <FILE> exists and has suid bit set.                                         |
+  | -r <FILE>           | True, if <FILE> exists and is readable.                                              |
+  | -w <FILE>           | True, if <FILE> exists and is writable.                                              |
+  | -x <FILE>           | True, if <FILE> exists and is executable.                                            |
+  | -s <FILE>           | True, if <FILE> exists and has size bigger than 0 (not empty).                       |
+  | -t <fd>             | True, if file descriptor <fd> is open and refers to a terminal.                      |
+  | <FILE1> -nt <FILE2> | True, if <FILE1> is newer than <FILE2> (mtime). :!:                                  |
+  | <FILE1> -ot <FILE2> | True, if <FILE1> is older than <FILE2> (mtime). :!:                                  |
+  | <FILE1> -ef <FILE2> | True, if <FILE1> and <FILE2> refer to the same device and inode numbers. :!:         |
+  |---------------------+--------------------------------------------------------------------------------------|
+******* Looping
+******** loop over cmd output with while?
+        #+BEGIN_SRC sh
+       iseq 3 | while read l; do echo ">$l"; done
+       #> >1
+       #> >2
+       #> >3
+        #+END_SRC
+******** c style for loop?
+    #+begin_src sh
+    for ((i=0;i<3;i++)); do
+      echo $i
+    done
+    #+end_src
+******* switch case ?
+       #+begin_src sh
+   while [[ $# -gt 0 ]]; do
+       case "$1" in
+           *:*          ) hostport=(${1//:/ }); shift 1 ;;
+                --child ) CHILD=1             ; shift 1 ;;
+           -q | --quiet ) QUIET=1             ; shift 1 ;;
+           -s | --strict) STRICT=1            ; shift 1 ;;
+           --host=*     ) HOST="${1#*=}"      ; shift 1 ;;
+           --help       ) usage               ; shift 1 ;;
+           *            ) unknownArg "$1"     ; shift 1 ;;
+       esac
+   done
+       #+end_src
+****** Types
+******* Datastructures
+******** Arrays
+********* Associative arrays
+********** declare, print, ...
+     #+begin_src sh
+     # declare
+     declare -A m=( [red]='0;31' [green]='0;32' )
+     # print keys
+     echo "keys=${!m[@]}"
+     # print all
+     declare | grep colorsCodes
+     # iterate
+     for i in "${!array[@]}"
+     do
+       echo "key  : $i"
+       echo "value: ${array[$i]}"
+     done
+     #+end_src
+********** copy ?
+     #+begin_src sh
+     declare -A arr=([this]=hello [\'that\']=world [theother]='and "goodbye"!')
+     declare -A newarr
+     for idx in "${!arr[@]}"; do
+         newarr[$idx]=${arr[$idx]}
+     done
+
+     diff <(echo "$temp") <(declare -p newarr | sed 's/newarr=/arr=/')
+     # no output
+     #+end_src
+     http://stackoverflow.com/questions/19417015/bash-copy-from-one-array-to-another
+********* Normal arrays
+********** declare/literal/set/getAll/size
+         #+begin_src bash
+         # declare
+         declare -a a
+         # literal
+         a=(a b c)
+         # set
+         a[0]=x
+         # get all
+         echo ${a[*]}
+         # size
+         echo "size=${#a[@]}"
+         #+end_src
+********** access empty array?
+
+          #+BEGIN_SRC sh
+          declare -a a=()
+          echo -n a=
+          echo ${a[@} + "${a[@]}"}
+          #+END_SRC
+********** parse string to array?
+          #+BEGIN_SRC sh
+          IFS=', ' read -r -a array <<< "a, b, c"
+          echo "array=${array[@]}"
+          #> array=a b c
+          #+END_SRC
+********** clone an array into another array?
+          #+BEGIN_SRC sh
+          show() { declare | egrep "^${1}=" ; }
+          # declare array a1
+          declare -a a1=( a b )
+          show a1
+          #> a1=([0]="a" [1]="b")
+          declare -a a2=("${a1[@]}")
+          show a2
+          #> a2=([0]="a" [1]="b")
+          # verify it is a clone
+          a2[0]=x
+          show a2
+          #> a2=([0]="x" [1]="b")
+          show a1
+          #> a1=([0]="a" [1]="b")
+          #+END_SRC
+******* Strings
+******** bash strings cheat sheet?
+
+   | what        | how                                          | example |
+   |-------------+----------------------------------------------+---------|
+   | size        | =${#str}=                                    |         |
+   | substring   | =${str:pos}=                                 |         |
+   | substring   | =${str:pos:length}=                          |         |
+   |             |                                              |         |
+   | char to int | =printf '%d\n' "'y"=                         |         |
+   | int to char | =printf "\x$(printf %x 65)"=                 |         |
+   | replace all | =bash -c 'x=abcabc; echo ${x//b/z} # axcaxc= |         |
+   |             |                                              |         |
+******** Syntax
+********* ssh escape sequence?
+     =ENTER, ~, .=
+******** Printf?
+********* print args, one by line with its position?
+         from: http://wiki.bash-hackers.org/commands/builtin/printf
+         #+BEGIN_SRC sh
+         printf '"%b"\n' "$0" "$@" | nl -v0 -s": "
+         #> 0: "-zsh"
+         #> 1: "foo"
+         #> 2: "bar"
+         #+END_SRC
+********* print a line accross the terminal?
+         from: http://wiki.bash-hackers.org/commands/builtin/printf
+         #+BEGIN_SRC sh
+         bash -c "l=$(tput cols)"' && printf -v line "%*s" $l && echo ${line// /-}'
+         #> --------------------------------------------------------------------------------
+         #+END_SRC
+***** Bash options
+****** How to get the values of errexit etc (set by set -e ...)?
+      #+BEGIN_SRC sh
+set -o
+#> allexport       off
+#> braceexpand     on
+#> emacs           on
+#> errexit         off
+#> errtrace        off
+      #+END_SRC
+****** option so bash export all declared variables?
+      #+BEGIN_SRC sh
+      a=1
+      bash -c 'echo "a=$a"'
+      set -a
+      a=1
+      bash -c 'echo "a=$a"'
+      #> a=
+      #> a=1
+
+      #+END_SRC
+****** option to glob also hidden files?
+      #+BEGIN_SRC sh
+ls -Alrth
+   #> total 1,0K
+   #> -rw-r--r-- 1 u u 0 fvr. 10 19:37 .a
+   #> -rw-r--r-- 1 u u 0 fvr. 10 19:37 a
+ls *
+   #> a
+shopt -s dotglob && ls *
+   #> a
+   #> .als -Alrth
+   #> total 1,0K
+   #> -rw-r--r-- 1 u u 0 fvr. 10 19:37 .a
+   #> -rw-r--r-- 1 u u 0 fvr. 10 19:37 a
+      #+END_SRC
+****** Bash config files
+******* Order of loading of bash init files?
+       - See diagram: https://blog.flowblok.id.au/2013-02/shell-startup-scripts.html
+       - graphviz code repo: =hg clone https://bitbucket.org/flowblok/shell-startup=
+       [[./img/shell-startup.png]]
+***** Files and Redirections
+****** Stdin/out/err
+******* redirect file to stdin on the left side?
+       see: http://www.tldp.org/LDP/abs/html/io-redirection.html
+       #+BEGIN_SRC sh
+       < input-file command > output-file
+       # non standard
+       #+END_SRC
+******* redirecting stdout, stderr
+       #+BEGIN_SRC sh
+       | redirect from | to   | cmd                            | notes          |
+       |---------------+------+--------------------------------+----------------|
+       | out           | err  |  ls 1>&2                       |                |
+       | out & err     | file |  ls &>   file                  |                |
+       |               |      |  ls >    file 2>&1             | for older bash |
+       | err           | out  |  ls 2>&1                       |                |
+       | err & out     | pipe |  ls 2>&1 |  grep '.*'          |                |
+       |               |      |  ls      |& grep '.*'          | equiv          |
+       | err           | proc |  ls 2> >(grep foo)  '          | equiv          |
+       #+END_SRC
+******* use stdout as a file (with filename) for another cmd?
+       #+BEGIN_SRC sh
+       cmd <(cat f)
+       #+END_SRC
+******* swap stdout and stderr?
+       =cmd 3>&1 1>&2 2>&3=
+      #+BEGIN_SRC sh
+      $ f() { (echo out) && (echo err 1>&2); }
+      $ f
+   out
+   err
+      $ s() { sed "s/.*/=$1>&<$1=/"; }
+      $ f | s 1
+   err
+   =1>out<1=
+      $ (f 3>&1 1>&2 2>&3) | s 1
+   out
+   =1>err<1=
+      $ ((f 3>&1 1>&2 2>&3) | s 1) | s 2
+   out
+   =2>=1>err<1=<2=
+      $ (((f 3>&1 1>&2 2>&3) | s 1) 3>&1 1>&2 2>&3) | s 2
+   =2>out<2=
+   =1>err<1=
+      #+END_SRC
+******* write to stdin of a backround process?
+       see: https://serverfault.com/questions/188936/writing-to-stdin-of-background-process
+       #+BEGIN_SRC sh
+       # create server
+       mkfifo in
+       cat > in &
+       echo $! > pid
+       cat in | sed 's/.*/changed> &/' &
+       # use server
+       echo foo > in
+       # stop server
+       kill -9 $(cat pid)
+       #+END_SRC
+******* here-string with indentation in src but not in output?
+       #+BEGIN_SRC sh
+       cat <<EOF''
+ <TAB>hi
+ EOF
+       #> <TAB>hi
+       # But:
+       cat <<-EOF''
+ <TAB>hi
+ EOF
+       #> hi
+       #+END_SRC
+******* File Descriptors
+******** Named File Descriptors
+********* define a named file descriptor to a writable file and write to it?
+         #+BEGIN_SRC sh
+         # open
+         exec {filew}>outputfile
+         # write
+         echo foo >&$filew
+         # check
+         cat outputfile
+         #> foo
+         # close
+         exec {filew}>&-
+         #+END_SRC
+******* how to know if stdout is a terminal?
+       #+BEGIN_SRC sh
+       echo -n "stdout is: "
+       if [ -t 1 ]; then
+         echo "a terminal"
+       else
+         echo "not a terminal"
+       fi
+       #+END_SRC
+******* Printout
+******** Padding
+********* right / left pad with printf?
+         #+BEGIN_SRC sh
+         printf "%40s\n" foo | tr ' ' .
+         #> .....................................foo
+         printf "%-40s\n" foo | tr ' ' .
+         #> foo.....................................
+         #+END_SRC
+********* zero padding numbers?
+         #+BEGIN_SRC sh
+         printf "%05d\n" 99
+         #> 00099
+         #+END_SRC
+****** Tmp files
+******* "delete while still open" trick to be sure a file will be deleted?
+       from: https://unix.stackexchange.com/questions/181937/how-create-a-temporary-file-in-shell-script
+       #+BEGIN_SRC sh
+       tmpfile=$(mktemp /tmp/abc-script.XXXXXX)
+       exec 3>"$tmpfile"
+       rm "$tmpfile"
+       : ...
+       echo foo >&3
+       #+END_SRC
+***** Env
+****** how to run a command with the env cleared?
+      #+BEGIN_SRC sh
+      env -i bash -c env
+      #>        -i, --ignore-environment
+      #>        start with an empty environment
+
+      #+END_SRC
+****** export bash function?
+
+     #+BEGIN_SRC sh
+     f() { echo "I'm f!" ; }
+     export -f f
+     bash -c f
+     #> I'm f!
+     #+END_SRC
+****** Replace all env var by values in file?
+      #+BEGIN_SRC sh
+      envsubst
+      #+END_SRC
+****** how to make bash source a file before running a command?
+      Use the =BASH_ENV= to tell bash to source a file:
+     #+BEGIN_SRC sh
+     touch .bashrc
+     echo foo=bar >> .bashrc
+     bash -c 'echo $foo'
+     #>
+     BASH_ENV=.bashrc bash -c 'echo $foo'
+     #> bar
+    #+END_SRC
+****** how to test if a variable is defined?
+      #+BEGIN_SRC sh
+      if [[ ${varname:-} ]]; then
+        echo "var is defined"
+      else
+        echo "var not defined or empt"
+      fi
+      #+END_SRC
+      - Another way from [[https://wiki-dev.bash-hackers.org/scripting/posparams][bash hackers]]:
+        #+BEGIN_SRC sh
+          if [ ${x+defined} ]; then echo "x is not defined"; \
+                               else echo "x is defined (may be blank)"; \
+          fi \
+          ;
+        #+END_SRC
+***** Debugging
+****** how to make a bash script stop and print current line before running it?
+      Add to your script:
+      #+BEGIN_SRC sh
+      trap '(read -p "[$BASH_SOURCE:$LINENO] $BASH_COMMAND?")' DEBUG
+      #+END_SRC
+      From: https://translate.google.co.uk/translate?hl=fr&sl=en&tl=fr&u=http%3A%2F%2Fwww.softpanorama.org%2FScripting%2FShellorama%2Fbash_debugging.shtml&anno=2
+****** how to execute a script step by step?
+      Add to your script:
+      #+BEGIN_SRC sh
+      trap 'echo TRAP ERROR something wrong happened, errcode=$? 1>&2 ; finish' ERR
+      #+END_SRC
+#+BEGIN_SRC sh
+     declare varName=foo
+     declare -n refToVar=varName
+     echo ${refToVar}
+     #> foo
+#+END_SRC
+works recursively:
+#+BEGIN_SRC sh
+$ declare varName=foo
+$ declare -n refToVar=varName
+$ declare -n refToRefToVar=refToVar
+$ echo ${refToRefToVar}
+#> foo
+#+END_SRC
+**** Zsh
+
+*** Editors
+**** Emacs
+***** file type indicator header for emacs?
+#+begin_src sh
+-*- mode: outline -*-
+#+end_src
+***** edit a file remotely over ssh with tramp?
+   #+begin_src sh
+   C-x C-f
+   /<user>@<host>:<file>
+   #+end_src
+
+***** Spacemacs
+****** Troubleshoot
+******* org-mode not working after a fresh install of spacemacs + practicalli config?
+- Remove any org mode in ~$HOME/.emacs.d/elpa~
+- Restart emacs it should work
+****** Clojure
+******* Tests
+******** Switch between implementation and test in Spacemacs Clojure?
+- Keybinding: =<SPC> p a=
+- Function: projectile-switch-between-implementation-and-test
+******** Clojure's switch between implementation and test: how to create the test if not exists?
+- In the spacemacs config add:
+#+begin_src elisp
+(spacemacs-project
+      :variables
+      projectile-create-missing-test-files t)
+#+end_src
+
+****** Install
+******* "No public key for 066DAFCB81E42C40" ?
+   #+begin_src sh
+   gpg --homedir ~/.emacs.d/elpa/gnupg --receive-keys 066DAFCB81E42C40
+   #+end_src
+
+****** evil cheat sheet?
+
+| what                                               |                       | cmds                  | example                  |
+|----------------------------------------------------+-----------------------+-----------------------+--------------------------|
+| general cmd                                        | pattern 1             | <cmd> [n] <object>    | =d 3 3= # delete 3 words |
+| "                                                  | pattern 2             | [n] <cmd> <object>    | =3 d w= # delete 3 words |
+| undo / redo                                        |                       | u / ctrl-r            |                          |
+| put (after copy)                                   |                       | p                     |                          |
+| change word                                        |                       | cw                    |                          |
+| go to a specific line number                       |                       | :<lineNb>             |                          |
+| search and replace                                 | current line          | :s/search/repl/[g]    |                          |
+| "                                                  | between lines N and M | :N,Ms/search/repl/[g] |                          |
+| "                                                  | whole buffer          | %s/search/repl/[g]    |                          |
+| locate matching parentesis (or curly, ...)         |                       | %                     |                          |
+| regex modifier to confirm before each replace?     |                       | c: s/search/repl/gc   |                          |
+| write current file                                 |                       | :w                    |                          |
+| save as <newName>                                  |                       | :w <newName>          |                          |
+| page up / page down                                |                       | C-j C-k               |                          |
+| insert the content of a file in the current buffer |                       | :r <filename>         |                          |
+| insert new line                                    | below                 | o                     |                          |
+|                                                    | above                 | O                     |                          |
+| replace (like replace mode - opposite of insert)   |                       | R                     |                          |
+| append at the end of the line                      |                       | A                     |                          |
+****** run a command and get the output in the current buffer?
+******* Emacs
+    ~C-u M-! <shell-command>~
+******* fix error when installing spacemacs: "No such file or directory, evil"?
+    May be a simply missing gpg elpa key:
+    #+BEGIN_SRC sh
+    gpg --homedir ~/.emacs.d/elpa/gnupg --receive-keys 066DAFCB81E42C40
+    #+END_SRC
+******* Spacemacs (evil mode)
+     ~SPC u SPC ! <shell-command>~
+****** Universal argument in spacemacs (evil mode)?
+    instead of the traditional ~C-u~
+    ~SPC u~
+****** Project
+******* =helm-project-do-ag= how to filter by file types?
+     - Example, searching for:
+       - =*.clj= files
+       - containing =defn=
+     ~SPC s a p~
+     ~--clojure defn~
+
+******* search and replace in project?
+     |                          |                      |             |
+     |--------------------------+----------------------+-------------|
+     | search string in project | ~helm-project-do-ag~ | ~SPC s a p~ |
+     | edit the search results  |                      | ~C-c C-e~   |
+     | commit the changes       |                      | ~C-c C-c~   |
+****** SearchAndReplace
+******* How to search and replace starting at the cursor position?
+     #+BEGIN_SRC sh
+     :.,$s/\vBEFORE/AFTER/gc
+     #+END_SRC
+****** Folding
+******* a promising mode?
+     - hint: =spacemacs/fold-transient-state/evil-close-fold=
+****** Misc
+******* Exit emacs mode (holy mode) entered by error?
+
+    Exit holy mode:
+
+    |                            | in holy mode | in evil mode |
+    |----------------------------+--------------+--------------|
+    | spacemacs/toggle-holy-mode | =M-m t E e=  | =SPC t E e=  |
+    |                            |              |              |
+
+******** pipe in table with code block
+      - create the table in org mode
+      | x    | l               |
+      |------+-----------------|
+      | cmd1 | cmd             |
+      | cmd2 | cmd <pipe> cmdx |
+      - copy and pase the table in a code block and add the missing pipes:
+        #+BEGIN_SRC sh
+      | x    | l               |
+      |------+-----------------|
+      | cmd1 | cmd             |
+      | cmd2 | cmd | cmdx      |
+        #+END_SRC
+******** TODO org mode how to use pipes in tables? [0%]
+********* TODO using contants?
+      #+CONSTANTS: c=299792458. pi=3.14 eps=2.4e-6
+      | name | value |
+      |------+-------|
+      | c    | $c    |
+      | pi   | $pi   |
+      | eps  | $eps  |
+********* TODO macros?
+********* TODO latex?
+********* TODO html?
+********* TODO compute cells values ?
+****** twbs export html
+    Controlling html output?
+  #+BEGIN_SRC sh
+    #+OPTIONS: num:5 whn:2 toc:4 H:6
+    And to set these via your publish configuration using the org-publish-project-alist, the options would be :section-numbers, :headline-levels and :with-toc.
+
+    The above options are described in the export settings section of the orgmode manual. This component introduces a new setting whn for per document, and :with-headline-numbers for publish config, which controls the display of section numbers. To disable, set to nil, to enable, set to t, and to control depth of display, use a whole number.
+  #+END_SRC
+    from: https://github.com/marsmining/ox-twbs
+****** easy templates?
+
+from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
+
+| s  |  =#+BEGIN_SRC ... #+END_SRC=      |
+| e  | =#+BEGIN_EXAMPLE ... #+END_EXAMPLE= |
+| q  | =#+BEGIN_QUOTE ... #+END_QUOTE=   |
+| v  | =#+BEGIN_VERSE ... #+END_VERSE=   |
+| c  | =#+BEGIN_CENTER ... #+END_CENTER= |
+| l  | =#+BEGIN_LaTeX ... #+END_LaTeX=   |
+| L  | =#+LaTeX:=                        |
+| h  | =#+BEGIN_HTML ... #+END_HTML=     |
+| H  | =#+HTML:=                         |
+| a  | =#+BEGIN_ASCII ... #+END_ASCII=   |
+| A  | =#+ASCII:=                        |
+| i  | =#+INDEX: line=                   |
+| I  | =#+INCLUDE: line=                 |
+****** Babel
+******* "eval is disabled for shell"
+******** add to your init file
+       *use =shell= and not =sh=*
+       #+BEGIN_SRC elisp
+       (org-babel-do-load-languages
+       'org-babel-load-languages
+       '(
+       (js         . t)
+       ;; (sh         . t)
+       (emacs-lisp . t)
+       (shell      . t)
+       (clojure    . t)
+     ))
+       #+END_SRC
+******** in the org mode file
+     #+BEGIN_EXAMPLE
+     #+BEGIN_SRC sh
+     f() { echo "I'm f!" ; }
+     export -f f
+     bash -c f
+     #+END_SRC
+     #+END_EXAMPLE
+******** stop emacs
+******** remove the folder =~/.emacs.d/elpa/org-plus-contrib-*=
+******** start emacs
+******** try to eval with =C-c C-c=
+****** Spacemace: disable mouse under termux ?
+- in your ~defun dotspacemacs/user-config ()~ :
+- add ~(xterm-mouse-mode 0)~
+
+***** install emacs25 on ubuntu16.04?
+   #+BEGIN_SRC sh
+cd
+mkdir emacs25.install
+cd emacs25.install
+# install preReqs
+sudo apt install build-essential checkinstall
+# install build deps (same for emacs24 or 25)
+sudo apt-get build-dep emacs24
+# Download emacs25 src
+wget http://ftp.igh.cnrs.fr/pub/gnu/emacs/emacs-25.1.tar.{xz,xz.sig}
+keyId=7C207910
+keyFingerprint='28D3 BED8 51FD F3AB 57FE F93C 2335 87A4 7C20 7910'
+gpg --keyserver keyserver.ubuntu.com --recv "${keyId}"
+gpg --list-keys --with-fingerprint "${keyId}" | tr -s ' ' | grep "${keyFingerprint}"
+# build
+cd emacs-25.1
+./configure
+make
+# install
+sudo checkinstall
+   #+END_SRC
+***** Org-Mode
+****** key binding to insert a code block?
+- Type:
+=<s>=
+- Then complete (eg: =M-/=)
+****** How to track time spen on TODO STARTED DONE?
+    - start clock in with: org-clock-in
+    - stop clock with    : org-clock-out
+    - when you pass the task  as DONE: org mode will inster the total time spent
+
+******* Text
+******** Less
+********* how to search for a tab ?
+       Enter a literal tab with: =CTRL-v TAB=.
+******** Tail
+********* skip the N first lines of input with tail?
+       #+BEGIN_SRC sh
+       seq 10 | tail -n +2
+       #> 2
+       #> 3
+       #> 4
+       #> 5
+       #> 6
+       #> 7
+       #> 8
+       #> 9
+       #+END_SRC
+****** Package managers
     | distrib    | pkg manager | no sudo          | inst                     | inst ver          | list all installed          | list all installed w ver         | list avail vers of pkg           | list files of pkg | rm                           | update list of pkg |
     |------------+-------------+------------------+--------------------------+-------------------+-----------------------------+----------------------------------+----------------------------------+-------------------+------------------------------+--------------------|
     | =alpine=   | =apk=       |                  | =add=                    | =add <pkg>=<ver>= | =info=                      | =apk info <pipe> xargs apk info= | =apk info <pkg>=                 | =apk -L $p=       |                              |                    |
@@ -32,7 +830,7 @@ chmod 666 /dev/null
     | =nix==     |             |                  | =nix-env -i -v "${pkg}"= |                   | =nix-env -qa --description= |                                  |                                  |                   | =nix-env --uninstall "$pkg"= |                    |
     | =opensuse= | =zypper=    | =?=              | =install= or =in=        |                   |                             |                                  |                                  |                   | =remove= or =rm=             | =ref= or =refresh= |
     |            |             |                  |                          |                   |                             |                                  |                                  |                   |                              |                    |
-**** find which package manager is used on this machine?
+******* find which package manager is used on this machine?
      #+BEGIN_SRC sh
      #!/usr/bin/env bash
      while read p; do $p --version &> /dev/null && echo $p ; done <<< $'yum\napt\napk'
@@ -40,44 +838,44 @@ chmod 666 /dev/null
 
      #+RESULTS:
 
-**** apk
-***** equivalent of apt-file search?
+******* apk
+******** equivalent of apt-file search?
 
-*** Packages
+****** Software packages
     Top level sections as per the 'Section' attribute of =aptitude show <pkg>=.
-**** Admin
-***** Tmux
-****** how do i detach other client when reattach to session?
+******* Admin
+******** Tmux
+********* how do i detach other client when reattach to session?
        #+begin_src sh
    tmux -2 a -dt 0
        #+end_src
-****** create a new session specifying the name?
+********* create a new session specifying the name?
        #+BEGIN_SRC sh
        # create a session named "net'
        tmux -2 new-session -s net
        #+END_SRC
 
-****** reload .tmux.conf?
+********* reload .tmux.conf?
        #+BEGIN_SRC sh
        tmux source-file ~/.tmux.conf
        #+END_SRC
-****** bindings to install plugins?
+********* bindings to install plugins?
        #+BEGIN_SRC sh
        <prefix> + I
        #+END_SRC
        Note: After an tmux you may need to upgrade plugins too [[bindings to upgrade plugins?][see upgrading]].
-****** bindings to upgrade plugins?
+********* bindings to upgrade plugins?
        - update plugins: ~<prefix> + U
        - remove plugins not on the list: =<prefix> + alt + u=
-****** use another shell as the default (ex: zsh instead of bash)
+********* use another shell as the default (ex: zsh instead of bash)
 
       In the tmux config file (example: =$HOME/.tmux.conf=)
        #+BEGIN_SRC sh
        set -g default-command /usr/local/bin/zsh
        #+END_SRC
 
-***** Zip
-****** list content of a zip file from stdin?
+******** Zip
+********* list content of a zip file from stdin?
        #+BEGIN_SRC sh
        curl file://$(pwd)/dir.zip | bsdtar -xvf-
        #> % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -88,62 +886,62 @@ chmod 666 /dev/null
        #> x dir/2/5/
        #> x dir/2/5/data
        #+END_SRC
-***** Apt-get
-****** dpkg show all installed files of a .deb?
+******** Apt-get
+********* dpkg show all installed files of a .deb?
 
     #+begin_src sh
     dpkg -L jenkins
     #+end_src
-****** apt-get: what package provide this file?
+********* apt-get: what package provide this file?
 
     #+begin_src sh
     apt-get install apt-file
     apt-file update
     apt-file find <file>
     #+end_src
-****** fix a broken state ?
+********* fix a broken state ?
 
     #+begin_src sh
     sudo apt-get install --fix-broken
     #+end_src
-****** install a specific version?
+********* install a specific version?
        #+begin_src sh
        apt-get install my-lib-java=2016.03.30-79 my-lib=2016.03.30-79
        #+end_src
-****** show version that a package can be upgraded to?
+********* show version that a package can be upgraded to?
        #+begin_src sh
        apt-cache policy google-chrome-stable
        #+end_src
-****** customize output of dpkg -l?
+********* customize output of dpkg -l?
        #+BEGIN_SRC sh
        dpkg-query --show --showformat='${Package}\n'
        #+END_SRC
-****** Alternative
-******* rebuild alternative for a particular package?
+********* Alternative
+********** rebuild alternative for a particular package?
         Note: there's problably a better way :)
         But this had worked:
         #+BEGIN_SRC sh
          sudo aptitude purge openjdk-8-jdk
          sudo aptitude install openjdk-8-jdk
         #+END_SRC
-***** Rpm
-****** list files installed by a package?
+******** Rpm
+********* list files installed by a package?
     #+begin_src sh
     rpm -ql [packageName]
     #+end_src
-****** list only names of packages?
+********* list only names of packages?
        #+BEGIN_SRC sh
        rpm -qa --qf "%{NAME}\n"
        #+END_SRC
-***** Ps
-******* list all processes, show only pids?
+******** Ps
+********** list all processes, show only pids?
        #+BEGIN_SRC sh
        ps ax -o pid=
        #> 3409
        #> 3413
        #> 3417
        #+END_SRC
-******* ps: List processes with their elapsed running time ?
+********** ps: List processes with their elapsed running time ?
 
 #+BEGIN_SRC sh
   ps a   -o pid,state,tname,time,etime,command
@@ -152,8 +950,8 @@ chmod 666 /dev/null
   #> 1248 R pts/2    00:00:00       00:00  \_ ps af -o pid,state,tname,time,etime,command
   #> 23774 R pts/0    00:16:13       25:50 sha256sum
 #+END_SRC
-***** SeLinux
-****** status/enable/disable selinux?
+******** SeLinux
+********* status/enable/disable selinux?
        #+BEGIN_SRC sh
        # with the selinux-utils pkg:
        # for example on debian like systems:
@@ -165,18 +963,18 @@ chmod 666 /dev/null
        # disable
        setenforce 0
        #+END_SRC
-***** Dd
-****** Typical dd invocation to copy a partition disk ?
+******** Dd
+********* Typical dd invocation to copy a partition disk ?
 #+BEGIN_SRC sh
   dd if=/dev/ad0 of=/dev/ad1 bs=64M conv=noerror
 #+END_SRC
-******  Show progress with dd?
+*********  Show progress with dd?
 
       #+BEGIN_SRC sh
 dd if=/dev/sda of=/dev/sdb status=progress
       #+END_SRC
-***** Systrace
-****** How to cp with a progress bar using strace?
+******** Systrace
+********* How to cp with a progress bar using strace?
        Adapted from: https://chris-lamb.co.uk/posts/can-you-get-cp-to-give-a-progress-bar-like-wget
 
 #+BEGIN_SRC sh
@@ -190,14 +988,14 @@ dd if=/dev/sda of=/dev/sdb status=progress
 ;
 #+END_SRC
 
-***** Security
-****** Other
-******* list recent ssh connection on a host?
+******** Security
+********* Other
+********** list recent ssh connection on a host?
 #+begin_src sh
 last
 #+end_src
-****** SeLinux
-****** status/enable/disable selinux?
+********* SeLinux
+********* status/enable/disable selinux?
        #+BEGIN_SRC sh
        # with the selinux-utils pkg:
        # for example on debian like systems:
@@ -209,8 +1007,8 @@ last
        # disable
        setenforce 0
        #+END_SRC
-****** User/groups management
-****** Users's group management command
+********* User/groups management
+********* Users's group management command
 
        |--------------+------------------------+--------+----------------------------+-----------------------------------------------------|
        | Subject      | Action                 | Object | Command                    | Notes                                               |
@@ -232,34 +1030,34 @@ sudo groupadd $g
 # add a group specifying its group id
 sudo groupadd -g $gid $g
 
-**** Graphics
+******* Graphics
 
-***** Imagemagick
-****** how to change the quality of a jpeg image?
+******** Imagemagick
+********* how to change the quality of a jpeg image?
        #+BEGIN_SRC sh
        convert input.png -quality 75 output.jpg
        #+END_SRC
-***** Ffmpeg
-****** How to get only the 1st n minutes of videos?
+******** Ffmpeg
+********* How to get only the 1st n minutes of videos?
        #+BEGIN_SRC sh
 set -- i.mp4
 ffmpeg -i "$1" -ss 0 -t 60 -c copy "${1/./.prev.}"
 #+END_SRC
-****** Record desktop?
+********* Record desktop?
 Depends on the OS. see https://trac.ffmpeg.org/wiki/Capture/Desktop
-******* linux
+********** linux
 ffmpeg -video_size 1024x768 -framerate 25 -f x11grab -i :0.0+100,200 output.mp4
-******* windows
-******** directshow
+********** windows
+*********** directshow
 ffmpeg -f dshow -i video="screen-capture-recorder" output.mkv
-******** built-in gdi screengrabber
-********* all displays
+*********** built-in gdi screengrabber
+************ all displays
 ffmpeg -f gdigrab -framerate 30 -i desktop output.mkv
-********* region
+************ region
 ffmpeg -f gdigrab -framerate 30 -offset_x 10 -offset_y 20 -video_size 640x480 -show_region 1 -i desktop output.mkv
-********* window
+************ window
 ffmpeg -f gdigrab -framerate 30 -i title=Calculator output.mkv
-********* hw encoding
+************ hw encoding
 ffmpeg -f gdigrab -framerate 30 -i desktop -c:v h264_nvenc -qp 0 output.mkv
 
 
@@ -270,55 +1068,54 @@ ffmpeg -f gdigrab -framerate 30 -i desktop -c:v h264_nvenc -qp 0 output.mkv
 
 #+begin_src dot
 ffmpeg -i output2.m4v -vf "scale=(trunc(iw/4)*4)/4:(trunc(ih/4)*4)/4" video.mp4
-******* lossless recording
+********** lossless recording
 ffmpeg -video_size 1920x1080 -framerate 30 -f x11grab -i :0.0 -c:v libx264rgb -crf 0 -preset ultrafast -color_range 2 output.mkv
 
-
-**** Math
-***** Bc
-****** float precision?
+******* Math
+******** Bc
+********* float precision?
        #+begin_src sh
        echo 'scale=2 ; 1/3' | bc -l
        #+end_src
 
-**** Net
-***** General
-****** Count all current tcp connection on linux host?
+******* Net
+******** General
+********* Count all current tcp connection on linux host?
 
        #+BEGIN_SRC sh
        wc -l /proc/net/tcp
        #+END_SRC
-****** List all tcp connections on a linux host?
+********* List all tcp connections on a linux host?
 #+BEGIN_SRC sh
 ss
 # or
 netstat
 #+END_SRC
-****** List all ssh connections on a linux host?
+********* List all ssh connections on a linux host?
 #+BEGIN_SRC sh
 ss | grep ssh
 #+END_SRC
-***** Netcat
-****** simple web server with netcat?
+******** Netcat
+********* simple web server with netcat?
        #+BEGIN_SRC sh
        while true; do nc -l 8989 <<< "Hi! the time is now $(date)"; done
        #+END_SRC
-***** Ssh
-****** How to check the *actual* configuration of a sshd server?
+******** Ssh
+********* How to check the *actual* configuration of a sshd server?
         check the *actual* configuration of the dst server with: =ssh sshd -T=
-****** Ssh Tunnels
-******* ssh tunnels explained
+********* Ssh Tunnels
+********** ssh tunnels explained
         https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot
         [[file://img/ssh-tunnels-explained.png][img]]
         [[file://img/ssh-tunnels-explained2.png][img2]]
-******* ssh reverse tunnel ?
+********** ssh reverse tunnel ?
 
     #+begin_src sh
     # from the target machine:
     ssh -R 2210:localhost:22 bserver.outside.com
     #+end_src
     from: https://toic.org/blog/2009/reverse-ssh-port-forwarding/
-******* ssh tunnel example?
+********** ssh tunnel example?
 
         #+BEGIN_SRC sh
         localPort=5555                              \
@@ -326,15 +1123,15 @@ ss | grep ssh
         sshStr=jenkins@jenkins-deploy.fircosoft.net \
           bash -c 'ssh -N  -f -L ${localPort}:localhost:${remotePort} ${sshStr}'
         #+END_SRC
-******* ssh tunnel socks "channel 2: open failed: administratively prohibited: open failed"
+********** ssh tunnel socks "channel 2: open failed: administratively prohibited: open failed"
         - make sure the destination ssh server has config in =/etc/ssh/sshd_config=:
         =AllowTcpForwarding all=q
         =PermitOpen any=
         - check the *actual* configuration of the dst server with: =ssh sshd -T=
 
-****** Passwordless and keyless ssh login
+********* Passwordless and keyless ssh login
 
-******* ssh without password or key?
+********** ssh without password or key?
     #+begin_src sh
     # remove password for user
     passwd -d user
@@ -346,7 +1143,7 @@ ss | grep ssh
         -i /etc/ssh/sshd_config                                                                          \
     #+end_src
 
-******* ssh root without password or key?
+********** ssh root without password or key?
        #+BEGIN_SRC sh
        passwd -d root                               \
        && sed -r                                    \
@@ -371,7 +1168,7 @@ ss | grep ssh
       && /usr/sbin/sshd -D
          #+END_SRC
 
-******* working conf for openssh 7.1 on alpine?
+********** working conf for openssh 7.1 on alpine?
         #+BEGIN_SRC sh
 HostKey /etc/ssh/ssh_host_rsa_key
 HostKey /etc/ssh/ssh_host_ecdsa_key
@@ -394,12 +1191,12 @@ AcceptEnv XMODIFIERS
 Subsystem       sftp    /usr/libexec/openssh/sftp-server
         #+END_SRC
 
-****** generate public private key pair
+********* generate public private key pair
    #+begin_src sh
    ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
    #+end_src
 
-****** ssh or scp in a script without entering password ?
+********* ssh or scp in a script without entering password ?
 
    #+begin_src sh
    expect -c "
@@ -411,38 +1208,38 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
    "
    #+end_src
 
-****** get public key from private key ?
+********* get public key from private key ?
    #+begin_src sh
    ssh-keygen -y -f ~/.ssh/id_rsa
    #+end_src
 
-****** Disable host verification?
-******* for one session
+********* Disable host verification?
+********** for one session
    #+begin_src sh
    ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no peter@192.168.0.100
    #+end_src
    http://linuxcommando.blogspot.co.uk/2008/10/how-to-disable-ssh-host-key-checking.html
 
-******* for all sessions:
+********** for all sessions:
         in ~~/.ssh/config~:
         #+BEGIN_SRC sh
  Host 192.168.0.*
    StrictHostKeyChecking no
    UserKnownHostsFile=/dev/null
         #+END_SRC
-******* for all sessions and all hosts:
+********** for all sessions and all hosts:
         in ~~/.ssh/config~:
         #+BEGIN_SRC sh
  StrictHostKeyChecking no
  UserKnownHostsFile=/dev/null
         #+END_SRC
 
-****** copy pub key to remote authorized_keys?
+********* copy pub key to remote authorized_keys?
        #+begin_src sh
        ssh-copy-id <user>@<host>
 
        #+end_src
-****** workaround for a ssh slow login on a particular server?
+********* workaround for a ssh slow login on a particular server?
        Use port forwarding to keep the connection open
        #+BEGIN_SRC sh
        remoteUser=user
@@ -457,7 +1254,7 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
        # close the port forwarding
        fuser -k -n tcp 5555
        #+END_SRC
-****** copy between two ssh hosts without intermediary copy?
+********* copy between two ssh hosts without intermediary copy?
 
        #+BEGIN_SRC sh
 :                                         \
@@ -476,18 +1273,18 @@ Subsystem       sftp    /usr/libexec/openssh/sftp-server
 &&                                        \
 :
        #+END_SRC
-****** disable host has in known_hosts?
+********* disable host has in known_hosts?
        #+BEGIN_SRC sh
        HashKnownHosts=false
        #+END_SRC
-****** Non interactive sftp session with non pubkey password?
+********* Non interactive sftp session with non pubkey password?
        #+BEGIN_SRC sh
        sshpass -e -- sftp -oBatchMode=no -b - user@host << !
              get /path/to/file
              bye
          !
        #+END_SRC
-****** How to view actual ssh config (system wide + user config + cmdline/env)?
+********* How to view actual ssh config (system wide + user config + cmdline/env)?
        #+BEGIN_SRC sh
 ssh -G localhost
 #> hostname localhost
@@ -496,8 +1293,8 @@ ssh -G localhost
 #> batchmode no
 #> (...)
        #+END_SRC
-****** Sshfs
-******* how to mount remote fs with sshfs?
+********* Sshfs
+********** how to mount remote fs with sshfs?
 
         - mount:
         #+begin_src sh
@@ -508,24 +1305,24 @@ ssh -G localhost
         #+end_src
         https://wiki.archlinux.org/index.php/SSHFS
         - umount: [[how to umount a mounted sshfs?]]
-******* how to umount a mounted sshfs?
+********** how to umount a mounted sshfs?
         #+begin_src sh
         fusermount -u  /path/to
         #+end_src
-******* sshfs with autossh?
+********** sshfs with autossh?
          From: https://wiki.gentoo.org/wiki/Autossh
          #+begin_src sh
          sshfs -o reconnect,compression=yes,transform_symlinks,ServerAliveInterval=45,ServerAliveCountMax=2,ssh_command='autossh -M 0' username@server:/ /mnt/remote"
 Removal
          #+end_src
-****** alpine ssh send_pubkey_test: no mutual signature algorithm ?
+********* alpine ssh send_pubkey_test: no mutual signature algorithm ?
 
 Depending on the actual algorithm avail on the server, a workaround would look like:
 ssh -o PubkeyAcceptedKeyTypes=+ssh-rsa $server
 
-***** Openssl
-****** SslCerts
-******* generate a self certificate for localhost (without prompt)?
+******** Openssl
+********* SslCerts
+********** generate a self certificate for localhost (without prompt)?
         from: https://letsencrypt.org/docs/certificates-for-localhost/
         #+BEGIN_SRC sh
         openssl req -x509 -out localhost.crt -keyout localhost.key \
@@ -533,7 +1330,7 @@ ssh -o PubkeyAcceptedKeyTypes=+ssh-rsa $server
    -subj '/CN=localhost' -extensions EXT -config <( \
     printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
         #+END_SRC
-******* How to add root cert to an Ubuntu install?
+********** How to add root cert to an Ubuntu install?
         #+BEGIN_SRC sh
           cat <<EOF''
           :                                            \
@@ -550,9 +1347,9 @@ ssh -o PubkeyAcceptedKeyTypes=+ssh-rsa $server
           ) \
           | bash
         #+END_SRC
-******* best explaination of "everything derive from the root ca key"?
+********** best explaination of "everything derive from the root ca key"?
         https://serverfault.com/questions/306345/certification-authority-root-certificate-expiry-and-renewal
-******* Generate a self signed ca cert and key, and a cert and key for a how that works on the command line and chrome?
+********** Generate a self signed ca cert and key, and a cert and key for a how that works on the command line and chrome?
         from: https://stackoverflow.com/questions/7580508/getting-chrome-to-accept-self-signed-localhost-certificate
         Response: With only 5 openssl commands, you can accomplish this.
         #+BEGIN_SRC sh
@@ -602,12 +1399,12 @@ You can check your work to ensure that the certificate is built correctly:
 
 openssl verify -CAfile myCA.pem -verify_hostname bar.mydomain.com mydomain.com.crt
         #+END_SRC
-***** Rsync
-****** how to specify the port in rsync?
+******** Rsync
+********* how to specify the port in rsync?
        #+BEGIN_SRC sh
        rsync -rvz -e 'ssh -p 2222' --progress --remove-sent-files ./dir user@host:/path
        #+END_SRC
-****** how to exactly copy a local directory to a remote host (remove extra remote file if necessary) and back ?
+********* how to exactly copy a local directory to a remote host (remove extra remote file if necessary) and back ?
        #+BEGIN_SRC sh
        # local -> remote
        rsync -rvza --progress --delete workspace/ jenkins@localhost:/home/jenkins/workspace
@@ -616,13 +1413,13 @@ openssl verify -CAfile myCA.pem -verify_hostname bar.mydomain.com mydomain.com.c
 
 
        #+END_SRC
-****** rsync and trailing slash behavior?
+********* rsync and trailing slash behavior?
        Only matter for the source dir:
        - if there is a trainling slash, means: copy the content of the dir
        - without trailing slash mean copy the directory
-***** Openvpn
-****** list and connect with openvpn from cli?
-******** with nmanager
+******** Openvpn
+********* list and connect with openvpn from cli?
+*********** with nmanager
        #+BEGIN_SRC sh
        # list the connections
        nmcli con show
@@ -630,21 +1427,21 @@ openssl verify -CAfile myCA.pem -verify_hostname bar.mydomain.com mydomain.com.c
        con=openvpn
        nmcli con up id $con
        #+END_SRC
-***** Dns
-****** Get ip from hostname?
+******** Dns
+********* Get ip from hostname?
        #+BEGIN_SRC sh
 host google.com
 #> google.com has address 172.217.17.78
        #+END_SRC
-****** Get hostname from ip?
+********* Get hostname from ip?
        #+BEGIN_SRC sh
          nslookup $ip domain.com
          #> <ip> name = <domain>
        #+END_SRC
 
-***** Network analysis
-****** Ngrep
-******* Ngrep example?
+******** Network analysis
+********* Ngrep
+********** Ngrep example?
 #+begin_src sh
 ngrep -l -W byline -d eth0 src host.com  and dst port 80
   #               `-l` Line buffered output
@@ -654,13 +1451,13 @@ ngrep -l -W byline -d eth0 src host.com  and dst port 80
   #           `dst 80` Match only traffic going to port 80
 #+end_src
 
-**** Misc
-***** VirtualBox
-****** Windows host
-******* Linux Guest
-******** How to disable HyperV so VBox can run correctly?
+******* Misc
+******** VirtualBox
+********* Windows host
+********** Linux Guest
+*********** How to disable HyperV so VBox can run correctly?
 
-******** How to correctly install guestAdditon on ubuntu22.04?
+*********** How to correctly install guestAdditon on ubuntu22.04?
 #+begin_src sh
      # First how to check if installed properly:
    for i in status status-kernel status-user; do sudo /sbin/rcvboxadd $i ; done
@@ -669,8 +1466,8 @@ ngrep -l -W byline -d eth0 src host.com  and dst port 80
   #  not finished yet ! ;)
 #+end_src
 
-******** How to correctly install guestAdditon on debian12?
-********* Hint1
+*********** How to correctly install guestAdditon on debian12?
+************ Hint1
 #+begin_src sh
   # First how to check if installed properly:
   for i in status status-kernel status-user; do sudo /sbin/rcvboxadd $i ; done
@@ -688,97 +1485,15 @@ ngrep -l -W byline -d eth0 src host.com  and dst port 80
 
   # after that at boot, vbox seems to be ok, at least acording to status status-kernel status-user
 #+end_src
-********* Hint2
+************ Hint2
 Also it seems to help to uninstall vbox (with /usr/sbin/vbox-uninstall-guest-additions)
 And reinstall it again
-********* Hint3
+************ Hint3
 Beware of not enought video memory, it can impact the resolution of the vm
 
-*** Hardware
-**** Sound
-***** Troubleshoot sound in Linux/Ubuntu ?
-
-      Source: https://help.ubuntu.com/community/SoundTroubleshootingProcedure
-
-      #+BEGIN_SRC sh
-        ( set -xv && killall pulseaudio; pulseaudio -k  ; rm -r ~/.config/pulse/* ; rm -r ~/.pulse* )
-        sleep 10
-        pulseaudio --start
-      #+END_SRC
-
-**** Ubuntu/Debian change the machine uuid (useful when the dhcp id is derived from it) ?
-
-from: https://bugs.launchpad.net/ubuntu/+source/cloud-init/+bug/1563951
-
-#+BEGIN_SRC sh
-   # once per instance remove /etc/machine-id and run systemd-machine-id-setup
-#+END_SRC
-** Windows
-*** Disable hyperV for vbox?
-    - open a windows cmd.exe as admin
-    - then run:
-    #+BEGIN_SRC sh
-mountvol X: /s
-copy %WINDIR%\System32\SecConfig.efi X:\EFI\Microsoft\Boot\SecConfig.efi /Y
-bcdedit /create {0cb3b571-2f2e-4343-a879-d86a476d7215} /d "DebugTool" /application osloader
-bcdedit /set {0cb3b571-2f2e-4343-a879-d86a476d7215} path "\EFI\Microsoft\Boot\SecConfig.efi"
-bcdedit /set {bootmgr} bootsequence {0cb3b571-2f2e-4343-a879-d86a476d7215}
-bcdedit /set {0cb3b571-2f2e-4343-a879-d86a476d7215} loadoptions DISABLE-LSA-ISO,DISABLE-VBS
-bcdedit /set {0cb3b571-2f2e-4343-a879-d86a476d7215} device partition=X:
-mountvol X: /d
-    #+END_SRC
-    - reboot
-    - press F3 at all the question displayed pre-boot
-
-
-****** manually mount a shared folder in a linux guest?
-       #+begin_src sh
-       sudo mount -t vboxsf <sharedFolderName> /path/to/shared/folder/dir
-       #+end_src
-****** host alt-tab when in a guest?
-       =host key=
-       then
-      alt-tab
-****** Windows Hosts
-******* Windows10
-******** VT-x is not available (VERR_VMX_NO_VMX)
-         From:
-
-         - VT-x is not enabled in the BIOS
-         - The CPU doesn't support VT-x
-         - Hyper-V virtualization is enabled in Windows
-         -
-         - Run in command prompt:
-        #+BEGIN_SRC sh
-        dism.exe /Online /Disable-Feature:Microsoft-Hyper-V
-        #+END_SRC
-        - And reboot
-
-
-
-
-
-
-**** Text
-***** Less
-****** how to search for a tab ?
-       Enter a literal tab with: =CTRL-v TAB=.
-***** Tail
-****** skip the N first lines of input with tail?
-       #+BEGIN_SRC sh
-       seq 10 | tail -n +2
-       #> 2
-       #> 3
-       #> 4
-       #> 5
-       #> 6
-       #> 7
-       #> 8
-       #> 9
-       #+END_SRC
-**** Utils
-***** Comm
-****** comm summary?
+******* Utils
+******** Comm
+********* comm summary?
       =comm <(echo $'a\nb') <(echo $'a\nc')=
 
       | 1 | 2 | 3 |
@@ -791,44 +1506,44 @@ mountvol X: /d
       - colukn2: only in FILE2
       - column3: in FILE1 and FILE2
 
-****** binary to compare the content of files (all in a but not in b, etc)?
+********* binary to compare the content of files (all in a but not in b, etc)?
        =comm=
 
-***** Find
-****** find files modified in the last x minutes
+******** Find
+********* find files modified in the last x minutes
    #+begin_src sh
    find . -cmin -5
    #+end_src
-****** find files modified in the last x days
+********* find files modified in the last x days
    #+begin_src sh
    find . -ctime -5
    #+end_src
-****** handle filenames with spaces ?
+********* handle filenames with spaces ?
    #+begin_src sh
    find . -maxdepth 1 -print0 | while read -d $'\0' d ; do echo $d ; done
    #+end_src
    http://www.cyberciti.biz/tips/handling-filenames-with-spaces-in-bash.html
-****** sort files by modified date?
+********* sort files by modified date?
        #+begin_src sh
        find -type f -printf '%T@ %p\0' |
        sort -zk 1nr |
        sed -z 's/^[^ ]* //' | tr '\0' '\n'
        #+end_src
-****** find files bigger than x MBytes?
+********* find files bigger than x MBytes?
        #+BEGIN_SRC sh
        find . -size +500M -exec l {} \;
        #+END_SRC
-****** find filename with regex?
+********* find filename with regex?
        #+BEGIN_SRC sh
       find . -type f -regextype egrep -regex '.*\.(msg|txt)$$'
        #+END_SRC
-****** find with logical or?
+********* find with logical or?
        #+BEGIN_SRC sh
       -name "*.xyz" OR ( -name "*.abc" AND -exec ... )
        #+END_SRC
 
-***** Grep
-****** Non capturing group?
+******** Grep
+********* Non capturing group?
         Use: -(?:)-
         #+BEGIN_SRC sh
 echo foo bar baz \
@@ -836,18 +1551,18 @@ echo foo bar baz \
 foo bar baz
         #+END_SRC
 
-****** cheat sheet
+********* cheat sheet
        |                                 | short opt | long opt               |
        |---------------------------------+-----------+------------------------|
        | print file name with match      | ~-H~      | ~--with-filename~      |
        | print only filename for matches | ~-l~      | ~--files-with-matches~ |
-****** Character class for blanks?
+********* Character class for blanks?
        #+BEGIN_SRC sh
  jq -nRr '"1: \t", "2:  "' | egrep '[[:space:]]' | jq -R .
  #> "1: \t"
  #> "2:  "
        #+END_SRC
-****** match pattern on multiples lines?
+********* match pattern on multiples lines?
        #+BEGIN_SRC sh
        seq 4  | grep -Pz '1\n2'
        #               ||
@@ -858,25 +1573,25 @@ foo bar baz
        #>  3
        #>  4
        #+END_SRC
-***** Tr
-******  remove all non printable characters from a file with tr ?
+******** Tr
+*********  remove all non printable characters from a file with tr ?
        #+BEGIN_SRC sh
        tr -cd '[:print:]' < file > newfile
        #+END_SRC
-***** Nohup
-****** run nohup?
+******** Nohup
+********* run nohup?
        #+BEGIN_SRC sh
        nohup bash -c "(time bash executeScript 1 input fileOutput > scrOutput) &> timeUse.txt" &
        #+END_SRC
 
-***** MoreUtils
-****** read / process / write the same file ?
+******** MoreUtils
+********* read / process / write the same file ?
        - Use:  =sponge=
        - =sponge= will read stdin and write to specified file. Unlike a shell redirect it will soaks all its input before writing the output file.
        #+begin_src sh
        sort f | sponge f
        #+end_src
-****** instead of xxx use moreutils yyy?
+********* instead of xxx use moreutils yyy?
 
        | cmd       | insteadof                               | use                                                            |
        |-----------+-----------------------------------------+----------------------------------------------------------------|
@@ -898,53 +1613,52 @@ foo bar baz
        |           | =sort file1 file2= \vert =uniq --unique= | =combine file1 xor file2=                                      |
 
        See: http://devblog.nestoria.com/post/110168998173/moreutils-basic-unix-tools-that-ought-to-be
-***** Stat
-****** Custom format with newlines?
+******** Stat
+********* Custom format with newlines?
 
        #+BEGIN_SRC sh
        # use --printf to insert the code sequences
        stat --printf='%U\n%G\n%C\n%z\n' /var/log/secure
        #+END_SRC
-***** Tar
-****** list the content of a remote tgz without intermediary files?
+******** Tar
+********* list the content of a remote tgz without intermediary files?
       #+BEGIN_SRC sh
        curl http://url/to/file.tgz | tar tzfv -
       #+END_SRC
-****** send tar compressed archive to stdout?
+********* send tar compressed archive to stdout?
        #+BEGIN_SRC sh
        seq 3 > x && tar czv x > x.tgz
        #+END_SRC
-****** recompress without intermediary files?
+********* recompress without intermediary files?
        don't know how to do it with regular target
        but there's a solution with bsdtar
-****** tar: archive files name coming from stdin?
+********* tar: archive files name coming from stdin?
 #+BEGIN_SRC sh
   find a -type f | tar cvf a.tgz -T -
 #+END_SRC
 
 
-****** Specify arbitrary order of files in tar file?
+********* Specify arbitrary order of files in tar file?
 
-
-***** Bsdtar
-****** recompress without intermediary files?
+******** Bsdtar
+********* recompress without intermediary files?
        #+BEGIN_SRC sh
          bsdtar -cJf - @- < a.tar.lzo > a.tar.xz
        #+END_SRC
 
-***** Tree
-****** print tree with unicode characters?
+******** Tree
+********* print tree with unicode characters?
        #+BEGIN_SRC sh
        tree -N
        #+END_SRC
-***** Xargs
-****** run a cmd on each line of stdin with xargs?
+******** Xargs
+********* run a cmd on each line of stdin with xargs?
    #+begin_src sh
    echo 'a
    b
    c' | xargs -I {} ./f {}
    #+end_src
-****** use bash function?
+********* use bash function?
        #+begin_src sh
        f() { bc; }
        echo '1 * 1
@@ -953,31 +1667,31 @@ foo bar baz
        | xargs -i echo "$(declare -f f) ; echo '{}' | f" \
        | bash
        #+end_src
-***** Zip
-****** unzip a single file from archive?
+******** Zip
+********* unzip a single file from archive?
        #+begin_src sh
        unzip -p myarchive.zip path/to/zipped/file.txt >file.txt
        #+end_src
-****** compress dir recursive?
-****** compress dir but exclude a directory ?
+********* compress dir recursive?
+********* compress dir but exclude a directory ?
    #+begin_src sh
    zip -9 -r --exclude=*.svn*  foo.zip [directory-to-compress]
    #+end_src
    #+begin_src sh
    zip -r archive.zip /dir
    #+end_src
-**** Web
-***** Curl
-****** follow redirects?
+******* Web
+******** Curl
+********* follow redirects?
        #+BEGIN_SRC sh
        curl -L <url>
        #+END_SRC
-****** post data from stdin?
+********* post data from stdin?
       #+BEGIN_SRC sh
      cat data.json | curl -H "Content-Type: application/json" -X POST -d @- http://api
       #+END_SRC
-***** Wget
-****** recursively download for example nexus ?
+******** Wget
+********* recursively download for example nexus ?
 
     #+begin_src sh
     wget --header="Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"                  \
@@ -987,15 +1701,15 @@ foo bar baz
          --no-parent                                                                                         \
          http://nexus-url/x/y/z
     #+end_src
-****** equivalent of curl -sS?
-***** Nginx
-****** Check config syntax?
+********* equivalent of curl -sS?
+******** Nginx
+********* Check config syntax?
        #+BEGIN_SRC sh
        /usr/nginx/sbin/nginx -t -c /usr/nginx/conf/nginx.conf
        /usr/nginx/sbin/nginx -t
        #+END_SRC
-***** Lynx
-****** html to text by piping to lynx?
+******** Lynx
+********* html to text by piping to lynx?
 #+BEGIN_SRC sh
 curl -L --fail -sS 'https://duckduckgo.com?q=lynx' \
 | lynx --dump --stdin
@@ -1008,18 +1722,38 @@ curl -L --fail -sS 'https://duckduckgo.com?q=lynx' \
 #> You are being redirected to the non-JavaScript site.
 #> [...]
 #+END_SRC
-**** X11
-***** NxClient
-****** keyboard issue when connecting with nx ?
+******* X11
+******** NxClient
+********* keyboard issue when connecting with nx ?
        Try:
        #+begin_src sh
        setxkbmap -model evdev -layout us
        #+end_src
 
-*** Sysadmin
-**** System Services (systemctl, ...)
-***** Systemd
-****** systemd / systemV cheatsheet
+
+****** Hardware
+******* Sound
+******** Troubleshoot sound in Linux/Ubuntu ?
+
+      Source: https://help.ubuntu.com/community/SoundTroubleshootingProcedure
+
+      #+BEGIN_SRC sh
+        ( set -xv && killall pulseaudio; pulseaudio -k  ; rm -r ~/.config/pulse/* ; rm -r ~/.pulse* )
+        sleep 10
+        pulseaudio --start
+      #+END_SRC
+
+******* Ubuntu/Debian change the machine uuid (useful when the dhcp id is derived from it) ?
+
+from: https://bugs.launchpad.net/ubuntu/+source/cloud-init/+bug/1563951
+
+#+BEGIN_SRC sh
+   # once per instance remove /etc/machine-id and run systemd-machine-id-setup
+#+END_SRC
+****** Sysadmin
+******* System Services (systemctl, ...)
+******** Systemd
+********* systemd / systemV cheatsheet
 
 from: https://fedoraproject.org/wiki/SysVinit_to_Systemd_Cheatsheet
 
@@ -1050,22 +1784,22 @@ from: https://fedoraproject.org/wiki/SysVinit_to_Systemd_Cheatsheet
 | print what level of this service   | =chkconfig ${name} --list=         | =ls /etc/systemd/system/*.wants/${serviceName}.service= |
 |------------------------------------+------------------------------------+---------------------------------------------------------|
 
-****** follow logs of a particular systemd service?
+********* follow logs of a particular systemd service?
        #+BEGIN_SRC sh
        journalctl -fu collectd
        #+END_SRC
-****** restart network on systemd?
+********* restart network on systemd?
 Depends, on recent installation, may work:
 #+BEGIN_SRC sh
   systemctl restart systemd-networkd
 #+END_SRC
-***** General Linux
-****** Linux reload service config
+******** General Linux
+********* Linux reload service config
    #+begin_src sh
    sudo systemctl daemon-reload
    #+end_src
-***** Centos
-****** create a new systemd unit file?
+******** Centos
+********* create a new systemd unit file?
        #+begin_src sh
        # create a new unit file
          (cat <<EOF''
@@ -1103,60 +1837,60 @@ Depends, on recent installation, may work:
 
    # check if a service is enabled
    #+end_src
-****** the hostname keep coming back at its previous state after each restart?
+********* the hostname keep coming back at its previous state after each restart?
        Try setting the hostanem in ~/etc/hostname~
-**** User Admin
-***** how to add a group to a user ?
+******* User Admin
+******** how to add a group to a user ?
   #+begin_src sh
   sudo usermod -aG docker u
   #+end_src
-***** add a user with specific groups ?
+******** add a user with specific groups ?
   #+begin_src sh
   adduser -G group1,group2 <user>
   #+end_src
 
-***** get the groups of a user ?
+******** get the groups of a user ?
   #+begin_src sh
   groups <user>
   #+end_src
-***** change the shell of a user?
+******** change the shell of a user?
   #+begin_src sh
   usermod -s /bin/bash user
   #+end_src
-***** remove a user?
+******** remove a user?
   #+begin_src sh
   export U=<user>
   userdel -r $U
   #+end_src
-***** add a user?
+******** add a user?
   #+begin_src sh
   adduser <user>
   #+end_src
-***** view login activity?
+******** view login activity?
       #+begin_src sh
       last
       #+end_src
 
-**** Sudo
-***** allow sudo without password for a user?
+******* Sudo
+******** allow sudo without password for a user?
   #+begin_src sh
   # if there's a sudo group add the user to this group
   #+end_src
-***** execute a cmd as another user?
+******** execute a cmd as another user?
   #+BEGIN_SRC sh
   sudo -u <user> /bin/ls -alrth <...>
   # WARN! path to binaries must be absolute!
   #+END_SRC
-**** Devices (hdd,...)
-***** eject a cd rom?
+******* Devices (hdd,...)
+******** eject a cd rom?
       #+begin_src sh
       ejet /dev/cdrom
       #+end_src
-***** how to list all supported FS for mounting?
+******** how to list all supported FS for mounting?
       #+begin_src sh
       cat /proc/filesystems
       #+end_src
-***** how to fix a screwed nfs mount without rebooting?
+******** how to fix a screwed nfs mount without rebooting?
       TODO: should be completed
       - Find the list of process open on the screwed fs:
       #+BEGIN_SRC sh
@@ -1165,8 +1899,8 @@ Depends, on recent installation, may work:
       - kill them
       - remount
       ref: http://joelinoff.com/blog/?p=356
-***** Swap
-****** manage swap (status, enable, disable)?
+******** Swap
+********* manage swap (status, enable, disable)?
        #+BEGIN_SRC sh
        # status
        swapon -s
@@ -1175,13 +1909,13 @@ Depends, on recent installation, may work:
        # allon
        swapon -a
        #+END_SRC
-**** Dns
-***** How to query all the entries of a dns server ?
+******* Dns
+******** How to query all the entries of a dns server ?
       #+BEGIN_SRC sh
       set -- domain=mydomain.net
       dig +nocmd ${domain} any +multiline +noall +answer
       #+END_SRC
-**** recover a lost root password at boot with grub
+******* recover a lost root password at boot with grub
      - type some keys at boot to display the menu
      - edit the boot options
      - change the line
@@ -1197,9 +1931,14 @@ Depends, on recent installation, may work:
        sync
        #+END_SRC
      - reboot
-*** Terminal
-**** Colors
-***** simple way to color output with grep?
+******* Special files
+******** Removed /dev/null how to remake it?
+mknod /dev/null c 1 3
+chmod 666 /dev/null
+
+****** Terminal
+******* Colors
+******** simple way to color output with grep?
       #+BEGIN_SRC sh
       echo -e 'foo\nbar\nbaz'                           \
       | GREP_COLOR='01;36' egrep --color=always 'foo|$' \
@@ -1208,8 +1947,8 @@ Depends, on recent installation, may work:
       #> bar
       #> baz *colored red*
       #+END_SRC
-**** Replace capslock by ctrl in console?
-***** working also in virtual consoles?
+******* Replace capslock by ctrl in console?
+******** working also in virtual consoles?
  #+begin_src sh
  #in  /etc/default/keyboard
  #replace XKBOPTIONS="" by XKBOPTIONS="ctrl:nocaps"
@@ -1217,12 +1956,12 @@ Depends, on recent installation, may work:
  run sudo dpkg-reconfigure -phigh console-setup
  #+end_src
  ref: https://www.emacswiki.org/emacs/MovingTheCtrlKey#toc9
-***** working under X?
+******** working under X?
 #+BEGIN_SRC sh
 setxkbmap -option ctrl:nocaps
 #+END_SRC
-**** replace capslock by ctrl in a terminal under X ?
-**** change language keyboard mapping
+******* replace capslock by ctrl in a terminal under X ?
+******* change language keyboard mapping
  #+begin_src sh
  # run
  dpkg-reconfigure keyboard-configuration
@@ -1237,39 +1976,39 @@ setxkbmap -option ctrl:nocaps
  udevadm trigger --subsystem-match=input --action=change
  #+end_src
  https://wiki.debian.org/Keyboard
-**** change text mode resolution?
-**** paste example?
+******* change text mode resolution?
+******* paste example?
  #+begin_src sh
  $ paste <(seq 1 3) <(seq 1 3)
  1       1
  2       2
  3       3
  #+end_src
-**** show which key is pressed in a terminal?
+******* show which key is pressed in a terminal?
 - showkey
 - if in a ssh session
  #+begin_src sh
    sudo apt install ncurses-examples
    /usr/lib/ncurses/examples/demo_altkeys
  #+end_src
-**** get the number of rows and colums?
+******* get the number of rows and colums?
      #+begin_src sh
      tput lines
      tput cols
      #+end_src
-**** Presentation conventions
-***** display a command line?
+******* Presentation conventions
+******** display a command line?
       #+BEGIN_SRC sh
       `npm install -g jsonresume-theme-kendall`
       #+END_SRC
-*** Io
-**** Disk
-***** list files open by a particular process
+****** Io
+******* Disk
+******** list files open by a particular process
 
       #+BEGIN_SRC sh
       lsof -u jenkins | <grep/cut/jq>
       #+END_SRC
-***** how to do a simple bind mount?
+******** how to do a simple bind mount?
 
       #+BEGIN_SRC sh
       # with mount cmd:
@@ -1278,9 +2017,9 @@ setxkbmap -option ctrl:nocaps
       # with /etc/fstab:
       /src/path /dst/path none defaults,bind 0 0
       #+END_SRC
-***** Disks
-****** Disks caches
-******* how do I clear the disk caches in Linux?
+******** Disks
+********* Disks caches
+********** how do I clear the disk caches in Linux?
         From https://www.tecmint.com/clear-ram-memory-cache-buffer-and-swap-space-on-linux/
 
         #+BEGIN_SRC sh
@@ -1291,30 +2030,30 @@ setxkbmap -option ctrl:nocaps
         # clear page cache, dentries and inodes (not on production!)
         sync; echo 3 > /proc/sys/vm/drop_caches
         #+END_SRC
-***** Images
-****** Copy an img file to a disk with bad blocks?
+******** Images
+********* Copy an img file to a disk with bad blocks?
        #+BEGIN_SRC sh
        sudo ddrescue  -r3 2020-08-20-raspios-buster-armhf-full.img -d -f /dev/sdX ddrescuemapfile
        #+END_SRC
-**** RemoteFs
-***** nfs
-****** How to mount a remote nfs drive on a linux host?
+******* RemoteFs
+******** nfs
+********* How to mount a remote nfs drive on a linux host?
        #+BEGIN_SRC sh
        mount -t nfs {remote_pc_address}:/remote/dir /some/local/dir
        #+END_SRC
-****** List all nfs share of a remote nfs server?
+********* List all nfs share of a remote nfs server?
        #+BEGIN_SRC sh
        showmount my.nfs.server.com
        #+END_SRC
        Can be found in package (on debian like): =nfs-common=
 
-**** VirtualFs
-***** How to get the load with /proc?
+******* VirtualFs
+******** How to get the load with /proc?
       #+BEGIN_SRC sh
 cat /proc/loadavg
       #+END_SRC
-**** Processes
-***** How to find how are connected by pipes running processes?
+******* Processes
+******** How to find how are connected by pipes running processes?
       #+BEGIN_SRC sh
 # draft - draft - draft - draft - draft - draft - draft - draft - draft - draft -
 seq Infinity | sed -r 's/^/> /' | pv -qlL1 > /tmp/o
@@ -1332,8 +2071,8 @@ lsof  | egrep "$pRe" | egrep -v '^(lsof|grep)' |  egrep '(^C|FIFO)' | tr -s ' ' 
 #> sed -> pv
 # draft - draft - draft - draft - draft - draft - draft - draft - draft - draft -
       #+END_SRC
-***** Autossh
-****** How to keep a ssh sesssion open with autossh?
+******** Autossh
+********* How to keep a ssh sesssion open with autossh?
        Exemple from:  https://wiki.gentoo.org/wiki/Autossh
        #+BEGIN_SRC sh
        # ssh on port 222, setup a sock proxy on port 999
@@ -1346,572 +2085,8 @@ lsof  | egrep "$pRe" | egrep -v '^(lsof|grep)' |  egrep '(^C|FIFO)' | tr -s ' ' 
            -o "ServerAliveCountMax 2" username@myserver
        #+END_SRC
 
-*** Bash
-**** Non interactive
-***** Use alises in non interactive bash?
-      #+BEGIN_SRC sh
-        shopt | egrep expand_aliases
-        #> expand_aliases  off
-        shopt -s expand_aliases
-        #>
-        shopt | egrep expand_aliases
-        expand_aliases  on
-      #+END_SRC
-**** Interactive use
-***** Complete
-****** bash completion cheat sheet?
-       | complete on                                                              | cmd        | options |             |               | for what?     | short form |
-       |--------------------------------------------------------------------------+------------+---------+-------------+---------------+---------------+------------|
-       | remove                                                                   | =complete= | =-r=    |             |               | all           |            |
-       |                                                                          | =complete= | =-r=    |             | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-       |--------------------------------------------------------------------------+------------+---------+-------------+---------------+---------------+------------|
-       | complete on alias names                                                  | =complete= | =-A=    | =alias=     | =cmd1 … cmdN= | =cmd1 … cmdN= | =-a=       |
-       |--------------------------------------------------------------------------+------------+---------+-------------+---------------+---------------+------------|
-       | array variable names                                                     | =complete= | =-A=    | =arrayvar=  | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-       | readline key binding names                                               | =complete= | =-A=    | =binding=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-       | names of shell builtin commands                                          | =complete= | =-A=    | =builtin=   | =cmd1 … cmdN= | =cmd1 … cmdN= | =-b=       |
-       | command names                                                            | =complete= | =-A=    | =command=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-       | directory names                                                          | =complete= | =-A=    | =directory= | =cmd1 … cmdN= | =cmd1 … cmdN= | =-d=       |
-       | disabled shell builtins                                                  | =complete= | =-A=    | =disabled=  | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-       | enabled shell builtins                                                   | =complete= | =-A=    | =enabled=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-       | names of exported shell variables                                        | =complete= | =-A=    | =export=    | =cmd1 … cmdN= | =cmd1 … cmdN= | =-e=       |
-       | file names                                                               | =complete= | =-A=    | =file=      | =cmd1 … cmdN= | =cmd1 … cmdN= | =-f=       |
-       | names of shell functions                                                 | =complete= | =-A=    | =function=  | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-       | group names                                                              | =complete= | =-A=    | =group=     | =cmd1 … cmdN= | =cmd1 … cmdN= | =-g=       |
-       | help topics accepted by the help builtin                                 | =complete= | =-A=    | =helptopic= | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-       | hostnames as taken from the file specifed by the HOSTFILE shell variable | =complete= | =-A=    | =hostname=  | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-       | job names                                                                | =complete= | =-A=    | =job=       | =cmd1 … cmdN= | =cmd1 … cmdN= | =-j=       |
-       | shell reserved words                                                     | =complete= | =-A=    | =keyword=   | =cmd1 … cmdN= | =cmd1 … cmdN= | =-k=       |
-       | names of running jobs                                                    | =complete= | =-A=    | =running=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-       | service names                                                            | =complete= | =-A=    | =service=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-       | valid args for the -o option of the set builtin                          | =complete= | =-A=    | =setopt=    | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-       | shell option names as accepted by the shopt builtin                      | =complete= | =-A=    | =shopt=     | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-       | signal names                                                             | =complete= | =-A=    | =signal=    | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-       | names of stopped jobs                                                    | =complete= | =-A=    | =stopped=   | =cmd1 … cmdN= | =cmd1 … cmdN= |            |
-       | user names                                                               | =complete= | =-A=    | =user=      | =cmd1 … cmdN= | =cmd1 … cmdN= | =-u=       |
-       | names of all shell variables                                             | =complete= | =-A=    | =variable=  | =cmd1 … cmdN= | =cmd1 … cmdN= | =-v=       |
-**** Common tasks
-
-***** Random
-****** Generate a lot of (pseudo) random data faster than /dev/urandom?
-#+BEGIN_SRC
-openssl enc -aes-256-ctr -pass pass:"$(head -c128 /dev/urandom | base64)" -nosalt < /dev/zero | pv > randomfile.bin
-#+END_SRC
-***** generate random string?
-  #+begin_src sh
-  #!/bin/bash
-  # bash generate random alphanumeric string
-  #
-
-  # bash generate random 32 character alphanumeric string (upper and lowercase) and
-  NEW_UUID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
-
-  # bash generate random 32 character alphanumeric string (lowercase only)
-  cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1
-
-  # Random numbers in a range, more randomly distributed than $RANDOM which is not
-  # very random in terms of distribution of numbers.
-
-  # bash generate random number between 0 and 9
-  cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | head --bytes 1
-
-  # bash generate random number between 0 and 99
-  NUMBER=$(cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | sed -e 's/^0*//' | head --bytes 2)
-  if [ "$NUMBER" == "" ]; then
-    NUMBER=0
-  fi
-
-  # bash generate random number between 0 and 999
-  NUMBER=$(cat /dev/urandom | tr -dc '0-9' | fold -w 256 | head -n 1 | sed -e 's/^0*//' | head --bytes 3)
-  if [ "$NUMBER" == "" ]; then
-    NUMBER=0
-  fi
-  #+end_src
-  https://gist.github.com/earthgecko/3089509
-***** decimal / hex (and opposite) conversion?
-  #+begin_src sh
- # decimal to hex
- echo "obase=16; 34" | bc
- # hex to decimal
-  echo $((0xa))
-  # 10
-  #+end_src
-***** redirect output in variable?
-  "must read" about the differents techniques of redirection: http://stackoverflow.com/questions/13763942/bash-why-piping-input-to-read-only-works-when-fed-into-while-read-const
-***** stop on error (even in subshell)?
-  It seems that bash disable -e in subshells.
-****** workaround1: set -e explicitly for each subshell
-  #+begin_src sh
-  set -e explicitly at the start of each subshell
-  #+end_src
-****** workaround2: write shell script with '&&'
-       Write each commands as a binary and:
-   #+begin_src sh
-     :        \
-     && cmd1  \
-     && cmd 2 \
-     && cmd 3 \
-     ;
-  #+end_src
-****** workaround3: write shell script with '||'
-   #+begin_src sh
-     cmd1 || false
-     cmd2 || false
-     cmd3 || false
-  #+end_src
-***** loop over args?
-      #+begin_src sh
-      for var in "$@"
-      do
-        echo "$var"
-      done
-      #+end_src
-      http://stackoverflow.com/questions/255898/how-to-iterate-over-arguments-in-a-bash-script
-***** parse a string as args
-      #+begin_src sh
-      How to process the following list of pairs: "Mercury 36" "Venus 67" "Earth 93"  "Mars 142" "Jupiter 483"?
-      (note no =IFS= set)
-      #+begin_src sh
-      #!/usr/bin/env bash
-      set -euo pipefail
-
-      for planet in "Mercury 36" "Venus 67"
-      do
-        set -- $planet
-        echo "\$1=$1"
-        echo "\$2=$2"
-      done
-      # outputs
-      #
-      # $1=Mercury
-      # $2=36
-      # $1=Venus
-      # $2=67
-      #+end_src
-***** How to save a script params (before doing modifications like shift, ..)?
-      #+begin_src sh
-      # save with
-      original_params=("$@")
-      # use the copy with
-      echo "${original_params[@]}"
-      #+end_src
-***** generate uuid?
-      #+BEGIN_SRC sh
-      cat /proc/sys/kernel/random/uuid
-      #> aa6bc854-9eab-43cd-986d-d2318bf4a845
-      #+END_SRC
-***** List all possible commands (including functions)?
-    #+BEGIN_SRC sh
-      # also works for zsh
-      compgen -c
-    #+END_SRC
-**** Programming
-***** Misc
-****** bash pointer variables?
-***** Control flow
-****** Tests/Conditionnals
-******* ternary operator in bash?
-        #+BEGIN_SRC sh
-        bash -c 'b=5 c=2 && d=3 && let a=b==5?c:d; echo $a'
-        #+END_SRC
-******* cheatsheet
-        |      |          |            |                 |
-        |------+----------+------------+-----------------|
-        | file | is empty | =[ -s a ]= | single brackets |
-        |      |          |            |                 |
-******* test files cheatsheet
-        from: https://wiki-dev.bash-hackers.org/commands/classictest
-  *For classic test =[ <..> ]=*
-  |---------------------+--------------------------------------------------------------------------------------|
-  | Operator syntax     | Description                                                                          |
-  |---------------------+--------------------------------------------------------------------------------------|
-  | -a <FILE>           | True if <FILE> exists. :!: (not recommended, may collide with -a for AND, see below) |
-  | -e <FILE>           | True if <FILE> exists.                                                               |
-  | -f <FILE>           | True, if <FILE> exists and is a regular file.                                        |
-  | -d <FILE>           | True, if <FILE> exists and is a directory.                                           |
-  | -c <FILE>           | True, if <FILE> exists and is a character special file.                              |
-  | -b <FILE>           | True, if <FILE> exists and is a block special file.                                  |
-  | -p <FILE>           | True, if <FILE> exists and is a named pipe (FIFO).                                   |
-  | -S <FILE>           | True, if <FILE> exists and is a socket file.                                         |
-  | -L <FILE>           | True, if <FILE> exists and is a symbolic link.                                       |
-  | -h <FILE>           | True, if <FILE> exists and is a symbolic link.                                       |
-  | -g <FILE>           | True, if <FILE> exists and has sgid bit set.                                         |
-  | -u <FILE>           | True, if <FILE> exists and has suid bit set.                                         |
-  | -r <FILE>           | True, if <FILE> exists and is readable.                                              |
-  | -w <FILE>           | True, if <FILE> exists and is writable.                                              |
-  | -x <FILE>           | True, if <FILE> exists and is executable.                                            |
-  | -s <FILE>           | True, if <FILE> exists and has size bigger than 0 (not empty).                       |
-  | -t <fd>             | True, if file descriptor <fd> is open and refers to a terminal.                      |
-  | <FILE1> -nt <FILE2> | True, if <FILE1> is newer than <FILE2> (mtime). :!:                                  |
-  | <FILE1> -ot <FILE2> | True, if <FILE1> is older than <FILE2> (mtime). :!:                                  |
-  | <FILE1> -ef <FILE2> | True, if <FILE1> and <FILE2> refer to the same device and inode numbers. :!:         |
-  |---------------------+--------------------------------------------------------------------------------------|
-****** Looping
-******* loop over cmd output with while?
-        #+BEGIN_SRC sh
-       iseq 3 | while read l; do echo ">$l"; done
-       #> >1
-       #> >2
-       #> >3
-        #+END_SRC
-******* c style for loop?
-    #+begin_src sh
-    for ((i=0;i<3;i++)); do
-      echo $i
-    done
-    #+end_src
-****** switch case ?
-       #+begin_src sh
-   while [[ $# -gt 0 ]]; do
-       case "$1" in
-           *:*          ) hostport=(${1//:/ }); shift 1 ;;
-                --child ) CHILD=1             ; shift 1 ;;
-           -q | --quiet ) QUIET=1             ; shift 1 ;;
-           -s | --strict) STRICT=1            ; shift 1 ;;
-           --host=*     ) HOST="${1#*=}"      ; shift 1 ;;
-           --help       ) usage               ; shift 1 ;;
-           *            ) unknownArg "$1"     ; shift 1 ;;
-       esac
-   done
-       #+end_src
-***** Types
-****** Datastructures
-******* Arrays
-******** Associative arrays
-********* declare, print, ...
-     #+begin_src sh
-     # declare
-     declare -A m=( [red]='0;31' [green]='0;32' )
-     # print keys
-     echo "keys=${!m[@]}"
-     # print all
-     declare | grep colorsCodes
-     # iterate
-     for i in "${!array[@]}"
-     do
-       echo "key  : $i"
-       echo "value: ${array[$i]}"
-     done
-     #+end_src
-********* copy ?
-     #+begin_src sh
-     declare -A arr=([this]=hello [\'that\']=world [theother]='and "goodbye"!')
-     declare -A newarr
-     for idx in "${!arr[@]}"; do
-         newarr[$idx]=${arr[$idx]}
-     done
-
-     diff <(echo "$temp") <(declare -p newarr | sed 's/newarr=/arr=/')
-     # no output
-     #+end_src
-     http://stackoverflow.com/questions/19417015/bash-copy-from-one-array-to-another
-******** Normal arrays
-********* declare/literal/set/getAll/size
-         #+begin_src bash
-         # declare
-         declare -a a
-         # literal
-         a=(a b c)
-         # set
-         a[0]=x
-         # get all
-         echo ${a[*]}
-         # size
-         echo "size=${#a[@]}"
-         #+end_src
-********* access empty array?
-
-          #+BEGIN_SRC sh
-          declare -a a=()
-          echo -n a=
-          echo ${a[@} + "${a[@]}"}
-          #+END_SRC
-********* parse string to array?
-          #+BEGIN_SRC sh
-          IFS=', ' read -r -a array <<< "a, b, c"
-          echo "array=${array[@]}"
-          #> array=a b c
-          #+END_SRC
-********* clone an array into another array?
-          #+BEGIN_SRC sh
-          show() { declare | egrep "^${1}=" ; }
-          # declare array a1
-          declare -a a1=( a b )
-          show a1
-          #> a1=([0]="a" [1]="b")
-          declare -a a2=("${a1[@]}")
-          show a2
-          #> a2=([0]="a" [1]="b")
-          # verify it is a clone
-          a2[0]=x
-          show a2
-          #> a2=([0]="x" [1]="b")
-          show a1
-          #> a1=([0]="a" [1]="b")
-          #+END_SRC
-****** Strings
-******* bash strings cheat sheet?
-
-   | what        | how                                          | example |
-   |-------------+----------------------------------------------+---------|
-   | size        | =${#str}=                                    |         |
-   | substring   | =${str:pos}=                                 |         |
-   | substring   | =${str:pos:length}=                          |         |
-   |             |                                              |         |
-   | char to int | =printf '%d\n' "'y"=                         |         |
-   | int to char | =printf "\x$(printf %x 65)"=                 |         |
-   | replace all | =bash -c 'x=abcabc; echo ${x//b/z} # axcaxc= |         |
-   |             |                                              |         |
-******* Syntax
-******** ssh escape sequence?
-     =ENTER, ~, .=
-******* Printf?
-******** print args, one by line with its position?
-         from: http://wiki.bash-hackers.org/commands/builtin/printf
-         #+BEGIN_SRC sh
-         printf '"%b"\n' "$0" "$@" | nl -v0 -s": "
-         #> 0: "-zsh"
-         #> 1: "foo"
-         #> 2: "bar"
-         #+END_SRC
-******** print a line accross the terminal?
-         from: http://wiki.bash-hackers.org/commands/builtin/printf
-         #+BEGIN_SRC sh
-         bash -c "l=$(tput cols)"' && printf -v line "%*s" $l && echo ${line// /-}'
-         #> --------------------------------------------------------------------------------
-         #+END_SRC
-**** Bash options
-***** How to get the values of errexit etc (set by set -e ...)?
-      #+BEGIN_SRC sh
-set -o
-#> allexport       off
-#> braceexpand     on
-#> emacs           on
-#> errexit         off
-#> errtrace        off
-      #+END_SRC
-***** option so bash export all declared variables?
-      #+BEGIN_SRC sh
-      a=1
-      bash -c 'echo "a=$a"'
-      set -a
-      a=1
-      bash -c 'echo "a=$a"'
-      #> a=
-      #> a=1
-
-      #+END_SRC
-***** option to glob also hidden files?
-      #+BEGIN_SRC sh
-ls -Alrth
-   #> total 1,0K
-   #> -rw-r--r-- 1 u u 0 fvr. 10 19:37 .a
-   #> -rw-r--r-- 1 u u 0 fvr. 10 19:37 a
-ls *
-   #> a
-shopt -s dotglob && ls *
-   #> a
-   #> .als -Alrth
-   #> total 1,0K
-   #> -rw-r--r-- 1 u u 0 fvr. 10 19:37 .a
-   #> -rw-r--r-- 1 u u 0 fvr. 10 19:37 a
-      #+END_SRC
-***** Bash config files
-****** Order of loading of bash init files?
-       - See diagram: https://blog.flowblok.id.au/2013-02/shell-startup-scripts.html
-       - graphviz code repo: =hg clone https://bitbucket.org/flowblok/shell-startup=
-       [[./img/shell-startup.png]]
-**** Files and Redirections
-***** Stdin/out/err
-****** redirect file to stdin on the left side?
-       see: http://www.tldp.org/LDP/abs/html/io-redirection.html
-       #+BEGIN_SRC sh
-       < input-file command > output-file
-       # non standard
-       #+END_SRC
-****** redirecting stdout, stderr
-       #+BEGIN_SRC sh
-       | redirect from | to   | cmd                            | notes          |
-       |---------------+------+--------------------------------+----------------|
-       | out           | err  |  ls 1>&2                       |                |
-       | out & err     | file |  ls &>   file                  |                |
-       |               |      |  ls >    file 2>&1             | for older bash |
-       | err           | out  |  ls 2>&1                       |                |
-       | err & out     | pipe |  ls 2>&1 |  grep '.*'          |                |
-       |               |      |  ls      |& grep '.*'          | equiv          |
-       | err           | proc |  ls 2> >(grep foo)  '          | equiv          |
-       #+END_SRC
-****** use stdout as a file (with filename) for another cmd?
-       #+BEGIN_SRC sh
-       cmd <(cat f)
-       #+END_SRC
-****** swap stdout and stderr?
-       =cmd 3>&1 1>&2 2>&3=
-      #+BEGIN_SRC sh
-      $ f() { (echo out) && (echo err 1>&2); }
-      $ f
-   out
-   err
-      $ s() { sed "s/.*/=$1>&<$1=/"; }
-      $ f | s 1
-   err
-   =1>out<1=
-      $ (f 3>&1 1>&2 2>&3) | s 1
-   out
-   =1>err<1=
-      $ ((f 3>&1 1>&2 2>&3) | s 1) | s 2
-   out
-   =2>=1>err<1=<2=
-      $ (((f 3>&1 1>&2 2>&3) | s 1) 3>&1 1>&2 2>&3) | s 2
-   =2>out<2=
-   =1>err<1=
-      #+END_SRC
-****** write to stdin of a backround process?
-       see: https://serverfault.com/questions/188936/writing-to-stdin-of-background-process
-       #+BEGIN_SRC sh
-       # create server
-       mkfifo in
-       cat > in &
-       echo $! > pid
-       cat in | sed 's/.*/changed> &/' &
-       # use server
-       echo foo > in
-       # stop server
-       kill -9 $(cat pid)
-       #+END_SRC
-****** here-string with indentation in src but not in output?
-       #+BEGIN_SRC sh
-       cat <<EOF''
- <TAB>hi
- EOF
-       #> <TAB>hi
-       # But:
-       cat <<-EOF''
- <TAB>hi
- EOF
-       #> hi
-       #+END_SRC
-****** File Descriptors
-******* Named File Descriptors
-******** define a named file descriptor to a writable file and write to it?
-         #+BEGIN_SRC sh
-         # open
-         exec {filew}>outputfile
-         # write
-         echo foo >&$filew
-         # check
-         cat outputfile
-         #> foo
-         # close
-         exec {filew}>&-
-         #+END_SRC
-****** how to know if stdout is a terminal?
-       #+BEGIN_SRC sh
-       echo -n "stdout is: "
-       if [ -t 1 ]; then
-         echo "a terminal"
-       else
-         echo "not a terminal"
-       fi
-       #+END_SRC
-****** Printout
-******* Padding
-******** right / left pad with printf?
-         #+BEGIN_SRC sh
-         printf "%40s\n" foo | tr ' ' .
-         #> .....................................foo
-         printf "%-40s\n" foo | tr ' ' .
-         #> foo.....................................
-         #+END_SRC
-******** zero padding numbers?
-         #+BEGIN_SRC sh
-         printf "%05d\n" 99
-         #> 00099
-         #+END_SRC
-***** Tmp files
-****** "delete while still open" trick to be sure a file will be deleted?
-       from: https://unix.stackexchange.com/questions/181937/how-create-a-temporary-file-in-shell-script
-       #+BEGIN_SRC sh
-       tmpfile=$(mktemp /tmp/abc-script.XXXXXX)
-       exec 3>"$tmpfile"
-       rm "$tmpfile"
-       : ...
-       echo foo >&3
-       #+END_SRC
-**** Env
-***** how to run a command with the env cleared?
-      #+BEGIN_SRC sh
-      env -i bash -c env
-      #>        -i, --ignore-environment
-      #>        start with an empty environment
-
-      #+END_SRC
-***** export bash function?
-
-     #+BEGIN_SRC sh
-     f() { echo "I'm f!" ; }
-     export -f f
-     bash -c f
-     #> I'm f!
-     #+END_SRC
-***** Replace all env var by values in file?
-      #+BEGIN_SRC sh
-      envsubst
-      #+END_SRC
-***** how to make bash source a file before running a command?
-      Use the =BASH_ENV= to tell bash to source a file:
-     #+BEGIN_SRC sh
-     touch .bashrc
-     echo foo=bar >> .bashrc
-     bash -c 'echo $foo'
-     #>
-     BASH_ENV=.bashrc bash -c 'echo $foo'
-     #> bar
-    #+END_SRC
-***** how to test if a variable is defined?
-      #+BEGIN_SRC sh
-      if [[ ${varname:-} ]]; then
-        echo "var is defined"
-      else
-        echo "var not defined or empt"
-      fi
-      #+END_SRC
-      - Another way from [[https://wiki-dev.bash-hackers.org/scripting/posparams][bash hackers]]:
-        #+BEGIN_SRC sh
-          if [ ${x+defined} ]; then echo "x is not defined"; \
-                               else echo "x is defined (may be blank)"; \
-          fi \
-          ;
-        #+END_SRC
-**** Debugging
-***** how to make a bash script stop and print current line before running it?
-      Add to your script:
-      #+BEGIN_SRC sh
-      trap '(read -p "[$BASH_SOURCE:$LINENO] $BASH_COMMAND?")' DEBUG
-      #+END_SRC
-      From: https://translate.google.co.uk/translate?hl=fr&sl=en&tl=fr&u=http%3A%2F%2Fwww.softpanorama.org%2FScripting%2FShellorama%2Fbash_debugging.shtml&anno=2
-***** how to execute a script step by step?
-      Add to your script:
-      #+BEGIN_SRC sh
-      trap 'echo TRAP ERROR something wrong happened, errcode=$? 1>&2 ; finish' ERR
-      #+END_SRC
-#+BEGIN_SRC sh
-     declare varName=foo
-     declare -n refToVar=varName
-     echo ${refToVar}
-     #> foo
-#+END_SRC
-works recursively:
-#+BEGIN_SRC sh
-$ declare varName=foo
-$ declare -n refToVar=varName
-$ declare -n refToRefToVar=refToVar
-$ echo ${refToRefToVar}
-#> foo
-#+END_SRC
-*** Zsh
-**** Completion
-***** using bash's autocomplete with zsh?
+******* Completion
+******** using bash's autocomplete with zsh?
       #+BEGIN_SRC sh
       touch cmd && chmod +x cmd
       # run bashcompinit
@@ -1921,24 +2096,24 @@ $ echo ${refToRefToVar}
       complete -W 'foo bar baz' cmd
       #> ./cmd b<tab><tab> will show "foo" "bar" "baz"
       #+END_SRC
-***** Copy an existing completion for another command?
+******** Copy an existing completion for another command?
       - From: https://github.com/zsh-users/zsh-completions/blob/master/zsh-completions-howto.org
       #+BEGIN_SRC sh
       compdef cmd1=cmd2
       #+END_SRC
-*** X
-**** copy to system clipboard from the command line?
+****** X
+******* copy to system clipboard from the command line?
      #+begin_src sh
  echo a | xclip -selection clipboard
      #+end_src
-**** dual monitor setup: turn off one of the monitor and not the other?
+******* dual monitor setup: turn off one of the monitor and not the other?
      #+BEGIN_SRC sh
      # choose one of the monitor with:
      xrandr -q
      # disbale it
      xrandr --output LVDS1 --off
      #+END_SRC
-**** force X resolution when an external monitor is not detected?
+******* force X resolution when an external monitor is not detected?
      #+BEGIN_SRC sh
 # check the current display and resolutions:
 xrandr
@@ -1952,26 +2127,26 @@ xrandr --newmode 1920x960_60.00 152.00  1920 2032 2232 2544  960 963 973 996 -hs
 xrandr --addmode DP-2 1920x960_60.00
 # in monitors setup choose the new reolution
 #+END_SRC
-**** Fonts
-***** List fonts?
+******* Fonts
+******** List fonts?
       #+BEGIN_SRC sh
       fc-list
       #+END_SRC
-**** Gnome
-***** How to logout from Gnome with the terminal?
+******* Gnome
+******** How to logout from Gnome with the terminal?
       #+BEGIN_SRC sh
       gnome-session-quit
       #+END_SRC
-**** Remote
-***** NoMachine NX
-****** How to administrate the NX server?
+******* Remote
+******** NoMachine NX
+********* How to administrate the NX server?
        #+BEGIN_SRC sh
        sudo /usr/NX/bin/nxserver --status
        sudo /usr/NX/bin/nxserver --stop
        sudo /usr/NX/bin/nxserver --start
        #+END_SRC
-**** Xpra
-*****  xpra quickstart on ubuntu?
+******* Xpra
+********  xpra quickstart on ubuntu?
       #+BEGIN_SRC sh
       # On the server ----------------------------------------------------------
       ## install xpra
@@ -1998,22 +2173,22 @@ xrandr --addmode DP-2 1920x960_60.00
       ## now start a bigger app:
       DISPLAY=${display} google-chrome
       #+END_SRC
-**** Window managers
-***** Gnome
-****** open the network manager (for proxy settings) from the command line?
+******* Window managers
+******** Gnome
+********* open the network manager (for proxy settings) from the command line?
        #+BEGIN_SRC sh
        gnome-control-center network
        #+END_SRC
-****** Gnome 3
-******* Gnome Shell
-******** how to have cpu,etc montoring in the top bar?
+********* Gnome 3
+********** Gnome Shell
+*********** how to have cpu,etc montoring in the top bar?
          - Install system-monitor gnome extension
          - Can search it through gnome shell search (win key)
-******** how restart gnome shell?
+*********** how restart gnome shell?
          - =alt-F2=
          - =r=
-********* Gnome Shell Extensions?
-********** how to manage enabling/disabling gnome shell user extensions (command line)?
+************ Gnome Shell Extensions?
+************* how to manage enabling/disabling gnome shell user extensions (command line)?
            from: https://askubuntu.com/questions/1029376/how-to-enable-and-disable-gnome-extensions-from-command-line
            #+BEGIN_SRC sh
            # are all gnome shell user extensions disabled?
@@ -2021,13 +2196,13 @@ xrandr --addmode DP-2 1920x960_60.00
            # disable all gnome shell user extensions
            gsettings set org.gnome.shell disable-user-extensions true
            #+END_SRC
-**** Xdg-open
-***** choose browser to use with xdg-open?
+******* Xdg-open
+******** choose browser to use with xdg-open?
       #+BEGIN_SRC sh
         xdg-settings set default-web-browser google-chrome.desktop
       #+END_SRC
-*** Converting formats
-**** Converting human readable <-> bytes
+****** Converting formats
+******* Converting human readable <-> bytes
 On linux, onw way is numfmt
 #+BEGIN_SRC sh
 echo 1K | numfmt --from=iec
@@ -2035,13 +2210,12 @@ echo 1K | numfmt --from=iec
 #+END_SRC
 More Options here:Q https://unix.stackexchange.com/questions/44040/a-standard-tool-to-convert-a-byte-count-into-human-kib-mib-etc-like-du-ls1
 
-
-**** convert file format table?
+******* convert file format table?
      | src   | dst   | command                                                                           |
      |-------+-------+-----------------------------------------------------------------------------------|
      | ~rtf~ | ~pdf~ | ~libreoffice --headless --invisible --norestore --convert-to pdf source-file.rtf~ |
-**** Pdf
-***** replace a string in a pdf file ?
+******* Pdf
+******** replace a string in a pdf file ?
       #+begin_src sh
    pdftk file.pdf output uncompressed.pdf uncompress
 
@@ -2050,9 +2224,11 @@ More Options here:Q https://unix.stackexchange.com/questions/44040/a-standard-to
    pdftk modified.pdf output recompressed.pdf compress
       #+end_src
       http://stackoverflow.com/questions/9871585/how-to-find-and-replace-text-in-a-existing-pdf-file-with-pdftk-or-other-command
-*** Locale
-**** fix locale config?
-***** ubuntu / debian
+******* units
+To convert many units
+****** Locale
+******* fix locale config?
+******** ubuntu / debian
       #+begin_src sh
  # add to /etc/environnement
  LC_ALL=en_US.UTF-8
@@ -2069,7 +2245,7 @@ More Options here:Q https://unix.stackexchange.com/questions/44040/a-standard-to
 [warn] /etc/environment has been deprecated for locale information; use /etc/default/locale for LC_ALL=en_US.UTF-8 instead ... (warning).
 
       #+END_SRC
-***** centos
+******** centos
       #+BEGIN_SRC sh
 cat /etc/environment /etc/environment.bak
 cat /etc/environment          \
@@ -2082,14 +2258,14 @@ cat /etc/environment          \
   | tee -a /etc/environment " ' \
 | bash -xeuo pipefail
       #+END_SRC
-*** Network
-**** How to trace all network activity?
+****** Network
+******* How to trace all network activity?
      =tcpflow=
      #+begin_src sh
      tcpflow -p -c -i eth0 port 80 | grep -oE '(GET|POST|HEAD) .* HTTP/1.[01]|Host: .*'
      #+end_src
      http://unix.stackexchange.com/questions/6279/on-the-fly-monitoring-http-requests-on-a-network-interface
-**** how to get the ip adresse of the local host ?
+******* how to get the ip adresse of the local host ?
      *Note*: To be verfied!
      #+begin_src sh
      hostname -I
@@ -2098,12 +2274,12 @@ cat /etc/environment          \
      #+begin_src sh
      hostname -I | cut -d' ' -f1
      #+end_src
-**** list open ports?
+******* list open ports?
      #+BEGIN_SRC sh
      netstat -lntu
      #+END_SRC
-**** Proxy
-***** Request with curl through a proxy over ssh ?
+******* Proxy
+******** Request with curl through a proxy over ssh ?
       #+BEGIN_SRC sh
       remoteHost=remote.host
       remoteHostSshPort=22222
@@ -2114,18 +2290,18 @@ cat /etc/environment          \
       # OR
       curl --socks5-hostname localhost:8123 http://remote.host.com
       #+END_SRC
-**** how to list all open ports and their associated processes?
+******* how to list all open ports and their associated processes?
      #+BEGIN_SRC sh
      sudo netstat -lntp
      #+END_SRC
-**** Mtu
-***** temporary change the mtu of a network interface?
+******* Mtu
+******** temporary change the mtu of a network interface?
       #+BEGIN_SRC sh
       ifconfig eth0 mtu 9000
       #+END_SRC
-**** Wifi
-***** Connect to wifi with via command line?
-****** Using nmcli
+******* Wifi
+******** Connect to wifi with via command line?
+********* Using nmcli
 #+BEGIN_SRC sh
   # Get the identifier of the  wifi device
   nmcli dev status
@@ -2141,16 +2317,16 @@ cat /etc/environment          \
   nmcli dev status
 #+END_SRC
 
-*** Compression
-**** compress stdin, uncompress to stdout ?
+****** Compression
+******* compress stdin, uncompress to stdout ?
 #+BEGIN_SRC sh
      |            | cmd                       |
      |------------+---------------------------|
      | compress   | echo foobarXgzip > msg.gz |
      | decompress | zcat msg.gz               |
 #+END_SRC
-**** Xz
-***** compress/decompress stdin with xz?
+******* Xz
+******** compress/decompress stdin with xz?
       #+BEGIN_SRC sh
       # compress
       seq 3 | xz > out.xz
@@ -2160,24 +2336,24 @@ cat /etc/environment          \
       #> 2
       #> 3
       #+END_SRC
-***** decompress stdin with xz?
+******** decompress stdin with xz?
       #+BEGIN_SRC sh
 
       #+END_SRC
-*** Fs
-**** difference between =/bin=, =/usr/bin=, =/usr/local/bin=?
+****** Fs
+******* difference between =/bin=, =/usr/bin=, =/usr/local/bin=?
      From: https://unix.stackexchange.com/questions/8656/usr-bin-vs-usr-local-bin-on-linux
      - =/bin=: for booting the os (must fit on a small partition)
      - =/usr/bin=: Normal binaries installed by the package manager
      - =/usr/local/bin=: Was installed after manually compiled (for exemple)
-**** Zfs
-***** Dedup
-****** Size RAM for online dedup ?
+******* Zfs
+******** Dedup
+********* Size RAM for online dedup ?
 A random web page:
 "
 For every TB of pool data, you should expect 5 GB of dedup table data, assuming an average block size of 64K.
 "
-****** Current RAM usage for dedup on a particular zfs pool?
+********* Current RAM usage for dedup on a particular zfs pool?
 See: https://serverfault.com/questions/533877/how-large-is-my-zfs-dedupe-table-at-the-moment
 #+BEGIN_SRC sh
   zpool status -D  tank
@@ -2186,7 +2362,7 @@ See: https://serverfault.com/questions/533877/how-large-is-my-zfs-dedupe-table-a
   jq -cn '10811910 * 153 | . / (1024 * 1024 * 1024) | {gb: .}'
 #> {"gb":1.5406145062297583}
 #+END_SRC
-***** Create a new zfs "env" in a file?
+******** Create a new zfs "env" in a file?
       #+BEGIN_SRC sh
         zpool list
 
@@ -2207,11 +2383,11 @@ See: https://serverfault.com/questions/533877/how-large-is-my-zfs-dedupe-table-a
         #> NAME       USED  AVAIL  REFER  MOUNTPOINT
         #> testpool   652K   447M    19K  /testpool
       #+END_SRC
-***** How to destroy a zpool ?
+******** How to destroy a zpool ?
       #+BEGIN_SRC sh
       zpool destroy <poolName>
       #+END_SRC
-***** How to add new devices to an exising pool?
+******** How to add new devices to an exising pool?
       #+BEGIN_SRC sh
       # List already used devices
       sudo zpool status
@@ -2222,12 +2398,12 @@ See: https://serverfault.com/questions/533877/how-large-is-my-zfs-dedupe-table-a
       # list again to check it has been taken into account
       sudo zpool add zpool-docker /dev/sde
       #+END_SRC
-***** How to view the dedup and compression properties of pools?
+******** How to view the dedup and compression properties of pools?
       #+BEGIN_SRC sh
       # a starting point:
       sudo zfs list -o devices,type,mountpoint,compressratio,refcompressratio,compression,dedup
       #+END_SRC
-***** Snaphot clones, etc
+******** Snaphot clones, etc
       from: https://www.howtoforge.com/tutorial/how-to-use-snapshots-clones-and-replication-in-zfs-on-linux/
       #+BEGIN_SRC sh
       # #### Given you havea datapool, eg created with:
@@ -2249,8 +2425,8 @@ See: https://serverfault.com/questions/533877/how-large-is-my-zfs-dedupe-table-a
           #> NAME                     USED  AVAIL  REFER  MOUNTPOINT
           #> datapool/docs@version1      0      -  19.5K  -
       #+End_src
-***** Send/receive
-****** How to do send a whole pool to another pool?
+******** Send/receive
+********* How to do send a whole pool to another pool?
 #+BEGIN_SRC sh
   # initial
   ssh src-host 'sudo zfs send -v -R -I srcpool@snap' | sudo zfs receive -v -Fdu dstpool
@@ -2264,14 +2440,14 @@ In one case I was only able to send the initial with:
   ssh src-host 'sudo zfs send -v -R -I srcpool srcpool@snap' | sudo zfs receive -v -Fdu dstpool
 #+END_SRC
 
-****** How to to send a whole pool with dedup=on to another pool but with dedup=off?
+********* How to to send a whole pool with dedup=on to another pool but with dedup=off?
 #+BEGIN_SRC sh
     # initial
     ssh src-host 'sudo zfs send -v -R -I srcpool srcpool@snap' \
         | sudo zfs receive -o dedup=off -v -Fdu dstpool
 #+END_SRC
 
-****** zfs partial send / receive ?
+********* zfs partial send / receive ?
 from: https://unix.stackexchange.com/questions/343675/zfs-on-linux-send-receive-resume-on-poor-bad-ssh-connection
 #+begin_src sh
   # on the receiving end
@@ -2291,12 +2467,12 @@ from: https://unix.stackexchange.com/questions/343675/zfs-on-linux-send-receive-
       | nc $receiveHost 9090
 #+end_src
 
-***** How to list all devices of a pool?
+******** How to list all devices of a pool?
 #+BEGIN_SRC sh
 sudo zpool list  -v -L
 #+END_SRC
 
-***** Grow a zfs pool when a device has grown?
+******** Grow a zfs pool when a device has grown?
       #+BEGIN_SRC sh
         # Let's the the growed device is sdx
         dev=sdx
@@ -2316,17 +2492,17 @@ sudo zpool list  -v -L
         zfs online -e $pool $dev
 #+END_SRC
 
-**** AccessControl
-***** Set read right reccursive for all files and and dir in a given dir?
+******* AccessControl
+******** Set read right reccursive for all files and and dir in a given dir?
       #+BEGIN_SRC sh
 dir=/path/to
 && find "$dir" -type f -print0 | xargs -0 chmod 744 \
 && find "$dir" -type d -print0 | xargs -0 chmod 755
       #+END_SRC
-*** Distribs
-**** Alpine
-***** Apk
-****** use a http cache for apk ?
+****** Distribs
+******* Alpine
+******** Apk
+********* use a http cache for apk ?
 
        from: https://hub.docker.com/r/vektorlab/apk-cache/
 
@@ -2349,20 +2525,20 @@ dir=/path/to
        #+END_SRC
 
        - Run apk-cache on any port + overwrite resolution of dl-4.alpinelinux.org via dnsmasq
-****** add a repo?
+********* add a repo?
        #+BEGIN_SRC sh
        echo "http://107.181.185.116/alpine/v3.2/main" >> /etc/apk/repositories; \
        #+END_SRC
-****** how to install telnet on alpine ???
+********* how to install telnet on alpine ???
        #+BEGIN_SRC sh
        #+END_SRC
-****** repo key rotated? (UNTRUSTED signature when =apk add=)?
+********* repo key rotated? (UNTRUSTED signature when =apk add=)?
 #+BEGIN_SRC sh
   # add the new key
   apk add -X https://dl-cdn.alpinelinux.org/alpine/v3.14/main -u alpine-keys
 #+END_SRC
-**** Debian
-***** Old debian GPG invalid signature when apt-get update?
+******* Debian
+******** Old debian GPG invalid signature when apt-get update?
       Re-import expired pgp keys with:
       #+BEGIN_SRC sh
       apt-key list | grep expired |  tr -s ' '  | cut -f2 -d ' ' | cut -f2 -d'/' | sed -r 's/.*/apt-key adv --recv-keys --keyserver keys.gnupg.net &/' | bash -xv
@@ -2379,8 +2555,8 @@ dir=/path/to
           | bash -xv \
       ;
       #+end_src
-***** Bookworm
-****** how to install java8 on Debian Bookworm?
+******** Bookworm
+********* how to install java8 on Debian Bookworm?
 
 Best solution found yet:
 - enable (if necessary) the debian non-free repo
@@ -2392,7 +2568,7 @@ https://packages.debian.org/bookworm/nvidia-openjdk-8-jre
 And switch between old/new java with:
 ~update-alternatives --config java~
 ~update-alternatives --config javac~
-****** Fresh install of bookworm 12.5 via cd.iso apt update fails !?
+********* Fresh install of bookworm 12.5 via cd.iso apt update fails !?
 #+BEGIN_SRC shell
     apt update
 
@@ -2419,22 +2595,22 @@ Solved it using https://wiki.debian.org/SourcesList
 
 #+END_SRC
 
-**** Ubuntu
-***** X
-****** Disable Wayland to use Xorg instead?
+******* Ubuntu
+******** X
+********* Disable Wayland to use Xorg instead?
        #+BEGIN_SRC sh
        Edit =/etc/gdm3/custom.conf=
        change:  :WaylandEnable=true:
        by    :  :WaylandEnable=false:
        #+END_SRC
-***** Admin
-****** How to authorize normal user to connect to wifi withouth authenticating as admin ?
+******** Admin
+********* How to authorize normal user to connect to wifi withouth authenticating as admin ?
 
        - Using the admin account, connect to the wifi
        - And in the wifi properties, choose:
          - "Make available to others users"
          -
-***** prevent snapd for ever installing?
+******** prevent snapd for ever installing?
 from: https://askubuntu.com/questions/1345385/how-can-i-stop-apt-from-installing-snap-packages
 #+begin_src
 # purge snapd
@@ -2443,20 +2619,20 @@ apt purge snapd
 apt-mark hold snapd
 #+end_src
 
-***** 18.04
-****** X
-******* Normal alt-tab?
+******** 18.04
+********* X
+********** Normal alt-tab?
         From: https://askubuntu.com/questions/1036248/how-to-separate-opened-windows-in-alttab-switcher-in-ubuntu-18-04
         - Go to =Settings > Devices > Keyboard=.
         - Choose: "Switch windows"
         - Assign 'alt-tab' to it
-****** uninstall snap?
+********* uninstall snap?
        from: https://stackoverflow.com/questions/50322306/how-to-remove-snap-store-from-ubuntu
        #+BEGIN_SRC sh
        sudo apt autoremove --purge snapd
        #+END_SRC
-**** Raspberry Pi
-***** Install docker on Raspberry Pi 4?
+******* Raspberry Pi
+******** Install docker on Raspberry Pi 4?
 https://docs.docker.com/engine/install/debian/#install-using-the-convenience-script
 As of 20230101:
 #+BEGIN_SRC sh
@@ -2473,9 +2649,9 @@ sudo usermod -aG docker $(whoami)
 newgrp docker
 docker run hello-world
 #+END_SRC
-*** Backup
-**** Bup
-***** bup essentials?
+****** Backup
+******* Bup
+******** bup essentials?
 
 | category | what?                | cmd                                      |
 |----------+----------------------+------------------------------------------|
@@ -2497,25 +2673,26 @@ docker run hello-world
 |          | - of   dir : $d      |                                          |
 |          | - with name: $n      |                                          |
 |----------+----------------------+------------------------------------------|
-** Solaris
-*** equivalent of linux's =ps aux= ?
+***** Other UNIXes
+****** Solaris
+******* equivalent of linux's =ps aux= ?
 
     maybee not exaclty equiv, but roughly:
 
     #+begin_src sh
     ps -AfL
     #+end_src
-** AIX
-*** list all processes with their corresponding commands?
+****** AIX
+******* list all processes with their corresponding commands?
     #+BEGIN_SRC sh
     ps -Af
     #+END_SRC
-***** How to know the actual amount of ram used by dedup on a particular dataset ?
+********* How to know the actual amount of ram used by dedup on a particular dataset ?
       from: https://serverfault.com/questions/533877/how-large-is-my-zfs-dedupe-table-at-the-moment
       #+BEGIN_SRC sh
       sudo zpool status -D zpool-docker | jq -Rr 'capture("^\\s*dedup: DDT entries (?<ddt>[0-9]+)[^0-9]\\s+size (?<sizeOnDisk>[0-9]+) on disk, (?<inCore>[0-9]+) in core$") | map_values(fromjson) | { ramUsedForDedupInMBytes: (.ddt * .inCore / (1024 * 1024))}'
       #+END_SRC
-****** common rsync flags?
+********** common rsync flags?
 
        #+BEGIN_SRC sh
        # to copy exactly (like above) plus more feedback:
@@ -2523,7 +2700,7 @@ docker run hello-world
        # even more verbose
        rsync -rvza --progress --delete --info=stats2,misc1,flist0 workspace/ jenkins@localhost:/home/jenkins/workspace
        #+END_SRC
-****** Compress / decompress on the fly?
+********** Compress / decompress on the fly?
        +BEGIN_SRC sh
        # data ------------------------------------------------------------------
        mkdir d
@@ -2544,66 +2721,32 @@ docker run hello-world
        #> 2
        # -----------------------------------------------------------------------
        +END_SRC
-****** How to display the actual configuration of the ssh command?
+********** How to display the actual configuration of the ssh command?
      #+BEGIN_SRC sh
      ssh user@host -G
      #+END_SRC_
-****** Signal to control nginx at runtime?
+********** Signal to control nginx at runtime?
        #+BEGIN_SRC sh
 quit – Shut down gracefully
 reload – Reload the configuration file
 reopen – Reopen log files
 stop – Shut down immediately (fast shutdown)
        #+END_SRC
-* Crypto
-** Gpg
-*** How to encrypt symmetric stdin without X (Inappropriate ioctl for device)?
-    #+BEGIN_SRC sh
-    # Workaround:
-    ( export GPG_TTY=$(tty) && tar czv f | gpg --symmetric  > f.gpg )
-    #+END_SRC
-
-*** verify a gpg signed file?
-    #+BEGIN_SRC sh
-    gpg --verify file.gpg file
-    #+END_SRC
-*** how to dw a gpg public key from ubuntu key server?
-    #+BEGIN_SRC sh
-    keyId=7C207910
-    keyFingerprint='28D3 BED8 51FD F3AB 57FE F93C 2335 87A4 7C20 7910'
-    gpg --keyserver keyserver.ubuntu.com --recv $keyId
-    gpg --list-keys --with-fingerprint $keyId | tr -s ' ' | grep "${keyFingerprint}"
-    #+END_SRC
-    sometimes behind firewalls:
-   #+BEGIN_SRC sh
-   gpg --keyid-format long --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0x8EF0A9D3F274FCE7
-   #+END_SRC
-
-* Non-unixes
-** Ms windows
-*** Vsphere
-**** when cloning a win vm, how to avoid a duplicate ip adress?
-     - vsphere: clone the vm :
-       - but customize the hardware
-       - disable the network card
-     - Open the vmware console to access the machine:
-       - win: setup a new ip adress
-     - vsphere: enable "connect" "connect at startup"
-
-*** Cygwin
-**** Sshd
-***** start sshd as a service after its installation with the Cygwin installer?
-****** TODO to be verified
+***** M$ Windows
+****** Cygwin
+******* Sshd
+******** start sshd as a service after its installation with the Cygwin installer?
+********* TODO to be verified
       1) Open a cmd.exe as administrator
       2) Run:
          #+BEGIN_SRC sh
          cygrunsrv -S sshd
          #+END_SRC
          (from: https://unix.stackexchange.com/questions/296275/running-sshd-in-cygwin-var-empty-must-be-owned-by-root
-***** install gpg under cygwin?
+******** install gpg under cygwin?
       It's already in the standard Cygwin repo, only called =gnupg=.
-*** cmd.exe
-**** windows services cheatsheet?
+****** cmd.exe
+******* windows services cheatsheet?
      - list all
        #+BEGIN_SRC sh
        sc queryex type= service state= all
@@ -2613,12 +2756,67 @@ stop – Shut down immediately (fast shutdown)
       sc queryex type= service state= all | find /i "NATION"
       #+END_SRC
 
-* Docker
-** Images
-*** find images on the command line ?
+****** Linux Guests in a Windows vbox host
+******** Disable hyperV for vbox?
+    - open a windows cmd.exe as admin
+    - then run:
+    #+BEGIN_SRC sh
+mountvol X: /s
+copy %WINDIR%\System32\SecConfig.efi X:\EFI\Microsoft\Boot\SecConfig.efi /Y
+bcdedit /create {0cb3b571-2f2e-4343-a879-d86a476d7215} /d "DebugTool" /application osloader
+bcdedit /set {0cb3b571-2f2e-4343-a879-d86a476d7215} path "\EFI\Microsoft\Boot\SecConfig.efi"
+bcdedit /set {bootmgr} bootsequence {0cb3b571-2f2e-4343-a879-d86a476d7215}
+bcdedit /set {0cb3b571-2f2e-4343-a879-d86a476d7215} loadoptions DISABLE-LSA-ISO,DISABLE-VBS
+bcdedit /set {0cb3b571-2f2e-4343-a879-d86a476d7215} device partition=X:
+mountvol X: /d
+    #+END_SRC
+    - reboot
+    - press F3 at all the question displayed pre-boot
+
+******** manually mount a shared folder in a linux guest?
+       #+begin_src sh
+       sudo mount -t vboxsf <sharedFolderName> /path/to/shared/folder/dir
+       #+end_src
+******** host alt-tab when in a guest?
+       =host key=
+       then
+      alt-tab
+******** Windows Hosts
+********* Windows10
+********** VT-x is not available (VERR_VMX_NO_VMX)
+         From:
+
+         - VT-x is not enabled in the BIOS
+         - The CPU doesn't support VT-x
+         - Hyper-V virtualization is enabled in Windows
+         -
+         - Run in command prompt:
+        #+BEGIN_SRC sh
+        dism.exe /Online /Disable-Feature:Microsoft-Hyper-V
+        #+END_SRC
+        - And reboot
+
+
+
+
+
+**** Vim
+***** Yaml
+****** Folding yaml in vim?
+    from: https://lornajane.net/posts/2018/vim-settings-for-working-with-yaml
+    Starting point, put in your =~/.vimrc=:
+    #+BEGIN_SRC sh
+   " add yaml stuffs
+   au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
+   autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+    #+END_SRC
+* Virtualization
+** Docker
+*** Images
+**** find images on the command line ?
    ???
-*** Building
-**** docker build from stdin?
+**** Building
+***** docker build from stdin?
      #+BEGIN_SRC sh
      #
      # docker < 17.05
@@ -2636,14 +2834,14 @@ stop – Shut down immediately (fast shutdown)
      COPY . /my-copied-files
      EOF
      #+END_SRC
-*** Tags
-**** Give a name to an image?
+**** Tags
+***** Give a name to an image?
      #+BEGIN_SRC sh
      docker tag <srcImgId>   <imgName>
      docker tag 978d85d02b87 firc/foo:1
      #+END_SRC
-** Containers
-*** docker run/start/exec ?
+*** Containers
+**** docker run/start/exec ?
     |-------+--------------------------------|
     | cmd   | descr                          |
     |-------+--------------------------------|
@@ -2652,7 +2850,7 @@ stop – Shut down immediately (fast shutdown)
     | start | start a *stopped* container    |
     |-------+--------------------------------|
 
-** troubleshoot ubuntu network ?
+*** troubleshoot ubuntu network ?
 - ping 8.8.8.8 but no www.google.com ?
 - incomplete response:
 #+begin_src sh
@@ -2664,8 +2862,8 @@ IP4.DNS[1]:                             10.19.18.25
 ExecStart=/usr/bin/docker daemon --dns 8.8.8.8 --dns 10.19.18.25 -H fd://
 #+end_src
 From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying-to-use-8-8-8-8
-** Persistence
-*** repair docker after a disk full?
+*** Persistence
+**** repair docker after a disk full?
  #+begin_src sh
  service docker stop
 
@@ -2677,8 +2875,8 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
 
  #+end_src
  http://stackoverflow.com/questions/30719896/docker-dm-task-run-failed-error
-** Dockerfile
-*** use bashism in Dockerfile?
+*** Dockerfile
+**** use bashism in Dockerfile?
     #+begin_src sh
  # Define bash as the default shell
  SHELL ["bash", "-c"]
@@ -2686,8 +2884,8 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
  SHELL ["bash", "-ueo","pipefail", "-c"]
      #+end_src
 
-** Docker Compose
-*** commands cheatsheet ?
+*** Docker Compose
+**** commands cheatsheet ?
 | cmd     | act on   | type      | target  | service | all | descr                                                     |
 |         |          |           | state   |         |     |                                                           |
 |---------+----------+-----------+---------+---------+-----+-----------------------------------------------------------|
@@ -2717,7 +2915,7 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
 | ps      | cont     | infos     |         | Y       | Y   | List containers                                           |
 | help    | special  | infos     |         | N       | N   | Get help on a command                                     |
 | version | special  | infos     |         | N       | N   | Show the Docker-Compose version information               |
-*** pass env var at build time ?
+**** pass env var at build time ?
 
     from: https://docs.docker.com/compose/compose-file/#cachefrom:
     #+begin_src sh
@@ -2728,7 +2926,7 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
         password: secret
     #+end_src
 
-** docker docs
+*** docker docs
 
    | what                        | url                      |
    |-----------------------------+--------------------------|
@@ -2742,8 +2940,8 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
    |                             | [[https://docs.docker.com/engine/userguide/storagedriver/device-mapper-driver/][overlay in practice]]      |
    |                             | [[https://docs.docker.com/engine/userguide/storagedriver/btrfs-driver/][btrfs in practice]]        |
    |                             | [[https://docs.docker.com/engine/userguide/storagedriver/zfs-driver/][zfs in practice]]          |
-** Network
-*** bind host /lib and /bin to the guest to run (eg) wget?
+*** Network
+**** bind host /lib and /bin to the guest to run (eg) wget?
     #+begin_src sh
     # on the host
     docker run -v /usr/lib/x86_64-linux-gnu:/usr-lib-host -v /lib/x86_64-linux-gnu/:/lib-host -v /usr/bin/:/bin-host -it ubuntu:16.04 bash
@@ -2751,8 +2949,8 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
     export LD_LIBRARY_PATH=/lib-host:/usr-lib-host && export PATH=$PATH:/bin-host
     wget google.com
     #+end_src
-** DockerHub
-*** How to list all tags of a particular image?
+*** DockerHub
+**** How to list all tags of a particular image?
     #+BEGIN_SRC sh
     img=jenkins
     curl "https://registry.hub.docker.com/v1/repositories/${img}/tags"  | jq -c '.[]'
@@ -2760,20 +2958,20 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
     #> {"layer":"","name":"2.7.4"}
     #> {"layer":"","name":"2.7.4-alpine"}
     #+END_SRC
-** Misc
-*** use stdin with a container?
+*** Misc
+**** use stdin with a container?
     #+BEGIN_SRC sh
    seq 100 | docker run -i syn synesthesia 1
     #+END_SRC
-** Cli
-*** Formatting
-**** docker cli command output in json?
+*** Cli
+**** Formatting
+***** docker cli command output in json?
      #+BEGIN_SRC sh
      docker history opensuse/portus:2.3.5 --format '{{json . }}'
      #+END_SRC
-** DockerDistribs
-*** RancherOs
-**** How to switch the default console to ubuntu?
+*** DockerDistribs
+**** RancherOs
+***** How to switch the default console to ubuntu?
 
      Source: https://rancher.com/docs/os/v1.2/en/configuration/switching-consoles/
      #+BEGIN_SRC sh
@@ -2782,258 +2980,64 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
      # Switch to another console
      sudo ros console switch ubuntu
      #+END_SRC
-* Vim
-** Yaml
-*** Folding yaml in vim?
-    from: https://lornajane.net/posts/2018/vim-settings-for-working-with-yaml
-    Starting point, put in your =~/.vimrc=:
+** Vsphere
+*** when cloning a win vm, how to avoid a duplicate ip adress?
+     - vsphere: clone the vm :
+       - but customize the hardware
+       - disable the network card
+     - Open the vmware console to access the machine:
+       - win: setup a new ip adress
+     - vsphere: enable "connect" "connect at startup"
+
+* Crypto
+** Gpg
+*** How to encrypt symmetric stdin without X (Inappropriate ioctl for device)?
     #+BEGIN_SRC sh
-   " add yaml stuffs
-   au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
-   autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+    # Workaround:
+    ( export GPG_TTY=$(tty) && tar czv f | gpg --symmetric  > f.gpg )
     #+END_SRC
-* Emacs
-** file type indicator header for emacs?
-#+begin_src sh
--*- mode: outline -*-
-#+end_src
-** edit a file remotely over ssh with tramp?
-   #+begin_src sh
-   C-x C-f
-   /<user>@<host>:<file>
-   #+end_src
 
-** Spacemacs
-*** Troubleshoot
-**** org-mode not working after a fresh install of spacemacs + practicalli config?
-- Remove any org mode in ~$HOME/.emacs.d/elpa~
-- Restart emacs it should work
-*** Clojure
-**** Tests
-***** Switch between implementation and test in Spacemacs Clojure?
-- Keybinding: =<SPC> p a=
-- Function: projectile-switch-between-implementation-and-test
-***** Clojure's switch between implementation and test: how to create the test if not exists?
-- In the spacemacs config add:
-#+begin_src elisp
-(spacemacs-project
-      :variables
-      projectile-create-missing-test-files t)
-#+end_src
-
-*** Install
-**** "No public key for 066DAFCB81E42C40" ?
-   #+begin_src sh
-   gpg --homedir ~/.emacs.d/elpa/gnupg --receive-keys 066DAFCB81E42C40
-   #+end_src
-
-*** evil cheat sheet?
-
-| what                                               |                       | cmds                  | example                  |
-|----------------------------------------------------+-----------------------+-----------------------+--------------------------|
-| general cmd                                        | pattern 1             | <cmd> [n] <object>    | =d 3 3= # delete 3 words |
-| "                                                  | pattern 2             | [n] <cmd> <object>    | =3 d w= # delete 3 words |
-| undo / redo                                        |                       | u / ctrl-r            |                          |
-| put (after copy)                                   |                       | p                     |                          |
-| change word                                        |                       | cw                    |                          |
-| go to a specific line number                       |                       | :<lineNb>             |                          |
-| search and replace                                 | current line          | :s/search/repl/[g]    |                          |
-| "                                                  | between lines N and M | :N,Ms/search/repl/[g] |                          |
-| "                                                  | whole buffer          | %s/search/repl/[g]    |                          |
-| locate matching parentesis (or curly, ...)         |                       | %                     |                          |
-| regex modifier to confirm before each replace?     |                       | c: s/search/repl/gc   |                          |
-| write current file                                 |                       | :w                    |                          |
-| save as <newName>                                  |                       | :w <newName>          |                          |
-| page up / page down                                |                       | C-j C-k               |                          |
-| insert the content of a file in the current buffer |                       | :r <filename>         |                          |
-| insert new line                                    | below                 | o                     |                          |
-|                                                    | above                 | O                     |                          |
-| replace (like replace mode - opposite of insert)   |                       | R                     |                          |
-| append at the end of the line                      |                       | A                     |                          |
-*** run a command and get the output in the current buffer?
-**** Emacs
-    ~C-u M-! <shell-command>~
-**** fix error when installing spacemacs: "No such file or directory, evil"?
-    May be a simply missing gpg elpa key:
+*** verify a gpg signed file?
     #+BEGIN_SRC sh
-    gpg --homedir ~/.emacs.d/elpa/gnupg --receive-keys 066DAFCB81E42C40
+    gpg --verify file.gpg file
     #+END_SRC
-**** Spacemacs (evil mode)
-     ~SPC u SPC ! <shell-command>~
-*** Universal argument in spacemacs (evil mode)?
-    instead of the traditional ~C-u~
-    ~SPC u~
-*** Project
-**** =helm-project-do-ag= how to filter by file types?
-     - Example, searching for:
-       - =*.clj= files
-       - containing =defn=
-     ~SPC s a p~
-     ~--clojure defn~
-
-**** search and replace in project?
-     |                          |                      |             |
-     |--------------------------+----------------------+-------------|
-     | search string in project | ~helm-project-do-ag~ | ~SPC s a p~ |
-     | edit the search results  |                      | ~C-c C-e~   |
-     | commit the changes       |                      | ~C-c C-c~   |
-*** SearchAndReplace
-**** How to search and replace starting at the cursor position?
-     #+BEGIN_SRC sh
-     :.,$s/\vBEFORE/AFTER/gc
-     #+END_SRC
-*** Folding
-**** a promising mode?
-     - hint: =spacemacs/fold-transient-state/evil-close-fold=
-*** Misc
-**** Exit emacs mode (holy mode) entered by error?
-
-    Exit holy mode:
-
-    |                            | in holy mode | in evil mode |
-    |----------------------------+--------------+--------------|
-    | spacemacs/toggle-holy-mode | =M-m t E e=  | =SPC t E e=  |
-    |                            |              |              |
-
-***** pipe in table with code block
-      - create the table in org mode
-      | x    | l               |
-      |------+-----------------|
-      | cmd1 | cmd             |
-      | cmd2 | cmd <pipe> cmdx |
-      - copy and pase the table in a code block and add the missing pipes:
-        #+BEGIN_SRC sh
-      | x    | l               |
-      |------+-----------------|
-      | cmd1 | cmd             |
-      | cmd2 | cmd | cmdx      |
-        #+END_SRC
-***** TODO org mode how to use pipes in tables? [0%]
-****** TODO using contants?
-      #+CONSTANTS: c=299792458. pi=3.14 eps=2.4e-6
-      | name | value |
-      |------+-------|
-      | c    | $c    |
-      | pi   | $pi   |
-      | eps  | $eps  |
-****** TODO macros?
-****** TODO latex?
-****** TODO html?
-****** TODO compute cells values ?
-*** twbs export html
-    Controlling html output?
-  #+BEGIN_SRC sh
-    #+OPTIONS: num:5 whn:2 toc:4 H:6
-    And to set these via your publish configuration using the org-publish-project-alist, the options would be :section-numbers, :headline-levels and :with-toc.
-
-    The above options are described in the export settings section of the orgmode manual. This component introduces a new setting whn for per document, and :with-headline-numbers for publish config, which controls the display of section numbers. To disable, set to nil, to enable, set to t, and to control depth of display, use a whole number.
-  #+END_SRC
-    from: https://github.com/marsmining/ox-twbs
-*** easy templates?
-
-from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
-
-| s  |  =#+BEGIN_SRC ... #+END_SRC=      |
-| e  | =#+BEGIN_EXAMPLE ... #+END_EXAMPLE= |
-| q  | =#+BEGIN_QUOTE ... #+END_QUOTE=   |
-| v  | =#+BEGIN_VERSE ... #+END_VERSE=   |
-| c  | =#+BEGIN_CENTER ... #+END_CENTER= |
-| l  | =#+BEGIN_LaTeX ... #+END_LaTeX=   |
-| L  | =#+LaTeX:=                        |
-| h  | =#+BEGIN_HTML ... #+END_HTML=     |
-| H  | =#+HTML:=                         |
-| a  | =#+BEGIN_ASCII ... #+END_ASCII=   |
-| A  | =#+ASCII:=                        |
-| i  | =#+INDEX: line=                   |
-| I  | =#+INCLUDE: line=                 |
-*** Babel
-**** "eval is disabled for shell"
-***** add to your init file
-       *use =shell= and not =sh=*
-       #+BEGIN_SRC elisp
-       (org-babel-do-load-languages
-       'org-babel-load-languages
-       '(
-       (js         . t)
-       ;; (sh         . t)
-       (emacs-lisp . t)
-       (shell      . t)
-       (clojure    . t)
-     ))
-       #+END_SRC
-***** in the org mode file
-     #+BEGIN_EXAMPLE
-     #+BEGIN_SRC sh
-     f() { echo "I'm f!" ; }
-     export -f f
-     bash -c f
-     #+END_SRC
-     #+END_EXAMPLE
-***** stop emacs
-***** remove the folder =~/.emacs.d/elpa/org-plus-contrib-*=
-***** start emacs
-***** try to eval with =C-c C-c=
-*** Spacemace: disable mouse under termux ?
-- in your ~defun dotspacemacs/user-config ()~ :
-- add ~(xterm-mouse-mode 0)~
-
-** install emacs25 on ubuntu16.04?
+*** how to dw a gpg public key from ubuntu key server?
+    #+BEGIN_SRC sh
+    keyId=7C207910
+    keyFingerprint='28D3 BED8 51FD F3AB 57FE F93C 2335 87A4 7C20 7910'
+    gpg --keyserver keyserver.ubuntu.com --recv $keyId
+    gpg --list-keys --with-fingerprint $keyId | tr -s ' ' | grep "${keyFingerprint}"
+    #+END_SRC
+    sometimes behind firewalls:
    #+BEGIN_SRC sh
-cd
-mkdir emacs25.install
-cd emacs25.install
-# install preReqs
-sudo apt install build-essential checkinstall
-# install build deps (same for emacs24 or 25)
-sudo apt-get build-dep emacs24
-# Download emacs25 src
-wget http://ftp.igh.cnrs.fr/pub/gnu/emacs/emacs-25.1.tar.{xz,xz.sig}
-keyId=7C207910
-keyFingerprint='28D3 BED8 51FD F3AB 57FE F93C 2335 87A4 7C20 7910'
-gpg --keyserver keyserver.ubuntu.com --recv "${keyId}"
-gpg --list-keys --with-fingerprint "${keyId}" | tr -s ' ' | grep "${keyFingerprint}"
-# build
-cd emacs-25.1
-./configure
-make
-# install
-sudo checkinstall
+   gpg --keyid-format long --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0x8EF0A9D3F274FCE7
    #+END_SRC
-** Org-Mode
-*** key binding to insert a code block?
-- Type:
-=<s>=
-- Then complete (eg: =M-/=)
-*** How to track time spen on TODO STARTED DONE?
-    - start clock in with: org-clock-in
-    - stop clock with    : org-clock-out
-    - when you pass the task  as DONE: org mode will inster the total time spent
-* Web
-** Browsers
-*** Firefox
-**** Disable images loading?
+
+* Web Browsers
+** Firefox
+*** Disable images loading?
      go to about:config
      firefox_profile.set_preference('permissions.default.image', 2)
-*** Chrome
-**** How to keep a Chrome background active (eg: for avoiding sessions timeouts)?
-***** Possible option1: Use Chrome build-in =ctrl-shift-click=
-****** STARTED 1) use the buit-in chrome shortcut [0/1]
+** Chrome
+*** How to keep a Chrome background active (eg: for avoiding sessions timeouts)?
+**** Possible option1: Use Chrome build-in =ctrl-shift-click=
+***** STARTED 1) use the buit-in chrome shortcut [0/1]
 
       =ctrl-click= on link open a link in another background.
       =ctrl-shift-click= open a link in another tag *and keep it active*.
-******* STARTED to be verified
+****** STARTED to be verified
 
         It seems to work be needs to be used for a few days to be definitvely validated
-***** TODO Possible option2: Use an extension like =Tab Reloader=
+**** TODO Possible option2: Use an extension like =Tab Reloader=
 https://chrome.google.com/webstore/detail/tab-reloader-page-auto-re/dejobinhdiimklegodgbmbifijpppopn
-****** TODO to check
+***** TODO to check
 
-*** Chromium
-**** Run chromium diagnostics?
+** Chromium
+*** Run chromium diagnostics?
 #+BEGIN_SRC shell
   chromium --diagnostics
 #+END_SRC
-**** Chromium crashes on startup, any hint?
+*** Chromium crashes on startup, any hint?
 - Run =chrome --diagnostics=
 - look for the size of $HOME/.config/chromium
 - I had a case of a webworker cache dir huge (4gb), deleting it fix the problem
@@ -3663,7 +3667,7 @@ curl -v -u tomcat:tomcat http://127.0.0.1:8080/manager/text/list
 ***** tomcat rest api doc ?
       http://tomcat.apache.org/tomcat-7.0-doc/manager-howto.html#List_Currently_Deployed_Applications
 ** Databases
-*** Sql
+*** Sql language
 **** DateTime
 ***** Sql: how to select rows where a field date is greater than...?
       Cast a string to a date type.
@@ -3764,11 +3768,43 @@ select * from (VALUES (1, 'c'), (1, 'a')) t(b,a)
 ;;> |  1 |  a |
  #+END_SRC
 
-*** PostgreSQL
-***** Posgresql cheatsheet?
+*** RDBMS
+**** PostgreSQL
+****** Posgresql cheatsheet?
 | descr                  | sql                    |
 |------------------------+------------------------|
 | get postgresql version | =SHOW server_version;= |
+
+**** sqlite
+***** sqlite3
+****** import
+******* How do I import a csv from stdin with field containing '"' into a sqlite3 db (non interactively)?
+#+BEGIN_SRC shell
+    # this is valid csv:
+    echo '"a","b"
+  "c""","d"
+  "e""e","ffff"
+  "gg""gg", "hhhhhh"'
+  # import it in sqlite3
+     echo '"a","b"
+  "c""","d"' \
+          | sqlite3 /tmp/.db -csv -cmd ".import '| cat' tt"
+  # let's check the content of the table tt
+     sqlite3 /tmp/.db 'select * from tt'
+     #> "c""" d
+#+END_SRC
+*** timeserie db
+**** influxdb
+***** flux
+****** flux query example?
+
+#+BEGIN_SRC sh
+from(bucket: "telegraf")
+  |> range(start: -12h)
+  |> filter(fn: (r) => r._measurement == "system" and r._field  =~ /load(1|5|15)$/ )
+  |> aggregateWindow(every: 10s, fn: mean)
+  |> group(columns: ["_field"], mode: "by")
+#+END_SRC
 
 ** Node
 *** Npm
@@ -4818,8 +4854,7 @@ digraph G {
 #+END_SRC
      - on the machine where jconsole is running, start a new connection on =$DOCKER_SERVER:8888=
 
-
-* Terminal (cli)
+* Special
 ** Unicode(UTF8)
 *** How can I search by name for unicode char on the command line?
 - Could use unipicker: https://github.com/jeremija/unipicker
@@ -5012,35 +5047,3 @@ see: https://en.wikipedia.org/wiki/List_of_U│nicode_characters#Box_Drawing
      ♈♉♌♎⛎♐♑♒♓
 ***** zodiac even more unambiguous
      ♈♉♌♎⛎♐♒
-
-* Db
-** sqlite
-*** sqlite3
-**** import
-***** How do I import a csv from stdin with field containing '"' into a sqlite3 db (non interactively)?
-#+BEGIN_SRC shell
-    # this is valid csv:
-    echo '"a","b"
-  "c""","d"
-  "e""e","ffff"
-  "gg""gg", "hhhhhh"'
-  # import it in sqlite3
-     echo '"a","b"
-  "c""","d"' \
-          | sqlite3 /tmp/.db -csv -cmd ".import '| cat' tt"
-  # let's check the content of the table tt
-     sqlite3 /tmp/.db 'select * from tt'
-     #> "c""" d
-#+END_SRC
-** timeserie db
-*** influxdb
-**** flux
-***** flux query example?
-
-#+BEGIN_SRC sh
-from(bucket: "telegraf")
-  |> range(start: -12h)
-  |> filter(fn: (r) => r._measurement == "system" and r._field  =~ /load(1|5|15)$/ )
-  |> aggregateWindow(every: 10s, fn: mean)
-  |> group(columns: ["_field"], mode: "by")
-#+END_SRC
