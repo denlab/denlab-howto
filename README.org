@@ -2821,7 +2821,6 @@ From: http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying
       projectile-create-missing-test-files t)
 #+end_src
 
-
 *** Install
 **** "No public key for 066DAFCB81E42C40" ?
    #+begin_src sh
@@ -2974,6 +2973,10 @@ from: http://orgmode.org/manual/Easy-Templates.html#Easy-Templates
 ***** remove the folder =~/.emacs.d/elpa/org-plus-contrib-*=
 ***** start emacs
 ***** try to eval with =C-c C-c=
+*** Spacemace: disable mouse under termux ?
+- in your ~defun dotspacemacs/user-config ()~ :
+- add ~(xterm-mouse-mode 0)~
+
 ** install emacs25 on ubuntu16.04?
    #+BEGIN_SRC sh
 cd
