@@ -4667,7 +4667,6 @@ end'
 - lorem ipsum
 #+END_SRC
 
-
 ** CI
 *** Jenkins
 **** RestApi
@@ -4776,6 +4775,22 @@ digraph G {
   c -> e,f;
 }
 #+END_SRC
+*** Grafana
+**** Grafana custom time formating for the x-axis ?
+- It's kind of hidden!
+- You need to customize the unit of the x-axis (using an override)
+- Then override the unit
+- But instead of choosing a pre-defined format:
+- Type in the input box:
+  - ~time: <fmt>~
+  - where <fmt> can be a format supported by Grafana, some examples:
+| fmt        |                                |         ex |
+|------------+--------------------------------+------------|
+| YYYY.MM.DD | <year>.<month>.<day>           | 2024.12.20 |
+| YYYY MMM   | <year>.<month in human format> |   2024 Mar |
+| WW         | <weekNumber>                   |          3 |
+| \Y \M \D   | A literal Y, M, D              |            |
+
 ** Video editing
 *** how to copy part of a video?
     #+BEGIN_SRC sh
