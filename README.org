@@ -63,7 +63,7 @@ Also serve:
 
 ****** Random
 ******* Generate a lot of (pseudo) random data faster than /dev/urandom?
-#+BEGIN_SRC
+#+BEGIN_SRC shell
 openssl enc -aes-256-ctr -pass pass:"$(head -c128 /dev/urandom | base64)" -nosalt < /dev/zero | pv > randomfile.bin
 #+END_SRC
 ****** generate random string?
@@ -1066,8 +1066,9 @@ ffmpeg -f gdigrab -framerate 30 -i desktop -c:v h264_nvenc -qp 0 output.mkv
 
 
 
-#+begin_src dot
+#+begin_src shell
 ffmpeg -i output2.m4v -vf "scale=(trunc(iw/4)*4)/4:(trunc(ih/4)*4)/4" video.mp4
+#+end_src
 ********** lossless recording
 ffmpeg -video_size 1920x1080 -framerate 30 -f x11grab -i :0.0 -c:v libx264rgb -crf 0 -preset ultrafast -color_range 2 output.mkv
 
@@ -1106,8 +1107,9 @@ ss | grep ssh
 ********* Ssh Tunnels
 ********** ssh tunnels explained
         https://unix.stackexchange.com/questions/115897/whats-ssh-port-forwarding-and-whats-the-difference-between-ssh-local-and-remot
-        [[file://img/ssh-tunnels-explained.png][img]]
-        [[file://img/ssh-tunnels-explained2.png][img2]]
+
+        [[./img/ssh-tunnels-explained.png][img]
+        [[./img/ssh-tunnels-explained2.png][img2]]
 ********** ssh reverse tunnel ?
 
     #+begin_src sh
@@ -2612,7 +2614,7 @@ Solved it using https://wiki.debian.org/SourcesList
          -
 ******** prevent snapd for ever installing?
 from: https://askubuntu.com/questions/1345385/how-can-i-stop-apt-from-installing-snap-packages
-#+begin_src
+#+begin_src shell
 # purge snapd
 apt purge snapd
 # holdit
@@ -2701,7 +2703,7 @@ docker run hello-world
        rsync -rvza --progress --delete --info=stats2,misc1,flist0 workspace/ jenkins@localhost:/home/jenkins/workspace
        #+END_SRC
 ********** Compress / decompress on the fly?
-       +BEGIN_SRC sh
+       #+BEGIN_SRC sh
        # data ------------------------------------------------------------------
        mkdir d
        seq 2 > d/f
@@ -2720,11 +2722,11 @@ docker run hello-world
        #> 1
        #> 2
        # -----------------------------------------------------------------------
-       +END_SRC
+       #+END_SRC
 ********** How to display the actual configuration of the ssh command?
      #+BEGIN_SRC sh
      ssh user@host -G
-     #+END_SRC_
+     #+END_SRC
 ********** Signal to control nginx at runtime?
        #+BEGIN_SRC sh
 quit – Shut down gracefully
@@ -3285,7 +3287,7 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
   (testing "User"           (is (= "<user><id>0</id><name>john</name><dob>473385600</dob></user>"
                                                          (as-xml (->User "0" "john" (t/date-time 1985)))))))
 
- # +END_SRC
+ #+END_SRC
 ***** Modulo/quotient/reminder?
 #+BEGIN_SRC sh
 (mod 5 2)
@@ -3395,9 +3397,9 @@ Works with any base:
 **** Js
 **** Babasha
 ***** Parse a date in babashka?
-      #+BEGIN_SRC sh
+      #+BEGIN_SRC clj
        (java.time.LocalDateTime/parse "2019-12-18T16:01:41.485")
-      #+END_SRC]
+      #+END_SRC
 
 **** Processes
 
@@ -3846,7 +3848,7 @@ from(bucket: "telegraf")
       http://nipstr.com
 *** how to read all lines from stdin in one go?
 
-    #+BEGIN_SRC
+    #+BEGIN_SRC shell
     # install  module get-stdin
     npm i get-stdin
     # example
@@ -4766,7 +4768,6 @@ withPool{
       println(new XStream(new com.thoughtworks.xstream.io.json.JsonHierarchicalStreamDriver()).toXML(this))
      #+END_SRC
 
-    #+END_SRC
 **** legacy jobs
 ***** job-dsl plugin
 ****** Example job-dsl for matrix project?
@@ -4890,8 +4891,8 @@ U+21Ex	⇠	⇡	⇢	⇣	⇤	⇥	⇦	⇧	⇨	⇩	⇪	⇫	⇬	⇭	⇮	⇯
 U+21Fx	⇰	⇱	⇲	⇳	⇴	⇵	⇶	⇷	⇸	⇹	⇺	⇻	⇼	⇽	⇾	⇿
 #+END_SRC
 **** draft
-see: https://en.wikipedia.org/wiki/List_of_U│nicode_characters#Box_Drawing
- #+begin_src sh                             │
+see: https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing
+ #+begin_src sh
       ┌┐
       └┘
       ┌┐┌┐
