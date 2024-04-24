@@ -3214,7 +3214,7 @@ Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
 ***** Repl
 ****** Change the alias of a ns in a ns def (Alias <alias> already exists in namespace <ns>,etc)?
         If the ns is: =user.ns= and the alias is =alias=:
-        #+BEGIN_SRC clj
+        #+BEGIN_SRC clojure
         (ns-unalias (find-ns 'user.ns) 'alias)
         #+END_SRC
 ****** List all ns?

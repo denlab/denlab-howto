@@ -1,878 +1,878 @@
 
 # Table of Contents
 
--   [Operating Systems](#org4026465)
-    -   [Linux](#org9fad175)
-        -   [Shells](#org93b289a)
-            -   [Bash](#org860609c)
-                -   [Non interactive](#org750a319)
-                    -   [Use alises in non interactive bash?](#org8967e0f)
-                -   [Interactive use](#org6692547)
-                    -   [Complete](#orgb60f170)
-                        -   [bash completion cheat sheet?](#orgafcd563)
-                -   [Common tasks](#org7d6d20e)
-                    -   [Random](#org9b444f4)
-                        -   [Generate a lot of (pseudo) random data faster than /dev/urandom?](#org1a0e8b7)
-                    -   [generate random string?](#orgacbd640)
-                    -   [decimal / hex (and opposite) conversion?](#org3aeabbc)
-                    -   [redirect output in variable?](#orgd7a1811)
-                    -   [stop on error (even in subshell)?](#org1c279c0)
-                        -   [workaround1: set -e explicitly for each subshell](#org1a5757c)
-                        -   [workaround2: write shell script with '&&'](#org584ba91)
-                        -   [workaround3: write shell script with '||'](#orgd7c72c6)
-                    -   [loop over args?](#org4afc1e8)
-                    -   [parse a string as args](#org918eed6)
-                    -   [How to save a script params (before doing modifications like shift, ..)?](#orgad9b338)
-                    -   [generate uuid?](#org249a81f)
-                    -   [List all possible commands (including functions)?](#org0b64c35)
-                -   [Programming](#org4578ce2)
-                    -   [Misc](#orgd1ad436)
-                        -   [bash pointer variables?](#orgd03ae84)
-                    -   [Control flow](#orgfb2c2be)
-                        -   [Tests/Conditionnals](#org48fba59)
-                            -   [ternary operator in bash?](#org8108ab9)
-                            -   [cheatsheet](#org8633217)
-                            -   [test files cheatsheet](#orgd5f3e88)
-                        -   [Looping](#orgb8e3003)
-                            -   [loop over cmd output with while?](#orgfcff9ec)
-                            -   [c style for loop?](#orgde1667e)
-                        -   [switch case ?](#org3b0c201)
-                    -   [Types](#org599a3a6)
-                        -   [Datastructures](#orga9a1e72)
-                            -   [Arrays](#org3ea5f2a)
-                                -   [Associative arrays](#org3e65c47)
-                                    -   [declare, print, &#x2026;](#org027d891)
-                                    -   [copy ?](#org50ea236)
-                                -   [Normal arrays](#orga445f8f)
-                                    -   [declare/literal/set/getAll/size](#orgd37dba4)
-                                    -   [access empty array?](#org9c804d1)
-                                    -   [parse string to array?](#org2a47e67)
-                                    -   [clone an array into another array?](#org2789a29)
-                        -   [Strings](#org4548ded)
-                            -   [bash strings cheat sheet?](#org7f415e3)
-                            -   [Syntax](#orgb482b8a)
-                                -   [ssh escape sequence?](#orgd96ce6b)
-                            -   [Printf?](#orga752421)
-                                -   [print args, one by line with its position?](#orgdfa50a8)
-                                -   [print a line accross the terminal?](#org9660f60)
-                -   [Bash options](#org1725eb3)
-                    -   [How to get the values of errexit etc (set by set -e &#x2026;)?](#orgc3d310a)
-                    -   [option so bash export all declared variables?](#org94796ee)
-                    -   [option to glob also hidden files?](#orgb488e08)
-                    -   [Bash config files](#org0198745)
-                        -   [Order of loading of bash init files?](#org0d484eb)
-                -   [Files and Redirections](#org627c6ba)
-                    -   [Stdin/out/err](#orgeedcd27)
-                        -   [redirect file to stdin on the left side?](#org723f64a)
-                        -   [redirecting stdout, stderr](#org7ffebd9)
-                        -   [use stdout as a file (with filename) for another cmd?](#org51fa24c)
-                        -   [swap stdout and stderr?](#orgc82d9d8)
-                        -   [write to stdin of a backround process?](#orgfc37af5)
-                        -   [here-string with indentation in src but not in output?](#org5ffa1ff)
-                        -   [File Descriptors](#org62246e4)
-                            -   [Named File Descriptors](#org7af3b33)
-                                -   [define a named file descriptor to a writable file and write to it?](#orgd996884)
-                        -   [how to know if stdout is a terminal?](#orgc4b34db)
-                        -   [Printout](#org809d9b2)
-                            -   [Padding](#org4bf79ef)
-                                -   [right / left pad with printf?](#org424ffbc)
-                                -   [zero padding numbers?](#org3880925)
-                    -   [Tmp files](#orgc96ec98)
-                        -   ["delete while still open" trick to be sure a file will be deleted?](#org74b93c7)
-                -   [Env](#org96b6beb)
-                    -   [how to run a command with the env cleared?](#org794e76b)
-                    -   [export bash function?](#org33ca8ff)
-                    -   [Replace all env var by values in file?](#org462be55)
-                    -   [how to make bash source a file before running a command?](#org9a3c577)
-                    -   [how to test if a variable is defined?](#orgcec6e6e)
-                -   [Debugging](#org82c2c98)
-                    -   [how to make a bash script stop and print current line before running it?](#org9243179)
-                    -   [how to execute a script step by step?](#orgb5ec2f3)
-            -   [Zsh](#orgc72c48c)
-        -   [Editors](#orga600dac)
-            -   [Emacs](#org522fc4e)
-                -   [file type indicator header for emacs?](#org8108e54)
-                -   [edit a file remotely over ssh with tramp?](#orgac3a7fa)
-                -   [Spacemacs](#orga59e408)
-                    -   [Troubleshoot](#orgc893db2)
-                        -   [org-mode not working after a fresh install of spacemacs + practicalli config?](#org78ebd25)
-                    -   [Clojure](#orgea4be24)
-                        -   [Tests](#org435e805)
-                            -   [Switch between implementation and test in Spacemacs Clojure?](#orgc150494)
-                            -   [Clojure's switch between implementation and test: how to create the test if not exists?](#org1b5ba31)
-                    -   [Install](#orgc55779c)
-                        -   ["No public key for 066DAFCB81E42C40" ?](#org3387b00)
-                    -   [evil cheat sheet?](#org62a21d5)
-                    -   [run a command and get the output in the current buffer?](#orgd5b3d83)
-                        -   [Emacs](#orgcf79993)
-                        -   [fix error when installing spacemacs: "No such file or directory, evil"?](#org385ad46)
-                        -   [Spacemacs (evil mode)](#org83fc4d1)
-                    -   [Universal argument in spacemacs (evil mode)?](#org1a0e1f7)
-                    -   [Project](#org0f52572)
-                        -   [`helm-project-do-ag` how to filter by file types?](#org4eabe0a)
-                        -   [search and replace in project?](#org3dd3f0a)
-                    -   [SearchAndReplace](#org01f0560)
-                        -   [How to search and replace starting at the cursor position?](#org8ea7556)
-                    -   [Folding](#org4e5d102)
-                        -   [a promising mode?](#org1eb5ab8)
-                    -   [Misc](#orgaf05f6a)
-                        -   [Exit emacs mode (holy mode) entered by error?](#org6c3af9a)
-                            -   [pipe in table with code block](#orgc651b22)
-                            -   [org mode how to use pipes in tables? <code>[0%]</code>](#org184b540)
-                                -   [using contants?](#org0813494)
-                                -   [macros?](#org5d19aed)
-                                -   [latex?](#org9c4bc42)
-                                -   [html?](#orgde28ae0)
-                                -   [compute cells values ?](#org1784e27)
-                    -   [twbs export html](#org7d91371)
-                    -   [easy templates?](#org9ff3a3b)
-                    -   [Babel](#orgb991913)
-                        -   ["eval is disabled for shell"](#org1f60215)
-                            -   [add to your init file](#org29d1a5c)
-                            -   [in the org mode file](#orgb69a1ab)
-                            -   [stop emacs](#org290b09b)
-                            -   [remove the folder `~/.emacs.d/elpa/org-plus-contrib-*`](#org97bcc36)
-                            -   [start emacs](#orgface948)
-                            -   [try to eval with `C-c C-c`](#orgd0e2079)
-                    -   [Spacemace: disable mouse under termux ?](#orgd4c4459)
-                -   [install emacs25 on ubuntu16.04?](#org127886e)
-                -   [Org-Mode](#org38df0d4)
-                    -   [key binding to insert a code block?](#org93bcae4)
-                    -   [How to track time spen on TODO STARTED DONE?](#org4d25dc4)
-                        -   [Text](#orgc4f5de0)
-                            -   [Less](#org05d327c)
-                                -   [how to search for a tab ?](#org500da64)
-                            -   [Tail](#orge574766)
-                                -   [skip the N first lines of input with tail?](#orge7d5ac2)
-                    -   [Package managers](#orga8b1ce6)
-                        -   [find which package manager is used on this machine?](#org85a1d00)
-                        -   [apk](#orge8f34a3)
-                            -   [equivalent of apt-file search?](#orgc39a4d4)
-                    -   [Software packages](#org4214cce)
-                        -   [Admin](#orgd1723c0)
-                            -   [Tmux](#org07830e6)
-                                -   [how do i detach other client when reattach to session?](#orga00175b)
-                                -   [create a new session specifying the name?](#orgadd964e)
-                                -   [reload .tmux.conf?](#org74ec7b4)
-                                -   [bindings to install plugins?](#orga3cb9c5)
-                                -   [bindings to upgrade plugins?](#orgc733908)
-                                -   [use another shell as the default (ex: zsh instead of bash)](#org4fecf60)
-                            -   [Zip](#org5ddff9e)
-                                -   [list content of a zip file from stdin?](#orgd9d7efe)
-                            -   [Apt-get](#org0786f83)
-                                -   [dpkg show all installed files of a .deb?](#org323e39b)
-                                -   [apt-get: what package provide this file?](#org37b6d4b)
-                                -   [fix a broken state ?](#org8afc52f)
-                                -   [install a specific version?](#org04de9cc)
-                                -   [show version that a package can be upgraded to?](#orge24b827)
-                                -   [customize output of dpkg -l?](#orge92503c)
-                                -   [Alternative](#org9c8b5a8)
-                                    -   [rebuild alternative for a particular package?](#org252b448)
-                            -   [Rpm](#org87b773e)
-                                -   [list files installed by a package?](#org9f8d84b)
-                                -   [list only names of packages?](#orgd9195b7)
-                            -   [Ps](#org7a7ffdc)
-                                    -   [list all processes, show only pids?](#orgb8ea6d7)
-                                    -   [ps: List processes with their elapsed running time ?](#orgbe62ad1)
-                            -   [SeLinux](#org47ea29c)
-                                -   [status/enable/disable selinux?](#org3e86e03)
-                            -   [Dd](#org8acf2f4)
-                                -   [Typical dd invocation to copy a partition disk ?](#orgc13b1dd)
-                                -   [Show progress with dd?](#org86ced97)
-                            -   [Systrace](#org77c8007)
-                                -   [How to cp with a progress bar using strace?](#org1f1c6eb)
-                            -   [Security](#org8a75bac)
-                                -   [Other](#orgcdbf01b)
-                                    -   [list recent ssh connection on a host?](#org80e1e20)
-                                -   [SeLinux](#org78f375f)
-                                -   [status/enable/disable selinux?](#org6632f12)
-                                -   [User/groups management](#org3937435)
-                                -   [Users's group management command](#org918735c)
-                        -   [Graphics](#org2f1ce39)
-                            -   [Imagemagick](#orgd07347a)
-                                -   [how to change the quality of a jpeg image?](#orge947123)
-                            -   [Ffmpeg](#org48cada7)
-                                -   [How to get only the 1st n minutes of videos?](#org1ab0551)
-                                -   [Record desktop?](#org4db11f6)
-                                    -   [linux](#orgc65f40b)
-                                    -   [windows](#orgf601e34)
-                                        -   [directshow](#org4b4c2c5)
-                                        -   [built-in gdi screengrabber](#orgc8823c4)
-                                            -   [all displays](#orgbe41c8c)
-                                            -   [region](#orgdf396ba)
-                                            -   [window](#org4c72ec1)
-                                            -   [hw encoding](#org5f24591)
-                                    -   [lossless recording](#org33bf49b)
-                        -   [Math](#org8606555)
-                            -   [Bc](#org1218479)
-                                -   [float precision?](#org7b11e13)
-                        -   [Net](#org0c67760)
-                            -   [General](#org7edbd8d)
-                                -   [Count all current tcp connection on linux host?](#orgffea1fb)
-                                -   [List all tcp connections on a linux host?](#orgadd7093)
-                                -   [List all ssh connections on a linux host?](#orgd855927)
-                            -   [Netcat](#org2fe0afd)
-                                -   [simple web server with netcat?](#org3a0a188)
-                            -   [Ssh](#org08cb9a2)
-                                -   [How to check the **actual** configuration of a sshd server?](#orge68d9a3)
-                                -   [Ssh Tunnels](#orgb7ca848)
-                                    -   [ssh tunnels explained](#org90f9d04)
-                                    -   [ssh reverse tunnel ?](#org87708f1)
-                                    -   [ssh tunnel example?](#org6990ee3)
-                                    -   [ssh tunnel socks "channel 2: open failed: administratively prohibited: open failed"](#org55dba13)
-                                -   [Passwordless and keyless ssh login](#org4f0f6df)
-                                    -   [ssh without password or key?](#org35e25b3)
-                                    -   [ssh root without password or key?](#orgf0629b8)
-                                    -   [working conf for openssh 7.1 on alpine?](#org4810ecd)
-                                -   [generate public private key pair](#orgbc00f24)
-                                -   [ssh or scp in a script without entering password ?](#org0685225)
-                                -   [get public key from private key ?](#orgafbef0e)
-                                -   [Disable host verification?](#org426f430)
-                                    -   [for one session](#org1fc2ff1)
-                                    -   [for all sessions:](#org7141c8b)
-                                    -   [for all sessions and all hosts:](#orga4c1709)
-                                -   [copy pub key to remote authorized<sub>keys</sub>?](#org9f1a457)
-                                -   [workaround for a ssh slow login on a particular server?](#org6651e64)
-                                -   [copy between two ssh hosts without intermediary copy?](#org1085289)
-                                -   [disable host has in known<sub>hosts</sub>?](#org05cf8ee)
-                                -   [Non interactive sftp session with non pubkey password?](#org0d69ea0)
-                                -   [How to view actual ssh config (system wide + user config + cmdline/env)?](#orgc3e41f6)
-                                -   [Sshfs](#org8cb6228)
-                                    -   [how to mount remote fs with sshfs?](#org5cec382)
-                                    -   [how to umount a mounted sshfs?](#orgbc34bc2)
-                                    -   [sshfs with autossh?](#org8d47377)
-                                -   [alpine ssh send<sub>pubkey</sub><sub>test</sub>: no mutual signature algorithm ?](#org718ae03)
-                            -   [Openssl](#org3d910ee)
-                                -   [SslCerts](#orgafa8de9)
-                                    -   [generate a self certificate for localhost (without prompt)?](#org99fd19b)
-                                    -   [How to add root cert to an Ubuntu install?](#orgae597ad)
-                                    -   [best explaination of "everything derive from the root ca key"?](#orgd6aaba8)
-                                    -   [Generate a self signed ca cert and key, and a cert and key for a how that works on the command line and chrome?](#org98e6267)
-                            -   [Rsync](#orgb41e888)
-                                -   [how to specify the port in rsync?](#org5fee952)
-                                -   [how to exactly copy a local directory to a remote host (remove extra remote file if necessary) and back ?](#org6574446)
-                                -   [rsync and trailing slash behavior?](#org28a2cea)
-                            -   [Openvpn](#org30b8398)
-                                -   [list and connect with openvpn from cli?](#orgb523272)
-                                        -   [with nmanager](#org0a7b336)
-                            -   [Dns](#orgc1c4904)
-                                -   [Get ip from hostname?](#orgb0ab692)
-                                -   [Get hostname from ip?](#org167016e)
-                            -   [Network analysis](#org8862203)
-                                -   [Ngrep](#org38a0a36)
-                                    -   [Ngrep example?](#org58e1855)
-                        -   [Misc](#org38ecb98)
-                            -   [VirtualBox](#orge8153d4)
-                                -   [Windows host](#org15186a9)
-                                    -   [Linux Guest](#orga14e532)
-                                        -   [How to disable HyperV so VBox can run correctly?](#orga0a7f7c)
-                                        -   [How to correctly install guestAdditon on ubuntu22.04?](#orgacf00e5)
-                                        -   [How to correctly install guestAdditon on debian12?](#orga5f907c)
-                                            -   [Hint1](#org1187c59)
-                                            -   [Hint2](#orgf8360f6)
-                                            -   [Hint3](#org487f304)
-                        -   [Utils](#org6168957)
-                            -   [Comm](#org397d1bd)
-                                -   [comm summary?](#orgeed82db)
-                                -   [binary to compare the content of files (all in a but not in b, etc)?](#org7920179)
-                            -   [Find](#org804447a)
-                                -   [find files modified in the last x minutes](#orgcff2fa6)
-                                -   [find files modified in the last x days](#org7219a7d)
-                                -   [handle filenames with spaces ?](#org5948c60)
-                                -   [sort files by modified date?](#orga6bbbce)
-                                -   [find files bigger than x MBytes?](#orgfda1e7b)
-                                -   [find filename with regex?](#org3452dd8)
-                                -   [find with logical or?](#orgc326ffe)
-                            -   [Grep](#org1f99fef)
-                                -   [Non capturing group?](#org6762950)
-                                -   [cheat sheet](#org6691875)
-                                -   [Character class for blanks?](#org456ab06)
-                                -   [match pattern on multiples lines?](#org42386cb)
-                            -   [Tr](#org52b2633)
-                                -   [remove all non printable characters from a file with tr ?](#orgd302a2d)
-                            -   [Nohup](#org8c49723)
-                                -   [run nohup?](#orgf8b6394)
-                            -   [MoreUtils](#orge6d7b69)
-                                -   [read / process / write the same file ?](#org39f0b92)
-                                -   [instead of xxx use moreutils yyy?](#org72c88bc)
-                            -   [Stat](#org2ce9316)
-                                -   [Custom format with newlines?](#orge78036c)
-                            -   [Tar](#org826dcdd)
-                                -   [list the content of a remote tgz without intermediary files?](#org1055dcd)
-                                -   [send tar compressed archive to stdout?](#org77de70f)
-                                -   [recompress without intermediary files?](#org61dfe03)
-                                -   [tar: archive files name coming from stdin?](#org9d1bf10)
-                                -   [Specify arbitrary order of files in tar file?](#orgd300ab3)
-                            -   [Bsdtar](#orgb077f85)
-                                -   [recompress without intermediary files?](#org65d03f9)
-                            -   [Tree](#org5f45ed2)
-                                -   [print tree with unicode characters?](#org8eedd44)
-                            -   [Xargs](#org1cd4aa7)
-                                -   [run a cmd on each line of stdin with xargs?](#orgd872d7a)
-                                -   [use bash function?](#orge41122d)
-                            -   [Zip](#org686e942)
-                                -   [unzip a single file from archive?](#orgd141e7f)
-                                -   [compress dir recursive?](#org1794bb3)
-                                -   [compress dir but exclude a directory ?](#org3800835)
-                        -   [Web](#org5983252)
-                            -   [Curl](#org50c843a)
-                                -   [follow redirects?](#orgb1046f4)
-                                -   [post data from stdin?](#orgcc871ef)
-                            -   [Wget](#org98c7922)
-                                -   [recursively download for example nexus ?](#orga19f0d7)
-                                -   [equivalent of curl -sS?](#org88bb1c6)
-                            -   [Nginx](#org7b3bdf3)
-                                -   [Check config syntax?](#orgea9cd27)
-                            -   [Lynx](#org7207166)
-                                -   [html to text by piping to lynx?](#org7d1662e)
-                        -   [X11](#org0b2ac62)
-                            -   [NxClient](#org034026a)
-                                -   [keyboard issue when connecting with nx ?](#org65c909a)
-                    -   [Hardware](#orge999e32)
-                        -   [Sound](#org29c6c69)
-                            -   [Troubleshoot sound in Linux/Ubuntu ?](#org3267d90)
-                        -   [Ubuntu/Debian change the machine uuid (useful when the dhcp id is derived from it) ?](#org189613f)
-                    -   [Sysadmin](#org78704a4)
-                        -   [System Services (systemctl, &#x2026;)](#orgd8afa0f)
-                            -   [Systemd](#org5aecff5)
-                                -   [systemd / systemV cheatsheet](#orgf69e360)
-                                -   [follow logs of a particular systemd service?](#orga781d60)
-                                -   [restart network on systemd?](#orgfae8460)
-                            -   [General Linux](#org0c25de4)
-                                -   [Linux reload service config](#org3f68a5e)
-                            -   [Centos](#org044bfda)
-                                -   [create a new systemd unit file?](#org9b7ea23)
-                                -   [the hostname keep coming back at its previous state after each restart?](#org3f63abe)
-                        -   [User Admin](#org17cc2cd)
-                            -   [how to add a group to a user ?](#org4c12c3c)
-                            -   [add a user with specific groups ?](#org49fadd1)
-                            -   [get the groups of a user ?](#org86de962)
-                            -   [change the shell of a user?](#org6c28790)
-                            -   [remove a user?](#org6d8b8ad)
-                            -   [add a user?](#org06a6fc7)
-                            -   [view login activity?](#orgef5c1fd)
-                        -   [Sudo](#org0090465)
-                            -   [allow sudo without password for a user?](#orgc959a4c)
-                            -   [execute a cmd as another user?](#org142b950)
-                        -   [Devices (hdd,&#x2026;)](#org2318b8e)
-                            -   [eject a cd rom?](#orgc8a15de)
-                            -   [how to list all supported FS for mounting?](#org914a250)
-                            -   [how to fix a screwed nfs mount without rebooting?](#orgf0a6bd3)
-                            -   [Swap](#orga713df7)
-                                -   [manage swap (status, enable, disable)?](#orge3c1344)
-                        -   [Dns](#org717ded2)
-                            -   [How to query all the entries of a dns server ?](#org51770db)
-                        -   [recover a lost root password at boot with grub](#orgbcc88fa)
-                        -   [Special files](#orgb7ad52b)
-                            -   [Removed /dev/null how to remake it?](#orge17b88e)
-                    -   [Terminal](#orgb148f1d)
-                        -   [Colors](#orgf2391a0)
-                            -   [simple way to color output with grep?](#org7dbfdc5)
-                        -   [Replace capslock by ctrl in console?](#org7720d3c)
-                            -   [working also in virtual consoles?](#orgabd3d5f)
-                            -   [working under X?](#org80bab48)
-                        -   [replace capslock by ctrl in a terminal under X ?](#org6fb5b40)
-                        -   [change language keyboard mapping](#org3846367)
-                        -   [change text mode resolution?](#orgf933c0e)
-                        -   [paste example?](#orga9fa436)
-                        -   [show which key is pressed in a terminal?](#orgbb6ff0b)
-                        -   [get the number of rows and colums?](#orgfdc115d)
-                        -   [Presentation conventions](#org6782c68)
-                            -   [display a command line?](#org8e00380)
-                    -   [Io](#org6f7dcca)
-                        -   [Disk](#org1b893ab)
-                            -   [list files open by a particular process](#org4fb5f31)
-                            -   [how to do a simple bind mount?](#org656890e)
-                            -   [Disks](#org6e9c3ed)
-                                -   [Disks caches](#org5fb1fb2)
-                                    -   [how do I clear the disk caches in Linux?](#org777b4cc)
-                            -   [Images](#org9547622)
-                                -   [Copy an img file to a disk with bad blocks?](#org82a8ddc)
-                        -   [RemoteFs](#orgaa385bf)
-                            -   [nfs](#org79249fe)
-                                -   [How to mount a remote nfs drive on a linux host?](#orga28f8dc)
-                                -   [List all nfs share of a remote nfs server?](#org5bf43ea)
-                        -   [VirtualFs](#org09de033)
-                            -   [How to get the load with /proc?](#org6009bae)
-                        -   [Processes](#orgf15d78b)
-                            -   [How to find how are connected by pipes running processes?](#org1a163db)
-                            -   [Autossh](#orga1b5987)
-                                -   [How to keep a ssh sesssion open with autossh?](#org5f4d655)
-                        -   [Completion](#orgc741c17)
-                            -   [using bash's autocomplete with zsh?](#orgc0a3a3c)
-                            -   [Copy an existing completion for another command?](#org89cc32e)
-                    -   [X](#org6810132)
-                        -   [copy to system clipboard from the command line?](#orgd2b1961)
-                        -   [dual monitor setup: turn off one of the monitor and not the other?](#orgaf92adc)
-                        -   [force X resolution when an external monitor is not detected?](#org93952ab)
-                        -   [Fonts](#org8589ee7)
-                            -   [List fonts?](#orgf01100c)
-                        -   [Gnome](#orgbd32074)
-                            -   [How to logout from Gnome with the terminal?](#orgfab9af5)
-                        -   [Remote](#org20883e6)
-                            -   [NoMachine NX](#org3a08478)
-                                -   [How to administrate the NX server?](#org55fe81a)
-                        -   [Xpra](#orgb49becf)
-                            -   [xpra quickstart on ubuntu?](#org2181277)
-                        -   [Window managers](#org5be4c03)
-                            -   [Gnome](#org709c815)
-                                -   [open the network manager (for proxy settings) from the command line?](#org87d6ed0)
-                                -   [Gnome 3](#org68b578a)
-                                    -   [Gnome Shell](#org50ba42a)
-                                        -   [how to have cpu,etc montoring in the top bar?](#orgef091e6)
-                                        -   [how restart gnome shell?](#org18a278a)
-                                            -   [Gnome Shell Extensions?](#orgcbbc083)
-                                                -   [how to manage enabling/disabling gnome shell user extensions (command line)?](#org06a2320)
-                        -   [Xdg-open](#orgf371db9)
-                            -   [choose browser to use with xdg-open?](#org78fa03f)
-                    -   [Converting formats](#org0dcee00)
-                        -   [Converting human readable <-> bytes](#orgbb8f628)
-                        -   [convert file format table?](#org0106e9e)
-                        -   [Pdf](#org02f98d5)
-                            -   [replace a string in a pdf file ?](#org4461990)
-                        -   [units](#orga35e617)
-                    -   [Locale](#orgc2479f8)
-                        -   [fix locale config?](#org87ee8ae)
-                            -   [ubuntu / debian](#org39c4bc8)
-                            -   [centos](#orgcd4ede0)
-                    -   [Network](#orgeafd1e0)
-                        -   [How to trace all network activity?](#org3502bfa)
-                        -   [how to get the ip adresse of the local host ?](#org6b8f818)
-                        -   [list open ports?](#org3a1b71d)
-                        -   [Proxy](#orgae99892)
-                            -   [Request with curl through a proxy over ssh ?](#org2d58360)
-                        -   [how to list all open ports and their associated processes?](#org1a45052)
-                        -   [Mtu](#org68cf862)
-                            -   [temporary change the mtu of a network interface?](#orga0214dd)
-                        -   [Wifi](#orga59745a)
-                            -   [Connect to wifi with via command line?](#org38cd40b)
-                                -   [Using nmcli](#org3b94b28)
-                    -   [Compression](#org15b4c1b)
-                        -   [compress stdin, uncompress to stdout ?](#org9d62f8f)
-                        -   [Xz](#orgddeb3e8)
-                            -   [compress/decompress stdin with xz?](#org9874f0b)
-                            -   [decompress stdin with xz?](#org057ed68)
-                    -   [Fs](#orgc01ea8b)
-                        -   [difference between `/bin`, `/usr/bin`, `/usr/local/bin`?](#orgccd7323)
-                        -   [Zfs](#org178e9a0)
-                            -   [Dedup](#orgd43ce6c)
-                                -   [Size RAM for online dedup ?](#org0ad4433)
-                                -   [Current RAM usage for dedup on a particular zfs pool?](#org7838ed7)
-                            -   [Create a new zfs "env" in a file?](#org97306e8)
-                            -   [How to destroy a zpool ?](#org45f4cf7)
-                            -   [How to add new devices to an exising pool?](#orgd30bb82)
-                            -   [How to view the dedup and compression properties of pools?](#org7206405)
-                            -   [Snaphot clones, etc](#org843cbdf)
-                            -   [Send/receive](#org0a86bb9)
-                                -   [How to do send a whole pool to another pool?](#org24d1c60)
-                                -   [How to to send a whole pool with dedup=on to another pool but with dedup=off?](#org50b1b97)
-                                -   [zfs partial send / receive ?](#org87fdb28)
-                            -   [How to list all devices of a pool?](#orgb2c6068)
-                            -   [Grow a zfs pool when a device has grown?](#orge4477ef)
-                        -   [AccessControl](#orgbdf11a0)
-                            -   [Set read right reccursive for all files and and dir in a given dir?](#org2235e0a)
-                    -   [Distribs](#orge9bf779)
-                        -   [Alpine](#org05793d1)
-                            -   [Apk](#orgb8d177d)
-                                -   [use a http cache for apk ?](#org10bf2c2)
-                                -   [add a repo?](#org6f65bba)
-                                -   [how to install telnet on alpine ???](#orgfe6a2cf)
-                                -   [repo key rotated? (UNTRUSTED signature when `apk add`)?](#orgee4be47)
-                        -   [Debian](#org2be59a4)
-                            -   [Old debian GPG invalid signature when apt-get update?](#org41aa5cf)
-                            -   [Bookworm](#org5ce340f)
-                                -   [how to install java8 on Debian Bookworm?](#org63b8dfe)
-                                -   [Fresh install of bookworm 12.5 via cd.iso apt update fails !?](#orgc073b5b)
-                        -   [Ubuntu](#org6ff4e75)
-                            -   [X](#org6939dc4)
-                                -   [Disable Wayland to use Xorg instead?](#org7fdf8a9)
-                            -   [Admin](#orga454db5)
-                                -   [How to authorize normal user to connect to wifi withouth authenticating as admin ?](#orgb6e75e2)
-                            -   [prevent snapd for ever installing?](#org5919965)
-                            -   [18.04](#orgb6aa97d)
-                                -   [X](#org5110000)
-                                    -   [Normal alt-tab?](#org9dc30c4)
-                                -   [uninstall snap?](#org00aa5ba)
-                        -   [Raspberry Pi](#orgd36ffb0)
-                            -   [Install docker on Raspberry Pi 4?](#orgb7c3334)
-                    -   [Backup](#org271fe45)
-                        -   [Bup](#org5c76dea)
-                            -   [bup essentials?](#org755e6f6)
-                -   [Other UNIXes](#org4e8c28e)
-                    -   [Solaris](#orgc4cf309)
-                        -   [equivalent of linux's `ps aux` ?](#orge57b281)
-                    -   [AIX](#org6b2692e)
-                        -   [list all processes with their corresponding commands?](#org03eace8)
-                                -   [How to know the actual amount of ram used by dedup on a particular dataset ?](#org4dabf9e)
-                                    -   [common rsync flags?](#orgdf35b05)
-                                    -   [Compress / decompress on the fly?](#orgd36d6d6)
-                                    -   [How to display the actual configuration of the ssh command?](#org539c24a)
-                                    -   [Signal to control nginx at runtime?](#org1c15391)
-                -   [M$ Windows](#org04d61cb)
-                    -   [Cygwin](#orgc1cea2c)
-                        -   [Sshd](#org955ab37)
-                            -   [start sshd as a service after its installation with the Cygwin installer?](#orgb11a3f3)
-                                -   [to be verified](#org1e38c44)
-                            -   [install gpg under cygwin?](#org898f86a)
-                    -   [cmd.exe](#org29d6440)
-                        -   [windows services cheatsheet?](#orgcb31616)
-                    -   [Linux Guests in a Windows vbox host](#org11e1bae)
-                            -   [Disable hyperV for vbox?](#org2df8415)
-                            -   [manually mount a shared folder in a linux guest?](#orgf4b3ecf)
-                            -   [host alt-tab when in a guest?](#orgfdf4479)
-                            -   [Windows Hosts](#orgf12c66b)
-                                -   [Windows10](#org1f62ca1)
-                                    -   [VT-x is not available (VERR<sub>VMX</sub><sub>NO</sub><sub>VMX</sub>)](#orgb8f6f0b)
-            -   [Vim](#org0d20ee7)
-                -   [Yaml](#org4481301)
-                    -   [Folding yaml in vim?](#orgabd2772)
--   [Virtualization](#orge90b730)
-    -   [Docker](#org5389aed)
-        -   [Images](#org90d9ee0)
-            -   [find images on the command line ?](#orgeb6dc46)
-            -   [Building](#orgf5b0282)
-                -   [docker build from stdin?](#org84a8ab6)
-            -   [Tags](#org341ee8d)
-                -   [Give a name to an image?](#org272969b)
-        -   [Containers](#org7e2e6c2)
-            -   [docker run/start/exec ?](#org51cfb82)
-        -   [troubleshoot ubuntu network ?](#orgf90bcf6)
-        -   [Persistence](#org5cd6790)
-            -   [repair docker after a disk full?](#org55ad63f)
-        -   [Dockerfile](#orgfac5c77)
-            -   [use bashism in Dockerfile?](#org6c6801b)
-        -   [Docker Compose](#org981e437)
-            -   [commands cheatsheet ?](#org3ab9afc)
-            -   [pass env var at build time ?](#orgc9feb88)
-        -   [docker docs](#org7e8a2e3)
-        -   [Network](#org68100e7)
-            -   [bind host /lib and /bin to the guest to run (eg) wget?](#org420837e)
-        -   [DockerHub](#orgc463af3)
-            -   [How to list all tags of a particular image?](#orgfba20e3)
-        -   [Misc](#orge496f01)
-            -   [use stdin with a container?](#orgf8b3be4)
-        -   [Cli](#org6a519b6)
-            -   [Formatting](#org325e9ef)
-                -   [docker cli command output in json?](#org6211a0b)
-        -   [DockerDistribs](#orgd48722e)
-            -   [RancherOs](#org2022fa2)
-                -   [How to switch the default console to ubuntu?](#org55acf74)
-    -   [Vsphere](#orga317377)
-        -   [when cloning a win vm, how to avoid a duplicate ip adress?](#org14dfe3e)
--   [Crypto](#org051f6aa)
-    -   [Gpg](#org6d7dd72)
-        -   [How to encrypt symmetric stdin without X (Inappropriate ioctl for device)?](#org9e9911a)
-        -   [verify a gpg signed file?](#orgc4062cd)
-        -   [how to dw a gpg public key from ubuntu key server?](#org6f618d7)
--   [Web Browsers](#org94aacdf)
-    -   [Firefox](#org1d53285)
-        -   [Disable images loading?](#org04bf1b1)
-    -   [Chrome](#org1c156a4)
-        -   [How to keep a Chrome background active (eg: for avoiding sessions timeouts)?](#orgc46f808)
-            -   [Possible option1: Use Chrome build-in `ctrl-shift-click`](#orgf4de74d)
-                -   [1) use the buit-in chrome shortcut <code>[0/1]</code>](#orgfcd4586)
-                    -   [to be verified](#orgbd824ac)
-            -   [Possible option2: Use an extension like `Tab Reloader`](#org6586ab2)
-                -   [to check](#org6909ae6)
-    -   [Chromium](#org9e124a1)
-        -   [Run chromium diagnostics?](#orgdafd9a6)
-        -   [Chromium crashes on startup, any hint?](#orgcc8cf19)
--   [Videos](#org9626fd9)
-    -   [Youtube](#orgecf81cc)
-            -   [How do I send a link to a youtube video specifing the resolution?](#org423a133)
-                    -   [Solution from stackoverflow](#orgb3a9b8b)
-                -   [In other words](#orgbba3d68)
--   [Programming](#org31691fd)
-    -   [JVM ecosystem](#org4612e72)
-        -   [Groovy](#org3a80366)
-            -   [Misc](#org2250c02)
-                -   [Get the Groovy version from within a Groovy script/class?](#orgbddf9ad)
-            -   [pipeline oriented programming in groovy like Clojure's threading macro?](#org36f4b75)
-            -   [groovy switch case?](#org8777816)
-            -   [groovy interval ?](#orga2da622)
-            -   [get cmd line args?](#org0cd5fcd)
-            -   [run a system command in groovy ?](#orgb9ffb7f)
-            -   [groovy pprint datastructure?](#org7e42996)
-        -   [Java](#orgdea80d1)
-            -   [Create an object with the same behavior than System.out (for testing output)?](#org95b2f93)
-            -   [timestamp in java ?](#orgad8f803)
-        -   [Gradle](#org29e6002)
-            -   [how to create a new project from scratch?](#org979721d)
-        -   [Maven](#orgf1b7e30)
-            -   [simply download a jar with maven?](#orgf92fa6b)
-                -   [simple](#org5677775)
-                -   [specifying transitivity and repo](#orgbe4af2a)
-            -   [generate a simple maven project?](#orgb51819e)
-            -   [generate a simple webapp?](#org3a9dd38)
-        -   [Clojure](#org94a4b52)
-            -   [Dev](#org916b868)
-                -   [Repl](#org35905d9)
-                    -   [Change the alias of a ns in a ns def (Alias <alias> already exists in namespace <ns>,etc)?](#org1557987)
-                    -   [List all ns?](#org7b0d928)
-                -   [Strings](#orga9efbc0)
-                    -   [ByteArrayInputStream to string?](#org0615252)
-                    -   [Convert a string to a regex?](#orga0a7db3)
-                -   [Protocols](#org8154b45)
-                    -   [Full example of protocole usage for fast & simple polymorphic dispatch on a single type?](#org9dd60ae)
-                -   [Modulo/quotient/reminder?](#orgaaf1fd7)
-                -   [Lein](#orgb9e0cce)
-                    -   [Show dependencies tree?](#org4508dbf)
-                    -   [Connect to an existing nrepl process?](#org427252e)
-                -   [Bloody java.time dates](#org13cdb86)
-                    -   [java.time formatting and parsing nanosecond precision dates with UTC timezone?](#org68ac7d9)
-                        -   [conversion from seconds from epoch to DateTime:](#org6fb9c78)
-                    -   [simple date formating like '16/Mar/2023' ?](#org67f3413)
-                    -   [current LocalDateTime?](#org8f422d8)
-                    -   [convert LocalDateTime to ZonedDateTime utc?](#org6af1b8b)
-                    -   [date fmt & parse cheatsheet?](#orgdc257ee)
-                        -   [parse 2023-03-23](#org83e45eb)
-                -   [Misc](#org2e8549e)
-                    -   [hex <-> decimal conversion?](#orgcf78156)
-            -   [Js](#orga3fd1d9)
-            -   [Babasha](#org755f6ab)
-                -   [Parse a date in babashka?](#orga3f9dcf)
-            -   [Processes](#org5e4c829)
-                -   [Process output of a cmd lazily?](#org3f33bff)
-                    -   [Pure clojure (works with Clojure JVM + Babashka)](#org84ac5f5)
-                    -   [Using babashka process lib](#org056c189)
-                -   [Macros](#org85c6d68)
-                    -   [Threading](#orge2f4285)
-                        -   [how to use threading macros with functions with different argument position?](#orga2c649f)
-                        -   [how to use ->> with fns args mixed at the beginning and and?](#org7d05ed1)
-                    -   [Functions](#org0b1c9f4)
-                        -   [Args](#org165495b)
-                            -   [optional args with default values using keys?](#org4b474e9)
-                    -   [Ns](#orgabc5464)
-                        -   [Alias](#org5080796)
-                            -   [How to remove an alias to a ns?](#orgd1d9651)
-                    -   [Var](#orgd368088)
-                        -   [symbol->var->value?](#org4d457da)
-                            -   [alternative:](#org15515d6)
-                            -   [in one go:](#orgf0aa953)
-                            -   [or for conditional evaluation](#org62ea62c)
-                    -   [Destructuring](#org17c5148)
-                        -   [Nested destructuring with map and seq ?](#orge140eb2)
-                    -   [Files](#orge4b0816)
-                        -   [Read a file line by line?](#orgef45381)
-                    -   [Strings](#org4b6268d)
-                        -   [Regexes](#org822c69e)
-                            -   [named groups search and replace in Clojure?](#org3a9aac6)
-                            -   [string to regex?](#org39f4d9a)
-                            -   [repeat expression between n and m?](#org761a8c2)
-                    -   [Classpath](#org29c9796)
-                        -   [slurp a resource in the classpath?](#org46fa173)
-                    -   [Java interop](#org42e4b1f)
-                        -   [Get all parents classes of an instance ?](#orgfb76260)
-                    -   [Generate uuid](#orgb94db21)
-                    -   [Exceptions](#org7ee074c)
-                        -   [try/catch/finally?](#org43e66b7)
-            -   [Java interop](#orgcb203af)
-                -   [Start a clojure repl server from java?](#orgac266e7)
-        -   [Web Servers](#org7bcd187)
-            -   [Tomcat](#org78a9bd7)
-                -   [how to configure tomcat so that it can be managed programatically ?](#org3daf6c2)
-                -   [tomcat rest api doc ?](#org69fd7e6)
-    -   [Databases](#org63def22)
-        -   [Sql language](#orgb31ebf3)
-            -   [DateTime](#org22d6644)
-                -   [Sql: how to select rows where a field date is greater than&#x2026;?](#org6fbd2c7)
-                -   [Sql: how to select rows where a field date is in [<date> ; <date> + 1 day]?](#org72862fc)
-            -   [GroupBy](#org5f50d53)
-                -   [group by concatenate string?](#orga293989)
-            -   [Other](#orgd1c1776)
-                -   [Pseudo table in sql?](#org51eedc2)
-                -   [Concatenate two tables?](#org2f18ffd)
-        -   [RDBMS](#org744c5cc)
-            -   [PostgreSQL](#org80f6db8)
-                    -   [Posgresql cheatsheet?](#org4e35a08)
-            -   [sqlite](#org811587e)
-                -   [sqlite3](#org926ee6b)
-                    -   [import](#org774288e)
-                        -   [How do I import a csv from stdin with field containing '"' into a sqlite3 db (non interactively)?](#org656564f)
-        -   [timeserie db](#orgc7ec292)
-            -   [influxdb](#org7fd737d)
-                -   [flux](#org4412247)
-                    -   [flux query example?](#orgaa879d3)
-    -   [Node](#org523d36b)
-        -   [Npm](#org9335ca1)
-            -   [Cli usage](#org78760a4)
-                -   [how to install global packages without sudo?](#org3653f2a)
-                -   [upgrade npm to latest?](#org204202b)
-                -   [color config in npm?](#org9e4f3dd)
-                -   [npm list all config keys?](#orge1cb7d7)
-                -   [npm install a module from a git url ?](#org5f20015)
-            -   [Searching](#orgf2265e9)
-                -   [how to search npm packages (and filter by populariy, &#x2026;)?](#org0771820)
-        -   [how to read all lines from stdin in one go?](#org584941f)
-    -   [Regex](#org3b4e16e)
-        -   [General](#orgc44037b)
-            -   [regex cheatsheet?](#org8910b8d)
-        -   [Sed](#org640ce7e)
-            -   [use a backreference without grouping?](#org5d1db1d)
-            -   [remove backslash EOL with sed?](#org2e2efa4)
-            -   [join lines of a files two by two?](#org14f870c)
-            -   [add a line before the first line of a file?](#orgee72c7a)
-            -   [output lines from regex to N line after it?](#orged61ead)
-        -   [Perl](#org6ac00c9)
-            -   [Multiline search and replace?](#orgf4ae855)
-    -   [Python](#org4883b24)
-        -   [Pip](#org02c3fb7)
-            -   [How to install pip for python 3 ?](#org94d570c)
-            -   [How to install pip for python 2 ?](#org7b79220)
-            -   [pip completion on the command line?](#org9cb90e1)
-            -   [avoid pip warning when pip list in a script?](#org8aea79b)
-        -   [Json](#org66f6538)
-            -   [Parse a json string?](#org655f071)
-        -   [read from stdin?](#org577d3a4)
-    -   [GnuMake](#org9d1c10c)
-        -   [build in a diferent directory than the Makefile?](#org0ce655a)
-        -   [GnuMake language](#orge3fffd6)
-            -   [print newline?](#org351eb47)
-            -   [print all variables?](#org0619293)
-        -   [print all targets?](#orgec2ddaf)
-        -   [how do I fail the build if an env var is not defined for a particular target?](#org5d32197)
-        -   [how to use a multiline make var in a shell recipe?](#orge95b720)
-        -   [selfDoc](#orgd2c83e8)
-            -   [how to extract all targets from a Makefile without a make command ?](#org75f6ea7)
-    -   [Lorem ipsum](#orge58e7c6)
-    -   [Git](#org21cc484)
-        -   [Submodules](#orgac1e22a)
-            -   [submodule lifecycle mgmt](#org37bd6f2)
-            -   [submodule: track latest?](#org6cf6d1a)
-            -   [how to deregister a submodule?](#org6e22a0c)
-        -   [Tags / branches lifecycle mgmt](#orgaaf1ba0)
-        -   [rm a big file from history?](#org894dcc6)
-        -   [list branch sorted by last commit date?](#org1e4cf39)
-        -   [grep history?](#org30db351)
-        -   [essential git config?](#org02ed291)
-        -   [config for colors?](#org6d47604)
-        -   [Git Lfs essentials?](#orgf0cefa6)
-        -   [git & ssh](#orgc2366c7)
-            -   [view ssh details?](#org2e2a23d)
-                -   [git v2.3.0 or higher:](#org1bbc6a1)
-            -   [how to specify the ssh key used by git?](#org1202747)
-        -   [Diffing](#orgb2f19d6)
-            -   [show only the filnames that changed](#org7981fac)
-        -   [Syntax](#orgffc15ac)
-            -   [Reference Nthieme commit from HEAD?](#orgc63ae4a)
-        -   [Colors](#org1184529)
-            -   [git colors=always?](#org6390576)
-        -   [hacks](#org92256a5)
-            -   [how to git diff even if the repo do not have an empty init commit?](#org9cf3910)
-    -   [Jq](#org56cd416)
-        -   [Finding](#org348a048)
-            -   [recursively find a value by key?](#orge1621ed)
-            -   [recursively find all values of a given key?](#org54cd470)
-            -   [recursively find all path leading to a given key](#org431dabc)
-            -   [recursively find all path leading to a certain value?](#org7508e88)
-            -   [get all the values of an object?](#org709d8ef)
-            -   [does this array contains this element?](#org72c6925)
-        -   [Modifying](#org17965ce)
-            -   [delete the key of an object?](#org07a7053)
-            -   [jq update ?](#org811959d)
-            -   [delete in nested datastructure?](#orgd6c9bd8)
-            -   [recursively delete all keys leading to pair numbers?](#org32ffa4f)
-            -   [deep merge two nested datastructure?](#org8399dee)
-        -   [Strings / Regex](#org142bca2)
-            -   [jq regexes cheet sheat ?](#orgef0a5f5)
-                -   [jq regex flags](#org385fdcb)
-                -   [jq regex functions](#orgdac1476)
-            -   [recursively find containers having a value that match a given regex?](#orga5216c2)
-            -   [convert string to upper case?](#org064960a)
-            -   [jq regex replace?](#orgdd2df6c)
-            -   [jq regex search and replace with backreferences](#org0f70153)
-            -   [substring?](#orgfe6cc3a)
-        -   [Quoting](#org4b93c7d)
-            -   [given a known char I want to encode it in a json string for consumption by jq](#orgae3a0be)
-            -   [Single Quote](#org59a7628)
-                -   [single quote as a integer (to escape it in bash)?](#org19f05d5)
-                -   [encode a single quote in a string for jq to decode?](#org4bdffcf)
-        -   [Interop](#orgea19225)
-            -   [output a array for bash?](#org5a16edb)
-        -   [Functional](#orga171981)
-            -   [reduce ?](#org2d961b5)
-            -   [zip two arrays into a map?](#org2653c71)
-            -   [Comma in function args](#org386145b)
-                -   [given a list of strings and a list of regexes, for each string check wether it matches all the given regexes or not](#orgbf6881c)
-            -   [clojure's reductions equivalent in jq?](#org2137a98)
-        -   [Convert](#org692233e)
-            -   [element to array?](#org765b1ad)
-            -   [convert an array to a map?](#org357174b)
-        -   [Dates and time](#orga263a1c)
-            -   [Get a human readable date of current time?](#org470b930)
-            -   [Convert Unix epoch time in second to human readable?](#org421c60c)
-            -   [parse and format date with jq?](#orgfa0b370)
-        -   [Other](#org5b2de0b)
-            -   [Undocumented debug options?](#org55c8bb6)
-            -   [Syntax](#org0a526dc)
-                -   [Liberal Object notation?](#org54f396e)
-    -   [Lua](#org899750c)
-        -   [Call external command and get stdout?](#org31944db)
-        -   [Call external command and get stdout and return code?](#org962f05a)
-    -   [Jira](#org3701294)
-        -   [Jira webapp keyboard shortcut cheat sheet](#org1e43e3b)
-        -   [command line online help?](#org9a772da)
-    -   [CheatSheets](#org6c21dc2)
-        -   [Clojure](#orgf26bdea)
-    -   [Doc](#org4c2221f)
-        -   [Markdown](#orge9f479c)
-            -   [Cheatsheet?](#org367e64a)
-                -   [Links?](#orgc046555)
-            -   [get values by their path (eg: ["a",1,"b"])?](#orged8adb6)
-            -   [Bitbucket flavored markdown](#org0485bf3)
-                -   [How do I create a link to the same page in Bitbucket flavored markdown?](#org3e91516)
-    -   [CI](#org4956688)
-        -   [Jenkins](#org7518d28)
-            -   [RestApi](#orgd243907)
-                -   [Jenkins Rest Api Essentials?](#org7f72732)
-                -   [JSON](#org0e3c535)
-                    -   [Get all build result with time of particulatar job?](#org0f0d088)
-                -   [XML](#org55aa4ca)
-            -   [parallel map in groovy?](#orgf68b5ba)
-            -   [dump nested object as json/xml ?](#org58fb3df)
-                -   [native but do not handle cycles](#org6176680)
-                -   [with xstream (handle cycles)](#org89d4ae9)
-                    -   [Demo with cycles](#org6dfa5c6)
-                -   [with xstream: json](#org628ee7e)
-            -   [legacy jobs](#org13866cf)
-                -   [job-dsl plugin](#orgee0b07f)
-                    -   [Example job-dsl for matrix project?](#org88a07c9)
-            -   [Stop an unstoppable build?](#orgc8929f5)
-    -   [Visualization](#org93418be)
-        -   [Online visualization of Wikipedia's graph?](#org975839f)
-        -   [Graphviz's dot language?](#org4b67346)
-            -   [Example of colorscheme usage?](#org5987354)
-        -   [Grafana](#org7d0d572)
-            -   [Grafana custom time formating for the x-axis ?](#orgedcacef)
-    -   [Video editing](#org0be3706)
-        -   [how to copy part of a video?](#org4339e2c)
-    -   [Repositories](#org03864cd)
-        -   [Nexus](#orgd0689b2)
-            -   [V2](#org35642e6)
-                -   [self hosted api doc for nexus v2?](#orgb7409a5)
-        -   [Monitoring](#org3986599)
-            -   [how to connect jconsole to a jvm running in a remote docker container?](#org9f86900)
--   [Special](#orgf57c49b)
-    -   [Unicode(UTF8)](#org54101de)
-        -   [How can I search by name for unicode char on the command line?](#orgbb84527)
-        -   [Handy unicode(utf8) chars?](#org8cbc84a)
-            -   [Handy emoticon ?](#org8cf6e5f)
-            -   [arrows](#org59f308b)
-            -   [draft](#orgcc33e07)
-                -   [boxes](#orgdb45c91)
-            -   [use char by its code ?](#org3092443)
-            -   [unicode number in circle](#org42103d0)
-            -   [lambda](#org62e2859)
-            -   [elipsis?](#orgd11764b)
-            -   [Checkmarks](#org5e64ed9)
-                -   [check / uncheck marks?](#org8d05119)
-                -   [more check marks?](#org4540aec)
-            -   [colored utf8 chars](#org2c57f49)
-                -   [some cool](#org19fa428)
-                -   [some](#org0e3ac42)
-                -   [zodiac](#org57d94c1)
-                -   [zodiac unambiguous](#orgf164628)
-                -   [zodiac even more unambiguous](#orgaba4c76)
+-   [Operating Systems](#orge69ba8f)
+    -   [Linux](#org739bc00)
+        -   [Shells](#org8377233)
+            -   [Bash](#org5aac2ac)
+                -   [Non interactive](#org1d8df03)
+                    -   [Use alises in non interactive bash?](#org37fa6ab)
+                -   [Interactive use](#org1b12c0f)
+                    -   [Complete](#org0e8950b)
+                        -   [bash completion cheat sheet?](#org7737651)
+                -   [Common tasks](#org85e6fed)
+                    -   [Random](#org38d3aaa)
+                        -   [Generate a lot of (pseudo) random data faster than /dev/urandom?](#org228686d)
+                    -   [generate random string?](#orgae1f569)
+                    -   [decimal / hex (and opposite) conversion?](#orgd68970f)
+                    -   [redirect output in variable?](#orgf913d32)
+                    -   [stop on error (even in subshell)?](#org31824b9)
+                        -   [workaround1: set -e explicitly for each subshell](#org37e8182)
+                        -   [workaround2: write shell script with '&&'](#orgeb3c04f)
+                        -   [workaround3: write shell script with '||'](#org0de6550)
+                    -   [loop over args?](#org32063c6)
+                    -   [parse a string as args](#org695ae74)
+                    -   [How to save a script params (before doing modifications like shift, ..)?](#orga6069f5)
+                    -   [generate uuid?](#orgb81cbf4)
+                    -   [List all possible commands (including functions)?](#org79701d3)
+                -   [Programming](#org614aee1)
+                    -   [Misc](#orgf6c84a0)
+                        -   [bash pointer variables?](#org89b8898)
+                    -   [Control flow](#org7cca2b8)
+                        -   [Tests/Conditionnals](#orgc796d43)
+                            -   [ternary operator in bash?](#org61f80ab)
+                            -   [cheatsheet](#org16fec41)
+                            -   [test files cheatsheet](#org43ac490)
+                        -   [Looping](#org089f528)
+                            -   [loop over cmd output with while?](#org82d0747)
+                            -   [c style for loop?](#org3885687)
+                        -   [switch case ?](#orgb2a9093)
+                    -   [Types](#org5ae90f3)
+                        -   [Datastructures](#orge0c4d5a)
+                            -   [Arrays](#orga2860d8)
+                                -   [Associative arrays](#orgae61a54)
+                                    -   [declare, print, &#x2026;](#org318761a)
+                                    -   [copy ?](#org37e3a22)
+                                -   [Normal arrays](#org2d72d20)
+                                    -   [declare/literal/set/getAll/size](#org969698d)
+                                    -   [access empty array?](#orgc18cac6)
+                                    -   [parse string to array?](#org38e4c06)
+                                    -   [clone an array into another array?](#org6a04046)
+                        -   [Strings](#orgd4bbc9f)
+                            -   [bash strings cheat sheet?](#org78b81a6)
+                            -   [Syntax](#org53f2099)
+                                -   [ssh escape sequence?](#org03e5b55)
+                            -   [Printf?](#org11e978c)
+                                -   [print args, one by line with its position?](#orgc1f24b4)
+                                -   [print a line accross the terminal?](#orgb0464ec)
+                -   [Bash options](#org94826d2)
+                    -   [How to get the values of errexit etc (set by set -e &#x2026;)?](#org61817a8)
+                    -   [option so bash export all declared variables?](#org86cfb63)
+                    -   [option to glob also hidden files?](#org33b5ad4)
+                    -   [Bash config files](#orgda122ac)
+                        -   [Order of loading of bash init files?](#org010350f)
+                -   [Files and Redirections](#orgbb328cb)
+                    -   [Stdin/out/err](#orgab99452)
+                        -   [redirect file to stdin on the left side?](#orge4d1ca1)
+                        -   [redirecting stdout, stderr](#orga33be96)
+                        -   [use stdout as a file (with filename) for another cmd?](#org8f2b16c)
+                        -   [swap stdout and stderr?](#org84db453)
+                        -   [write to stdin of a backround process?](#orgd7ce4a3)
+                        -   [here-string with indentation in src but not in output?](#org234673a)
+                        -   [File Descriptors](#org63a8a11)
+                            -   [Named File Descriptors](#org72da3b4)
+                                -   [define a named file descriptor to a writable file and write to it?](#org34fbe7a)
+                        -   [how to know if stdout is a terminal?](#org56bb27f)
+                        -   [Printout](#orga16e179)
+                            -   [Padding](#orgd36d08e)
+                                -   [right / left pad with printf?](#org9bd69c7)
+                                -   [zero padding numbers?](#orge04797a)
+                    -   [Tmp files](#org62c4a1c)
+                        -   ["delete while still open" trick to be sure a file will be deleted?](#org925d81a)
+                -   [Env](#org996624c)
+                    -   [how to run a command with the env cleared?](#org415f308)
+                    -   [export bash function?](#org22ad07a)
+                    -   [Replace all env var by values in file?](#org294ac38)
+                    -   [how to make bash source a file before running a command?](#org5ed0d61)
+                    -   [how to test if a variable is defined?](#org1e9a24a)
+                -   [Debugging](#org9127fbc)
+                    -   [how to make a bash script stop and print current line before running it?](#orge7a5d34)
+                    -   [how to execute a script step by step?](#org4bd5e53)
+            -   [Zsh](#org86ab30b)
+        -   [Editors](#orgfd34fdd)
+            -   [Emacs](#org2e296eb)
+                -   [file type indicator header for emacs?](#orgbc138a5)
+                -   [edit a file remotely over ssh with tramp?](#org4399d3e)
+                -   [Spacemacs](#org1cc429d)
+                    -   [Troubleshoot](#org634ec79)
+                        -   [org-mode not working after a fresh install of spacemacs + practicalli config?](#orgc9f4c41)
+                    -   [Clojure](#org5c83d69)
+                        -   [Tests](#org954a30b)
+                            -   [Switch between implementation and test in Spacemacs Clojure?](#org9a1e93b)
+                            -   [Clojure's switch between implementation and test: how to create the test if not exists?](#org2595e3b)
+                    -   [Install](#orgd519420)
+                        -   ["No public key for 066DAFCB81E42C40" ?](#org6386247)
+                    -   [evil cheat sheet?](#orgbe5f8c4)
+                    -   [run a command and get the output in the current buffer?](#org9fff76e)
+                        -   [Emacs](#orgef7985b)
+                        -   [fix error when installing spacemacs: "No such file or directory, evil"?](#orgdcbc5c5)
+                        -   [Spacemacs (evil mode)](#org4016d53)
+                    -   [Universal argument in spacemacs (evil mode)?](#org33bc9d2)
+                    -   [Project](#org641fcb9)
+                        -   [`helm-project-do-ag` how to filter by file types?](#org1e160e4)
+                        -   [search and replace in project?](#org434849c)
+                    -   [SearchAndReplace](#org82a0bfb)
+                        -   [How to search and replace starting at the cursor position?](#orgc9df0bc)
+                    -   [Folding](#org01fa98f)
+                        -   [a promising mode?](#orgb70526f)
+                    -   [Misc](#org02bcd79)
+                        -   [Exit emacs mode (holy mode) entered by error?](#orgf255f9e)
+                            -   [pipe in table with code block](#org1b25ce4)
+                            -   [org mode how to use pipes in tables? <code>[0%]</code>](#orgcf741e8)
+                                -   [using contants?](#org77dc87b)
+                                -   [macros?](#org92d83d0)
+                                -   [latex?](#org678db24)
+                                -   [html?](#org12767de)
+                                -   [compute cells values ?](#org418a3f8)
+                    -   [twbs export html](#org9c8fbd2)
+                    -   [easy templates?](#orgd5f3a22)
+                    -   [Babel](#org62c7074)
+                        -   ["eval is disabled for shell"](#orgabe09f0)
+                            -   [add to your init file](#org1e208d6)
+                            -   [in the org mode file](#orgfcd1805)
+                            -   [stop emacs](#org5da2169)
+                            -   [remove the folder `~/.emacs.d/elpa/org-plus-contrib-*`](#orgaa91b01)
+                            -   [start emacs](#org6f96e06)
+                            -   [try to eval with `C-c C-c`](#orgd28491f)
+                    -   [Spacemace: disable mouse under termux ?](#org04f4a15)
+                -   [install emacs25 on ubuntu16.04?](#org78249a7)
+                -   [Org-Mode](#orgc7b31bc)
+                    -   [key binding to insert a code block?](#org1d884a0)
+                    -   [How to track time spen on TODO STARTED DONE?](#org2f12aad)
+                        -   [Text](#org6ab59b3)
+                            -   [Less](#org244a7fd)
+                                -   [how to search for a tab ?](#orgf564f54)
+                            -   [Tail](#orgc1f4b34)
+                                -   [skip the N first lines of input with tail?](#org109773c)
+                    -   [Package managers](#org768d568)
+                        -   [find which package manager is used on this machine?](#org0fcdcaf)
+                        -   [apk](#orgb2e21c7)
+                            -   [equivalent of apt-file search?](#org10e4f4e)
+                    -   [Software packages](#org2a877c5)
+                        -   [Admin](#org00a6e01)
+                            -   [Tmux](#orgd48327e)
+                                -   [how do i detach other client when reattach to session?](#org8f69829)
+                                -   [create a new session specifying the name?](#org7cd6efb)
+                                -   [reload .tmux.conf?](#org901c210)
+                                -   [bindings to install plugins?](#org1764a74)
+                                -   [bindings to upgrade plugins?](#orgb82505a)
+                                -   [use another shell as the default (ex: zsh instead of bash)](#org2de64e7)
+                            -   [Zip](#org28341e6)
+                                -   [list content of a zip file from stdin?](#org46f2491)
+                            -   [Apt-get](#org7fbc1aa)
+                                -   [dpkg show all installed files of a .deb?](#org99a47dc)
+                                -   [apt-get: what package provide this file?](#orgfbd4195)
+                                -   [fix a broken state ?](#orge8f5472)
+                                -   [install a specific version?](#org8e423bb)
+                                -   [show version that a package can be upgraded to?](#org368ec14)
+                                -   [customize output of dpkg -l?](#org9e5b939)
+                                -   [Alternative](#org517e392)
+                                    -   [rebuild alternative for a particular package?](#org45a8bc1)
+                            -   [Rpm](#org74374e9)
+                                -   [list files installed by a package?](#org28ff7a8)
+                                -   [list only names of packages?](#orgb5cc936)
+                            -   [Ps](#orgfa6f5cd)
+                                    -   [list all processes, show only pids?](#org74b7a59)
+                                    -   [ps: List processes with their elapsed running time ?](#orgaf4d846)
+                            -   [SeLinux](#orgc68721f)
+                                -   [status/enable/disable selinux?](#org63cd87f)
+                            -   [Dd](#orgc2e0485)
+                                -   [Typical dd invocation to copy a partition disk ?](#orge7cc59b)
+                                -   [Show progress with dd?](#org1336105)
+                            -   [Systrace](#org642d5a6)
+                                -   [How to cp with a progress bar using strace?](#orgfd340f5)
+                            -   [Security](#orgaa7e176)
+                                -   [Other](#orge51f450)
+                                    -   [list recent ssh connection on a host?](#org8a338e9)
+                                -   [SeLinux](#orgca51537)
+                                -   [status/enable/disable selinux?](#org1d8cc96)
+                                -   [User/groups management](#orgb8532e6)
+                                -   [Users's group management command](#org8d6e75d)
+                        -   [Graphics](#orgf0e5988)
+                            -   [Imagemagick](#org43206c5)
+                                -   [how to change the quality of a jpeg image?](#org6ed0e64)
+                            -   [Ffmpeg](#org9c4fdea)
+                                -   [How to get only the 1st n minutes of videos?](#org78fb7a9)
+                                -   [Record desktop?](#org8bef31c)
+                                    -   [linux](#org5b2be16)
+                                    -   [windows](#org04439b6)
+                                        -   [directshow](#org4bc6f31)
+                                        -   [built-in gdi screengrabber](#orgae3b788)
+                                            -   [all displays](#org3e5e268)
+                                            -   [region](#org4a9e878)
+                                            -   [window](#orgce3bc5f)
+                                            -   [hw encoding](#org1f60ca4)
+                                    -   [lossless recording](#org4aa8618)
+                        -   [Math](#orgc64b5e9)
+                            -   [Bc](#org8aee6db)
+                                -   [float precision?](#org79d8b5b)
+                        -   [Net](#orge277e1e)
+                            -   [General](#orge43bef5)
+                                -   [Count all current tcp connection on linux host?](#orgc15a26f)
+                                -   [List all tcp connections on a linux host?](#orge2366c8)
+                                -   [List all ssh connections on a linux host?](#org97b4417)
+                            -   [Netcat](#orgf848757)
+                                -   [simple web server with netcat?](#orgcc2d4d9)
+                            -   [Ssh](#org45777e3)
+                                -   [How to check the **actual** configuration of a sshd server?](#org8e0d148)
+                                -   [Ssh Tunnels](#org3341cb4)
+                                    -   [ssh tunnels explained](#orga494265)
+                                    -   [ssh reverse tunnel ?](#orgce68d85)
+                                    -   [ssh tunnel example?](#org5ea4816)
+                                    -   [ssh tunnel socks "channel 2: open failed: administratively prohibited: open failed"](#orgf8c708d)
+                                -   [Passwordless and keyless ssh login](#org3b8a97b)
+                                    -   [ssh without password or key?](#org85caf80)
+                                    -   [ssh root without password or key?](#org2355bec)
+                                    -   [working conf for openssh 7.1 on alpine?](#org87b5c94)
+                                -   [generate public private key pair](#org465cda4)
+                                -   [ssh or scp in a script without entering password ?](#org33602fd)
+                                -   [get public key from private key ?](#org47990f0)
+                                -   [Disable host verification?](#org28e71b9)
+                                    -   [for one session](#org070a617)
+                                    -   [for all sessions:](#org2c18b5f)
+                                    -   [for all sessions and all hosts:](#orgd495b60)
+                                -   [copy pub key to remote authorized<sub>keys</sub>?](#org594b04e)
+                                -   [workaround for a ssh slow login on a particular server?](#orgc75880c)
+                                -   [copy between two ssh hosts without intermediary copy?](#orgdb13cb1)
+                                -   [disable host has in known<sub>hosts</sub>?](#org0241209)
+                                -   [Non interactive sftp session with non pubkey password?](#orgbaff6a2)
+                                -   [How to view actual ssh config (system wide + user config + cmdline/env)?](#orga0542f1)
+                                -   [Sshfs](#orgb2a3ee0)
+                                    -   [how to mount remote fs with sshfs?](#org2cd1a0e)
+                                    -   [how to umount a mounted sshfs?](#orgaec71d3)
+                                    -   [sshfs with autossh?](#orgaaefd41)
+                                -   [alpine ssh send<sub>pubkey</sub><sub>test</sub>: no mutual signature algorithm ?](#orgd537152)
+                            -   [Openssl](#org772a531)
+                                -   [SslCerts](#org0927abe)
+                                    -   [generate a self certificate for localhost (without prompt)?](#org2eb4daa)
+                                    -   [How to add root cert to an Ubuntu install?](#org68d1cc5)
+                                    -   [best explaination of "everything derive from the root ca key"?](#orgf30fd42)
+                                    -   [Generate a self signed ca cert and key, and a cert and key for a how that works on the command line and chrome?](#org3b047ac)
+                            -   [Rsync](#orgbb0e922)
+                                -   [how to specify the port in rsync?](#org09906db)
+                                -   [how to exactly copy a local directory to a remote host (remove extra remote file if necessary) and back ?](#orgeb11ae9)
+                                -   [rsync and trailing slash behavior?](#org7d50044)
+                            -   [Openvpn](#org10971ee)
+                                -   [list and connect with openvpn from cli?](#org9cae677)
+                                        -   [with nmanager](#orge807dba)
+                            -   [Dns](#org91c5712)
+                                -   [Get ip from hostname?](#orgf6c419e)
+                                -   [Get hostname from ip?](#org75b7fec)
+                            -   [Network analysis](#orgcfaa266)
+                                -   [Ngrep](#org84a5a73)
+                                    -   [Ngrep example?](#orgc46de72)
+                        -   [Misc](#orgb95e225)
+                            -   [VirtualBox](#org804b8ad)
+                                -   [Windows host](#org49da054)
+                                    -   [Linux Guest](#org7c2a90e)
+                                        -   [How to disable HyperV so VBox can run correctly?](#org2741da2)
+                                        -   [How to correctly install guestAdditon on ubuntu22.04?](#orgda5a558)
+                                        -   [How to correctly install guestAdditon on debian12?](#org41e71dd)
+                                            -   [Hint1](#org69aca69)
+                                            -   [Hint2](#org7fee9d4)
+                                            -   [Hint3](#org7d8c49f)
+                        -   [Utils](#orgc14360c)
+                            -   [Comm](#org2ed96ed)
+                                -   [comm summary?](#orgfa6a16d)
+                                -   [binary to compare the content of files (all in a but not in b, etc)?](#orga6d31d4)
+                            -   [Find](#orgc2f3bc6)
+                                -   [find files modified in the last x minutes](#org3a7631f)
+                                -   [find files modified in the last x days](#orgdebce52)
+                                -   [handle filenames with spaces ?](#org86c880f)
+                                -   [sort files by modified date?](#orgd4febc7)
+                                -   [find files bigger than x MBytes?](#org18704bd)
+                                -   [find filename with regex?](#org458e546)
+                                -   [find with logical or?](#orgea85648)
+                            -   [Grep](#orgef913f9)
+                                -   [Non capturing group?](#org4eee469)
+                                -   [cheat sheet](#org5073a34)
+                                -   [Character class for blanks?](#org2193670)
+                                -   [match pattern on multiples lines?](#org4337671)
+                            -   [Tr](#orge3e2367)
+                                -   [remove all non printable characters from a file with tr ?](#org6fca69b)
+                            -   [Nohup](#orgb93bedc)
+                                -   [run nohup?](#org60208bd)
+                            -   [MoreUtils](#org379e8e7)
+                                -   [read / process / write the same file ?](#orgec06854)
+                                -   [instead of xxx use moreutils yyy?](#org8c4ec4c)
+                            -   [Stat](#org37cb109)
+                                -   [Custom format with newlines?](#org9560418)
+                            -   [Tar](#orgd6fc853)
+                                -   [list the content of a remote tgz without intermediary files?](#org1035940)
+                                -   [send tar compressed archive to stdout?](#orga94be02)
+                                -   [recompress without intermediary files?](#org21bed7a)
+                                -   [tar: archive files name coming from stdin?](#org7ae7c2c)
+                                -   [Specify arbitrary order of files in tar file?](#orgc8efc6a)
+                            -   [Bsdtar](#orgd81b66d)
+                                -   [recompress without intermediary files?](#orgaee2822)
+                            -   [Tree](#orga9fc54e)
+                                -   [print tree with unicode characters?](#org25ca910)
+                            -   [Xargs](#org91cb455)
+                                -   [run a cmd on each line of stdin with xargs?](#org0a87480)
+                                -   [use bash function?](#org3dea3d0)
+                            -   [Zip](#org8ee6ce7)
+                                -   [unzip a single file from archive?](#org0acf89c)
+                                -   [compress dir recursive?](#orge7beda9)
+                                -   [compress dir but exclude a directory ?](#org8ee7e32)
+                        -   [Web](#org07276b1)
+                            -   [Curl](#org42e2a30)
+                                -   [follow redirects?](#org5d7a44a)
+                                -   [post data from stdin?](#orge296a55)
+                            -   [Wget](#org1f4b418)
+                                -   [recursively download for example nexus ?](#org6766497)
+                                -   [equivalent of curl -sS?](#orga852f1d)
+                            -   [Nginx](#orgfbbd29f)
+                                -   [Check config syntax?](#org5ba97b4)
+                            -   [Lynx](#orgebf8f46)
+                                -   [html to text by piping to lynx?](#orgea4d321)
+                        -   [X11](#orgd974a39)
+                            -   [NxClient](#orgafc2964)
+                                -   [keyboard issue when connecting with nx ?](#org1cb1535)
+                    -   [Hardware](#org2e121aa)
+                        -   [Sound](#org342a752)
+                            -   [Troubleshoot sound in Linux/Ubuntu ?](#org6309752)
+                        -   [Ubuntu/Debian change the machine uuid (useful when the dhcp id is derived from it) ?](#orgf0d4c91)
+                    -   [Sysadmin](#org0cdd21b)
+                        -   [System Services (systemctl, &#x2026;)](#org5251b98)
+                            -   [Systemd](#org6febee5)
+                                -   [systemd / systemV cheatsheet](#orgd2ed86c)
+                                -   [follow logs of a particular systemd service?](#org5bccfe5)
+                                -   [restart network on systemd?](#orge19fedf)
+                            -   [General Linux](#org57fce4c)
+                                -   [Linux reload service config](#org4d3fa23)
+                            -   [Centos](#org878cc74)
+                                -   [create a new systemd unit file?](#orgda7caa4)
+                                -   [the hostname keep coming back at its previous state after each restart?](#orge7124b4)
+                        -   [User Admin](#orgd98c61d)
+                            -   [how to add a group to a user ?](#orge25b2b8)
+                            -   [add a user with specific groups ?](#orga913e0f)
+                            -   [get the groups of a user ?](#org0b03270)
+                            -   [change the shell of a user?](#orgdbedaad)
+                            -   [remove a user?](#orga1e27e4)
+                            -   [add a user?](#org4bd0299)
+                            -   [view login activity?](#org3c416f8)
+                        -   [Sudo](#orgdef9535)
+                            -   [allow sudo without password for a user?](#org0e3db5a)
+                            -   [execute a cmd as another user?](#org1ead71d)
+                        -   [Devices (hdd,&#x2026;)](#org1748b55)
+                            -   [eject a cd rom?](#orga56d7ee)
+                            -   [how to list all supported FS for mounting?](#orgcfb6c1d)
+                            -   [how to fix a screwed nfs mount without rebooting?](#org72bb245)
+                            -   [Swap](#orgd009c96)
+                                -   [manage swap (status, enable, disable)?](#orgad30cea)
+                        -   [Dns](#orgdc564ca)
+                            -   [How to query all the entries of a dns server ?](#org18dc00f)
+                        -   [recover a lost root password at boot with grub](#org441ad16)
+                        -   [Special files](#org3b64cd8)
+                            -   [Removed /dev/null how to remake it?](#orgfc20d9d)
+                    -   [Terminal](#org6408ddb)
+                        -   [Colors](#orgd9ae163)
+                            -   [simple way to color output with grep?](#org3128ab6)
+                        -   [Replace capslock by ctrl in console?](#org276ec20)
+                            -   [working also in virtual consoles?](#org05e4afd)
+                            -   [working under X?](#orge853f22)
+                        -   [replace capslock by ctrl in a terminal under X ?](#org87954a8)
+                        -   [change language keyboard mapping](#orga8b852d)
+                        -   [change text mode resolution?](#org79ac511)
+                        -   [paste example?](#org6ee6b2a)
+                        -   [show which key is pressed in a terminal?](#org4f7a59a)
+                        -   [get the number of rows and colums?](#orgfdf0b85)
+                        -   [Presentation conventions](#org197b7b1)
+                            -   [display a command line?](#org24d59ff)
+                    -   [Io](#orgbfac877)
+                        -   [Disk](#org0c33116)
+                            -   [list files open by a particular process](#orgf619b61)
+                            -   [how to do a simple bind mount?](#orge843091)
+                            -   [Disks](#orga835aae)
+                                -   [Disks caches](#orge13ce5a)
+                                    -   [how do I clear the disk caches in Linux?](#org09b55a1)
+                            -   [Images](#org61de31a)
+                                -   [Copy an img file to a disk with bad blocks?](#org2abf8e1)
+                        -   [RemoteFs](#org041ac18)
+                            -   [nfs](#org7541051)
+                                -   [How to mount a remote nfs drive on a linux host?](#org4977719)
+                                -   [List all nfs share of a remote nfs server?](#org6ecb77e)
+                        -   [VirtualFs](#orgf40cbba)
+                            -   [How to get the load with /proc?](#orgeecc0e7)
+                        -   [Processes](#org27eecdb)
+                            -   [How to find how are connected by pipes running processes?](#orgee54992)
+                            -   [Autossh](#orgc6f0d9f)
+                                -   [How to keep a ssh sesssion open with autossh?](#org5065d11)
+                        -   [Completion](#org9b20497)
+                            -   [using bash's autocomplete with zsh?](#org03a2572)
+                            -   [Copy an existing completion for another command?](#org276a6bd)
+                    -   [X](#org53a8622)
+                        -   [copy to system clipboard from the command line?](#org519d09e)
+                        -   [dual monitor setup: turn off one of the monitor and not the other?](#orgf9d8dbe)
+                        -   [force X resolution when an external monitor is not detected?](#orga03d798)
+                        -   [Fonts](#orgfada6f3)
+                            -   [List fonts?](#orgcb8899f)
+                        -   [Gnome](#orga5d5f65)
+                            -   [How to logout from Gnome with the terminal?](#orgf711da8)
+                        -   [Remote](#orgafee2ba)
+                            -   [NoMachine NX](#orgdf43fa7)
+                                -   [How to administrate the NX server?](#orgacea592)
+                        -   [Xpra](#org4bbb9e7)
+                            -   [xpra quickstart on ubuntu?](#orgf5f3fa9)
+                        -   [Window managers](#org114f632)
+                            -   [Gnome](#org034cfb0)
+                                -   [open the network manager (for proxy settings) from the command line?](#org60038d5)
+                                -   [Gnome 3](#org73b2314)
+                                    -   [Gnome Shell](#org77f6650)
+                                        -   [how to have cpu,etc montoring in the top bar?](#org2f7c3d9)
+                                        -   [how restart gnome shell?](#org841ce22)
+                                            -   [Gnome Shell Extensions?](#org82ba931)
+                                                -   [how to manage enabling/disabling gnome shell user extensions (command line)?](#org63d1073)
+                        -   [Xdg-open](#org29cca4d)
+                            -   [choose browser to use with xdg-open?](#orgd717920)
+                    -   [Converting formats](#org1bbb2a1)
+                        -   [Converting human readable <-> bytes](#org687ea21)
+                        -   [convert file format table?](#org45e2be0)
+                        -   [Pdf](#org51444be)
+                            -   [replace a string in a pdf file ?](#org45a29f9)
+                        -   [units](#orgadbc56a)
+                    -   [Locale](#org971f5af)
+                        -   [fix locale config?](#org740bf7b)
+                            -   [ubuntu / debian](#org689e2f8)
+                            -   [centos](#orgd42b360)
+                    -   [Network](#org7e0321a)
+                        -   [How to trace all network activity?](#org63ae834)
+                        -   [how to get the ip adresse of the local host ?](#org7dc2092)
+                        -   [list open ports?](#org469c4a8)
+                        -   [Proxy](#orgc9b578d)
+                            -   [Request with curl through a proxy over ssh ?](#org1466218)
+                        -   [how to list all open ports and their associated processes?](#orgedaa175)
+                        -   [Mtu](#org1044055)
+                            -   [temporary change the mtu of a network interface?](#orga1d1436)
+                        -   [Wifi](#orga1954f0)
+                            -   [Connect to wifi with via command line?](#org57b31af)
+                                -   [Using nmcli](#orga52e1b3)
+                    -   [Compression](#org558bea0)
+                        -   [compress stdin, uncompress to stdout ?](#org105dbb7)
+                        -   [Xz](#org745ffe2)
+                            -   [compress/decompress stdin with xz?](#org68e6cd3)
+                            -   [decompress stdin with xz?](#org88fc7e6)
+                    -   [Fs](#orgca41595)
+                        -   [difference between `/bin`, `/usr/bin`, `/usr/local/bin`?](#org1951ec2)
+                        -   [Zfs](#orgb74a042)
+                            -   [Dedup](#orgec1f342)
+                                -   [Size RAM for online dedup ?](#org0c485c8)
+                                -   [Current RAM usage for dedup on a particular zfs pool?](#org763c666)
+                            -   [Create a new zfs "env" in a file?](#orgab9b643)
+                            -   [How to destroy a zpool ?](#org54e80b4)
+                            -   [How to add new devices to an exising pool?](#org71cd56d)
+                            -   [How to view the dedup and compression properties of pools?](#org3115007)
+                            -   [Snaphot clones, etc](#org4ca8ea0)
+                            -   [Send/receive](#org4c3b66e)
+                                -   [How to do send a whole pool to another pool?](#org06b1c03)
+                                -   [How to to send a whole pool with dedup=on to another pool but with dedup=off?](#org7561ca9)
+                                -   [zfs partial send / receive ?](#org48b2ea2)
+                            -   [How to list all devices of a pool?](#org03cc13c)
+                            -   [Grow a zfs pool when a device has grown?](#org7201064)
+                        -   [AccessControl](#orgfd7090a)
+                            -   [Set read right reccursive for all files and and dir in a given dir?](#org2d12e3a)
+                    -   [Distribs](#org9a48f81)
+                        -   [Alpine](#org0a1b5de)
+                            -   [Apk](#orgdff903e)
+                                -   [use a http cache for apk ?](#orgf1e7282)
+                                -   [add a repo?](#org4ec761b)
+                                -   [how to install telnet on alpine ???](#org8ce6dee)
+                                -   [repo key rotated? (UNTRUSTED signature when `apk add`)?](#orgf9a0a03)
+                        -   [Debian](#orgdd44845)
+                            -   [Old debian GPG invalid signature when apt-get update?](#orgd7f3f11)
+                            -   [Bookworm](#org049da55)
+                                -   [how to install java8 on Debian Bookworm?](#orgc56b6ac)
+                                -   [Fresh install of bookworm 12.5 via cd.iso apt update fails !?](#org15c81d3)
+                        -   [Ubuntu](#org4eeb3b2)
+                            -   [X](#orgbed3949)
+                                -   [Disable Wayland to use Xorg instead?](#org3b01d1b)
+                            -   [Admin](#orgb17726a)
+                                -   [How to authorize normal user to connect to wifi withouth authenticating as admin ?](#org31fcd92)
+                            -   [prevent snapd for ever installing?](#org37664f5)
+                            -   [18.04](#org0dff21c)
+                                -   [X](#org31a2d72)
+                                    -   [Normal alt-tab?](#orged40137)
+                                -   [uninstall snap?](#org4d3c724)
+                        -   [Raspberry Pi](#org1955e67)
+                            -   [Install docker on Raspberry Pi 4?](#orgcaabebf)
+                    -   [Backup](#org3cb6302)
+                        -   [Bup](#orgf993fdf)
+                            -   [bup essentials?](#org8fe399e)
+                -   [Other UNIXes](#orge028e8b)
+                    -   [Solaris](#org8802286)
+                        -   [equivalent of linux's `ps aux` ?](#org9ef2abc)
+                    -   [AIX](#orge6e88b8)
+                        -   [list all processes with their corresponding commands?](#org7b9f95a)
+                                -   [How to know the actual amount of ram used by dedup on a particular dataset ?](#orga027b76)
+                                    -   [common rsync flags?](#org2d62ced)
+                                    -   [Compress / decompress on the fly?](#orge7320a6)
+                                    -   [How to display the actual configuration of the ssh command?](#org3b56f12)
+                                    -   [Signal to control nginx at runtime?](#orgc4ddc1f)
+                -   [M$ Windows](#org8eef66d)
+                    -   [Cygwin](#org5fa96f6)
+                        -   [Sshd](#org53406b0)
+                            -   [start sshd as a service after its installation with the Cygwin installer?](#org8d9eafa)
+                                -   [to be verified](#org9196e3d)
+                            -   [install gpg under cygwin?](#org652b44e)
+                    -   [cmd.exe](#org76d5daa)
+                        -   [windows services cheatsheet?](#org04bdbbf)
+                    -   [Linux Guests in a Windows vbox host](#org990e7f8)
+                            -   [Disable hyperV for vbox?](#orgd7e2002)
+                            -   [manually mount a shared folder in a linux guest?](#orgc02a60b)
+                            -   [host alt-tab when in a guest?](#org8d0b06b)
+                            -   [Windows Hosts](#orgc967b37)
+                                -   [Windows10](#orgb5fbe60)
+                                    -   [VT-x is not available (VERR<sub>VMX</sub><sub>NO</sub><sub>VMX</sub>)](#orgbdc5427)
+            -   [Vim](#org380b653)
+                -   [Yaml](#orgd179327)
+                    -   [Folding yaml in vim?](#org7b36198)
+-   [Virtualization](#org1c00fc3)
+    -   [Docker](#orgb5e14a9)
+        -   [Images](#org4a25c0c)
+            -   [find images on the command line ?](#orgbce8527)
+            -   [Building](#org8592777)
+                -   [docker build from stdin?](#org21fb6f7)
+            -   [Tags](#orgd5f402a)
+                -   [Give a name to an image?](#orge5bf223)
+        -   [Containers](#org9a173f8)
+            -   [docker run/start/exec ?](#org9ce52cc)
+        -   [troubleshoot ubuntu network ?](#org7bdf58e)
+        -   [Persistence](#orga0d1e6c)
+            -   [repair docker after a disk full?](#orgc6bcd56)
+        -   [Dockerfile](#org2c0bd71)
+            -   [use bashism in Dockerfile?](#orgecfa38f)
+        -   [Docker Compose](#org715d6b5)
+            -   [commands cheatsheet ?](#org0f066cc)
+            -   [pass env var at build time ?](#orgcc9e08c)
+        -   [docker docs](#org117c7ca)
+        -   [Network](#org2daa7e9)
+            -   [bind host /lib and /bin to the guest to run (eg) wget?](#org3c55ccb)
+        -   [DockerHub](#orga872fe3)
+            -   [How to list all tags of a particular image?](#orgbdd97e2)
+        -   [Misc](#orgfab6783)
+            -   [use stdin with a container?](#orgfe91a14)
+        -   [Cli](#org6c3e614)
+            -   [Formatting](#org7c42697)
+                -   [docker cli command output in json?](#org2a9db83)
+        -   [DockerDistribs](#org0215246)
+            -   [RancherOs](#orgfe68fa1)
+                -   [How to switch the default console to ubuntu?](#orgc65d25f)
+    -   [Vsphere](#org273ae93)
+        -   [when cloning a win vm, how to avoid a duplicate ip adress?](#orge9f23ce)
+-   [Crypto](#orge769824)
+    -   [Gpg](#org9b42710)
+        -   [How to encrypt symmetric stdin without X (Inappropriate ioctl for device)?](#orgd818ac2)
+        -   [verify a gpg signed file?](#org47995e1)
+        -   [how to dw a gpg public key from ubuntu key server?](#orgac0800c)
+-   [Web Browsers](#orgb92373b)
+    -   [Firefox](#org55a32b2)
+        -   [Disable images loading?](#orgf752fed)
+    -   [Chrome](#orgf0ba7d8)
+        -   [How to keep a Chrome background active (eg: for avoiding sessions timeouts)?](#org199ec06)
+            -   [Possible option1: Use Chrome build-in `ctrl-shift-click`](#orgd12a038)
+                -   [1) use the buit-in chrome shortcut <code>[0/1]</code>](#org68022ab)
+                    -   [to be verified](#orgb38fc74)
+            -   [Possible option2: Use an extension like `Tab Reloader`](#org767c515)
+                -   [to check](#org0b1f552)
+    -   [Chromium](#org826cff1)
+        -   [Run chromium diagnostics?](#orgbee4629)
+        -   [Chromium crashes on startup, any hint?](#org2fab425)
+-   [Videos](#org6e2b225)
+    -   [Youtube](#orgd402f4a)
+            -   [How do I send a link to a youtube video specifing the resolution?](#orgfe0bddb)
+                    -   [Solution from stackoverflow](#org1764481)
+                -   [In other words](#org20455cd)
+-   [Programming](#org96e8148)
+    -   [JVM ecosystem](#orgda7dc79)
+        -   [Groovy](#orge0a1ff9)
+            -   [Misc](#orgd17f869)
+                -   [Get the Groovy version from within a Groovy script/class?](#orgd959d4b)
+            -   [pipeline oriented programming in groovy like Clojure's threading macro?](#orga0ca8b9)
+            -   [groovy switch case?](#org38d0f79)
+            -   [groovy interval ?](#orgec5f6ba)
+            -   [get cmd line args?](#org5390169)
+            -   [run a system command in groovy ?](#org2b53db3)
+            -   [groovy pprint datastructure?](#org4bd36a7)
+        -   [Java](#org5c38694)
+            -   [Create an object with the same behavior than System.out (for testing output)?](#org85a90b9)
+            -   [timestamp in java ?](#orgf9e5130)
+        -   [Gradle](#org886d2be)
+            -   [how to create a new project from scratch?](#org3cd60ef)
+        -   [Maven](#orgd6dcd2b)
+            -   [simply download a jar with maven?](#orge465936)
+                -   [simple](#orgb5d9f90)
+                -   [specifying transitivity and repo](#org54440f7)
+            -   [generate a simple maven project?](#orgf03d06f)
+            -   [generate a simple webapp?](#orge43c237)
+        -   [Clojure](#org3dc8c32)
+            -   [Dev](#org957216e)
+                -   [Repl](#org8e41e80)
+                    -   [Change the alias of a ns in a ns def (Alias <alias> already exists in namespace <ns>,etc)?](#org9fcd7da)
+                    -   [List all ns?](#org9c39755)
+                -   [Strings](#orgc02d66b)
+                    -   [ByteArrayInputStream to string?](#org46198b3)
+                    -   [Convert a string to a regex?](#orgbf995f5)
+                -   [Protocols](#org9cac41a)
+                    -   [Full example of protocole usage for fast & simple polymorphic dispatch on a single type?](#orgc238d20)
+                -   [Modulo/quotient/reminder?](#org7a33125)
+                -   [Lein](#orgf359379)
+                    -   [Show dependencies tree?](#org3ff3fe0)
+                    -   [Connect to an existing nrepl process?](#orgd624b3c)
+                -   [Bloody java.time dates](#orgacee60e)
+                    -   [java.time formatting and parsing nanosecond precision dates with UTC timezone?](#org41bb061)
+                        -   [conversion from seconds from epoch to DateTime:](#orgbc8b075)
+                    -   [simple date formating like '16/Mar/2023' ?](#orga3a814b)
+                    -   [current LocalDateTime?](#orgdbe76e8)
+                    -   [convert LocalDateTime to ZonedDateTime utc?](#orga5d82be)
+                    -   [date fmt & parse cheatsheet?](#org0a92e2c)
+                        -   [parse 2023-03-23](#orgc5dda8e)
+                -   [Misc](#org9fd42de)
+                    -   [hex <-> decimal conversion?](#org25cb543)
+            -   [Js](#orga31e298)
+            -   [Babasha](#org050c993)
+                -   [Parse a date in babashka?](#org73bdc90)
+            -   [Processes](#org863717e)
+                -   [Process output of a cmd lazily?](#org8cb6eca)
+                    -   [Pure clojure (works with Clojure JVM + Babashka)](#org15b0d13)
+                    -   [Using babashka process lib](#orgb1c8459)
+                -   [Macros](#org2c3dd05)
+                    -   [Threading](#org8f3c42b)
+                        -   [how to use threading macros with functions with different argument position?](#org712c59b)
+                        -   [how to use ->> with fns args mixed at the beginning and and?](#org4ad9d47)
+                    -   [Functions](#org6bad784)
+                        -   [Args](#orge8f6092)
+                            -   [optional args with default values using keys?](#org95703fd)
+                    -   [Ns](#orgaf63ca9)
+                        -   [Alias](#org8defccf)
+                            -   [How to remove an alias to a ns?](#orgc556d1a)
+                    -   [Var](#org3dfbeda)
+                        -   [symbol->var->value?](#org4bf2db8)
+                            -   [alternative:](#orgca39085)
+                            -   [in one go:](#org81793d7)
+                            -   [or for conditional evaluation](#orgf99d309)
+                    -   [Destructuring](#org008be25)
+                        -   [Nested destructuring with map and seq ?](#org798241c)
+                    -   [Files](#orgff78280)
+                        -   [Read a file line by line?](#org659b443)
+                    -   [Strings](#org977fddf)
+                        -   [Regexes](#org6cc287f)
+                            -   [named groups search and replace in Clojure?](#orgb1bba19)
+                            -   [string to regex?](#org2750057)
+                            -   [repeat expression between n and m?](#orgf40e822)
+                    -   [Classpath](#orgbf656d8)
+                        -   [slurp a resource in the classpath?](#org6007e04)
+                    -   [Java interop](#orge2b56e8)
+                        -   [Get all parents classes of an instance ?](#orgd6dfd6e)
+                    -   [Generate uuid](#org16ff96f)
+                    -   [Exceptions](#orgfb28ef4)
+                        -   [try/catch/finally?](#org68d5c6c)
+            -   [Java interop](#orgb8f8c71)
+                -   [Start a clojure repl server from java?](#orga2a3318)
+        -   [Web Servers](#org879d1c4)
+            -   [Tomcat](#org7a8149f)
+                -   [how to configure tomcat so that it can be managed programatically ?](#org68adb87)
+                -   [tomcat rest api doc ?](#orgf418d60)
+    -   [Databases](#orgdd78989)
+        -   [Sql language](#org40cc979)
+            -   [DateTime](#org06aaca2)
+                -   [Sql: how to select rows where a field date is greater than&#x2026;?](#org8afd224)
+                -   [Sql: how to select rows where a field date is in [<date> ; <date> + 1 day]?](#org4ec631f)
+            -   [GroupBy](#org6c5e2d3)
+                -   [group by concatenate string?](#org1f73e0f)
+            -   [Other](#org6b18fba)
+                -   [Pseudo table in sql?](#org4c929dd)
+                -   [Concatenate two tables?](#org941ea25)
+        -   [RDBMS](#org63c58a2)
+            -   [PostgreSQL](#orgcd550ef)
+                    -   [Posgresql cheatsheet?](#orgc75ee79)
+            -   [sqlite](#orga319316)
+                -   [sqlite3](#orgb9366c6)
+                    -   [import](#orgd5de118)
+                        -   [How do I import a csv from stdin with field containing '"' into a sqlite3 db (non interactively)?](#org766832f)
+        -   [timeserie db](#org3c2d1bd)
+            -   [influxdb](#org615aaf5)
+                -   [flux](#org471da14)
+                    -   [flux query example?](#org29141c3)
+    -   [Node](#orgf84daac)
+        -   [Npm](#orgadaec4a)
+            -   [Cli usage](#org20966b9)
+                -   [how to install global packages without sudo?](#org62a401f)
+                -   [upgrade npm to latest?](#org48aa0cd)
+                -   [color config in npm?](#org9e6c77b)
+                -   [npm list all config keys?](#org7725fb3)
+                -   [npm install a module from a git url ?](#orga2e1b08)
+            -   [Searching](#org43a2d53)
+                -   [how to search npm packages (and filter by populariy, &#x2026;)?](#org18a523e)
+        -   [how to read all lines from stdin in one go?](#org6d49d25)
+    -   [Regex](#org714a82e)
+        -   [General](#org41654fd)
+            -   [regex cheatsheet?](#orgf4ddf3e)
+        -   [Sed](#orga9b15f9)
+            -   [use a backreference without grouping?](#orgdd5db7d)
+            -   [remove backslash EOL with sed?](#orga86b8b8)
+            -   [join lines of a files two by two?](#orga53d304)
+            -   [add a line before the first line of a file?](#orgf03c12c)
+            -   [output lines from regex to N line after it?](#orgd192e32)
+        -   [Perl](#org20fff57)
+            -   [Multiline search and replace?](#org7b7744f)
+    -   [Python](#orgd894551)
+        -   [Pip](#orgaa29fce)
+            -   [How to install pip for python 3 ?](#org6b1a8f0)
+            -   [How to install pip for python 2 ?](#orga882250)
+            -   [pip completion on the command line?](#orgf30fd6f)
+            -   [avoid pip warning when pip list in a script?](#orgc3168eb)
+        -   [Json](#orgcf6005e)
+            -   [Parse a json string?](#org83a6994)
+        -   [read from stdin?](#org09f5c49)
+    -   [GnuMake](#org3b430c1)
+        -   [build in a diferent directory than the Makefile?](#org9b5770e)
+        -   [GnuMake language](#org20f3c0f)
+            -   [print newline?](#org9ab0a1c)
+            -   [print all variables?](#org7a5ba70)
+        -   [print all targets?](#orga9756ba)
+        -   [how do I fail the build if an env var is not defined for a particular target?](#org9423c27)
+        -   [how to use a multiline make var in a shell recipe?](#org7b0205c)
+        -   [selfDoc](#orgef48017)
+            -   [how to extract all targets from a Makefile without a make command ?](#org5b411b2)
+    -   [Lorem ipsum](#org158f131)
+    -   [Git](#org139e441)
+        -   [Submodules](#orgf940172)
+            -   [submodule lifecycle mgmt](#org6db987d)
+            -   [submodule: track latest?](#org039504a)
+            -   [how to deregister a submodule?](#org439f75d)
+        -   [Tags / branches lifecycle mgmt](#org8c96f6b)
+        -   [rm a big file from history?](#org85b5627)
+        -   [list branch sorted by last commit date?](#orgc5d9df3)
+        -   [grep history?](#org5e845d8)
+        -   [essential git config?](#org0696606)
+        -   [config for colors?](#orge6f5ab5)
+        -   [Git Lfs essentials?](#org7faf679)
+        -   [git & ssh](#org14b7efd)
+            -   [view ssh details?](#org556891d)
+                -   [git v2.3.0 or higher:](#orgac33e3d)
+            -   [how to specify the ssh key used by git?](#org257c25b)
+        -   [Diffing](#org4a8bcc7)
+            -   [show only the filnames that changed](#org65c7250)
+        -   [Syntax](#orgeb4ba0c)
+            -   [Reference Nthieme commit from HEAD?](#org243ef07)
+        -   [Colors](#orgcd9162a)
+            -   [git colors=always?](#org8936b2c)
+        -   [hacks](#orga401faf)
+            -   [how to git diff even if the repo do not have an empty init commit?](#org6a351f9)
+    -   [Jq](#org29312b0)
+        -   [Finding](#org3491d26)
+            -   [recursively find a value by key?](#org824bacf)
+            -   [recursively find all values of a given key?](#org3dff4b9)
+            -   [recursively find all path leading to a given key](#orga55fb6e)
+            -   [recursively find all path leading to a certain value?](#org87cebc0)
+            -   [get all the values of an object?](#orga0a08ae)
+            -   [does this array contains this element?](#orgecd9b38)
+        -   [Modifying](#orgfcc06f2)
+            -   [delete the key of an object?](#org6e62d29)
+            -   [jq update ?](#orgaaa6102)
+            -   [delete in nested datastructure?](#org0e18643)
+            -   [recursively delete all keys leading to pair numbers?](#orgff5ec35)
+            -   [deep merge two nested datastructure?](#orge9814a7)
+        -   [Strings / Regex](#org59f424f)
+            -   [jq regexes cheet sheat ?](#org6e58d63)
+                -   [jq regex flags](#org3b6e553)
+                -   [jq regex functions](#orgd3b6cda)
+            -   [recursively find containers having a value that match a given regex?](#org7dd5def)
+            -   [convert string to upper case?](#org5330279)
+            -   [jq regex replace?](#org9c0048c)
+            -   [jq regex search and replace with backreferences](#orgd228f2f)
+            -   [substring?](#orgbf69492)
+        -   [Quoting](#org6fa314f)
+            -   [given a known char I want to encode it in a json string for consumption by jq](#org46361cc)
+            -   [Single Quote](#org4999f44)
+                -   [single quote as a integer (to escape it in bash)?](#orgc4c13e7)
+                -   [encode a single quote in a string for jq to decode?](#orga703731)
+        -   [Interop](#orgd0f7bcc)
+            -   [output a array for bash?](#org77588e7)
+        -   [Functional](#orgda6213e)
+            -   [reduce ?](#org51258c6)
+            -   [zip two arrays into a map?](#orgda19180)
+            -   [Comma in function args](#org72e0205)
+                -   [given a list of strings and a list of regexes, for each string check wether it matches all the given regexes or not](#org9298ee5)
+            -   [clojure's reductions equivalent in jq?](#orgba6d12f)
+        -   [Convert](#orge50511c)
+            -   [element to array?](#org69803b7)
+            -   [convert an array to a map?](#orge9d6889)
+        -   [Dates and time](#org3197e3b)
+            -   [Get a human readable date of current time?](#orgdfce400)
+            -   [Convert Unix epoch time in second to human readable?](#orgd7a4433)
+            -   [parse and format date with jq?](#org6294e89)
+        -   [Other](#org0935959)
+            -   [Undocumented debug options?](#org2ade21b)
+            -   [Syntax](#orge4b940c)
+                -   [Liberal Object notation?](#orgbf1e5b9)
+    -   [Lua](#orga1b1733)
+        -   [Call external command and get stdout?](#org5fd4fb8)
+        -   [Call external command and get stdout and return code?](#org28cc029)
+    -   [Jira](#org2ac324a)
+        -   [Jira webapp keyboard shortcut cheat sheet](#org4a852e3)
+        -   [command line online help?](#org2e59aee)
+    -   [CheatSheets](#org9c80b3c)
+        -   [Clojure](#orgd2283fb)
+    -   [Doc](#orgdb481ee)
+        -   [Markdown](#org3e0cc46)
+            -   [Cheatsheet?](#org0e0fe28)
+                -   [Links?](#org1d5cb7b)
+            -   [get values by their path (eg: ["a",1,"b"])?](#org6b0c52a)
+            -   [Bitbucket flavored markdown](#org800a1de)
+                -   [How do I create a link to the same page in Bitbucket flavored markdown?](#orgba83aed)
+    -   [CI](#org0104bd7)
+        -   [Jenkins](#orgd36b78b)
+            -   [RestApi](#org64f9da6)
+                -   [Jenkins Rest Api Essentials?](#org00fb468)
+                -   [JSON](#org288dba8)
+                    -   [Get all build result with time of particulatar job?](#org1edebf6)
+                -   [XML](#org998d778)
+            -   [parallel map in groovy?](#orgd45b520)
+            -   [dump nested object as json/xml ?](#orgb381462)
+                -   [native but do not handle cycles](#org600b2e1)
+                -   [with xstream (handle cycles)](#orge53b6eb)
+                    -   [Demo with cycles](#orgada851a)
+                -   [with xstream: json](#org3d87b02)
+            -   [legacy jobs](#orgc6687b0)
+                -   [job-dsl plugin](#org26b2969)
+                    -   [Example job-dsl for matrix project?](#org7e7a882)
+            -   [Stop an unstoppable build?](#orgdd593a1)
+    -   [Visualization](#org631c044)
+        -   [Online visualization of Wikipedia's graph?](#org5dc88ae)
+        -   [Graphviz's dot language?](#org199a7de)
+            -   [Example of colorscheme usage?](#org38856f5)
+        -   [Grafana](#orgda11fdd)
+            -   [Grafana custom time formating for the x-axis ?](#org0706b47)
+    -   [Video editing](#org9ff5de3)
+        -   [how to copy part of a video?](#org379c51b)
+    -   [Repositories](#org860f5cb)
+        -   [Nexus](#orgd12ce44)
+            -   [V2](#org5fb3012)
+                -   [self hosted api doc for nexus v2?](#org2908b0e)
+        -   [Monitoring](#org62f2f6a)
+            -   [how to connect jconsole to a jvm running in a remote docker container?](#org04a14a0)
+-   [Special](#orgb6d987e)
+    -   [Unicode(UTF8)](#orgc2ef068)
+        -   [How can I search by name for unicode char on the command line?](#org42e6cfc)
+        -   [Handy unicode(utf8) chars?](#org3cd3fa1)
+            -   [Handy emoticon ?](#orga897945)
+            -   [arrows](#orgee53f65)
+            -   [draft](#org5bf73ba)
+                -   [boxes](#org559fca9)
+            -   [use char by its code ?](#orgdc4d68b)
+            -   [unicode number in circle](#org0f7b60a)
+            -   [lambda](#org50f8a83)
+            -   [elipsis?](#org3529e95)
+            -   [Checkmarks](#orgde88548)
+                -   [check / uncheck marks?](#orgebee837)
+                -   [more check marks?](#org7110834)
+            -   [colored utf8 chars](#orgca608f0)
+                -   [some cool](#org07e30da)
+                -   [some](#org456704c)
+                -   [zodiac](#orgd6df40e)
+                -   [zodiac unambiguous](#org07b6323)
+                -   [zodiac even more unambiguous](#org843efea)
 
 My personal howto for things I know I knew, but keep forgetting 😸
 
@@ -882,32 +882,32 @@ Also serve:
 -   A Rough log of my computer-related interests over time (with the Git history)
 
 
-<a id="org4026465"></a>
+<a id="orge69ba8f"></a>
 
 # Operating Systems
 
 
-<a id="org9fad175"></a>
+<a id="org739bc00"></a>
 
 ## Linux
 
 
-<a id="org93b289a"></a>
+<a id="org8377233"></a>
 
 ### Shells
 
 
-<a id="org860609c"></a>
+<a id="org5aac2ac"></a>
 
 #### Bash
 
 
-<a id="org750a319"></a>
+<a id="org1d8df03"></a>
 
 ##### Non interactive
 
 
-<a id="org8967e0f"></a>
+<a id="org37fa6ab"></a>
 
 ###### Use alises in non interactive bash?
 
@@ -919,12 +919,12 @@ Also serve:
     expand_aliases  on
 
 
-<a id="org6692547"></a>
+<a id="org1b12c0f"></a>
 
 ##### Interactive use
 
 
-<a id="orgb60f170"></a>
+<a id="org0e8950b"></a>
 
 ###### Complete
 
@@ -1225,12 +1225,12 @@ Also serve:
     </table>
 
 
-<a id="org7d6d20e"></a>
+<a id="org85e6fed"></a>
 
 ##### Common tasks
 
 
-<a id="org9b444f4"></a>
+<a id="org38d3aaa"></a>
 
 ###### Random
 
@@ -1239,7 +1239,7 @@ Also serve:
         openssl enc -aes-256-ctr -pass pass:"$(head -c128 /dev/urandom | base64)" -nosalt < /dev/zero | pv > randomfile.bin
 
 
-<a id="orgacbd640"></a>
+<a id="orgae1f569"></a>
 
 ###### generate random string?
 
@@ -1274,7 +1274,7 @@ Also serve:
 <https://gist.github.com/earthgecko/3089509>
 
 
-<a id="org3aeabbc"></a>
+<a id="orgd68970f"></a>
 
 ###### decimal / hex (and opposite) conversion?
 
@@ -1285,14 +1285,14 @@ Also serve:
      # 10
 
 
-<a id="orgd7a1811"></a>
+<a id="orgf913d32"></a>
 
 ###### redirect output in variable?
 
 "must read" about the differents techniques of redirection: <http://stackoverflow.com/questions/13763942/bash-why-piping-input-to-read-only-works-when-fed-into-while-read-const>
 
 
-<a id="org1c279c0"></a>
+<a id="org31824b9"></a>
 
 ###### stop on error (even in subshell)?
 
@@ -1319,7 +1319,7 @@ It seems that bash disable -e in subshells.
         cmd3 || false
 
 
-<a id="org4afc1e8"></a>
+<a id="org32063c6"></a>
 
 ###### loop over args?
 
@@ -1331,7 +1331,7 @@ It seems that bash disable -e in subshells.
 <http://stackoverflow.com/questions/255898/how-to-iterate-over-arguments-in-a-bash-script>
 
 
-<a id="org918eed6"></a>
+<a id="org695ae74"></a>
 
 ###### parse a string as args
 
@@ -1355,7 +1355,7 @@ It seems that bash disable -e in subshells.
     # $2=67
 
 
-<a id="orgad9b338"></a>
+<a id="orga6069f5"></a>
 
 ###### How to save a script params (before doing modifications like shift, ..)?
 
@@ -1365,7 +1365,7 @@ It seems that bash disable -e in subshells.
     echo "${original_params[@]}"
 
 
-<a id="org249a81f"></a>
+<a id="orgb81cbf4"></a>
 
 ###### generate uuid?
 
@@ -1373,7 +1373,7 @@ It seems that bash disable -e in subshells.
     #> aa6bc854-9eab-43cd-986d-d2318bf4a845
 
 
-<a id="org0b64c35"></a>
+<a id="org79701d3"></a>
 
 ###### List all possible commands (including functions)?
 
@@ -1381,19 +1381,19 @@ It seems that bash disable -e in subshells.
     compgen -c
 
 
-<a id="org4578ce2"></a>
+<a id="org614aee1"></a>
 
 ##### Programming
 
 
-<a id="orgd1ad436"></a>
+<a id="orgf6c84a0"></a>
 
 ###### Misc
 
 -   bash pointer variables?
 
 
-<a id="orgfb2c2be"></a>
+<a id="org7cca2b8"></a>
 
 ###### Control flow
 
@@ -1594,7 +1594,7 @@ It seems that bash disable -e in subshells.
         done
 
 
-<a id="org599a3a6"></a>
+<a id="org5ae90f3"></a>
 
 ###### Types
 
@@ -1773,12 +1773,12 @@ It seems that bash disable -e in subshells.
                 #> --------------------------------------------------------------------------------
 
 
-<a id="org1725eb3"></a>
+<a id="org94826d2"></a>
 
 ##### Bash options
 
 
-<a id="orgc3d310a"></a>
+<a id="org61817a8"></a>
 
 ###### How to get the values of errexit etc (set by set -e &#x2026;)?
 
@@ -1790,7 +1790,7 @@ It seems that bash disable -e in subshells.
     #> errtrace        off
 
 
-<a id="org94796ee"></a>
+<a id="org86cfb63"></a>
 
 ###### option so bash export all declared variables?
 
@@ -1803,7 +1803,7 @@ It seems that bash disable -e in subshells.
     #> a=1
 
 
-<a id="orgb488e08"></a>
+<a id="org33b5ad4"></a>
 
 ###### option to glob also hidden files?
 
@@ -1821,7 +1821,7 @@ It seems that bash disable -e in subshells.
        #> -rw-r--r-- 1 u u 0 fvr. 10 19:37 a
 
 
-<a id="org0198745"></a>
+<a id="orgda122ac"></a>
 
 ###### Bash config files
 
@@ -1833,12 +1833,12 @@ It seems that bash disable -e in subshells.
     ![img](./img/shell-startup.png)
 
 
-<a id="org627c6ba"></a>
+<a id="orgbb328cb"></a>
 
 ##### Files and Redirections
 
 
-<a id="orgeedcd27"></a>
+<a id="orgab99452"></a>
 
 ###### Stdin/out/err
 
@@ -1955,7 +1955,7 @@ It seems that bash disable -e in subshells.
                 #> 00099
 
 
-<a id="orgc96ec98"></a>
+<a id="org62c4a1c"></a>
 
 ###### Tmp files
 
@@ -1970,12 +1970,12 @@ It seems that bash disable -e in subshells.
         echo foo >&3
 
 
-<a id="org96b6beb"></a>
+<a id="org996624c"></a>
 
 ##### Env
 
 
-<a id="org794e76b"></a>
+<a id="org415f308"></a>
 
 ###### how to run a command with the env cleared?
 
@@ -1984,7 +1984,7 @@ It seems that bash disable -e in subshells.
     #>        start with an empty environment
 
 
-<a id="org33ca8ff"></a>
+<a id="org22ad07a"></a>
 
 ###### export bash function?
 
@@ -1994,14 +1994,14 @@ It seems that bash disable -e in subshells.
     #> I'm f!
 
 
-<a id="org462be55"></a>
+<a id="org294ac38"></a>
 
 ###### Replace all env var by values in file?
 
     envsubst
 
 
-<a id="org9a3c577"></a>
+<a id="org5ed0d61"></a>
 
 ###### how to make bash source a file before running a command?
 
@@ -2015,7 +2015,7 @@ Use the `BASH_ENV` to tell bash to source a file:
     #> bar
 
 
-<a id="orgcec6e6e"></a>
+<a id="org1e9a24a"></a>
 
 ###### how to test if a variable is defined?
 
@@ -2033,12 +2033,12 @@ Use the `BASH_ENV` to tell bash to source a file:
         ;
 
 
-<a id="org82c2c98"></a>
+<a id="org9127fbc"></a>
 
 ##### Debugging
 
 
-<a id="org9243179"></a>
+<a id="orge7a5d34"></a>
 
 ###### how to make a bash script stop and print current line before running it?
 
@@ -2049,7 +2049,7 @@ Add to your script:
 From: <https://translate.google.co.uk/translate?hl=fr&sl=en&tl=fr&u=http%3A%2F%2Fwww.softpanorama.org%2FScripting%2FShellorama%2Fbash_debugging.shtml&anno=2>
 
 
-<a id="orgb5ec2f3"></a>
+<a id="org4bd5e53"></a>
 
 ###### how to execute a script step by step?
 
@@ -2071,29 +2071,29 @@ works recursively:
     #> foo
 
 
-<a id="orgc72c48c"></a>
+<a id="org86ab30b"></a>
 
 #### Zsh
 
 
-<a id="orga600dac"></a>
+<a id="orgfd34fdd"></a>
 
 ### Editors
 
 
-<a id="org522fc4e"></a>
+<a id="org2e296eb"></a>
 
 #### Emacs
 
 
-<a id="org8108e54"></a>
+<a id="orgbc138a5"></a>
 
 ##### file type indicator header for emacs?
 
     -*- mode: outline -*-
 
 
-<a id="orgac3a7fa"></a>
+<a id="org4399d3e"></a>
 
 ##### edit a file remotely over ssh with tramp?
 
@@ -2101,12 +2101,12 @@ works recursively:
     /<user>@<host>:<file>
 
 
-<a id="orga59e408"></a>
+<a id="org1cc429d"></a>
 
 ##### Spacemacs
 
 
-<a id="orgc893db2"></a>
+<a id="org634ec79"></a>
 
 ###### Troubleshoot
 
@@ -2116,7 +2116,7 @@ works recursively:
     -   Restart emacs it should work
 
 
-<a id="orgea4be24"></a>
+<a id="org5c83d69"></a>
 
 ###### Clojure
 
@@ -2136,7 +2136,7 @@ works recursively:
                   projectile-create-missing-test-files t)
 
 
-<a id="orgc55779c"></a>
+<a id="orgd519420"></a>
 
 ###### Install
 
@@ -2145,7 +2145,7 @@ works recursively:
         gpg --homedir ~/.emacs.d/elpa/gnupg --receive-keys 066DAFCB81E42C40
 
 
-<a id="org62a21d5"></a>
+<a id="orgbe5f8c4"></a>
 
 ###### evil cheat sheet?
 
@@ -2306,7 +2306,7 @@ works recursively:
 </table>
 
 
-<a id="orgd5b3d83"></a>
+<a id="org9fff76e"></a>
 
 ###### run a command and get the output in the current buffer?
 
@@ -2325,7 +2325,7 @@ works recursively:
     `SPC u SPC ! <shell-command>`
 
 
-<a id="org1a0e1f7"></a>
+<a id="org33bc9d2"></a>
 
 ###### Universal argument in spacemacs (evil mode)?
 
@@ -2333,7 +2333,7 @@ instead of the traditional `C-u`
 `SPC u`
 
 
-<a id="org0f52572"></a>
+<a id="org641fcb9"></a>
 
 ###### Project
 
@@ -2387,7 +2387,7 @@ instead of the traditional `C-u`
     </table>
 
 
-<a id="org01f0560"></a>
+<a id="org82a0bfb"></a>
 
 ###### SearchAndReplace
 
@@ -2396,7 +2396,7 @@ instead of the traditional `C-u`
         :.,$s/\vBEFORE/AFTER/gc
 
 
-<a id="org4e5d102"></a>
+<a id="org01fa98f"></a>
 
 ###### Folding
 
@@ -2405,7 +2405,7 @@ instead of the traditional `C-u`
     -   hint: `spacemacs/fold-transient-state/evil-close-fold`
 
 
-<a id="orgaf05f6a"></a>
+<a id="org02bcd79"></a>
 
 ###### Misc
 
@@ -2528,7 +2528,7 @@ instead of the traditional `C-u`
         -   TODO compute cells values ?
 
 
-<a id="org7d91371"></a>
+<a id="org9c8fbd2"></a>
 
 ###### twbs export html
 
@@ -2542,7 +2542,7 @@ Controlling html output?
 from: <https://github.com/marsmining/ox-twbs>
 
 
-<a id="org9ff3a3b"></a>
+<a id="orgd5f3a22"></a>
 
 ###### easy templates?
 
@@ -2625,7 +2625,7 @@ from: <http://orgmode.org/manual/Easy-Templates.html#Easy-Templates>
 </table>
 
 
-<a id="orgb991913"></a>
+<a id="org62c7074"></a>
 
 ###### Babel
 
@@ -2662,7 +2662,7 @@ from: <http://orgmode.org/manual/Easy-Templates.html#Easy-Templates>
     -   try to eval with `C-c C-c`
 
 
-<a id="orgd4c4459"></a>
+<a id="org04f4a15"></a>
 
 ###### Spacemace: disable mouse under termux ?
 
@@ -2670,7 +2670,7 @@ from: <http://orgmode.org/manual/Easy-Templates.html#Easy-Templates>
 -   add `(xterm-mouse-mode 0)`
 
 
-<a id="org127886e"></a>
+<a id="org78249a7"></a>
 
 ##### install emacs25 on ubuntu16.04?
 
@@ -2695,12 +2695,12 @@ from: <http://orgmode.org/manual/Easy-Templates.html#Easy-Templates>
     sudo checkinstall
 
 
-<a id="org38df0d4"></a>
+<a id="orgc7b31bc"></a>
 
 ##### Org-Mode
 
 
-<a id="org93bcae4"></a>
+<a id="org1d884a0"></a>
 
 ###### key binding to insert a code block?
 
@@ -2711,7 +2711,7 @@ from: <http://orgmode.org/manual/Easy-Templates.html#Easy-Templates>
 -   Then complete (eg: `M-/`)
 
 
-<a id="org4d25dc4"></a>
+<a id="org2f12aad"></a>
 
 ###### How to track time spen on TODO STARTED DONE?
 
@@ -2742,7 +2742,7 @@ from: <http://orgmode.org/manual/Easy-Templates.html#Easy-Templates>
                 #> 9
 
 
-<a id="orga8b1ce6"></a>
+<a id="org768d568"></a>
 
 ###### Package managers
 
@@ -2968,7 +2968,7 @@ from: <http://orgmode.org/manual/Easy-Templates.html#Easy-Templates>
     -   equivalent of apt-file search?
 
 
-<a id="org4214cce"></a>
+<a id="org2a877c5"></a>
 
 ###### Software packages
 
@@ -2995,7 +2995,7 @@ Top level sections as per the 'Section' attribute of `aptitude show <pkg>`.
         
                 <prefix> + I
             
-            Note: After an tmux you may need to upgrade plugins too [see upgrading](#orgc733908).
+            Note: After an tmux you may need to upgrade plugins too [see upgrading](#orgb82505a).
         
         -   bindings to upgrade plugins?
         
@@ -3541,7 +3541,7 @@ Top level sections as per the 'Section' attribute of `aptitude show <pkg>`.
                 
                 <https://wiki.archlinux.org/index.php/SSHFS>
                 
-                -   umount: [how to umount a mounted sshfs?](#orgbc34bc2)
+                -   umount: [how to umount a mounted sshfs?](#orgaec71d3)
             
             -   how to umount a mounted sshfs?
             
@@ -4167,7 +4167,7 @@ Top level sections as per the 'Section' attribute of `aptitude show <pkg>`.
                 setxkbmap -model evdev -layout us
 
 
-<a id="orge999e32"></a>
+<a id="org2e121aa"></a>
 
 ###### Hardware
 
@@ -4188,7 +4188,7 @@ Top level sections as per the 'Section' attribute of `aptitude show <pkg>`.
         # once per instance remove /etc/machine-id and run systemd-machine-id-setup
 
 
-<a id="org78704a4"></a>
+<a id="org0cdd21b"></a>
 
 ###### Sysadmin
 
@@ -4494,7 +4494,7 @@ Top level sections as per the 'Section' attribute of `aptitude show <pkg>`.
         chmod 666 /dev/null
 
 
-<a id="orgb148f1d"></a>
+<a id="org6408ddb"></a>
 
 ###### Terminal
 
@@ -4571,7 +4571,7 @@ Top level sections as per the 'Section' attribute of `aptitude show <pkg>`.
             `npm install -g jsonresume-theme-kendall`
 
 
-<a id="org6f7dcca"></a>
+<a id="orgbfac877"></a>
 
 ###### Io
 
@@ -4684,7 +4684,7 @@ Top level sections as per the 'Section' attribute of `aptitude show <pkg>`.
             compdef cmd1=cmd2
 
 
-<a id="org6810132"></a>
+<a id="org53a8622"></a>
 
 ###### X
 
@@ -4804,7 +4804,7 @@ Top level sections as per the 'Section' attribute of `aptitude show <pkg>`.
             xdg-settings set default-web-browser google-chrome.desktop
 
 
-<a id="org0dcee00"></a>
+<a id="org1bbb2a1"></a>
 
 ###### Converting formats
 
@@ -4862,7 +4862,7 @@ Top level sections as per the 'Section' attribute of `aptitude show <pkg>`.
     To convert many units
 
 
-<a id="orgc2479f8"></a>
+<a id="org971f5af"></a>
 
 ###### Locale
 
@@ -4897,7 +4897,7 @@ Top level sections as per the 'Section' attribute of `aptitude show <pkg>`.
             | bash -xeuo pipefail
 
 
-<a id="orgeafd1e0"></a>
+<a id="org7e0321a"></a>
 
 ###### Network
 
@@ -4966,7 +4966,7 @@ Top level sections as per the 'Section' attribute of `aptitude show <pkg>`.
                 nmcli dev status
 
 
-<a id="org15b4c1b"></a>
+<a id="org558bea0"></a>
 
 ###### Compression
 
@@ -4992,7 +4992,7 @@ Top level sections as per the 'Section' attribute of `aptitude show <pkg>`.
     -   decompress stdin with xz?
 
 
-<a id="orgc01ea8b"></a>
+<a id="orgca41595"></a>
 
 ###### Fs
 
@@ -5161,7 +5161,7 @@ Top level sections as per the 'Section' attribute of `aptitude show <pkg>`.
             && find "$dir" -type d -print0 | xargs -0 chmod 755
 
 
-<a id="orge9bf779"></a>
+<a id="org9a48f81"></a>
 
 ###### Distribs
 
@@ -5328,7 +5328,7 @@ Top level sections as per the 'Section' attribute of `aptitude show <pkg>`.
             docker run hello-world
 
 
-<a id="org271fe45"></a>
+<a id="org3cb6302"></a>
 
 ###### Backup
 
@@ -5439,12 +5439,12 @@ Top level sections as per the 'Section' attribute of `aptitude show <pkg>`.
         </table>
 
 
-<a id="org4e8c28e"></a>
+<a id="orge028e8b"></a>
 
 ##### Other UNIXes
 
 
-<a id="orgc4cf309"></a>
+<a id="org8802286"></a>
 
 ###### Solaris
 
@@ -5455,7 +5455,7 @@ Top level sections as per the 'Section' attribute of `aptitude show <pkg>`.
         ps -AfL
 
 
-<a id="org6b2692e"></a>
+<a id="orge6e88b8"></a>
 
 ###### AIX
 
@@ -5509,12 +5509,12 @@ Top level sections as per the 'Section' attribute of `aptitude show <pkg>`.
                 stop – Shut down immediately (fast shutdown)
 
 
-<a id="org04d61cb"></a>
+<a id="org8eef66d"></a>
 
 ##### M$ Windows
 
 
-<a id="orgc1cea2c"></a>
+<a id="org5fa96f6"></a>
 
 ###### Cygwin
 
@@ -5536,7 +5536,7 @@ Top level sections as per the 'Section' attribute of `aptitude show <pkg>`.
         It's already in the standard Cygwin repo, only called `gnupg`.
 
 
-<a id="org29d6440"></a>
+<a id="org76d5daa"></a>
 
 ###### cmd.exe
 
@@ -5551,7 +5551,7 @@ Top level sections as per the 'Section' attribute of `aptitude show <pkg>`.
             sc queryex type= service state= all | find /i "NATION"
 
 
-<a id="org11e1bae"></a>
+<a id="org990e7f8"></a>
 
 ###### Linux Guests in a Windows vbox host
 
@@ -5602,17 +5602,17 @@ Top level sections as per the 'Section' attribute of `aptitude show <pkg>`.
             -   And reboot
 
 
-<a id="org0d20ee7"></a>
+<a id="org380b653"></a>
 
 #### Vim
 
 
-<a id="org4481301"></a>
+<a id="orgd179327"></a>
 
 ##### Yaml
 
 
-<a id="orgabd2772"></a>
+<a id="org7b36198"></a>
 
 ###### Folding yaml in vim?
 
@@ -5624,34 +5624,34 @@ Starting point, put in your `~/.vimrc`:
     autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 
 
-<a id="orge90b730"></a>
+<a id="org1c00fc3"></a>
 
 # Virtualization
 
 
-<a id="org5389aed"></a>
+<a id="orgb5e14a9"></a>
 
 ## Docker
 
 
-<a id="org90d9ee0"></a>
+<a id="org4a25c0c"></a>
 
 ### Images
 
 
-<a id="orgeb6dc46"></a>
+<a id="orgbce8527"></a>
 
 #### find images on the command line ?
 
 ???
 
 
-<a id="orgf5b0282"></a>
+<a id="org8592777"></a>
 
 #### Building
 
 
-<a id="org84a8ab6"></a>
+<a id="org21fb6f7"></a>
 
 ##### docker build from stdin?
 
@@ -5672,12 +5672,12 @@ Starting point, put in your `~/.vimrc`:
     EOF
 
 
-<a id="org341ee8d"></a>
+<a id="orgd5f402a"></a>
 
 #### Tags
 
 
-<a id="org272969b"></a>
+<a id="orge5bf223"></a>
 
 ##### Give a name to an image?
 
@@ -5685,12 +5685,12 @@ Starting point, put in your `~/.vimrc`:
     docker tag 978d85d02b87 firc/foo:1
 
 
-<a id="org7e2e6c2"></a>
+<a id="org9a173f8"></a>
 
 ### Containers
 
 
-<a id="org51cfb82"></a>
+<a id="org9ce52cc"></a>
 
 #### docker run/start/exec ?
 
@@ -5727,7 +5727,7 @@ Starting point, put in your `~/.vimrc`:
 </table>
 
 
-<a id="orgf90bcf6"></a>
+<a id="org7bdf58e"></a>
 
 ### troubleshoot ubuntu network ?
 
@@ -5744,12 +5744,12 @@ Starting point, put in your `~/.vimrc`:
 From: <http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-trying-to-use-8-8-8-8>
 
 
-<a id="org5cd6790"></a>
+<a id="orga0d1e6c"></a>
 
 ### Persistence
 
 
-<a id="org55ad63f"></a>
+<a id="orgc6bcd56"></a>
 
 #### repair docker after a disk full?
 
@@ -5764,12 +5764,12 @@ From: <http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-tryin
 <http://stackoverflow.com/questions/30719896/docker-dm-task-run-failed-error>
 
 
-<a id="orgfac5c77"></a>
+<a id="org2c0bd71"></a>
 
 ### Dockerfile
 
 
-<a id="org6c6801b"></a>
+<a id="orgecfa38f"></a>
 
 #### use bashism in Dockerfile?
 
@@ -5779,12 +5779,12 @@ From: <http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-tryin
     SHELL ["bash", "-ueo","pipefail", "-c"]
 
 
-<a id="org981e437"></a>
+<a id="org715d6b5"></a>
 
 ### Docker Compose
 
 
-<a id="org3ab9afc"></a>
+<a id="org0f066cc"></a>
 
 #### commands cheatsheet ?
 
@@ -6073,7 +6073,7 @@ From: <http://askubuntu.com/questions/475764/docker-io-dns-doesnt-work-its-tryin
 </table>
 
 
-<a id="orgc9feb88"></a>
+<a id="orgcc9e08c"></a>
 
 #### pass env var at build time ?
 
@@ -6086,7 +6086,7 @@ from: <https://docs.docker.com/compose/compose-file/#cachefrom>:
         password: secret
 
 
-<a id="org7e8a2e3"></a>
+<a id="org117c7ca"></a>
 
 ### docker docs
 
@@ -6150,12 +6150,12 @@ from: <https://docs.docker.com/compose/compose-file/#cachefrom>:
 </table>
 
 
-<a id="org68100e7"></a>
+<a id="org2daa7e9"></a>
 
 ### Network
 
 
-<a id="org420837e"></a>
+<a id="org3c55ccb"></a>
 
 #### bind host /lib and /bin to the guest to run (eg) wget?
 
@@ -6166,12 +6166,12 @@ from: <https://docs.docker.com/compose/compose-file/#cachefrom>:
     wget google.com
 
 
-<a id="orgc463af3"></a>
+<a id="orga872fe3"></a>
 
 ### DockerHub
 
 
-<a id="orgfba20e3"></a>
+<a id="orgbdd97e2"></a>
 
 #### How to list all tags of a particular image?
 
@@ -6182,46 +6182,46 @@ from: <https://docs.docker.com/compose/compose-file/#cachefrom>:
     #> {"layer":"","name":"2.7.4-alpine"}
 
 
-<a id="orge496f01"></a>
+<a id="orgfab6783"></a>
 
 ### Misc
 
 
-<a id="orgf8b3be4"></a>
+<a id="orgfe91a14"></a>
 
 #### use stdin with a container?
 
     seq 100 | docker run -i syn synesthesia 1
 
 
-<a id="org6a519b6"></a>
+<a id="org6c3e614"></a>
 
 ### Cli
 
 
-<a id="org325e9ef"></a>
+<a id="org7c42697"></a>
 
 #### Formatting
 
 
-<a id="org6211a0b"></a>
+<a id="org2a9db83"></a>
 
 ##### docker cli command output in json?
 
     docker history opensuse/portus:2.3.5 --format '{{json . }}'
 
 
-<a id="orgd48722e"></a>
+<a id="org0215246"></a>
 
 ### DockerDistribs
 
 
-<a id="org2022fa2"></a>
+<a id="orgfe68fa1"></a>
 
 #### RancherOs
 
 
-<a id="org55acf74"></a>
+<a id="orgc65d25f"></a>
 
 ##### How to switch the default console to ubuntu?
 
@@ -6233,12 +6233,12 @@ Source: <https://rancher.com/docs/os/v1.2/en/configuration/switching-consoles/>
     sudo ros console switch ubuntu
 
 
-<a id="orga317377"></a>
+<a id="org273ae93"></a>
 
 ## Vsphere
 
 
-<a id="org14dfe3e"></a>
+<a id="orge9f23ce"></a>
 
 ### when cloning a win vm, how to avoid a duplicate ip adress?
 
@@ -6250,17 +6250,17 @@ Source: <https://rancher.com/docs/os/v1.2/en/configuration/switching-consoles/>
 -   vsphere: enable "connect" "connect at startup"
 
 
-<a id="org051f6aa"></a>
+<a id="orge769824"></a>
 
 # Crypto
 
 
-<a id="org6d7dd72"></a>
+<a id="org9b42710"></a>
 
 ## Gpg
 
 
-<a id="org9e9911a"></a>
+<a id="orgd818ac2"></a>
 
 ### How to encrypt symmetric stdin without X (Inappropriate ioctl for device)?
 
@@ -6268,14 +6268,14 @@ Source: <https://rancher.com/docs/os/v1.2/en/configuration/switching-consoles/>
     ( export GPG_TTY=$(tty) && tar czv f | gpg --symmetric  > f.gpg )
 
 
-<a id="orgc4062cd"></a>
+<a id="org47995e1"></a>
 
 ### verify a gpg signed file?
 
     gpg --verify file.gpg file
 
 
-<a id="org6f618d7"></a>
+<a id="orgac0800c"></a>
 
 ### how to dw a gpg public key from ubuntu key server?
 
@@ -6289,17 +6289,17 @@ sometimes behind firewalls:
     gpg --keyid-format long --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0x8EF0A9D3F274FCE7
 
 
-<a id="org94aacdf"></a>
+<a id="orgb92373b"></a>
 
 # Web Browsers
 
 
-<a id="org1d53285"></a>
+<a id="org55a32b2"></a>
 
 ## Firefox
 
 
-<a id="org04bf1b1"></a>
+<a id="orgf752fed"></a>
 
 ### Disable images loading?
 
@@ -6307,22 +6307,22 @@ go to about:config
 firefox<sub>profile.set</sub><sub>preference</sub>('permissions.default.image', 2)
 
 
-<a id="org1c156a4"></a>
+<a id="orgf0ba7d8"></a>
 
 ## Chrome
 
 
-<a id="orgc46f808"></a>
+<a id="org199ec06"></a>
 
 ### How to keep a Chrome background active (eg: for avoiding sessions timeouts)?
 
 
-<a id="orgf4de74d"></a>
+<a id="orgd12a038"></a>
 
 #### Possible option1: Use Chrome build-in `ctrl-shift-click`
 
 
-<a id="orgfcd4586"></a>
+<a id="org68022ab"></a>
 
 ##### STARTED 1) use the buit-in chrome shortcut <code>[0/1]</code>
 
@@ -6330,38 +6330,38 @@ firefox<sub>profile.set</sub><sub>preference</sub>('permissions.default.image', 
 `ctrl-shift-click` open a link in another tag **and keep it active**.
 
 
-<a id="orgbd824ac"></a>
+<a id="orgb38fc74"></a>
 
 ###### STARTED to be verified
 
 It seems to work be needs to be used for a few days to be definitvely validated
 
 
-<a id="org6586ab2"></a>
+<a id="org767c515"></a>
 
 #### TODO Possible option2: Use an extension like `Tab Reloader`
 
 <https://chrome.google.com/webstore/detail/tab-reloader-page-auto-re/dejobinhdiimklegodgbmbifijpppopn>
 
 
-<a id="org6909ae6"></a>
+<a id="org0b1f552"></a>
 
 ##### TODO to check
 
 
-<a id="org9e124a1"></a>
+<a id="org826cff1"></a>
 
 ## Chromium
 
 
-<a id="orgdafd9a6"></a>
+<a id="orgbee4629"></a>
 
 ### Run chromium diagnostics?
 
     chromium --diagnostics
 
 
-<a id="orgcc8cf19"></a>
+<a id="org2fab425"></a>
 
 ### Chromium crashes on startup, any hint?
 
@@ -6370,22 +6370,22 @@ It seems to work be needs to be used for a few days to be definitvely validated
 -   I had a case of a webworker cache dir huge (4gb), deleting it fix the problem
 
 
-<a id="org9626fd9"></a>
+<a id="org6e2b225"></a>
 
 # Videos
 
 
-<a id="orgecf81cc"></a>
+<a id="orgd402f4a"></a>
 
 ## Youtube
 
 
-<a id="org423a133"></a>
+<a id="orgfe0bddb"></a>
 
 #### How do I send a link to a youtube video specifing the resolution?
 
 
-<a id="orgb3a9b8b"></a>
+<a id="org1764481"></a>
 
 ###### Solution from stackoverflow
 
@@ -6407,7 +6407,7 @@ From: <https://stackoverflow.com/questions/23145257/is-there-a-way-to-link-someo
     Code for 240p: vq=small
 
 
-<a id="orgbba3d68"></a>
+<a id="org20455cd"></a>
 
 ##### In other words
 
@@ -6422,34 +6422,34 @@ From: <https://stackoverflow.com/questions/23145257/is-there-a-way-to-link-someo
         -   The url will be: <https://www.youtube.com/embed/EOoM2ooJICc?vq=hd1440>
 
 
-<a id="org31691fd"></a>
+<a id="org96e8148"></a>
 
 # Programming
 
 
-<a id="org4612e72"></a>
+<a id="orgda7dc79"></a>
 
 ## JVM ecosystem
 
 
-<a id="org3a80366"></a>
+<a id="orge0a1ff9"></a>
 
 ### Groovy
 
 
-<a id="org2250c02"></a>
+<a id="orgd17f869"></a>
 
 #### Misc
 
 
-<a id="orgbddf9ad"></a>
+<a id="orgd959d4b"></a>
 
 ##### Get the Groovy version from within a Groovy script/class?
 
     println GroovySystem.version
 
 
-<a id="org36f4b75"></a>
+<a id="orga0ca8b9"></a>
 
 #### pipeline oriented programming in groovy like Clojure's threading macro?
 
@@ -6461,7 +6461,7 @@ From: <https://stackoverflow.com/questions/23145257/is-there-a-way-to-link-someo
           | {it * 2}) == [4]
 
 
-<a id="org8777816"></a>
+<a id="org38d0f79"></a>
 
 #### groovy switch case?
 
@@ -6476,21 +6476,21 @@ From: <https://stackoverflow.com/questions/23145257/is-there-a-way-to-link-someo
     }
 
 
-<a id="orga2da622"></a>
+<a id="orgec5f6ba"></a>
 
 #### groovy interval ?
 
     (1..10).each{prinltn it}
 
 
-<a id="org0cd5fcd"></a>
+<a id="org5390169"></a>
 
 #### get cmd line args?
 
     println(args)
 
 
-<a id="orgb9ffb7f"></a>
+<a id="org2b53db3"></a>
 
 #### run a system command in groovy ?
 
@@ -6509,7 +6509,7 @@ see: <http://docs.groovy-lang.org/latest/html/documentation/working-with-io.html
     p.waitFor()
 
 
-<a id="org7e42996"></a>
+<a id="org4bd36a7"></a>
 
 #### groovy pprint datastructure?
 
@@ -6520,12 +6520,12 @@ from: <https://gist.github.com/esycat/6410360>
     println prettyPrint(toJson(config))
 
 
-<a id="orgdea80d1"></a>
+<a id="org5c38694"></a>
 
 ### Java
 
 
-<a id="org95b2f93"></a>
+<a id="org85a90b9"></a>
 
 #### Create an object with the same behavior than System.out (for testing output)?
 
@@ -6537,7 +6537,7 @@ from: <https://gist.github.com/esycat/6410360>
 <http://stackoverflow.com/questions/1760654/java-printstream-to-string>
 
 
-<a id="orgad8f803"></a>
+<a id="orgf9e5130"></a>
 
 #### timestamp in java ?
 
@@ -6550,29 +6550,29 @@ from: <https://gist.github.com/esycat/6410360>
     Date date = new SimpleDateFormat("dd MMM yyyy").parse(dateString);
 
 
-<a id="org29e6002"></a>
+<a id="org886d2be"></a>
 
 ### Gradle
 
 
-<a id="org979721d"></a>
+<a id="org3cd60ef"></a>
 
 #### how to create a new project from scratch?
 
     gradle init --type basic
 
 
-<a id="orgf1b7e30"></a>
+<a id="orgd6dcd2b"></a>
 
 ### Maven
 
 
-<a id="orgf92fa6b"></a>
+<a id="orge465936"></a>
 
 #### simply download a jar with maven?
 
 
-<a id="org5677775"></a>
+<a id="orgb5d9f90"></a>
 
 ##### simple
 
@@ -6582,7 +6582,7 @@ from: <https://gist.github.com/esycat/6410360>
 See: <http://stackoverflow.com/questions/7110114/how-to-simply-download-a-jar-using-maven>
 
 
-<a id="orgbe4af2a"></a>
+<a id="org54440f7"></a>
 
 ##### specifying transitivity and repo
 
@@ -6591,7 +6591,7 @@ See: <http://stackoverflow.com/questions/7110114/how-to-simply-download-a-jar-us
       -Dtransitive=false
 
 
-<a id="orgb51819e"></a>
+<a id="orgf03d06f"></a>
 
 #### generate a simple maven project?
 
@@ -6607,7 +6607,7 @@ See: <http://stackoverflow.com/questions/7110114/how-to-simply-download-a-jar-us
     mvn archetype:generate -Dfilter=maven-archetype-simple
 
 
-<a id="org3a9dd38"></a>
+<a id="orge43c237"></a>
 
 #### generate a simple webapp?
 
@@ -6618,22 +6618,22 @@ See: <http://stackoverflow.com/questions/7110114/how-to-simply-download-a-jar-us
       -DinteractiveMode=false
 
 
-<a id="org94a4b52"></a>
+<a id="org3dc8c32"></a>
 
 ### Clojure
 
 
-<a id="org916b868"></a>
+<a id="org957216e"></a>
 
 #### Dev
 
 
-<a id="org35905d9"></a>
+<a id="org8e41e80"></a>
 
 ##### Repl
 
 
-<a id="org1557987"></a>
+<a id="org9fcd7da"></a>
 
 ###### Change the alias of a ns in a ns def (Alias <alias> already exists in namespace <ns>,etc)?
 
@@ -6642,19 +6642,19 @@ If the ns is: `user.ns` and the alias is `alias`:
     (ns-unalias (find-ns 'user.ns) 'alias)
 
 
-<a id="org7b0d928"></a>
+<a id="org9c39755"></a>
 
 ###### List all ns?
 
     (all-ns)
 
 
-<a id="orga9efbc0"></a>
+<a id="orgc02d66b"></a>
 
 ##### Strings
 
 
-<a id="org0615252"></a>
+<a id="org46198b3"></a>
 
 ###### ByteArrayInputStream to string?
 
@@ -6667,19 +6667,19 @@ Use `slurp`:
     #> "foo"
 
 
-<a id="orga0a7db3"></a>
+<a id="orgbf995f5"></a>
 
 ###### Convert a string to a regex?
 
     (re-pattern "a.*b")
 
 
-<a id="org8154b45"></a>
+<a id="org9cac41a"></a>
 
 ##### Protocols
 
 
-<a id="org9dd60ae"></a>
+<a id="orgc238d20"></a>
 
 ###### Full example of protocole usage for fast & simple polymorphic dispatch on a single type?
 
@@ -6732,7 +6732,7 @@ Use `slurp`:
                                                             (as-xml (->User "0" "john" (t/date-time 1985)))))))
 
 
-<a id="orgaaf1fd7"></a>
+<a id="org7a33125"></a>
 
 ##### Modulo/quotient/reminder?
 
@@ -6751,12 +6751,12 @@ Use `slurp`:
     #> true
 
 
-<a id="orgb9e0cce"></a>
+<a id="orgf359379"></a>
 
 ##### Lein
 
 
-<a id="org4508dbf"></a>
+<a id="org3ff3fe0"></a>
 
 ###### Show dependencies tree?
 
@@ -6764,19 +6764,19 @@ Use `slurp`:
     mvn dependency:tree -Dverbose=true
 
 
-<a id="org427252e"></a>
+<a id="orgd624b3c"></a>
 
 ###### Connect to an existing nrepl process?
 
     lein repl :connect localhost:7888
 
 
-<a id="org13cdb86"></a>
+<a id="orgacee60e"></a>
 
 ##### Bloody java.time dates
 
 
-<a id="org68ac7d9"></a>
+<a id="org41bb061"></a>
 
 ###### java.time formatting and parsing nanosecond precision dates with UTC timezone?
 
@@ -6809,7 +6809,7 @@ Use `slurp`:
         }
 
 
-<a id="org67f3413"></a>
+<a id="orga3a814b"></a>
 
 ###### simple date formating like '16/Mar/2023' ?
 
@@ -6826,14 +6826,14 @@ Use `slurp`:
     '
 
 
-<a id="org8f422d8"></a>
+<a id="orgdbe76e8"></a>
 
 ###### current LocalDateTime?
 
 java.time.LocalDateTime/now
 
 
-<a id="org6af1b8b"></a>
+<a id="orga5d82be"></a>
 
 ###### convert LocalDateTime to ZonedDateTime utc?
 
@@ -6841,7 +6841,7 @@ java.time.LocalDateTime/now
 (def zdt (ldt.atZone(java.time.ZoneId/of "UTC")))
 
 
-<a id="orgdc257ee"></a>
+<a id="org0a92e2c"></a>
 
 ###### date fmt & parse cheatsheet?
 
@@ -6853,12 +6853,12 @@ java.time.LocalDateTime/now
          '
 
 
-<a id="org2e8549e"></a>
+<a id="org9fd42de"></a>
 
 ##### Misc
 
 
-<a id="orgcf78156"></a>
+<a id="org25cb543"></a>
 
 ###### hex <-> decimal conversion?
 
@@ -6870,34 +6870,34 @@ Works with any base:
      ;=> 123
 
 
-<a id="orga3fd1d9"></a>
+<a id="orga31e298"></a>
 
 #### Js
 
 
-<a id="org755f6ab"></a>
+<a id="org050c993"></a>
 
 #### Babasha
 
 
-<a id="orga3f9dcf"></a>
+<a id="org73bdc90"></a>
 
 ##### Parse a date in babashka?
 
     (java.time.LocalDateTime/parse "2019-12-18T16:01:41.485")
 
 
-<a id="org5e4c829"></a>
+<a id="org863717e"></a>
 
 #### Processes
 
 
-<a id="org3f33bff"></a>
+<a id="org8cb6eca"></a>
 
 ##### Process output of a cmd lazily?
 
 
-<a id="org84ac5f5"></a>
+<a id="org15b0d13"></a>
 
 ###### Pure clojure (works with Clojure JVM + Babashka)
 
@@ -6953,7 +6953,7 @@ Works with any base:
     (time (pp/pprint (take 10 s)))
 
 
-<a id="org056c189"></a>
+<a id="orgb1c8459"></a>
 
 ###### Using babashka process lib
 
@@ -6967,12 +6967,12 @@ Works with any base:
            '
 
 
-<a id="org85c6d68"></a>
+<a id="org2c3dd05"></a>
 
 ##### Macros
 
 
-<a id="orge2f4285"></a>
+<a id="org8f3c42b"></a>
 
 ###### Threading
 
@@ -7009,7 +7009,7 @@ Works with any base:
         #> ("[:k :v]")
 
 
-<a id="org0b1c9f4"></a>
+<a id="org6bad784"></a>
 
 ###### Functions
 
@@ -7030,7 +7030,7 @@ Works with any base:
             ;; => "Hi John"
 
 
-<a id="orgabc5464"></a>
+<a id="orgaf63ca9"></a>
 
 ###### Ns
 
@@ -7046,7 +7046,7 @@ Works with any base:
                        ))
 
 
-<a id="orgd368088"></a>
+<a id="org3dfbeda"></a>
 
 ###### Var
 
@@ -7087,7 +7087,7 @@ Works with any base:
                 :dostuff))
 
 
-<a id="org17c5148"></a>
+<a id="org008be25"></a>
 
 ###### Destructuring
 
@@ -7100,7 +7100,7 @@ Works with any base:
         ;; #> [:a :b]
 
 
-<a id="orge4b0816"></a>
+<a id="orgff78280"></a>
 
 ###### Files
 
@@ -7110,7 +7110,7 @@ Works with any base:
           (count (line-seq rdr)))
 
 
-<a id="org4b6268d"></a>
+<a id="org977fddf"></a>
 
 ###### Strings
 
@@ -7131,7 +7131,7 @@ Works with any base:
             #> "chute"
 
 
-<a id="org29c9796"></a>
+<a id="orgbf656d8"></a>
 
 ###### Classpath
 
@@ -7141,21 +7141,21 @@ Works with any base:
         (slurp (io/resource "some_project_name/foo.txt"))
 
 
-<a id="org42e4b1f"></a>
+<a id="orge2b56e8"></a>
 
 ###### Java interop
 
 -   Get all parents classes of an instance ?
 
 
-<a id="orgb94db21"></a>
+<a id="org16ff96f"></a>
 
 ###### Generate uuid
 
     (str (java.util.UUID/randomUUID))
 
 
-<a id="org7ee074c"></a>
+<a id="orgfb28ef4"></a>
 
 ###### Exceptions
 
@@ -7166,12 +7166,12 @@ Works with any base:
           (finally (prn :always-run)))
 
 
-<a id="orgcb203af"></a>
+<a id="orgb8f8c71"></a>
 
 #### Java interop
 
 
-<a id="orgac266e7"></a>
+<a id="orga2a3318"></a>
 
 ##### Start a clojure repl server from java?
 
@@ -7201,17 +7201,17 @@ One way
     -   Then connect to the repl with:
 
 
-<a id="org7bcd187"></a>
+<a id="org879d1c4"></a>
 
 ### Web Servers
 
 
-<a id="org78a9bd7"></a>
+<a id="org7a8149f"></a>
 
 #### Tomcat
 
 
-<a id="org3daf6c2"></a>
+<a id="org68adb87"></a>
 
 ##### how to configure tomcat so that it can be managed programatically ?
 
@@ -7227,29 +7227,29 @@ One way
     curl -v -u tomcat:tomcat http://127.0.0.1:8080/manager/text/list
 
 
-<a id="org69fd7e6"></a>
+<a id="orgf418d60"></a>
 
 ##### tomcat rest api doc ?
 
 <http://tomcat.apache.org/tomcat-7.0-doc/manager-howto.html#List_Currently_Deployed_Applications>
 
 
-<a id="org63def22"></a>
+<a id="orgdd78989"></a>
 
 ## Databases
 
 
-<a id="orgb31ebf3"></a>
+<a id="org40cc979"></a>
 
 ### Sql language
 
 
-<a id="org22d6644"></a>
+<a id="org06aaca2"></a>
 
 #### DateTime
 
 
-<a id="org6fbd2c7"></a>
+<a id="org8afd224"></a>
 
 ##### Sql: how to select rows where a field date is greater than&#x2026;?
 
@@ -7262,7 +7262,7 @@ Ex in Postgresqldb:
       and created >  ('2019-01-02 09:00:00'::timestamp)
 
 
-<a id="org72862fc"></a>
+<a id="org4ec631f"></a>
 
 ##### Sql: how to select rows where a field date is in [<date> ; <date> + 1 day]?
 
@@ -7273,12 +7273,12 @@ Ex in Postgresqldb:
       and created <=  ('2019-01-02 09:00:00'::timestamp + '1 day'::interval)
 
 
-<a id="org5f50d53"></a>
+<a id="org6c5e2d3"></a>
 
 #### GroupBy
 
 
-<a id="orga293989"></a>
+<a id="org1f73e0f"></a>
 
 ##### group by concatenate string?
 
@@ -7316,12 +7316,12 @@ Ex in Postgresqldb:
     ;;> |   2 |          30 |
 
 
-<a id="orgd1c1776"></a>
+<a id="org6b18fba"></a>
 
 #### Other
 
 
-<a id="org51eedc2"></a>
+<a id="org4c929dd"></a>
 
 ##### Pseudo table in sql?
 
@@ -7362,7 +7362,7 @@ postgresql and others:
     ;;> | 2 |
 
 
-<a id="org2f18ffd"></a>
+<a id="org941ea25"></a>
 
 ##### Concatenate two tables?
 
@@ -7389,17 +7389,17 @@ postgresql and others:
     ;;> |  1 |  a |
 
 
-<a id="org744c5cc"></a>
+<a id="org63c58a2"></a>
 
 ### RDBMS
 
 
-<a id="org80f6db8"></a>
+<a id="orgcd550ef"></a>
 
 #### PostgreSQL
 
 
-<a id="org4e35a08"></a>
+<a id="orgc75ee79"></a>
 
 ###### Posgresql cheatsheet?
 
@@ -7426,17 +7426,17 @@ postgresql and others:
 </table>
 
 
-<a id="org811587e"></a>
+<a id="orga319316"></a>
 
 #### sqlite
 
 
-<a id="org926ee6b"></a>
+<a id="orgb9366c6"></a>
 
 ##### sqlite3
 
 
-<a id="org774288e"></a>
+<a id="orgd5de118"></a>
 
 ###### import
 
@@ -7456,22 +7456,22 @@ postgresql and others:
            #> "c""" d
 
 
-<a id="orgc7ec292"></a>
+<a id="org3c2d1bd"></a>
 
 ### timeserie db
 
 
-<a id="org7fd737d"></a>
+<a id="org615aaf5"></a>
 
 #### influxdb
 
 
-<a id="org4412247"></a>
+<a id="org471da14"></a>
 
 ##### flux
 
 
-<a id="orgaa879d3"></a>
+<a id="org29141c3"></a>
 
 ###### flux query example?
 
@@ -7482,22 +7482,22 @@ postgresql and others:
       |> group(columns: ["_field"], mode: "by")
 
 
-<a id="org523d36b"></a>
+<a id="orgf84daac"></a>
 
 ## Node
 
 
-<a id="org9335ca1"></a>
+<a id="orgadaec4a"></a>
 
 ### Npm
 
 
-<a id="org78760a4"></a>
+<a id="org20966b9"></a>
 
 #### Cli usage
 
 
-<a id="org3653f2a"></a>
+<a id="org62a401f"></a>
 
 ##### how to install global packages without sudo?
 
@@ -7513,14 +7513,14 @@ postgresql and others:
 <https://docs.npmjs.com/getting-started/fixing-npm-permissions>
 
 
-<a id="org204202b"></a>
+<a id="org48aa0cd"></a>
 
 ##### upgrade npm to latest?
 
     npm install npm@latest -g
 
 
-<a id="org9e4f3dd"></a>
+<a id="org9e6c77b"></a>
 
 ##### color config in npm?
 
@@ -7529,7 +7529,7 @@ Starting point:
     npm config set color always
 
 
-<a id="orge1cb7d7"></a>
+<a id="org7725fb3"></a>
 
 ##### npm list all config keys?
 
@@ -7538,7 +7538,7 @@ Starting point:
 <http://nipstr.com/>
 
 
-<a id="org5f20015"></a>
+<a id="orga2e1b08"></a>
 
 ##### npm install a module from a git url ?
 
@@ -7549,19 +7549,19 @@ notes, the repo:
     npm install 'git+ssh://git@github.com:denlab/denlab-examples.git#repo/npm/npmLib' --save
 
 
-<a id="orgf2265e9"></a>
+<a id="org43a2d53"></a>
 
 #### Searching
 
 
-<a id="org0771820"></a>
+<a id="org18a523e"></a>
 
 ##### how to search npm packages (and filter by populariy, &#x2026;)?
 
 <http://nipstr.com>
 
 
-<a id="org584941f"></a>
+<a id="org6d49d25"></a>
 
 ### how to read all lines from stdin in one go?
 
@@ -7580,17 +7580,17 @@ notes, the repo:
     #> foo
 
 
-<a id="org3b4e16e"></a>
+<a id="org714a82e"></a>
 
 ## Regex
 
 
-<a id="orgc44037b"></a>
+<a id="org41654fd"></a>
 
 ### General
 
 
-<a id="org8910b8d"></a>
+<a id="orgf4ddf3e"></a>
 
 #### regex cheatsheet?
 
@@ -7634,12 +7634,12 @@ from: <https://www.regular-expressions.info/refadv.html>
 </table>
 
 
-<a id="org640ce7e"></a>
+<a id="orga9b15f9"></a>
 
 ### Sed
 
 
-<a id="org5d1db1d"></a>
+<a id="orgdd5db7d"></a>
 
 #### use a backreference without grouping?
 
@@ -7647,7 +7647,7 @@ from: <https://www.regular-expressions.info/refadv.html>
     # => bar <=
 
 
-<a id="org2e2efa4"></a>
+<a id="orga86b8b8"></a>
 
 #### remove backslash EOL with sed?
 
@@ -7664,7 +7664,7 @@ from: <https://www.regular-expressions.info/refadv.html>
     # b c
 
 
-<a id="org14f870c"></a>
+<a id="orga53d304"></a>
 
 #### join lines of a files two by two?
 
@@ -7676,7 +7676,7 @@ from: <https://www.regular-expressions.info/refadv.html>
     9 10
 
 
-<a id="orgee72c7a"></a>
+<a id="orgf03c12c"></a>
 
 #### add a line before the first line of a file?
 
@@ -7698,7 +7698,7 @@ from: <https://unix.stackexchange.com/questions/99350/how-to-insert-text-before-
     history | tail -10
 
 
-<a id="orged61ead"></a>
+<a id="orgd192e32"></a>
 
 #### output lines from regex to N line after it?
 
@@ -7710,29 +7710,29 @@ from: <https://unix.stackexchange.com/questions/99350/how-to-insert-text-before-
     #> 43
 
 
-<a id="org6ac00c9"></a>
+<a id="org20fff57"></a>
 
 ### Perl
 
 
-<a id="orgf4ae855"></a>
+<a id="org7b7744f"></a>
 
 #### Multiline search and replace?
 
     perl -pe 's/<search>/<replace>/'  < in.file > out.file
 
 
-<a id="org4883b24"></a>
+<a id="orgd894551"></a>
 
 ## Python
 
 
-<a id="org02c3fb7"></a>
+<a id="orgaa29fce"></a>
 
 ### Pip
 
 
-<a id="org94d570c"></a>
+<a id="org6b1a8f0"></a>
 
 #### How to install pip for python 3 ?
 
@@ -7745,7 +7745,7 @@ from: <https://unix.stackexchange.com/questions/99350/how-to-insert-text-before-
         pip3 <cmd>
 
 
-<a id="org7b79220"></a>
+<a id="orga882250"></a>
 
 #### How to install pip for python 2 ?
 
@@ -7754,7 +7754,7 @@ from: <https://unix.stackexchange.com/questions/99350/how-to-insert-text-before-
     sudo python2 get-pip.py
 
 
-<a id="org9cb90e1"></a>
+<a id="orgf30fd6f"></a>
 
 #### pip completion on the command line?
 
@@ -7767,7 +7767,7 @@ or
 from: <https://pip.pypa.io/en/stable/user_guide/?highlight=completion%20#command-completion>
 
 
-<a id="org8aea79b"></a>
+<a id="orgc3168eb"></a>
 
 #### avoid pip warning when pip list in a script?
 
@@ -7777,12 +7777,12 @@ from: <https://pip.pypa.io/en/stable/user_guide/?highlight=completion%20#command
     EOF
 
 
-<a id="org66f6538"></a>
+<a id="orgcf6005e"></a>
 
 ### Json
 
 
-<a id="org655f071"></a>
+<a id="org83a6994"></a>
 
 #### Parse a json string?
 
@@ -7794,7 +7794,7 @@ from: <https://pip.pypa.io/en/stable/user_guide/?highlight=completion%20#command
     EOF
 
 
-<a id="org577d3a4"></a>
+<a id="org09f5c49"></a>
 
 ### read from stdin?
 
@@ -7805,12 +7805,12 @@ from: <https://pip.pypa.io/en/stable/user_guide/?highlight=completion%20#command
       print line, # comma to avoid double printing newline
 
 
-<a id="org9d1c10c"></a>
+<a id="org3b430c1"></a>
 
 ## GnuMake
 
 
-<a id="org0ce655a"></a>
+<a id="org9b5770e"></a>
 
 ### build in a diferent directory than the Makefile?
 
@@ -7839,12 +7839,12 @@ from: <https://stackoverflow.com/questions/37467969/how-to-change-current-direct
         rm -fr $(blddir)
 
 
-<a id="orge3fffd6"></a>
+<a id="org20f3c0f"></a>
 
 ### GnuMake language
 
 
-<a id="org351eb47"></a>
+<a id="org9ab0a1c"></a>
 
 #### print newline?
 
@@ -7858,7 +7858,7 @@ from: <https://stackoverflow.com/questions/37467969/how-to-change-current-direct
     $(info - newline: ${\n} has been inserted)
 
 
-<a id="org0619293"></a>
+<a id="org7a5ba70"></a>
 
 #### print all variables?
 
@@ -7868,7 +7868,7 @@ from: <https://stackoverflow.com/questions/37467969/how-to-change-current-direct
        @echo "V=$(foreach v, $(.VARIABLES), $(v):$($(v)))" | tr ' ' '\n' | jq -R '.' | jq -Ss '[ .[] | select(length > 0)  | [splits(":")]  | {key: .[0], value: .[1]}] | .[] | .key + ":" + .value' | jq -r '.' | column
 
 
-<a id="orgec2ddaf"></a>
+<a id="orga9756ba"></a>
 
 ### print all targets?
 
@@ -7883,7 +7883,7 @@ or
     make -prRn | egrep -v $'(^(#|\t)|=)' | egrep ':' 2> /dev/null | cut -d: -f1 | sort
 
 
-<a id="org5d32197"></a>
+<a id="org9423c27"></a>
 
 ### how do I fail the build if an env var is not defined for a particular target?
 
@@ -7893,7 +7893,7 @@ or
     endif
 
 
-<a id="orge95b720"></a>
+<a id="org7b0205c"></a>
 
 ### how to use a multiline make var in a shell recipe?
 
@@ -7920,12 +7920,12 @@ Export the make var, and use it in the recipe:
     #>
 
 
-<a id="orgd2c83e8"></a>
+<a id="orgef48017"></a>
 
 ### selfDoc
 
 
-<a id="org75f6ea7"></a>
+<a id="org5b411b2"></a>
 
 #### how to extract all targets from a Makefile without a make command ?
 
@@ -7934,7 +7934,7 @@ Export the make var, and use it in the recipe:
 +END<sub>SRC</sub>
 
 
-<a id="orge58e7c6"></a>
+<a id="org158f131"></a>
 
 ## Lorem ipsum
 
@@ -7965,17 +7965,17 @@ Export the make var, and use it in the recipe:
 </table>
 
 
-<a id="org21cc484"></a>
+<a id="org139e441"></a>
 
 ## Git
 
 
-<a id="orgac1e22a"></a>
+<a id="orgf940172"></a>
 
 ### Submodules
 
 
-<a id="org37bd6f2"></a>
+<a id="org6db987d"></a>
 
 #### submodule lifecycle mgmt
 
@@ -8006,7 +8006,7 @@ Export the make var, and use it in the recipe:
 </table>
 
 
-<a id="org6cf6d1a"></a>
+<a id="org039504a"></a>
 
 #### submodule: track latest?
 
@@ -8017,7 +8017,7 @@ Export the make var, and use it in the recipe:
     git submodule update --remote
 
 
-<a id="org6e22a0c"></a>
+<a id="org439f75d"></a>
 
 #### how to deregister a submodule?
 
@@ -8030,7 +8030,7 @@ Something that has worked for me:
     git reset --hard
 
 
-<a id="orgaaf1ba0"></a>
+<a id="org8c96f6b"></a>
 
 ### Tags / branches lifecycle mgmt
 
@@ -8122,7 +8122,7 @@ Something that has worked for me:
 </table>
 
 
-<a id="org894dcc6"></a>
+<a id="org85b5627"></a>
 
 ### rm a big file from history?
 
@@ -8155,14 +8155,14 @@ Something that has worked for me:
     $ git rebase --continue
 
 
-<a id="org1e4cf39"></a>
+<a id="orgc5d9df3"></a>
 
 ### list branch sorted by last commit date?
 
     git for-each-ref --sort=-committerdate refs/heads/
 
 
-<a id="org30db351"></a>
+<a id="org5e845d8"></a>
 
 ### grep history?
 
@@ -8170,7 +8170,7 @@ Something that has worked for me:
     git grep "$@" $(git rev-list --all)
 
 
-<a id="org02ed291"></a>
+<a id="org0696606"></a>
 
 ### essential git config?
 
@@ -8179,14 +8179,14 @@ Something that has worked for me:
     && git config --global user.name "Your Name"
 
 
-<a id="org6d47604"></a>
+<a id="orge6f5ab5"></a>
 
 ### config for colors?
 
     git config --global color.ui true
 
 
-<a id="orgf0cefa6"></a>
+<a id="org7faf679"></a>
 
 ### Git Lfs essentials?
 
@@ -8228,24 +8228,24 @@ git push origin master
 from: <https://git-lfs.github.com/>
 
 
-<a id="orgc2366c7"></a>
+<a id="org14b7efd"></a>
 
 ### git & ssh
 
 
-<a id="org2e2a23d"></a>
+<a id="org556891d"></a>
 
 #### view ssh details?
 
 
-<a id="org1bbc6a1"></a>
+<a id="orgac33e3d"></a>
 
 ##### git v2.3.0 or higher:
 
     GIT_SSH_COMMAND="ssh -vvv" git clone example
 
 
-<a id="org1202747"></a>
+<a id="org257c25b"></a>
 
 #### how to specify the ssh key used by git?
 
@@ -8254,48 +8254,48 @@ from: <https://stackoverflow.com/questions/4565700/specify-private-ssh-key-to-us
     ssh-agent bash -c 'ssh-add /somewhere/yourkey; git clone git@github.com:user/project.git'
 
 
-<a id="orgb2f19d6"></a>
+<a id="org4a8bcc7"></a>
 
 ### Diffing
 
 
-<a id="org7981fac"></a>
+<a id="org65c7250"></a>
 
 #### show only the filnames that changed
 
     git diff --stat --names-only HEAD^^..HEAD^
 
 
-<a id="orgffc15ac"></a>
+<a id="orgeb4ba0c"></a>
 
 ### Syntax
 
 
-<a id="orgc63ae4a"></a>
+<a id="org243ef07"></a>
 
 #### Reference Nthieme commit from HEAD?
 
     git checkout HEAD@{30}
 
 
-<a id="org1184529"></a>
+<a id="orgcd9162a"></a>
 
 ### Colors
 
 
-<a id="org6390576"></a>
+<a id="org8936b2c"></a>
 
 #### git colors=always?
 
     git -c color.status=always status
 
 
-<a id="org92256a5"></a>
+<a id="orga401faf"></a>
 
 ### hacks
 
 
-<a id="org9cf3910"></a>
+<a id="org6a351f9"></a>
 
 #### how to git diff even if the repo do not have an empty init commit?
 
@@ -8306,17 +8306,17 @@ Event if only one commit in a repo (without a base empty commmit),
     #> will return the correct diff
 
 
-<a id="org56cd416"></a>
+<a id="org29312b0"></a>
 
 ## Jq
 
 
-<a id="org348a048"></a>
+<a id="org3491d26"></a>
 
 ### Finding
 
 
-<a id="orge1621ed"></a>
+<a id="org824bacf"></a>
 
 #### recursively find a value by key?
 
@@ -8324,7 +8324,7 @@ Event if only one commit in a repo (without a base empty commmit),
     #=> 1
 
 
-<a id="org54cd470"></a>
+<a id="org3dff4b9"></a>
 
 #### recursively find all values of a given key?
 
@@ -8344,7 +8344,7 @@ Event if only one commit in a repo (without a base empty commmit),
     #=> ]
 
 
-<a id="org431dabc"></a>
+<a id="orga55fb6e"></a>
 
 #### recursively find all path leading to a given key
 
@@ -8367,7 +8367,7 @@ Event if only one commit in a repo (without a base empty commmit),
     #=> ]
 
 
-<a id="org7508e88"></a>
+<a id="org87cebc0"></a>
 
 #### recursively find all path leading to a certain value?
 
@@ -8415,7 +8415,7 @@ Event if only one commit in a repo (without a base empty commmit),
 \#+end<sub>src</sub>
 
 
-<a id="org709d8ef"></a>
+<a id="orga0a08ae"></a>
 
 #### get all the values of an object?
 
@@ -8423,7 +8423,7 @@ Event if only one commit in a repo (without a base empty commmit),
     #=> 1
 
 
-<a id="org72c6925"></a>
+<a id="orgecd9b38"></a>
 
 #### does this array contains this element?
 
@@ -8434,19 +8434,19 @@ Event if only one commit in a repo (without a base empty commmit),
     jq -n '[0] | inside([1,2])'       #> false
 
 
-<a id="org17965ce"></a>
+<a id="orgfcc06f2"></a>
 
 ### Modifying
 
 
-<a id="org07a7053"></a>
+<a id="org6e62d29"></a>
 
 #### delete the key of an object?
 
     echo '{"k": 1}' | jq 'del(.k)'
 
 
-<a id="org811959d"></a>
+<a id="orgaaa6102"></a>
 
 #### jq update ?
 
@@ -8457,14 +8457,14 @@ Event if only one commit in a repo (without a base empty commmit),
     #=> }
 
 
-<a id="orgd6c9bd8"></a>
+<a id="org0e18643"></a>
 
 #### delete in nested datastructure?
 
     jq -n '{a:1, b:2, c:3} | del(.. | .a?//empty)'
 
 
-<a id="org32ffa4f"></a>
+<a id="orgff5ec35"></a>
 
 #### recursively delete all keys leading to pair numbers?
 
@@ -8474,7 +8474,7 @@ Note: Probably could be written more concisely:
       | del(.. | numbers | (if (. % 2) == 0 then . else empty end))'
 
 
-<a id="org8399dee"></a>
+<a id="orge9814a7"></a>
 
 #### deep merge two nested datastructure?
 
@@ -8493,17 +8493,17 @@ Use the `*` operator:
     #=> }
 
 
-<a id="org142bca2"></a>
+<a id="org59f424f"></a>
 
 ### Strings / Regex
 
 
-<a id="orgef0a5f5"></a>
+<a id="org6e58d63"></a>
 
 #### jq regexes cheet sheat ?
 
 
-<a id="org385fdcb"></a>
+<a id="org3b6e553"></a>
 
 ##### jq regex flags
 
@@ -8569,7 +8569,7 @@ flag usage example:
 </table>
 
 
-<a id="orgdac1476"></a>
+<a id="orgd3b6cda"></a>
 
 ##### jq regex functions
 
@@ -8666,7 +8666,7 @@ flag usage example:
 </table>
 
 
-<a id="orga5216c2"></a>
+<a id="org7dd5def"></a>
 
 #### recursively find containers having a value that match a given regex?
 
@@ -8687,7 +8687,7 @@ flag usage example:
     #=> (...)
 
 
-<a id="org064960a"></a>
+<a id="org5330279"></a>
 
 #### convert string to upper case?
 
@@ -8695,7 +8695,7 @@ flag usage example:
     #=> "ABCD"
 
 
-<a id="orgdd2df6c"></a>
+<a id="org9c0048c"></a>
 
 #### jq regex replace?
 
@@ -8703,7 +8703,7 @@ flag usage example:
     jq -n '"foo bar" | sub(" "; "x")'
 
 
-<a id="org0f70153"></a>
+<a id="orgd228f2f"></a>
 
 #### jq regex search and replace with backreferences
 
@@ -8718,7 +8718,7 @@ flag usage example:
     #> "fo - o - "
 
 
-<a id="orgfe6cc3a"></a>
+<a id="orgbf69492"></a>
 
 #### substring?
 
@@ -8726,12 +8726,12 @@ flag usage example:
     "f"
 
 
-<a id="org4b93c7d"></a>
+<a id="org6fa314f"></a>
 
 ### Quoting
 
 
-<a id="orgae3a0be"></a>
+<a id="org46361cc"></a>
 
 #### given a known char I want to encode it in a json string for consumption by jq
 
@@ -8747,12 +8747,12 @@ flag usage example:
     #> "'"
 
 
-<a id="org59a7628"></a>
+<a id="org4999f44"></a>
 
 #### Single Quote
 
 
-<a id="org19f05d5"></a>
+<a id="orgc4c13e7"></a>
 
 ##### single quote as a integer (to escape it in bash)?
 
@@ -8760,7 +8760,7 @@ flag usage example:
     #> "'"
 
 
-<a id="org4bdffcf"></a>
+<a id="orga703731"></a>
 
 ##### encode a single quote in a string for jq to decode?
 
@@ -8769,24 +8769,24 @@ flag usage example:
     #> "'"
 
 
-<a id="orgea19225"></a>
+<a id="orgd0f7bcc"></a>
 
 ### Interop
 
 
-<a id="org5a16edb"></a>
+<a id="org77588e7"></a>
 
 #### output a array for bash?
 
     echo '[1,2,3]' | jq '.|@tsv'
 
 
-<a id="orga171981"></a>
+<a id="orgda6213e"></a>
 
 ### Functional
 
 
-<a id="org2d961b5"></a>
+<a id="org51258c6"></a>
 
 #### reduce ?
 
@@ -8794,7 +8794,7 @@ flag usage example:
     | jq 'reduce .[] as $item (0; . + $item)'
 
 
-<a id="org2653c71"></a>
+<a id="orgda19180"></a>
 
 #### zip two arrays into a map?
 
@@ -8813,12 +8813,12 @@ flag usage example:
     #>
 
 
-<a id="org386145b"></a>
+<a id="org72e0205"></a>
 
 #### Comma in function args
 
 
-<a id="orgbf6881c"></a>
+<a id="org9298ee5"></a>
 
 ##### given a list of strings and a list of regexes, for each string check wether it matches all the given regexes or not
 
@@ -8834,7 +8834,7 @@ flag usage example:
     #> false
 
 
-<a id="org2137a98"></a>
+<a id="orgba6d12f"></a>
 
 #### clojure's reductions equivalent in jq?
 
@@ -8844,17 +8844,17 @@ flag usage example:
     | head | xargs
 
 
-<a id="org692233e"></a>
+<a id="orge50511c"></a>
 
 ### Convert
 
 
-<a id="org765b1ad"></a>
+<a id="org69803b7"></a>
 
 #### TODO element to array?
 
 
-<a id="org357174b"></a>
+<a id="orge9d6889"></a>
 
 #### convert an array to a map?
 
@@ -8867,12 +8867,12 @@ flag usage example:
     #=>  }
 
 
-<a id="orga263a1c"></a>
+<a id="org3197e3b"></a>
 
 ### Dates and time
 
 
-<a id="org470b930"></a>
+<a id="orgdfce400"></a>
 
 #### Get a human readable date of current time?
 
@@ -8880,7 +8880,7 @@ flag usage example:
     #> "2017-09-12T18:35:01Z"
 
 
-<a id="org421c60c"></a>
+<a id="orgd7a4433"></a>
 
 #### Convert Unix epoch time in second to human readable?
 
@@ -8894,7 +8894,7 @@ flag usage example:
     #> "2019-08-06T16:16:55Z"
 
 
-<a id="orgfa0b370"></a>
+<a id="org6294e89"></a>
 
 #### parse and format date with jq?
 
@@ -8910,12 +8910,12 @@ flag usage example:
     #> }
 
 
-<a id="org5b2de0b"></a>
+<a id="org0935959"></a>
 
 ### Other
 
 
-<a id="org55c8bb6"></a>
+<a id="org2ade21b"></a>
 
 #### Undocumented debug options?
 
@@ -8933,12 +8933,12 @@ flag usage example:
     #> 1
 
 
-<a id="org0a526dc"></a>
+<a id="orge4b940c"></a>
 
 #### Syntax
 
 
-<a id="org54f396e"></a>
+<a id="orgbf1e5b9"></a>
 
 ##### Liberal Object notation?
 
@@ -8953,12 +8953,12 @@ flag usage example:
           # Note: do not seems to works wtih arrays ...
 
 
-<a id="org899750c"></a>
+<a id="orga1b1733"></a>
 
 ## Lua
 
 
-<a id="org31944db"></a>
+<a id="org5fd4fb8"></a>
 
 ### Call external command and get stdout?
 
@@ -8973,7 +8973,7 @@ flag usage example:
     #> 3
 
 
-<a id="org962f05a"></a>
+<a id="org28cc029"></a>
 
 ### Call external command and get stdout and return code?
 
@@ -8981,12 +8981,12 @@ it seems not straighforward to do.
 Seem to have to implement this by adding some way to get the rc from the command :-(
 
 
-<a id="org3701294"></a>
+<a id="org2ac324a"></a>
 
 ## Jira
 
 
-<a id="org1e43e3b"></a>
+<a id="org4a852e3"></a>
 
 ### Jira webapp keyboard shortcut cheat sheet
 
@@ -9018,7 +9018,7 @@ Seem to have to implement this by adding some way to get the rc from the command
 </table>
 
 
-<a id="org9a772da"></a>
+<a id="org2e59aee"></a>
 
 ### command line online help?
 
@@ -9035,12 +9035,12 @@ Seem to have to implement this by adding some way to get the rc from the command
 -   import the wanted module;
 
 
-<a id="org6c21dc2"></a>
+<a id="org9c80b3c"></a>
 
 ## CheatSheets
 
 
-<a id="orgf26bdea"></a>
+<a id="orgd2283fb"></a>
 
 ### Clojure
 
@@ -9070,22 +9070,22 @@ Seem to have to implement this by adding some way to get the rc from the command
 </table>
 
 
-<a id="org4c2221f"></a>
+<a id="orgdb481ee"></a>
 
 ## Doc
 
 
-<a id="orge9f479c"></a>
+<a id="org3e0cc46"></a>
 
 ### Markdown
 
 
-<a id="org367e64a"></a>
+<a id="org0e0fe28"></a>
 
 #### Cheatsheet?
 
 
-<a id="orgc046555"></a>
+<a id="org1d5cb7b"></a>
 
 ##### Links?
 
@@ -9114,7 +9114,7 @@ From: <https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links>
     [link text itself]: http://www.reddit.com
 
 
-<a id="orged8adb6"></a>
+<a id="org6b0c52a"></a>
 
 #### get values by their path (eg: ["a",1,"b"])?
 
@@ -9122,12 +9122,12 @@ From: <https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links>
     #> 1
 
 
-<a id="org0485bf3"></a>
+<a id="org800a1de"></a>
 
 #### Bitbucket flavored markdown
 
 
-<a id="org3e91516"></a>
+<a id="orgba83aed"></a>
 
 ##### How do I create a link to the same page in Bitbucket flavored markdown?
 
@@ -9169,22 +9169,22 @@ From: <https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links>
     - lorem ipsum
 
 
-<a id="org4956688"></a>
+<a id="org0104bd7"></a>
 
 ## CI
 
 
-<a id="org7518d28"></a>
+<a id="orgd36b78b"></a>
 
 ### Jenkins
 
 
-<a id="orgd243907"></a>
+<a id="org64f9da6"></a>
 
 #### RestApi
 
 
-<a id="org7f72732"></a>
+<a id="org00fb468"></a>
 
 ##### Jenkins Rest Api Essentials?
 
@@ -9192,24 +9192,24 @@ From: <https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links>
     # for all jenkins jobs: get the name and the last build status (building or not)"
 
 
-<a id="org0e3c535"></a>
+<a id="org288dba8"></a>
 
 ##### JSON
 
 
-<a id="org0f0d088"></a>
+<a id="org1edebf6"></a>
 
 ###### Get all build result with time of particulatar job?
 
     j.jsonapi '/job/DevOps/job/maintenance/job/nexus/job/nexus-auto-restart/api/json?tree=builds[*]{1}'
 
 
-<a id="org55aa4ca"></a>
+<a id="org998d778"></a>
 
 ##### XML
 
 
-<a id="orgf68b5ba"></a>
+<a id="orgd45b520"></a>
 
 #### parallel map in groovy?
 
@@ -9220,12 +9220,12 @@ From: <https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links>
     }
 
 
-<a id="org58fb3df"></a>
+<a id="orgb381462"></a>
 
 #### dump nested object as json/xml ?
 
 
-<a id="org6176680"></a>
+<a id="org600b2e1"></a>
 
 ##### native but do not handle cycles
 
@@ -9237,7 +9237,7 @@ From: <https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links>
     (new XStream()).toXML(this)
 
 
-<a id="org89d4ae9"></a>
+<a id="orge53b6eb"></a>
 
 ##### with xstream (handle cycles)
 
@@ -9246,7 +9246,7 @@ From: <https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links>
     (new XStream()).toXML(this)
 
 
-<a id="org6dfa5c6"></a>
+<a id="orgada851a"></a>
 
 ###### Demo with cycles
 
@@ -9266,7 +9266,7 @@ From: <https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links>
     println(new XStream().toXML([n,m]))
 
 
-<a id="org628ee7e"></a>
+<a id="org3d87b02"></a>
 
 ##### with xstream: json
 
@@ -9276,17 +9276,17 @@ From: <https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links>
     println(new XStream(new com.thoughtworks.xstream.io.json.JsonHierarchicalStreamDriver()).toXML(this))
 
 
-<a id="org13866cf"></a>
+<a id="orgc6687b0"></a>
 
 #### legacy jobs
 
 
-<a id="orgee0b07f"></a>
+<a id="org26b2969"></a>
 
 ##### job-dsl plugin
 
 
-<a id="org88a07c9"></a>
+<a id="org7e7a882"></a>
 
 ###### Example job-dsl for matrix project?
 
@@ -9296,7 +9296,7 @@ From: <https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links>
     }
 
 
-<a id="orgc8929f5"></a>
+<a id="orgdd593a1"></a>
 
 #### Stop an unstoppable build?
 
@@ -9306,12 +9306,12 @@ From: <https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links>
     jenkins.model.Jenkins.instance.getItemByFullName(jobName).getBuildByNumber(jobNum).finish(hudson.model.Result.ABORTED,new java.io.IOException("Aborting build")
 
 
-<a id="org93418be"></a>
+<a id="org631c044"></a>
 
 ## Visualization
 
 
-<a id="org975839f"></a>
+<a id="org5dc88ae"></a>
 
 ### Online visualization of Wikipedia's graph?
 
@@ -9319,12 +9319,12 @@ From: <https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links>
 -   <http://seealso.org/>
 
 
-<a id="org4b67346"></a>
+<a id="org199a7de"></a>
 
 ### Graphviz's dot language?
 
 
-<a id="org5987354"></a>
+<a id="org38856f5"></a>
 
 #### Example of colorscheme usage?
 
@@ -9345,12 +9345,12 @@ From: <https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links>
     }
 
 
-<a id="org7d0d572"></a>
+<a id="orgda11fdd"></a>
 
 ### Grafana
 
 
-<a id="orgedcacef"></a>
+<a id="org0706b47"></a>
 
 #### Grafana custom time formating for the x-axis ?
 
@@ -9407,12 +9407,12 @@ From: <https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links>
 </table>
 
 
-<a id="org0be3706"></a>
+<a id="org9ff5de3"></a>
 
 ## Video editing
 
 
-<a id="org4339e2c"></a>
+<a id="org379c51b"></a>
 
 ### how to copy part of a video?
 
@@ -9423,34 +9423,34 @@ From: <https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links>
     avconv -ss $start -t $duration -i $in -codec copy $out
 
 
-<a id="org03864cd"></a>
+<a id="org860f5cb"></a>
 
 ## Repositories
 
 
-<a id="orgd0689b2"></a>
+<a id="orgd12ce44"></a>
 
 ### Nexus
 
 
-<a id="org35642e6"></a>
+<a id="org5fb3012"></a>
 
 #### V2
 
 
-<a id="orgb7409a5"></a>
+<a id="org2908b0e"></a>
 
 ##### self hosted api doc for nexus v2?
 
 $NEXUS<sub>URL</sub>/nexus-restlet1x-plugin/default/docs/index.html
 
 
-<a id="org3986599"></a>
+<a id="org62f2f6a"></a>
 
 ### Monitoring
 
 
-<a id="org9f86900"></a>
+<a id="org04a14a0"></a>
 
 #### how to connect jconsole to a jvm running in a remote docker container?
 
@@ -9466,17 +9466,17 @@ $NEXUS<sub>URL</sub>/nexus-restlet1x-plugin/default/docs/index.html
 -   on the machine where jconsole is running, start a new connection on `$DOCKER_SERVER:8888`
 
 
-<a id="orgf57c49b"></a>
+<a id="orgb6d987e"></a>
 
 # Special
 
 
-<a id="org54101de"></a>
+<a id="orgc2ef068"></a>
 
 ## Unicode(UTF8)
 
 
-<a id="orgbb84527"></a>
+<a id="org42e6cfc"></a>
 
 ### How can I search by name for unicode char on the command line?
 
@@ -9486,12 +9486,12 @@ $NEXUS<sub>URL</sub>/nexus-restlet1x-plugin/default/docs/index.html
     nix-env -iA nixpkgs.unipicker
 
 
-<a id="org8cbc84a"></a>
+<a id="org3cd3fa1"></a>
 
 ### Handy unicode(utf8) chars?
 
 
-<a id="org8cf6e5f"></a>
+<a id="orga897945"></a>
 
 #### Handy emoticon ?
 
@@ -9563,7 +9563,7 @@ $NEXUS<sub>URL</sub>/nexus-restlet1x-plugin/default/docs/index.html
 </table>
 
 
-<a id="org59f308b"></a>
+<a id="orgee53f65"></a>
 
 #### arrows
 
@@ -9577,7 +9577,7 @@ $NEXUS<sub>URL</sub>/nexus-restlet1x-plugin/default/docs/index.html
     U+21Fx	⇰	⇱	⇲	⇳	⇴	⇵	⇶	⇷	⇸	⇹	⇺	⇻	⇼	⇽	⇾	⇿
 
 
-<a id="orgcc33e07"></a>
+<a id="org5bf73ba"></a>
 
 #### draft
 
@@ -9613,7 +9613,7 @@ see: <https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing>
     ╚════════╝
 
 
-<a id="orgdb45c91"></a>
+<a id="org559fca9"></a>
 
 ##### boxes
 
@@ -9705,12 +9705,12 @@ see: <https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing>
 </table>
 
 
-<a id="org3092443"></a>
+<a id="orgdc4d68b"></a>
 
 #### use char by its code ?
 
 
-<a id="org42103d0"></a>
+<a id="org0f7b60a"></a>
 
 #### unicode number in circle
 
@@ -9870,26 +9870,26 @@ see: <https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing>
 </table>
 
 
-<a id="org62e2859"></a>
+<a id="org50f8a83"></a>
 
 #### lambda
 
     λ
 
 
-<a id="orgd11764b"></a>
+<a id="org3529e95"></a>
 
 #### elipsis?
 
     …
 
 
-<a id="org5e64ed9"></a>
+<a id="orgde88548"></a>
 
 #### Checkmarks
 
 
-<a id="org8d05119"></a>
+<a id="orgebee837"></a>
 
 ##### check / uncheck marks?
 
@@ -9901,7 +9901,7 @@ see: <https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing>
         ☑
 
 
-<a id="org4540aec"></a>
+<a id="org7110834"></a>
 
 ##### more check marks?
 
@@ -9985,12 +9985,12 @@ from: <https://en.wikipedia.org/wiki/X_mark>
     | 🞩      | U+1F7A9                  |  LIGHT SALTIRE                                     |
 
 
-<a id="org2c57f49"></a>
+<a id="orgca608f0"></a>
 
 #### colored utf8 chars
 
 
-<a id="org19fa428"></a>
+<a id="org07e30da"></a>
 
 ##### some cool
 
@@ -10016,7 +10016,7 @@ from: <https://en.wikipedia.org/wiki/X_mark>
 </table>
 
 
-<a id="org0e3ac42"></a>
+<a id="org456704c"></a>
 
 ##### some
 
@@ -10093,21 +10093,21 @@ from: <https://en.wikipedia.org/wiki/X_mark>
 </table>
 
 
-<a id="org57d94c1"></a>
+<a id="orgd6df40e"></a>
 
 ##### zodiac
 
 ♈♉♊♋♌♍♎♏⛎♐♑♒♓
 
 
-<a id="orgf164628"></a>
+<a id="org07b6323"></a>
 
 ##### zodiac unambiguous
 
 ♈♉♌♎⛎♐♑♒♓
 
 
-<a id="orgaba4c76"></a>
+<a id="org843efea"></a>
 
 ##### zodiac even more unambiguous
 
