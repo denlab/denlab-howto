@@ -1413,6 +1413,7 @@ You can check your work to ensure that the certificate is built correctly:
 
 openssl verify -CAfile myCA.pem -verify_hostname bar.mydomain.com mydomain.com.crt
         #+END_SRC
+
 ******** Rsync
 ********* how to specify the port in rsync?
        #+BEGIN_SRC sh
@@ -2518,19 +2519,21 @@ dir=/path/to
 ******** Apk
 ********* use a http cache for apk ?
 
-       from: https://hub.docker.com/r/vektorlab/apk-cache/
+       - from: https://hub.docker.com/r/vektorlab/apk-cache/
 
        - Run an apk-cache on port 80 + --add-host:
+
        #+BEGIN_SRC sh
-       # run an apk-cache container
-       docker run -d -p 80:80 --name=apk-cache vektorlab/apk-cache
-       # run container by replacing dl-4.alpinelinux.org:
-       docker run --add-host dl-cdn.alpinelinux.org:${hostIp} -it alpine:3.6
-       # Alternative if not running on port 80, link the container:
-       docker run -d -p 80:80 --name=apk-cache vektorlab/apk-cache
+         # run an apk-cache container
+         docker run -d -p 80:80 --name=apk-cache vektorlab/apk-cache
+         # run container by replacing dl-4.alpinelinux.org:
+         docker run --add-host dl-cdn.alpinelinux.org:${hostIp} -it alpine:3.6
+         # Alternative if not running on port 80, link the container:
+         docker run -d -p 80:80 --name=apk-cache vektorlab/apk-cache
        #+END_SRC
 
        - Run an apk-cache on any port + link on port 80 + --add-host:
+
        #+BEGIN_SRC sh
        # run an apk-cache container
        docker run -d -p 8080:80 --name=apk-cache vektorlab/apk-cache
@@ -2539,18 +2542,30 @@ dir=/path/to
        #+END_SRC
 
        - Run apk-cache on any port + overwrite resolution of dl-4.alpinelinux.org via dnsmasq
+
 ********* add a repo?
+
        #+BEGIN_SRC sh
        echo "http://107.181.185.116/alpine/v3.2/main" >> /etc/apk/repositories; \
        #+END_SRC
+
 ********* how to install telnet on alpine ???
+
        #+BEGIN_SRC sh
        #+END_SRC
+
 ********* repo key rotated? (UNTRUSTED signature when =apk add=)?
+       -
 #+BEGIN_SRC sh
   # add the new key
   apk add -X https://dl-cdn.alpinelinux.org/alpine/v3.14/main -u alpine-keys
 #+END_SRC
+
+******** OpenSsl
+
+********* Add a root cert CA to an alpine?
+
+
 ******* Debian
 ******** Old debian GPG invalid signature when apt-get update?
       Re-import expired pgp keys with:
