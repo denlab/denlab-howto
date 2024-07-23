@@ -1079,7 +1079,11 @@ ffmpeg -i output2.m4v -vf "scale=(trunc(iw/4)*4)/4:(trunc(ih/4)*4)/4" video.mp4
 #+end_src
 ********** lossless recording
 ffmpeg -video_size 1920x1080 -framerate 30 -f x11grab -i :0.0 -c:v libx264rgb -crf 0 -preset ultrafast -color_range 2 output.mkv
-
+********* half res of a video ?
+From copilot terminal (!)
+#+BEGIN_SRC sh
+ffmpeg -i input.mp4 -vf scale=iw/2:-1 output.mp4
+#+END_SRC
 ******* Math
 ******** Bc
 ********* float precision?
