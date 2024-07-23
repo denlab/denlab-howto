@@ -177,6 +177,14 @@ openssl enc -aes-256-ctr -pass pass:"$(head -c128 /dev/urandom | base64)" -nosal
 ***** Programming
 ****** Misc
 ******* bash pointer variables?
+******* compact way to print the name of the current script (basename not full path)?
+#+BEGIN_SRC sh
+  s=/the/path/foo.txt
+  echo "${s##*/}"
+
+  #> foo.txt
+#+END_SRC
+
 ****** Control flow
 ******* Tests/Conditionnals
 ******** ternary operator in bash?
