@@ -1037,7 +1037,13 @@ last
 sudo groupadd $g
 # add a group specifying its group id
 sudo groupadd -g $gid $g
-
+******** Cron
+********* cron cheatsheet
+| how to                                                    | Cron            | Jenkins         | Jenkins note       |
+|-----------------------------------------------------------+-----------------+-----------------+--------------------|
+| At midnight approx                                        |                 | @Midnight       | To spread the load |
+| Run a cron job every 2 hours between midnight and 7h AM ? | 0 1,3,5,7 * * * | H 1,3,5,7 * * * | To spread the load |
+TODO : complete cheatsheet
 ******* Graphics
 
 ******** Imagemagick
