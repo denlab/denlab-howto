@@ -3830,6 +3830,19 @@ select * from (VALUES (1, 'c'), (1, 'a')) t(b,a)
 #+END_SRC
 *** timeserie db
 **** influxdb
+***** import/export
+****** Dump a measurment?
+
+      #+begin_src sh
+       docker                        \
+           exec -it influx-container \
+           influx                    \
+              -username  USER        \
+              -password admin        \
+              -database db           \
+              -execute 'select * from $bucket.$retentions.${measurement} where time < now()'
+
+      #+end_src
 ***** flux
 ****** flux query example?
 
