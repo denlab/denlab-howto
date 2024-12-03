@@ -177,13 +177,14 @@ openssl enc -aes-256-ctr -pass pass:"$(head -c128 /dev/urandom | base64)" -nosal
 ***** Programming
 ****** Misc
 ******* bash pointer variables?
-******* compact way to print the name of the current script (basename not full path)?
-#+BEGIN_SRC sh
-  s=/the/path/foo.txt
-  echo "${s##*/}"
+******* Var substution cheatsheet?
 
-  #> foo.txt
-#+END_SRC
+|----------------------------+-----------------------+------------------+-------------------|
+| :what:                     | :example input:       | :example output: | :cmd:             |
+|----------------------------+-----------------------+------------------+-------------------|
+| basename                   | ~s=/the/path/foo.txt~ | ~foo.txt~        | ~echo "${s##*/}"~ |
+| filename without extension | ~s=/the/path/foo.txt~ | ~/the/path/foo~  | ~echo "${s%.*}"~  |
+|----------------------------+-----------------------+------------------+-------------------|
 
 ****** Control flow
 ******* Tests/Conditionnals
