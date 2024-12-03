@@ -1343,6 +1343,16 @@ ssh -o PubkeyAcceptedKeyTypes=+ssh-rsa $server
 
 ******** Openssl
 ********* SslCerts
+********** Add a custom ca cert
+|---------+----------+-------------------------------------------------------------------------------------------------------------------------|
+| distrib | version  | cmd                                                                                                                     |
+|---------+----------+-------------------------------------------------------------------------------------------------------------------------|
+| alpine  | 3.20.3   | ~COPY my-cert.pem /usr/local/share/ca-certificates/my-cert.crt~                                                         |
+|         |          | ~RUN cat /usr/local/share/ca-certificates/my-cert.crt >> /etc/ssl/certs/ca-certificates.crt && apk --no-cache add curl~ |
+|---------+----------+-------------------------------------------------------------------------------------------------------------------------|
+| debian  | bookworm | ~cp cert.crt /usr/local/share/ca-certificates/ && update-ca-certificates~                                               |
+|---------+----------+-------------------------------------------------------------------------------------------------------------------------|
+
 ********** generate a self certificate for localhost (without prompt)?
         from: https://letsencrypt.org/docs/certificates-for-localhost/
         #+BEGIN_SRC sh
