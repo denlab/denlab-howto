@@ -1378,7 +1378,7 @@ ssh -o PubkeyAcceptedKeyTypes=+ssh-rsa $server
 
 ******** Openssl
 ********* SslCerts
-********** Add a custom ca cert
+********** Add a custom ca cert cheatcheet
 |---------+----------+-------------------------------------------------------------------------------------------------------------------------|
 | distrib | version  | cmd                                                                                                                     |
 |---------+----------+-------------------------------------------------------------------------------------------------------------------------|
@@ -1387,7 +1387,13 @@ ssh -o PubkeyAcceptedKeyTypes=+ssh-rsa $server
 |---------+----------+-------------------------------------------------------------------------------------------------------------------------|
 | debian  | bookworm | ~cp cert.crt /usr/local/share/ca-certificates/ && update-ca-certificates~                                               |
 |---------+----------+-------------------------------------------------------------------------------------------------------------------------|
+********** ssl cheatcheat
 
+| what                                 | cmd |
+|--------------------------------------+-----|
+| Convert a pem cert to crt            |     |
+| Extract a pub key from a certificate | ~openssl x509 -in certificate.pem -pubkey -noout > public_key.pem~  |
+|                                      |     |
 ********** generate a self certificate for localhost (without prompt)?
         from: https://letsencrypt.org/docs/certificates-for-localhost/
         #+BEGIN_SRC sh
