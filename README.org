@@ -798,6 +798,16 @@ make
 sudo checkinstall
    #+END_SRC
 ***** Org-Mode
+****** Tables
+******* example of org-mode table with columns merged vertically ?
++---------+---------+---------+
+| Header1 | Header2 | Header3 |
++---------+---------+---------+
+| Merged  | Text1   | Text2   |
+| text    +---------+---------+
+| here    | Text3   | Text4   |
++---------+---------+---------+
+
 ****** key binding to insert a code block?
 - Type:
 =<s>=
