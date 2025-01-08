@@ -2067,6 +2067,51 @@ setxkbmap -option ctrl:nocaps
       #+END_SRC
 ****** Io
 ******* Disk
+******** Live disk increase
+********* Make the kernel aware of a new disk ?
+
+#+BEGIN_SRC sh
+  lsblk
+
+  find /sys/class/scsi_host/ -mindepth 1 \
+  | jq -Rr '"\(.)/scan" | "echo \"- - -\" > \(@sh)"' \
+  | bash -xv
+
+  lsblk
+  # this should be different
+#+END_SRC
+********* Make the kernel aware of disk having its size changed?
+
+#+BEGIN_SRC sh
+  lsblk
+
+  ls /sys/class/scsi_device/                                               \
+  | xargs -i -n1 echo 'echo 1 > /sys/class/scsi_device/{}/device/rescan' \
+  | bash -xveuo pipefail
+
+  lsblk
+  # this should be different
+#+END_SRC
+********* Grow a mounted and used partition live (on a growed disk and the fs on one partition)?
+#+BEGIN_SRC sh
+# Check disk status
+fdisk -l
+# Check partition info
+
+lsblk
+
+# Start parted for the disk (here assumming the growed disk is /dev/sda)
+
+growpart /dev/sda 1
+
+
+# Assuming the partition is mounted on /:
+xfs_growfs /
+
+
+# Check new filesystem size
+df -h
+#+BEGIN_SRC
 ******** list files open by a particular process
 
       #+BEGIN_SRC bash
