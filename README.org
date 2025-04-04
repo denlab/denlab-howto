@@ -2489,7 +2489,7 @@ cat /etc/environment          \
   # use pigz instead
   pigz -n -0 b.tar
 #+END_SRC
-********
+
 ****** Fs
 ******* difference between =/bin=, =/usr/bin=, =/usr/local/bin=?
      From: https://unix.stackexchange.com/questions/8656/usr-bin-vs-usr-local-bin-on-linux
