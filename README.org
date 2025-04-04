@@ -333,6 +333,11 @@ openssl enc -aes-256-ctr -pass pass:"$(head -c128 /dev/urandom | base64)" -nosal
    | int to char | =printf "\x$(printf %x 65)"=                 |         |
    | replace all | =bash -c 'x=abcabc; echo ${x//b/z} # axcaxc= |         |
    |             |                                              |         |
+******** bash arrays cheat sheet?
+| what             | how       | example            |
+|------------------+-----------+--------------------|
+| get the last arg | ="${!#}"= | ~last_arg="${!#}"~ |
+|                  |           |                    |
 ******** Syntax
 ********* ssh escape sequence?
      =ENTER, ~, .=
