@@ -1035,7 +1035,7 @@ dd if=/dev/sda of=/dev/sdb status=progress
 last
 #+end_src
 ********* SeLinux
-********* status/enable/disable selinux?
+********** status/enable/disable selinux?
        #+BEGIN_SRC bash
        # with the selinux-utils pkg:
        # for example on debian like systems:
