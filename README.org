@@ -1029,6 +1029,30 @@ dd if=/dev/sda of=/dev/sdb status=progress
 #+END_SRC
 
 ******** Security
+
+********* Deletion
+********** how to securely overwrite a file for harder recovery?
+
+*Warning* Files may still be recovrable in some situations (ssd wear leveling,
+journaling file system etc). It's best to use full disk encryption from the start
+
+#+begin_src shell
+  # option1: shred
+  ## overwrite the file 3 times (default)
+  ## -z add a final 0 pass to hide shredding
+  shred -z $file
+  # remove file
+  rm $file
+
+  # option2: dd
+  dd if=/dev/urandom of=file bs=1M status=progress
+  ## second pass zeroing
+  dd if=/dev/zero of=file bs=1M status=progress
+  # remove file
+  rm $file
+#+end_src
+
+
 ********* Other
 ********** list recent ssh connection on a host?
 #+begin_src bash
