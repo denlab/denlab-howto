@@ -3978,6 +3978,14 @@ select * from (VALUES (1, 'c'), (1, 'a')) t(b,a)
               -execute 'select * from $bucket.$retentions.${measurement} where time < now()'
 
       #+end_src
+****** Copy a measurement from a bucket to another measurement in the same bucket  ?
+#+begin_src sh
+  from(bucket: "<bucket>")
+  |> range(start: 0)
+  |> filter(fn: (r) => r._measurement == "<srcMeasurement>")
+  |> set(key: "_measurement", value: "<dstMeasurement>j")
+  |> to(bucket: "<bucket>")
+#+End_src
 ***** flux
 ****** flux query example?
 
