@@ -3563,7 +3563,7 @@ Works with any base:
 #+END_SRC
 
 **** Js
-**** Babasha
+**** Babashka
 ***** Parse a date in babashka?
       #+BEGIN_SRC clj
        (java.time.LocalDateTime/parse "2019-12-18T16:01:41.485")
