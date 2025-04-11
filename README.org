@@ -584,7 +584,12 @@ $ echo ${refToRefToVar}
 #> foo
 #+END_SRC
 **** Zsh
-
+**** Linters
+***** Shellcheck
+****** How to ignore an shellcheck error with a comment in a a script?
+#+BEGIN_SRC shell
+  # shellcheck disable=SCXXXX
+#+END_SRC
 *** Editors
 **** Emacs
 ***** file type indicator header for emacs?
