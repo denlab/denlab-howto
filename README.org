@@ -2597,7 +2597,8 @@ In one case I was only able to send the initial with:
         | sudo zfs receive -o dedup=off -v -Fdu dstpool
 #+END_SRC
 
-********* zfs partial send / receive ?
+********* Zfs partial send / receive ?
+********** zfs partial send / receive
 from: https://unix.stackexchange.com/questions/343675/zfs-on-linux-send-receive-resume-on-poor-bad-ssh-connection
 #+begin_src bash
   # on the receiving end
@@ -2617,6 +2618,10 @@ from: https://unix.stackexchange.com/questions/343675/zfs-on-linux-send-receive-
       | nc $receiveHost 9090
 #+end_src
 
+********** canceiling a partial receive ?
+#+begin_src bash
+    zfs receive -A <dataset>
+#+end_src
 ******** How to list all devices of a pool?
 #+BEGIN_SRC bash
 sudo zpool list  -v -L
