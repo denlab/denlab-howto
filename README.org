@@ -890,6 +890,23 @@ sudo checkinstall
     Top level sections as per the 'Section' attribute of =aptitude show <pkg>=.
 ******* Admin
 ******** Tmux
+********* essential tmux config
+       #+begin_src bash
+         (cat <<e''
+         set -g mode-keys vi
+         set -g prefix C-q
+
+         # Clipboard integration without mouse mode
+         set-option -s set-clipboard on
+         bind-key -T copy-mode-vi v send-keys -X begin-selection
+         bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -i"
+         e
+         ) > /etc/tmux.conf
+         # xclip is req for copy/paste integration
+         apt install xclip
+       #+end_src
+
+
 ********* how do i detach other client when reattach to session?
        #+begin_src bash
    tmux -2 a -dt 0
