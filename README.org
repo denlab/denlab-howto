@@ -898,6 +898,11 @@ sudo checkinstall
     sudo ls /etc/cron.daily
     sudo ls /etc/cron.weekly
 #+end_src
+******** How do I downgrade a rocky linux docker to a specific version ?
+#+begin_src sh
+  # to  downgarde to docker 24.0.2
+  dnf downgrade docker-ce-24.0.2 docker-ce-cli-24.0.2 containerd.io
+#+end_src
 
 ****** Software packages
     Top level sections as per the 'Section' attribute of =aptitude show <pkg>=.
