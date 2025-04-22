@@ -885,6 +885,19 @@ sudo checkinstall
 
 ******* apk
 ******** equivalent of apt-file search?
+******* dnf
+******** how do I know if my dns system do auto upgrade?
+#+begin_src sh
+    # check
+    sudo systemctl stop dnf-automatic.timer
+    # check
+    sudo systemctl disable dnf-automatic.timer
+    # check
+    crontab -l
+    # check
+    sudo ls /etc/cron.daily
+    sudo ls /etc/cron.weekly
+#+end_src
 
 ****** Software packages
     Top level sections as per the 'Section' attribute of =aptitude show <pkg>=.
