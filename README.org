@@ -1718,6 +1718,21 @@ foo bar baz
        #+END_SRC
 
 ******** MoreUtils
+
+******** Ts
+
+********* How to use Moreutils's ts to get the time elpased between each line output by a process ?
+- use =ts= =-i= option:
+- Example:
+      #+BEGIN_SRC bash
+      seq Infinity \
+          | pv -L 1 -l  -q  \
+          | ts -i "%H:%M:%.S"
+      00:00:00.838060 1
+      00:00:01.033935 2
+      00:00:01.014818 3
+       #+END_SRC
+
 ********* read / process / write the same file ?
        - Use:  =sponge=
        - =sponge= will read stdin and write to specified file. Unlike a shell redirect it will soaks all its input before writing the output file.
