@@ -14,6 +14,7 @@ Also serve:
 
 * Operating Systems
 ** Linux
+
 *** Shells
 **** Bash
 ***** Non interactive
@@ -3030,6 +3031,18 @@ mountvol X: /d
    au! BufNewFile,BufReadPost *.{yaml,yml} set filetype=yaml foldmethod=indent
    autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
     #+END_SRC
+** Ms Windows
+*** Admin
+**** Disk cleanup
+***** on windws 11 how to the cleanmgr tool with "moreOptions" tab allowing to remove all the last shadow system copy from an admin powershell?
+
+    #+BEGIN_SRC bash
+      # Should open a cleanmgr proecess window with the moreOption tab
+      Start-Process -FilePath cleanmgr.exe -ArgumentList "/lowdisk /d $env:SystemDrive" -Verb RunAs
+      # To verify the number of shadow copy present on the system
+      vssadmin list shadows
+    #+END_SRC
+
 * Virtualization
 ** Docker
 *** Images
