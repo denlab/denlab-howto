@@ -5139,6 +5139,7 @@ digraph G {
 
 **** Handy emoticon ?
  |-----------------------------+-----------------+---|
+ | warning                     | ⚠️               |   |
  | pay attention               | 🖐 👉 👈 👇 👆 ⚠ |   |
  | thumbs up                   | 👍              |   |
  | applause                    | 👏y             |   |
