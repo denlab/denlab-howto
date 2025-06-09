@@ -2953,6 +2953,11 @@ reload – Reload the configuration file
 reopen – Reopen log files
 stop – Shut down immediately (fast shutdown)
        #+END_SRC
+******* linux -> AIX cheatshet
+| linux   | aix                 |
+|---------+---------------------|
+| =free -m= | =svmon -G -O unit=MB= |
+|         |                     |
 ***** M$ Windows
 ****** Cygwin
 ******* Sshd
