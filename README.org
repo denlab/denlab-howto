@@ -4012,7 +4012,18 @@ select * from (VALUES (1, 'c'), (1, 'a')) t(b,a)
 | descr                  | sql                    |
 |------------------------+------------------------|
 | get postgresql version | =SHOW server_version;= |
+****** How to I find all tables in a schema by their names?
+#+BEGIN_SRC sql
+  SELECT
+    table_name
+    , table_type
+  FROM information_schema.tables
+  WHERE true
+    and table_schema = 'public'
+    and table_name like '%some*table%name%pattern%'
+  ;
 
+#+END_SRC
 **** sqlite
 ***** sqlite3
 ****** import
