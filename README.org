@@ -285,6 +285,13 @@ openssl enc -aes-256-ctr -pass pass:"$(head -c128 /dev/urandom | base64)" -nosal
      #+end_src
      http://stackoverflow.com/questions/19417015/bash-copy-from-one-array-to-another
 ********* Normal arrays
+********** Get the size of a bash array?
+           #+begin_src sh
+             a=(a b c)
+             echo ${a[@]}
+             #> 3
+           #+end_src
+
 ********** declare/literal/set/getAll/size
          #+begin_src bash
          # declare
@@ -4453,6 +4460,8 @@ git reset --hard
     git config --global color.ui true
     #+END_SRC
 *** Git Lfs essentials?
+*** Git delete merged remote branches ?
+With git-extras,there is the command =
 #+begin_center sh
 # Download
 wget https://github.com/git-lfs/git-lfs/releases/download/v2.1.1/git-lfs-linux-amd64-2.1.1.tar.gz
