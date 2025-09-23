@@ -3659,6 +3659,11 @@ Works with any base:
       #+BEGIN_SRC clj
        (java.time.LocalDateTime/parse "2019-12-18T16:01:41.485")
       #+END_SRC
+***** How to detect if the babashka code has been invoked through main or through loading by another ns (similar than in Python or Bash) ?
+#+begin_src clj
+  (when (= *file* (System/getProperty "babashka.file"))
+    (apply -main *command-line-args*))
+#+end_src
 
 **** Processes
 
