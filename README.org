@@ -4096,8 +4096,24 @@ select * from (VALUES (1, 'c'), (1, 'a')) t(b,a)
     |> filter(fn: (r) => r._measurement == "tableSrc")
     |> to(bucket: "destBucket")
 #+end_src
+****** Copy a measurement from one bucket to another bucket changing measurement name?
+#+begin_src sh
+  from(bucket: "sourceBucket")
+  |> range(start: -inf)
+  |> filter(fn: (r) => r._measurement == "sourceMeasurement")
+  |> map(fn: (r) => ({ r with _measurement: "destMeasurement" }))  // optional: change measurement name
+  |> to(bucket: "destBucket")
+#+end_src
 ****** Copy a measurement from a bucket to another measurement in the same bucket  ?
 #+begin_src sh
+  from(bucket: "bucket")
+  |> range(start: -inf)
+  |> filter(fn: (r) => r._measurement == "sourceMeasurement")
+  |> map(fn: (r) => ({ r with _measurement: "destMeasurement" }))
+  |> to(bucket: "bucket")
+#+end_src
+
+  #+begin_src sh
   from(bucket: "<bucket>")
   |> range(start: 0)
   |> filter(fn: (r) => r._measurement == "<srcMeasurement>")
