@@ -4037,9 +4037,13 @@ select * from (VALUES (1, 'c'), (1, 'a')) t(b,a)
 *** RDBMS
 **** PostgreSQL
 ****** Posgresql cheatsheet?
-| descr                  | sql                    |
-|------------------------+------------------------|
-| get postgresql version | =SHOW server_version;= |
+| descr                    | sql                    |
+|--------------------------+------------------------|
+| get postgresql version   | =SHOW server_version;= |
+| get the type of a column | =pg_typeof(col)=       |
+| get jsonb type of a column | =jsonb_typeof(col)=  |
+
+|                          |                        |
 ****** How to I find all tables in a schema by their names?
 #+BEGIN_SRC sql
   SELECT
