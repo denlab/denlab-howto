@@ -1450,6 +1450,16 @@ ssh -o PubkeyAcceptedKeyTypes=+ssh-rsa $server
 
 ******** Openssl
 ********* SslCerts
+********** How do I inspect the certificate of a url ?
+       #+BEGIN_SRC bash
+         openssl  s_client                                  \
+                  -connect jenkins-deploy.fircosoft.net:443 \
+                  -servername jenkins-deploy.fircosoft.net  \
+                  < /dev/null                               \
+                  2> /dev/null                              \
+         | openssl  x509 -noout -text
+       #+END_SRC
+
 ********** Add a custom ca cert cheatcheet
 |---------+----------+-------------------------------------------------------------------------------------------------------------------------|
 | distrib | version  | cmd                                                                                                                     |
@@ -4364,7 +4374,7 @@ endef
 $(info - newline: ${\n} has been inserted)
      #+END_SRC
 **** print all variables?
-     ~Makefile~:
+~Makefile~:
      #+BEGIN_SRC bash
      info:
         @echo "V=$(foreach v, $(.VARIABLES), $(v):$($(v)))" | tr ' ' '\n' | jq -R '.' | jq -Ss '[ .[] | select(length > 0)  | [splits(":")]  | {key: .[0], value: .[1]}] | .[] | .key + ":" + .value' | jq -r '.' | column
@@ -4414,9 +4424,9 @@ run:
     #+END_SRC
 *** selfDoc
 **** how to extract all targets from a Makefile without a make command ?
-     +BEGIN_SRC bash
+     #+BEGIN_SRC bash
       egrep '^[^. :]+:' < proxy | sed -r -e 's/.*/  - &/' -e 's/://g']
-     +END_SRC
+     #+END_SRC
 ** Lorem ipsum
    |      |        |                                         |
    |------+--------+-----------------------------------------|
