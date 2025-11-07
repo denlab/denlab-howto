@@ -3108,6 +3108,12 @@ mountvol X: /d
     | exec  | run cmd in *running* container |
     | start | start a *stopped* container    |
     |-------+--------------------------------|
+**** How to run a docker container in such way monitoring program like htop will behave as is it was running on the host?
+    #+BEGIN_SRC bash
+docker run --rm --name glances2  -it -v /var/run/docker.sock:/var/run/docker.sock:ro -v /run/user/1000/podman/podman.sock:/run/user/1000/podman/podman.sock:ro --network=host --pid host alpine sh -c 'apk update && apk add htop && htop'
+    #+END_SRC
+
+
 
 *** troubleshoot ubuntu network ?
 - ping 8.8.8.8 but no www.google.com ?
