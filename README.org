@@ -4087,6 +4087,32 @@ select * from (VALUES (1, 'c'), (1, 'a')) t(b,a)
   ;
 
 #+END_SRC
+****** How do I list all pg tables with their size on disk ?
+#+BEGIN_SRC sql
+  SELECT schemaname,
+    tablename,
+    pg_table_size((((quote_ident((schemaname)::text) || '.'::text) || quote_ident((tablename)::text)))::regclass) AS table_bytes,
+    pg_size_pretty(pg_table_size((((quote_ident((schemaname)::text) || '.'::text) || quote_ident((tablename)::text)))::regclass)) AS table_size,
+    pg_indexes_size((((quote_ident((schemaname)::text) || '.'::text) || quote_ident((tablename)::text)))::regclass) AS indexes_bytes,
+    pg_size_pretty(pg_indexes_size((((quote_ident((schemaname)::text) || '.'::text) || quote_ident((tablename)::text)))::regclass)) AS indexes_size,
+    pg_total_relation_size((((quote_ident((schemaname)::text) || '.'::text) || quote_ident((tablename)::text)))::regclass) AS total_bytes,
+    pg_size_pretty(pg_total_relation_size((((quote_ident((schemaname)::text) || '.'::text) || quote_ident((tablename)::text)))::regclass)) AS total_size
+   FROM pg_tables
+  WHERE (schemaname <> ALL (ARRAY['pg_catalog'::name, 'information_schema'::name]))
+  ORDER BY (pg_total_relation_size((((quote_ident((schemaname)::text) || '.'::text) || quote_ident((tablename)::text)))::regclass)) DESC;
+#+END_SRC
+
+Example output:
+#+BEGIN_SRC yaml
+schemaname  |        tablename        | table_bytes | table_size | indexes_bytes | indexes_size | total_bytes | total_size
+------------+-------------------------+-------------+------------+---------------+--------------+-------------+------------
+ public     | vm_full                 |  1110933504 | 1059 MB    |     299384832 | 286 MB       |  1410318336 | 1345 MB
+ public     | jenkins_builds          |   280428544 | 267 MB     |     493600768 | 471 MB       |   774029312 | 738 MB
+ public     | nexrel_nexfiles         |   478642176 | 456 MB     |     117407744 | 112 MB       |   596049920 | 568 MB
+ public     | registry_tag_digest     |    92545024 | 88 MB      |     183345152 | 175 MB       |   275890176 | 263 MB
+#+END_SRC
+
+
 **** sqlite
 ***** sqlite3
 ****** import
