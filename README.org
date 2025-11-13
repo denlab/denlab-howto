@@ -3266,6 +3266,11 @@ in ~docker-compose.yml~:
       deploy:
         restart_policy: none
 #+END_SRC
+**** In a docker swarm cluster how do I force the restart of a particular service?
+
+#+BEGIN_SRC sh
+  docker service update --force ${service}
+#+END_SRC
 
 ** Vsphere
 *** when cloning a win vm, how to avoid a duplicate ip adress?
