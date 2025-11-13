@@ -4066,7 +4066,7 @@ select * from (VALUES (1, 'c'), (1, 'a')) t(b,a)
  #+END_SRC
 
 *** RDBMS
-**** PostgreSQL
+**** Postgres
 ****** Posgresql cheatsheet?
 | descr                    | sql                    |
 |--------------------------+------------------------|
