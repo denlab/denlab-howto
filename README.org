@@ -2651,9 +2651,17 @@ See: https://serverfault.com/questions/533877/how-large-is-my-zfs-dedupe-table-a
 ********* How to do send a whole pool to another pool?
 #+BEGIN_SRC bash
   # initial
-  ssh src-host 'sudo zfs send -v -R -I srcpool@snap' | sudo zfs receive -v -Fdu dstpool
+  ssh $srcSshStr                                                     \
+    sudo zfs send -R $[srcPool}@${snap}                              \
+      | pv -s $zfsSize                                               \
+  | sudo zfs receive -Fdu ${dstPool}                                 \
+  ;
+
   # incremental
-  ssh src-host 'sudo zfs send -v -R -I srcpool@snap srcpool@snap2' | sudo zfs receive -v -Fdu datapool-mir
+  ssh $sshSshStr                                                     \
+      sudo zfs send -v -R -I ${srcPool}@${snap1} ${srcPool}@${snap2} \
+  | sudo zfs receive -v -Fdu ${dstPool}                              \
+  ;
 #+END_SRC
 
 In one case I was only able to send the initial with:
