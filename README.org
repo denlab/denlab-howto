@@ -3694,10 +3694,20 @@ Works with any base:
 
 **** Js
 **** Babashka
-***** Parse a date without timezone in babashka?
-      #+BEGIN_SRC clj
-       (java.time.LocalDateTime/parse "2019-12-18T16:01:41.485")
-      #+END_SRC
+***** Parse a date without timezone in babashka and convert it to seconds since epoch?
+      #+BEGIN_SRC sh
+bb -o '(java.time.LocalDateTime/parse "2019-12-18T16:01:41.485")'
+
+# you cannot convert it to seconds since epoch without giving the timezone
+
+ bb -o '
+(->> (java.time.LocalDateTime/parse "2019-12-18T16:01:41.485")
+          (#(.toInstant % java.time.ZoneOffset/UTC))
+          .getEpochSecond
+        )
+' | jq 'todate'
+#> "2019-12-18T16:01:41Z"
+        #+END_SRC
 ***** Parse a data with timezone in babashka and convert it to second since epoch?
       #+BEGIN_SRC clj
         bb -o '
