@@ -3694,10 +3694,23 @@ Works with any base:
 
 **** Js
 **** Babashka
-***** Parse a date in babashka?
+***** Parse a date without timezone in babashka?
       #+BEGIN_SRC clj
        (java.time.LocalDateTime/parse "2019-12-18T16:01:41.485")
       #+END_SRC
+***** Parse a data with timezone in babashka and convert it to second since epoch?
+      #+BEGIN_SRC clj
+        bb -o '
+(->> "2025-11-06T12:28:41.957021832+01:00"
+  java.time.OffsetDateTime/parse
+  .toInstant
+  .getEpochSecond
+)
+' | jq 'todate'
+#> "2025-11-06T11:28:41Z"
+
+      #+END_SRC
+
 ***** How to detect if the babashka code has been invoked through main or through loading by another ns (similar than in Python or Bash) ?
 #+begin_src clj
   (when (= *file* (System/getProperty "babashka.file"))
