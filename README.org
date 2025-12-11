@@ -3050,10 +3050,9 @@ mountvol X: /d
         dism.exe /Online /Disable-Feature:Microsoft-Hyper-V
         #+END_SRC
         - And reboot
-
-
-
-
+****** voice to text ?
+******* On windows 11 what is the keyboard shortcut to trigger the windows speach to text ?
+=<super> + H=
 
 **** Vim
 ***** Yaml
