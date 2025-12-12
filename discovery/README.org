@@ -1,0 +1,1368 @@
+#+STARTUP: logdone
+#+STARTUP: hidestars
+#+TODO: TODO(t) STARTED(s) WAITING(w) | DONE(d) CANCELED(c)
+#+STARTUP: shrink
+#+OPTIONS: num:0 whn:3 toc:999 H:999
+
+* Technology Discovery & Exploration
+:PROPERTIES:
+:CREATED: 2025-12-12
+:PURPOSE: Track new tools and technologies to explore based on existing knowledge patterns
+:END:
+
+This document tracks potential tools, libraries, and technologies worth exploring based on patterns in the main knowledge base (927 topics, 700 commits, 2016-2025).
+
+** Scoring System
+
+Each tool is scored on three dimensions (1-10 each, max 30):
+- *Match*: How well it aligns with demonstrated preferences (terminal-first, composable, plain-text, Docker-native)
+- *Impact*: Potential value add to current workflow
+- *Learning*: Ease of adoption (10 = trivial, 1 = steep curve)
+
+*** Priority Mapping
+- [#A] High Priority: Total score >= 24 (top tier recommendations)
+- [#B] Medium Priority: Total score 18-23 (solid additions)
+- [#C] Low Priority: Total score < 18 (nice to have)
+
+** Implementation Ideas
+*** PostgreSQL Knowledge Base
+Your PostgREST setup could power a queryable knowledge base:
+- Dump org-mode headlines + content to PostgreSQL
+- Use =pg_trgm= for fuzzy search
+- Full-text search with =ts_vector= / =ts_query=
+- Query via PostgREST API: ="GET /topics?content=fts.docker"=
+- Find co-occurrence patterns: tools used together
+- Temporal analysis: =WHERE created BETWEEN '2020' AND '2022'=
+
+*** Discovery Queries
+#+BEGIN_SRC sql
+-- Find topics not updated in 3+ years (candidates for new tools)
+SELECT topic, last_modified
+FROM knowledge
+WHERE last_modified < now() - interval '3 years'
+ORDER BY last_modified;
+
+-- Find tool clusters (what you use together)
+SELECT tool_a, tool_b, count(*)
+FROM topic_mentions
+GROUP BY tool_a, tool_b
+HAVING count(*) > 5;
+#+END_SRC
+
+* Text & Data Processing
+** TODO [#A] ripgrep (rg) - Faster grep with better defaults
+:PROPERTIES:
+:SCORE_MATCH: 10
+:SCORE_IMPACT: 9
+:SCORE_LEARNING: 10
+:SCORE_TOTAL: 29
+:GITHUB: https://github.com/BurntSushi/ripgrep
+:TAGS: :search:text:rust:
+:END:
+
+*** Why explore this?
+Your README shows *extensive* grep/text search usage. ripgrep is 5-10x faster, respects .gitignore by default, and has better output formatting.
+
+*** Key features
+- Recursive search by default
+- Automatically skips hidden files, binary files
+- Multiline search support
+- Respects .gitignore
+- Colored output
+- Parallel execution
+
+*** Quick start
+#+BEGIN_SRC bash
+# Install
+apt-get install ripgrep  # or via docker
+
+# Drop-in grep replacement
+rg "pattern"
+rg "pattern" --type sh  # search only shell files
+rg "TODO|FIXME" -A 3    # context lines like grep
+#+END_SRC
+
+*** Your use cases
+- Searching large codebases (faster)
+- Multi-file refactoring prep
+- Log analysis
+
+** TODO [#A] miller (mlr) - sed/awk/cut/join for CSV/JSON/TSV
+:PROPERTIES:
+:SCORE_MATCH: 10
+:SCORE_IMPACT: 9
+:SCORE_LEARNING: 8
+:SCORE_TOTAL: 27
+:GITHUB: https://github.com/johnkerl/miller
+:TAGS: :data:csv:json:text:
+:END:
+
+*** Why explore this?
+You juggle data formats constantly (jq for JSON, awk/sed for text, SQL for databases). Miller is like sed/awk but aware of CSV/JSON/TSV structure.
+
+*** Key features
+- Name-indexed operations (no more =$3= vs =$4=)
+- Format conversion: CSV ↔ JSON ↔ TSV
+- SQL-like operations: join, group-by, sort
+- Stats functions: sum, mean, percentiles
+- Works in streaming mode
+
+*** Quick start
+#+BEGIN_SRC bash
+# CSV operations
+mlr --csv filter '$age > 30' data.csv
+mlr --csv cut -f name,email data.csv
+mlr --csv sort -f age data.csv
+
+# JSON to CSV
+mlr --ijson --ocsv cat data.json
+
+# Stats
+mlr --csv stats1 -a sum,mean -f revenue data.csv
+
+# Join two CSVs
+mlr --csv join -j id -f users.csv data.csv
+#+END_SRC
+
+*** Your use cases
+- Processing PostgreSQL CSV exports
+- Log file analysis (JSON logs)
+- Quick data transformations without writing Python
+- Pipeline: =pg dump | mlr --ijson filter '$age>30' --ocsv=
+
+** TODO [#A] fd - Modern find replacement
+:PROPERTIES:
+:SCORE_MATCH: 9
+:SCORE_IMPACT: 8
+:SCORE_LEARNING: 10
+:SCORE_TOTAL: 27
+:GITHUB: https://github.com/sharkdp/fd
+:TAGS: :files:search:rust:
+:END:
+
+*** Why explore this?
+You use find frequently. fd has saner defaults, faster execution, colored output, and simpler syntax.
+
+*** Key features
+- Respects .gitignore by default
+- Regex by default (no =-regex= flag)
+- Parallel execution
+- Colored output
+- Simpler syntax than find
+
+*** Quick start
+#+BEGIN_SRC bash
+# Find all shell scripts
+fd '\.sh$'
+
+# Find ignoring case
+fd -i readme
+
+# Execute command on results
+fd '\.log$' -x rm
+
+# Show hidden files
+fd -H pattern
+
+# Full path search
+fd -p '/home/.*/config'
+#+END_SRC
+
+*** Your use cases
+- Finding files in large repos
+- Cleanup operations (find + rm)
+- Build system file discovery
+
+** TODO [#A] jless - Interactive JSON viewer
+:PROPERTIES:
+:SCORE_MATCH: 9
+:SCORE_IMPACT: 8
+:SCORE_LEARNING: 9
+:SCORE_TOTAL: 26
+:GITHUB: https://github.com/PaulJuliusMartinez/jless
+:TAGS: :json:viewer:terminal:
+:END:
+
+*** Why explore this?
+You use jq extensively but sometimes need to explore JSON interactively. jless is like less but JSON-aware.
+
+*** Key features
+- Fold/unfold JSON structures
+- Vim keybindings
+- Search with =/=
+- Copy paths to clipboard
+- Works with huge files
+
+*** Quick start
+#+BEGIN_SRC bash
+# View JSON file
+jless data.json
+
+# From pipe
+curl -s api.example.com | jless
+
+# Show line numbers
+jless --line-numbers data.json
+#+END_SRC
+
+*** Your use cases
+- Exploring API responses
+- Debugging PostgreSQL JSONB output
+- Inspecting Docker inspect output
+
+** TODO [#B] gron - Make JSON greppable
+:PROPERTIES:
+:SCORE_MATCH: 9
+:SCORE_IMPACT: 7
+:SCORE_LEARNING: 9
+:SCORE_TOTAL: 25
+:GITHUB: https://github.com/tomnomnom/gron
+:TAGS: :json:grep:text:
+:END:
+
+*** Why explore this?
+Bridges your jq + grep workflows. Converts JSON to discrete assignments you can grep, then converts back.
+
+*** Key features
+- JSON → flat assignments
+- Grep-friendly format
+- Reversible transformation
+- Composable with standard tools
+
+*** Quick start
+#+BEGIN_SRC bash
+# Make JSON greppable
+gron data.json | grep "email"
+
+# Modify and convert back
+gron data.json | grep -v "password" | gron -u
+
+# Example
+echo '{"users":[{"name":"alice"},{"name":"bob"}]}' | gron
+# json = {};
+# json.users = [];
+# json.users[0] = {};
+# json.users[0].name = "alice";
+# json.users[1] = {};
+# json.users[1].name = "bob";
+#+END_SRC
+
+*** Your use cases
+- Quick JSON filtering without learning complex jq
+- Combine with sed/awk for transformations
+- Debugging complex JSON structures
+
+** TODO [#B] yq - jq for YAML
+:PROPERTIES:
+:SCORE_MATCH: 9
+:SCORE_IMPACT: 7
+:SCORE_LEARNING: 9
+:SCORE_TOTAL: 25
+:GITHUB: https://github.com/mikefarah/yq
+:TAGS: :yaml:data:parsing:
+:END:
+
+*** Why explore this?
+You work with Docker Compose (YAML) and jq. yq is jq but for YAML files.
+
+*** Key features
+- jq-like syntax for YAML
+- In-place editing
+- Format conversion
+- Merge YAML files
+
+*** Quick start
+#+BEGIN_SRC bash
+# Query YAML
+yq '.services.db.image' docker-compose.yml
+
+# Update in place
+yq -i '.services.db.ports = ["5432:5432"]' docker-compose.yml
+
+# Convert YAML to JSON
+yq -o json docker-compose.yml
+
+# Merge YAMLs
+yq eval-all 'select(fileIndex == 0) * select(fileIndex == 1)' base.yml override.yml
+#+END_SRC
+
+*** Your use cases
+- Docker Compose manipulation
+- CI/CD config editing (Jenkins YAML?)
+- Kubernetes manifests (if you touch k8s)
+
+** TODO [#B] xsv - CSV toolkit
+:PROPERTIES:
+:SCORE_MATCH: 8
+:SCORE_IMPACT: 7
+:SCORE_LEARNING: 9
+:SCORE_TOTAL: 24
+:GITHUB: https://github.com/BurntSushi/xsv
+:TAGS: :csv:data:rust:
+:END:
+
+*** Why explore this?
+Fast CSV operations. Complements miller (miller is more feature-rich, xsv is faster for simple operations).
+
+*** Key features
+- Blazingly fast
+- Index for constant-time slicing
+- Stats, search, join, frequency tables
+- Works with huge files
+
+*** Quick start
+#+BEGIN_SRC bash
+# Get stats
+xsv stats data.csv
+
+# Select columns
+xsv select name,email data.csv
+
+# Search
+xsv search -s email '@gmail.com' data.csv
+
+# Frequency count
+xsv frequency -s country data.csv
+
+# Index for fast operations
+xsv index data.csv
+xsv slice -s 100 -e 200 data.csv
+#+END_SRC
+
+*** Your use cases
+- PostgreSQL CSV exports
+- Large data file analysis
+- Quick stats before importing to DB
+
+** TODO [#B] htmlq - jq for HTML
+:PROPERTIES:
+:SCORE_MATCH: 8
+:SCORE_IMPACT: 6
+:SCORE_LEARNING: 8
+:SCORE_TOTAL: 22
+:GITHUB: https://github.com/mgdm/htmlq
+:TAGS: :html:parsing:web:
+:END:
+
+*** Why explore this?
+You use jq for JSON. htmlq brings CSS selectors to HTML scraping in shell pipelines.
+
+*** Quick start
+#+BEGIN_SRC bash
+# Extract links
+curl -s https://example.com | htmlq 'a' -a href
+
+# Get text content
+curl -s https://example.com | htmlq 'title' -t
+
+# Multiple selectors
+curl -s https://example.com | htmlq 'h1, h2, h3' -t
+#+END_SRC
+
+*** Your use cases
+- Quick web scraping
+- API documentation parsing
+- Monitoring dashboards
+
+** TODO [#C] bat - cat with syntax highlighting
+:PROPERTIES:
+:SCORE_MATCH: 7
+:SCORE_IMPACT: 5
+:SCORE_LEARNING: 10
+:SCORE_TOTAL: 22
+:GITHUB: https://github.com/sharkdp/bat
+:TAGS: :viewer:terminal:utility:
+:END:
+
+*** Why explore this?
+Drop-in cat replacement with syntax highlighting and git integration. Quality of life improvement.
+
+*** Quick start
+#+BEGIN_SRC bash
+# Use like cat
+bat script.sh
+
+# Show line numbers
+bat -n script.sh
+
+# Show git changes
+bat -d script.sh
+
+# Alias it
+alias cat='bat'
+#+END_SRC
+
+** TODO [#C] eza - Modern ls
+:PROPERTIES:
+:SCORE_MATCH: 7
+:SCORE_IMPACT: 5
+:SCORE_LEARNING: 10
+:SCORE_TOTAL: 22
+:GITHUB: https://github.com/eza-community/eza
+:TAGS: :files:terminal:utility:
+:END:
+
+*** Why explore this?
+Modern ls with colors, git integration, tree view. Fork of unmaintained exa.
+
+*** Quick start
+#+BEGIN_SRC bash
+# Better ls
+eza -l
+
+# Tree view
+eza --tree
+
+# Git status integration
+eza -l --git
+
+# Alias
+alias ls='eza'
+alias ll='eza -l'
+alias la='eza -la'
+#+END_SRC
+
+* Shell & Terminal Enhancement
+** TODO [#A] direnv - Per-directory environment variables
+:PROPERTIES:
+:SCORE_MATCH: 10
+:SCORE_IMPACT: 9
+:SCORE_LEARNING: 9
+:SCORE_TOTAL: 28
+:GITHUB: https://github.com/direnv/direnv
+:TAGS: :shell:env:workflow:
+:END:
+
+*** Why explore this?
+You juggle multiple projects with different env vars. direnv auto-loads/unloads env vars when you cd into directories.
+
+*** Key features
+- Automatic environment switching
+- .envrc files (gitignored by default)
+- Works with bash, zsh
+- Can load from .env files
+- Supports =layout= helpers for common setups
+
+*** Quick start
+#+BEGIN_SRC bash
+# Install and hook into shell
+# Add to ~/.bashrc: eval "$(direnv hook bash)"
+
+# In project directory
+echo 'export DATABASE_URL=postgresql://localhost/mydb' > .envrc
+direnv allow .
+
+# Now cd into/out of directory and vars are set/unset
+cd ~/project    # DATABASE_URL is set
+cd ~            # DATABASE_URL is unset
+#+END_SRC
+
+*** Your use cases
+- Per-project PostgreSQL connection strings
+- Docker registry credentials per project
+- Development vs staging environments
+- Jenkins configs per repo
+
+** TODO [#A] just - Command runner (modern make)
+:PROPERTIES:
+:SCORE_MATCH: 10
+:SCORE_IMPACT: 8
+:SCORE_LEARNING: 9
+:SCORE_TOTAL: 27
+:GITHUB: https://github.com/casey/just
+:TAGS: :build:automation:make:
+:END:
+
+*** Why explore this?
+You use make extensively. just is make-like but simpler, no tab issues, better for task running than building.
+
+*** Key features
+- No tabs vs spaces issues
+- Commands, not build rules
+- Better variable system
+- Arbitrary scripting languages per recipe
+- List all commands with =just --list=
+- .env file support
+
+*** Quick start
+#+BEGIN_SRC bash
+# justfile
+set dotenv-load := true
+
+# Default recipe (runs with just 'just')
+default:
+  @just --list
+
+# Recipe with parameters
+deploy env:
+  echo "Deploying to {{env}}"
+  docker-compose -f docker-compose.{{env}}.yml up -d
+
+# Multi-line with different shell
+test:
+  #!/usr/bin/env bash
+  set -euxo pipefail
+  pytest tests/
+
+# Dependencies
+all: build test deploy
+#+END_SRC
+
+*** Your use cases
+- Project task runners (replace make where it's overkill)
+- Docker compose orchestration
+- Deployment scripts
+- Development workflows
+
+** TODO [#B] zoxide - Smarter cd
+:PROPERTIES:
+:SCORE_MATCH: 8
+:SCORE_IMPACT: 7
+:SCORE_LEARNING: 9
+:SCORE_TOTAL: 24
+:GITHUB: https://github.com/ajeetdsouza/zoxide
+:TAGS: :shell:navigation:productivity:
+:END:
+
+*** Why explore this?
+Learns your most-used directories and lets you jump to them with partial names. Faster navigation.
+
+*** Quick start
+#+BEGIN_SRC bash
+# After installation, add to ~/.bashrc:
+eval "$(zoxide init bash)"
+
+# Use it (replaces cd)
+z project      # jumps to ~/code/my-project
+z doc ho       # jumps to ~/denlab-howto (fuzzy match)
+
+# Interactive selection with fzf
+zi doc
+#+END_SRC
+
+*** Your use cases
+- Quick project switching
+- Deep directory hierarchies
+- Reducing typing
+
+** TODO [#B] fzf - Fuzzy finder
+:PROPERTIES:
+:SCORE_MATCH: 9
+:SCORE_IMPACT: 8
+:SCORE_LEARNING: 8
+:SCORE_TOTAL: 25
+:GITHUB: https://github.com/junegunn/fzf
+:TAGS: :search:interactive:shell:
+:END:
+
+*** Why explore this?
+Interactive fuzzy finding for anything. Integrates with shell history, file search, git, etc.
+
+*** Key features
+- Fuzzy search anything
+- Ctrl-R for history (better than default)
+- Alt-C to cd with fuzzy find
+- Ctrl-T for file selection
+- Pipe any list into it
+
+*** Quick start
+#+BEGIN_SRC bash
+# Interactive file search
+vim $(fzf)
+
+# Search git commits
+git log --oneline | fzf
+
+# Process list
+ps aux | fzf
+
+# Custom preview
+fd | fzf --preview 'bat --color=always {}'
+
+# With ripgrep
+rg --files | fzf
+#+END_SRC
+
+*** Your use cases
+- Finding files in large repos
+- Git commit selection
+- Docker container selection
+- Exploring README.org topics interactively
+
+** TODO [#B] starship - Cross-shell prompt
+:PROPERTIES:
+:SCORE_MATCH: 7
+:SCORE_IMPACT: 6
+:SCORE_LEARNING: 9
+:SCORE_TOTAL: 22
+:GITHUB: https://github.com/starship/starship
+:TAGS: :shell:prompt:ui:
+:END:
+
+*** Why explore this?
+Fast, customizable prompt that shows git status, language versions, command duration, etc.
+
+*** Quick start
+#+BEGIN_SRC bash
+# Install and add to ~/.bashrc:
+eval "$(starship init bash)"
+
+# Configure via ~/.config/starship.toml
+# Shows: directory, git branch, language versions, command duration
+#+END_SRC
+
+** TODO [#C] nushell - Structured data shell
+:PROPERTIES:
+:SCORE_MATCH: 8
+:SCORE_IMPACT: 6
+:SCORE_LEARNING: 6
+:SCORE_TOTAL: 20
+:GITHUB: https://github.com/nushell/nushell
+:TAGS: :shell:data:experimental:
+:END:
+
+*** Why explore this?
+Radical rethinking of shell: everything is structured data (like PowerShell but better). Natural fit for your data-wrangling style.
+
+*** Key features
+- Pipelines pass structured data (not text)
+- Built-in commands for JSON/CSV/YAML
+- SQL-like operations
+- Type system
+- Great error messages
+
+*** Quick start
+#+BEGIN_SRC bash
+# List files as table
+ls | where size > 1mb | sort-by size
+
+# Parse JSON naturally
+open data.json | where age > 30 | select name email
+
+# HTTP request
+http get https://api.github.com/users/octocat | select name location
+#+END_SRC
+
+*** Your use cases
+- Complex data pipelines
+- Alternative to bash for data scripts
+- API interaction scripts
+
+*** Note
+Steep learning curve (different paradigm), but powerful for data work.
+
+* Container & DevOps Tools
+** TODO [#A] lazydocker - Docker TUI
+:PROPERTIES:
+:SCORE_MATCH: 9
+:SCORE_IMPACT: 9
+:SCORE_LEARNING: 10
+:SCORE_TOTAL: 28
+:GITHUB: https://github.com/jesseduffield/lazydocker
+:TAGS: :docker:tui:monitoring:
+:END:
+
+*** Why explore this?
+You're a heavy Docker user. lazydocker gives you interactive management without memorizing commands.
+
+*** Key features
+- Interactive container management
+- View logs, stats, inspect in one interface
+- Keyboard-driven
+- No mouse needed
+- Compose support
+
+*** Quick start
+#+BEGIN_SRC bash
+# Install via docker :)
+docker run --rm -it -v /var/run/docker.sock:/var/run/docker.sock lazyteam/lazydocker
+
+# Or native install
+lazydocker
+#+END_SRC
+
+*** Your use cases
+- Quick container debugging
+- Log viewing across containers
+- Stats monitoring
+- Compose stack management
+
+** TODO [#A] dive - Docker image layer explorer
+:PROPERTIES:
+:SCORE_MATCH: 9
+:SCORE_IMPACT: 8
+:SCORE_LEARNING: 9
+:SCORE_TOTAL: 26
+:GITHUB: https://github.com/wagoodman/dive
+:TAGS: :docker:optimization:analysis:
+:END:
+
+*** Why explore this?
+Analyze Docker image layers to reduce size. Shows what each layer adds, wasted space, etc.
+
+*** Quick start
+#+BEGIN_SRC bash
+dive myimage:tag
+
+# CI mode (fail if efficiency too low)
+dive --ci myimage:tag
+#+END_SRC
+
+*** Your use cases
+- Optimizing Dockerfile builds
+- Finding large files in images
+- Layer analysis
+- CI/CD image validation
+
+** TODO [#B] ctop - Container top
+:PROPERTIES:
+:SCORE_MATCH: 8
+:SCORE_IMPACT: 7
+:SCORE_LEARNING: 10
+:SCORE_TOTAL: 25
+:GITHUB: https://github.com/bcicen/ctop
+:TAGS: :docker:monitoring:performance:
+:END:
+
+*** Why explore this?
+top/htop but for containers. Real-time resource monitoring.
+
+*** Quick start
+#+BEGIN_SRC bash
+ctop
+
+# Single view
+ctop -a  # all containers, including stopped
+#+END_SRC
+
+** TODO [#B] podman - Daemonless Docker alternative
+:PROPERTIES:
+:SCORE_MATCH: 8
+:SCORE_IMPACT: 6
+:SCORE_LEARNING: 7
+:SCORE_TOTAL: 21
+:GITHUB: https://github.com/containers/podman
+:TAGS: :containers:docker:security:
+:END:
+
+*** Why explore this?
+Docker-compatible but rootless, daemonless. Better security model. Drop-in replacement (=alias docker=podman=).
+
+*** Key features
+- No daemon (more secure)
+- Rootless containers
+- Compatible with Docker images
+- Pod concept (like k8s)
+- =podman-compose= for compose files
+
+*** Your use cases
+- Production environments (better security)
+- Rootless CI/CD runners
+- Systemd integration for containers as services
+
+*** Note
+Slight differences from Docker, but mostly compatible.
+
+** TODO [#C] skopeo - Container image operations
+:PROPERTIES:
+:SCORE_MATCH: 7
+:SCORE_IMPACT: 6
+:SCORE_LEARNING: 8
+:SCORE_TOTAL: 21
+:GITHUB: https://github.com/containers/skopeo
+:TAGS: :containers:registry:operations:
+:END:
+
+*** Why explore this?
+Inspect/copy/delete container images without pulling them. Registry operations without Docker daemon.
+
+*** Quick start
+#+BEGIN_SRC bash
+# Inspect without pulling
+skopeo inspect docker://postgres:15
+
+# Copy between registries
+skopeo copy docker://source/image:tag docker://dest/image:tag
+
+# Delete from registry
+skopeo delete docker://registry/image:tag
+#+END_SRC
+
+** TODO [#C] buildah - OCI image builder
+:PROPERTIES:
+:SCORE_MATCH: 7
+:SCORE_IMPACT: 5
+:SCORE_LEARNING: 6
+:SCORE_TOTAL: 18
+:GITHUB: https://github.com/containers/buildah
+:TAGS: :containers:build:scripting:
+:END:
+
+*** Why explore this?
+Build container images from scripts (not Dockerfile). More control, no daemon needed.
+
+*** Your use cases
+- Complex build logic
+- Dynamic image generation
+- CI/CD without Docker daemon
+
+* Git & Version Control
+** TODO [#A] lazygit - Git TUI
+:PROPERTIES:
+:SCORE_MATCH: 9
+:SCORE_IMPACT: 9
+:SCORE_LEARNING: 9
+:SCORE_TOTAL: 27
+:GITHUB: https://github.com/jesseduffield/lazygit
+:TAGS: :git:tui:productivity:
+:END:
+
+*** Why explore this?
+Terminal UI for git. Visual but keyboard-driven. Stage hunks, resolve conflicts, rebase interactively.
+
+*** Key features
+- Interactive staging (like =git add -p= but visual)
+- Branch management
+- Stash management
+- Rebase/merge conflict resolution
+- View diffs inline
+- Fast keyboard navigation
+
+*** Quick start
+#+BEGIN_SRC bash
+lazygit
+
+# In a git repo
+# h/j/k/l for navigation
+# space to stage
+# c to commit
+# P to push
+#+END_SRC
+
+*** Your use cases
+- Complex staging (partial commits)
+- Interactive rebasing
+- Conflict resolution
+- Branch juggling
+
+** TODO [#B] delta - Better git diff
+:PROPERTIES:
+:SCORE_MATCH: 8
+:SCORE_IMPACT: 7
+:SCORE_LEARNING: 9
+:SCORE_TOTAL: 24
+:GITHUB: https://github.com/dandavison/delta
+:TAGS: :git:diff:viewer:
+:END:
+
+*** Why explore this?
+Syntax-highlighted git diffs with side-by-side view, line numbers, git blame integration.
+
+*** Quick start
+#+BEGIN_SRC bash
+# Configure as git pager
+git config --global core.pager delta
+git config --global interactive.diffFilter "delta --color-only"
+git config --global delta.navigate true
+git config --global delta.light false  # or true for light theme
+
+# Now all git diff/log use delta
+git diff
+git log -p
+#+END_SRC
+
+** TODO [#B] tig - Text-mode interface for git
+:PROPERTIES:
+:SCORE_MATCH: 8
+:SCORE_IMPACT: 7
+:SCORE_LEARNING: 8
+:SCORE_TOTAL: 23
+:GITHUB: https://github.com/jonas/tig
+:TAGS: :git:tui:history:
+:END:
+
+*** Why explore this?
+ncurses interface for git history/blame/grep. Great for exploring history.
+
+*** Quick start
+#+BEGIN_SRC bash
+tig                    # all commits
+tig HEAD~10..HEAD      # range
+tig -- file.txt        # file history
+tig blame file.txt     # interactive blame
+tig grep pattern       # search
+#+END_SRC
+
+** TODO [#C] gh - GitHub CLI
+:PROPERTIES:
+:SCORE_MATCH: 6
+:SCORE_IMPACT: 7
+:SCORE_LEARNING: 8
+:SCORE_TOTAL: 21
+:GITHUB: https://github.com/cli/cli
+:TAGS: :git:github:cli:automation:
+:END:
+
+*** Why explore this?
+GitHub operations from terminal. PRs, issues, releases, gists without browser.
+
+*** Quick start
+#+BEGIN_SRC bash
+gh auth login
+
+gh repo clone user/repo
+gh pr create --title "Fix bug" --body "Description"
+gh pr list
+gh pr view 123
+gh issue list
+gh release create v1.0.0
+#+END_SRC
+
+* Development Tools
+** TODO [#A] httpie / xh - Better curl
+:PROPERTIES:
+:SCORE_MATCH: 9
+:SCORE_IMPACT: 8
+:SCORE_LEARNING: 10
+:SCORE_TOTAL: 27
+:GITHUB_XH: https://github.com/ducaale/xh
+:GITHUB_HTTPIE: https://github.com/httpie/httpie
+:TAGS: :http:api:testing:
+:END:
+
+*** Why explore this?
+Simpler syntax than curl for API testing. xh is a Rust rewrite of httpie (faster, no Python).
+
+*** Quick start
+#+BEGIN_SRC bash
+# httpie
+http GET https://api.github.com/users/octocat
+http POST https://api.example.com/users name=john email=john@example.com
+http PUT https://api.example.com/users/123 name=jane
+
+# xh (same syntax, faster)
+xh get https://api.github.com/users/octocat
+xh post https://api.example.com/users name=john email=john@example.com
+
+# Headers
+xh get https://api.example.com Authorization:"Bearer token"
+
+# Form data
+xh --form post https://example.com/upload file@/path/to/file
+#+END_SRC
+
+*** Your use cases
+- PostgREST API testing
+- Debugging REST endpoints
+- Quick API exploration
+- CI/CD health checks
+
+** TODO [#B] entr - Run commands when files change
+:PROPERTIES:
+:SCORE_MATCH: 9
+:SCORE_IMPACT: 7
+:SCORE_LEARNING: 9
+:SCORE_TOTAL: 25
+:GITHUB: https://github.com/eradman/entr
+:TAGS: :automation:development:watch:
+:END:
+
+*** Why explore this?
+Watch files and run commands on change. Simple, composable, Unix-style.
+
+*** Quick start
+#+BEGIN_SRC bash
+# Run tests on file change
+fd '\.py$' | entr pytest
+
+# Rebuild on source change
+fd '\.c$' | entr make
+
+# Restart server on code change
+echo server.py | entr -r python server.py
+
+# Multiple files
+echo Dockerfile docker-compose.yml | entr -r docker-compose up
+#+END_SRC
+
+*** Your use cases
+- Development: auto-run tests
+- Auto-rebuild Docker images
+- Live reload for development
+
+** TODO [#B] watchexec - File watcher
+:PROPERTIES:
+:SCORE_MATCH: 8
+:SCORE_IMPACT: 7
+:SCORE_LEARNING: 9
+:SCORE_TOTAL: 24
+:GITHUB: https://github.com/watchexec/watchexec
+:TAGS: :automation:development:watch:
+:END:
+
+*** Why explore this?
+Alternative to entr with more features (ignore patterns, clear screen, etc.). Slightly more complex but more flexible.
+
+*** Quick start
+#+BEGIN_SRC bash
+# Watch current directory
+watchexec pytest
+
+# Watch specific pattern
+watchexec -e py,yml pytest
+
+# Ignore paths
+watchexec --ignore '*.log' make test
+
+# Clear screen before run
+watchexec -c pytest
+#+END_SRC
+
+** TODO [#B] tokei - Code statistics
+:PROPERTIES:
+:SCORE_MATCH: 6
+:SCORE_IMPACT: 6
+:SCORE_LEARNING: 10
+:SCORE_TOTAL: 22
+:GITHUB: https://github.com/XAMPPRocky/tokei
+:TAGS: :statistics:code:analysis:
+:END:
+
+*** Why explore this?
+Fast code statistics. Lines of code, comments, blanks by language.
+
+*** Quick start
+#+BEGIN_SRC bash
+tokei .
+
+# Specific language
+tokei . --type Python
+
+# Output formats
+tokei . --output json
+#+END_SRC
+
+** TODO [#C] tldr - Simplified man pages
+:PROPERTIES:
+:SCORE_MATCH: 7
+:SCORE_IMPACT: 6
+:SCORE_LEARNING: 10
+:SCORE_TOTAL: 23
+:GITHUB: https://github.com/tldr-pages/tldr
+:TAGS: :documentation:help:
+:END:
+
+*** Why explore this?
+Community-maintained simplified man pages with examples. Faster than searching man pages.
+
+*** Quick start
+#+BEGIN_SRC bash
+tldr tar
+tldr docker
+tldr jq
+
+# Update cache
+tldr --update
+#+END_SRC
+
+** TODO [#C] grex - Regex builder from examples
+:PROPERTIES:
+:SCORE_MATCH: 6
+:SCORE_IMPACT: 5
+:SCORE_LEARNING: 9
+:SCORE_TOTAL: 20
+:GITHUB: https://github.com/pemistahl/grex
+:TAGS: :regex:generator:utility:
+:END:
+
+*** Why explore this?
+Generate regex from example strings. Great for quick regex prototyping.
+
+*** Quick start
+#+BEGIN_SRC bash
+grex "2020-01-01" "2021-05-15" "2022-12-31"
+# Output: ^\d{4}-\d{2}-\d{2}$
+
+grex -r "foo bar" "foo baz"
+# Output: ^foo (?:ba[rz])$
+#+END_SRC
+
+* Database & Data Tools
+** TODO [#A] pgcli - Better psql
+:PROPERTIES:
+:SCORE_MATCH: 10
+:SCORE_IMPACT: 9
+:SCORE_LEARNING: 10
+:SCORE_TOTAL: 29
+:GITHUB: https://github.com/dbcli/pgcli
+:TAGS: :postgresql:cli:database:
+:END:
+
+*** Why explore this?
+You use PostgreSQL extensively. pgcli adds auto-completion, syntax highlighting, and better UX to psql.
+
+*** Key features
+- Smart auto-completion (table names, columns, keywords)
+- Syntax highlighting
+- Multi-line editing
+- Pretty-printed tables
+- Query history
+- =\\dt+= shows sizes
+
+*** Quick start
+#+BEGIN_SRC bash
+pgcli postgresql://user:pass@localhost/dbname
+
+# Or like psql
+pgcli -h localhost -U user -d dbname
+
+# Inside pgcli
+SELECT * FROM users WHERE <TAB>  # auto-completes columns
+#+END_SRC
+
+*** Your use cases
+- Daily PostgreSQL work
+- Faster query writing
+- Exploring schemas
+- Replaces psql for interactive use
+
+** TODO [#B] usql - Universal SQL CLI
+:PROPERTIES:
+:SCORE_MATCH: 8
+:SCORE_IMPACT: 7
+:SCORE_LEARNING: 8
+:SCORE_TOTAL: 23
+:GITHUB: https://github.com/xo/usql
+:TAGS: :sql:database:multi:
+:END:
+
+*** Why explore this?
+One CLI for all databases. PostgreSQL, MySQL, SQLite, Oracle, SQL Server, etc. Same interface.
+
+*** Quick start
+#+BEGIN_SRC bash
+usql postgres://user:pass@localhost/db
+usql mysql://user:pass@localhost/db
+usql sqlite://path/to/db.sqlite
+
+# Consistent \d commands across all databases
+\dt
+\d tablename
+#+END_SRC
+
+** TODO [#C] litecli - Better sqlite3
+:PROPERTIES:
+:SCORE_MATCH: 7
+:SCORE_IMPACT: 5
+:SCORE_LEARNING: 10
+:SCORE_TOTAL: 22
+:GITHUB: https://github.com/dbcli/litecli
+:TAGS: :sqlite:cli:database:
+:END:
+
+*** Why explore this?
+pgcli but for SQLite. Auto-completion and syntax highlighting for sqlite3.
+
+** TODO [#C] datasette - Instant API from SQLite/CSV
+:PROPERTIES:
+:SCORE_MATCH: 7
+:SCORE_IMPACT: 6
+:SCORE_LEARNING: 7
+:SCORE_TOTAL: 20
+:GITHUB: https://github.com/simonw/datasette
+:TAGS: :sqlite:api:exploration:
+:END:
+
+*** Why explore this?
+Point it at SQLite DB or CSV and get instant web UI + JSON API. Great for data exploration.
+
+*** Quick start
+#+BEGIN_SRC bash
+datasette data.db
+
+# From CSV
+datasette data.csv
+
+# Publish
+datasette publish data.db
+#+END_SRC
+
+*** Your use cases
+- Quick data sharing
+- Prototype APIs
+- Data exploration dashboards
+- Alternative to your PostgREST setup for one-off needs
+
+* Scripting & Programming
+** TODO [#A] babashka - Fast Clojure scripting
+:PROPERTIES:
+:SCORE_MATCH: 10
+:SCORE_IMPACT: 9
+:SCORE_LEARNING: 8
+:SCORE_TOTAL: 27
+:GITHUB: https://github.com/babashka/babashka
+:TAGS: :clojure:scripting:fast:
+:END:
+
+*** Status
+*You already know this!* (Recent commits show Babashka usage)
+
+*** Key exploration areas
+- =bb tasks= for project task runners (like just/make)
+- =babashka.pods= for native extensions
+- =babashka.process= for shell scripting
+- =babashka.fs= for file operations
+- =http-client= for API scripts
+- Replace complex bash scripts with bb
+
+*** Your use cases
+- Complex data pipelines (better than bash)
+- API automation scripts
+- Build scripts with Clojure's power
+- Fast startup alternative to JVM Clojure
+
+* Meta: Discovery Automation
+** TODO [#A] Build PostgreSQL-powered tool recommender
+:PROPERTIES:
+:SCORE_MATCH: 10
+:SCORE_IMPACT: 10
+:SCORE_LEARNING: 7
+:SCORE_TOTAL: 27
+:TAGS: :meta:automation:postgresql:
+:END:
+
+*** Implementation idea
+1. Parse README.org (927 headlines) into PostgreSQL
+2. Extract: topics, tools mentioned, timestamps, code blocks
+3. Schema:
+   #+BEGIN_SRC sql
+   CREATE TABLE topics (
+     id SERIAL PRIMARY KEY,
+     headline TEXT,
+     level INT,
+     parent_id INT REFERENCES topics(id),
+     content TEXT,
+     created TIMESTAMP,
+     last_modified TIMESTAMP
+   );
+
+   CREATE TABLE tool_mentions (
+     topic_id INT REFERENCES topics(id),
+     tool_name TEXT,
+     mention_count INT
+   );
+
+   CREATE INDEX idx_content_fts ON topics USING gin(to_tsvector('english', content));
+   CREATE INDEX idx_tool_trgm ON tool_mentions USING gist(tool_name gist_trgm_ops);
+   #+END_SRC
+
+4. Query via PostgREST:
+   #+BEGIN_SRC bash
+   # Find related topics
+   curl "http://localhost:3000/topics?content=fts.docker"
+
+   # Find tool co-occurrence
+   curl "http://localhost:3000/rpc/tool_cooccurrence?tool=docker"
+
+   # Find stale topics (not updated in 3 years)
+   curl "http://localhost:3000/topics?last_modified=lt.2022-01-01&order=last_modified"
+   #+END_SRC
+
+5. Build recommendation engine:
+   - Find topics not updated in N years → search for modern alternatives
+   - Find tool clusters → recommend tools used by people with similar clusters
+   - Temporal gaps → "you documented X in 2016, what's new since then?"
+
+*** Next steps
+- Write parser (Python/Babashka) to extract org-mode structure
+- Design schema
+- Build PostgREST API
+- Create discovery queries
+- Automate recommendations
+
+** TODO [#B] Create GitHub Action for discovery updates
+:PROPERTIES:
+:SCORE_MATCH: 7
+:SCORE_IMPACT: 7
+:SCORE_LEARNING: 8
+:SCORE_TOTAL: 22
+:TAGS: :meta:automation:ci:
+:END:
+
+*** Idea
+Weekly GitHub Action that:
+1. Scans awesome-lists for new tools
+2. Matches against your tool preferences
+3. Opens issue with recommendations
+4. Updates this discovery document
+
+** TODO [#C] Build org-mode search with fzf
+:PROPERTIES:
+:SCORE_MATCH: 9
+:SCORE_IMPACT: 6
+:SCORE_LEARNING: 9
+:SCORE_TOTAL: 24
+:TAGS: :meta:orgmode:search:
+:END:
+
+*** Quick implementation
+#+BEGIN_SRC bash
+#!/bin/bash
+# Search README.org with fzf
+
+grep -n '^[*]' README.org \
+  | fzf --preview 'bat --color=always README.org --line-range {1}:' \
+        --preview-window=right:60%
+#+END_SRC
+
+* Statistics & Insights
+** Current Knowledge Base Profile
+- *Total headlines*: 927
+- *Total commits*: 700
+- *Timespan*: 2016-08-29 to 2025-12-11 (9+ years)
+- *Total lines*: 5,466
+
+** Technology Density (estimated from sampling)
+- Docker/Containers: Very High (Docker, Compose, Swarm)
+- Shell/Bash: Very High (extensive text processing)
+- PostgreSQL: High (recent focus)
+- JVM Ecosystem: High (Groovy, Clojure, Java, Gradle, Maven)
+- Git: High
+- jq/JSON: High
+- Python: Medium
+- CI/CD: Medium (Jenkins)
+
+** Temporal Pattern
+- *2016-2018*: Linux admin, Docker adoption, shell scripting
+- *2019-2021*: JVM ecosystem, Groovy, Jenkins, databases
+- *2022-2023*: PostgreSQL, Docker Swarm, Clojure
+- *2024-2025*: Babashka, Windows 11, PostgreSQL optimization
+
+** Philosophy Profile
+- ✓ Terminal-first, avoid GUI
+- ✓ Composable tools (Unix pipes)
+- ✓ Plain text configuration
+- ✓ Docker-native workflows
+- ✓ Functional programming interest (Clojure)
+- ✓ Data-wrangling focus (jq, SQL, CSV)
+- ✓ Self-documenting systems (org-mode)
+- ✓ API-driven (PostgREST)
+
+* Next Steps
+1. [#A] Pick 3-5 highest-scored tools to try this week
+2. [#A] Consider PostgreSQL knowledge base implementation
+3. [#B] Set up fzf for README.org searching
+4. [#C] Create weekly discovery automation
+
+* Maintenance
+- Review this document quarterly
+- Mark items as DONE or CANCELED as you explore
+- Add new discoveries as you find them
+- Update scores based on experience
+- Remove irrelevant items
+
+#+BEGIN_COMMENT
+Generated: 2025-12-12
+Based on: /denlab-howto/README.org (927 headlines, 700 commits, 9 years)
+Philosophy: Terminal-first, composable, Docker-native, data-focused
+#+END_COMMENT
