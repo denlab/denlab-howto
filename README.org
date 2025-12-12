@@ -3121,7 +3121,6 @@ docker run --rm --name glances2  -it -v /var/run/docker.sock:/var/run/docker.soc
     #+END_SRC
 
 
-
 *** troubleshoot ubuntu network ?
 - ping 8.8.8.8 but no www.google.com ?
 - incomplete response:
@@ -3278,7 +3277,12 @@ in ~docker-compose.yml~:
 #+BEGIN_SRC sh
   docker service update --force ${service}
 #+END_SRC
+*** App in docker
+**** Dockerized chrome rendering on terminal?
+https://github.com/fathyb/carbonyl
 
+**** Dockerized firefox rendering on terminal?
+https://github.com/browsh-org/browsh
 ** Vsphere
 *** when cloning a win vm, how to avoid a duplicate ip adress?
      - vsphere: clone the vm :
