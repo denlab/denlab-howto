@@ -5468,3 +5468,51 @@ see: https://en.wikipedia.org/wiki/List_of_Unicode_characters#Box_Drawing
      ♈♉♌♎⛎♐♑♒♓
 ***** zodiac even more unambiguous
      ♈♉♌♎⛎♐♒
+* Natural language
+** DONE Quelles les differentes figures de style? (avec un example pour chacune d'entre elle).
+CLOSED: [2026-01-16 Fri 17:04]
+:LOGBOOK:
+CLOCK: [2026-01-16 Fri 17:00]--[2026-01-16 Fri 17:04] =>  0:04
+:END:
+
+Il y a plusieur categories de figures de styles:
+- Figure d'analogie
+- Figures d'Amplification
+- Figures d'Atténuation
+- Figures de Substitution
+- Figures de Construction
+- Figures d'Opposition
+- Figures d'Omission
+
+|-------------------------+------------------+------------------------------------------------------------+--------------------------------------------------------------|
+| Figure                  | nom              | Exlication                                                 | Example                                                      |
+|-------------------------+------------------+------------------------------------------------------------+--------------------------------------------------------------|
+| Figure d'Amplification  | Comparaison      | Rapprochement explicite avec "comme", "tel que"            | - Ex: "Ses cheveux noirs comme l'ébène"                      |
+|                         | Métaphore        | Rapprochement implicite sans terme de comparaison          | - Ex: "Cette femme est un soleil"                            |
+|                         | Allégorie        | Représentation d'une idée abstraite par une image concrète | - Ex: "La Mort faucha les moissons humaines"                 |
+|                         | Personnification | Attribution de qualités humaines à des objets/concepts     | - Ex: "Le vent murmurait ses secrets"                        |
+|-------------------------+------------------+------------------------------------------------------------+--------------------------------------------------------------|
+| Figures d'Analogie      | Comparaison      | Rapprochement explicite avec "comme", "tel que"            | - Ex: "Ses cheveux noirs comme l'ébène"                      |
+|                         | Métaphore        | Rapprochement implicite sans terme de comparaison          | - Ex: "Cette femme est un soleil"                            |
+|                         | Allégorie        | Représentation d'une idée abstraite par une image concrète | - Ex: "La Mort faucha les moissons humaines"                 |
+|                         | Personnification | Attribution de qualités humaines à des objets/concepts     | - Ex: "Le vent murmurait ses secrets"                        |
+|-------------------------+------------------+------------------------------------------------------------+--------------------------------------------------------------|
+| Figures d'Atténuation   | Litote           | Affirmation par la négation du contraire                   | - Ex: "Ce n'est pas mal" (= c'est bien)                      |
+|                         | Antiphrase       | Affirmation du contraire (ironie)                          | - Ex: "Oh, quel talent!" (pour une bêtise)                   |
+|                         | Euphémisme       | Remplacement par une expression plus douce                 | - Ex: "Il nous a quittés" (= il est mort)                    |
+|-------------------------+------------------+------------------------------------------------------------+--------------------------------------------------------------|
+| Figures de Substitution | Métonymie        | Désignation d'une chose par une autre liée                 | - Ex: "Boire un verre" (le verre pour le contenu)            |
+|                         | Synecdoque       | Désignation du tout par la partie ou inversement           | - Ex: "Tous les bras se levèrent" (les bras = les personnes) |
+|                         | Antonomase       | Nom propre pour nom commun ou inversement                  | - Ex: "C'est un Racine" (= un grand dramaturge)              |
+|-------------------------+------------------+------------------------------------------------------------+--------------------------------------------------------------|
+|                         | Parallélisme     | Construction similaire de propositions                     | - Ex: "Il parle sans écouter; il agit sans réfléchir"        |
+| Figures de Construction | Chiasme          | Inversion symétrique (A-B / B-A)                           | - Ex: "Je vais où tu viens; tu viens où je vais"             |
+|                         | Antithèse        | Opposition de deux idées                                   | - Ex: "La vie mène à la mort; la mort mène à la vie"         |
+|-------------------------+------------------+------------------------------------------------------------+--------------------------------------------------------------|
+| Figures d'Opposition    | Oxymore          | Association de termes contradictoires                      | - Ex: "Un silence assourdissant"                             |
+|                         | Paradoxe         | Affirmation qui semble illogique mais vraie                | - Ex: "Plus on vieillit, moins on a le temps"                |
+|-------------------------+------------------+------------------------------------------------------------+--------------------------------------------------------------|
+| Figures d'Omission      | Ellipse          | Suppression de mots jugés inutiles                         | - Ex: "Lui, un roi? Moi, un mendiant" (verbe être omis)      |
+|                         | Zeugma           | Mot utilisé au sens propre et figuré                       | - Ex: "Il quitta la chambre et ses illusions"                |
+|                         | Aposiopèse       | Phrase volontairement inachevée                            | - Ex: "Si vous continuez ainsi... vous verrez!"              |
+|-------------------------+------------------+------------------------------------------------------------+--------------------------------------------------------------|
