@@ -5196,8 +5196,6 @@ withPool{
              steps {shell('echo x: $x') }
          }
        #+END_SRC
-
-
 **** Stop an unstoppable build?
      #+BEGIN_SRC bash
      # with jenkins cli (groovysh or groovy):
