@@ -1622,6 +1622,7 @@ ngrep -l -W byline -d eth0 src host.com  and dst port 80
 #+end_src
 
 *********** How to correctly install guestAdditon on debian12?
+
 ************ Hint1
 #+begin_src bash
   # First how to check if installed properly:
