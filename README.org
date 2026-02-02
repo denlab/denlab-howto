@@ -1646,6 +1646,53 @@ And reinstall it again
 ************ Hint3
 Beware of not enought video memory, it can impact the resolution of the vm
 
+
+*********** vbox Linux guest fail to fail on win11 with "Driver name clash"
+
+VM failed to start with error message:
+
+   #+begin_src bash
+Driver name clash. Another driver with the same name as the one being registered exists. (VERR_PDM_USB_NAME_CLASH).
+Result Code:
+E_FAIL (0x80004005)
+Component:
+ConsoleWrap
+Interface:
+IConsole {6ac83d89-6ee7-4e33-8ae6-b257b2e81be8}
+   #+end_src
+
+   - option1 (workaround):
+     disable usb for this vm
+   - option2:
+     uninstall vbox extension pack / reboot / install vbox extension pack
+     (un)Installing vbox extension pack require running vbox as admin, to run vbox as admin from powershell:
+    #+begin_src powershell
+    # Run powershell as admin
+    # Run vbox as admin from powershell
+    Start-Process "C:\Program Files\Oracle\VirtualBox\VirtualBox.exe" -Verb RunAs  
+    #+end_src
+
+    - option3 (note the amount of reboot between each step may be overkill, just to be sure ...)
+      uninstall vbox / restart / uninstall vbox extension pack (if present) / reboot / install vbox / reboot / install vbox extension / reboot
+       - Running the installer as admin from powershell:
+     #+begin_src powershell
+    # Run powershell as admin
+    # Run vbox installer as admin from powershell
+    cd C:\Users\labayed1\Downloads\vbox-7.4.2\
+    Start-Process .\VirtualBox-7.2.4-170995-Win.exe  -Verb RunAs
+    Start-Process "C:\Program Files\Oracle\VirtualBox\VirtualBox.exe" -Verb RunAs  
+    #+end_src
+      - Runnting vbox as admin from powershell:
+     #+begin_src powershell
+    # Run powershell as admin
+    # Run vbox as admin from powershell
+    Start-Process "C:\Program Files\Oracle\VirtualBox\VirtualBox.exe" -Verb RunAs  
+    #+end_src
+
+        
+
+    
+     
 ******* Utils
 ******** Comm
 ********* comm summary?
