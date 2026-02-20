@@ -1,0 +1,19 @@
+#+STARTUP: logdone
+#+STARTUP: hidestars
+#+MACRO: pipe @@html:&#124;@@
+#+MACRO: pipeAnd @@html:&#124;&amp;@@
+#+TODO: TODO(t) STARTED(s) WAITING(w) | DONE(d) CANCELED(c)
+#+STARTUP: shrink
+#+OPTIONS: num:0 whn:3 toc:999 H:999
+
+lorem
+ipsum
+
+* a 
+** a1 
+line1
+line2
+* b
+** b2
+line1
+line2

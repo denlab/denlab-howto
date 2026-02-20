@@ -1,0 +1,59 @@
+#!/home/a/.local/bin/bb -io
+
+(require '[clojure.string :as str]
+         '[clojure.pprint :refer [pprint]])
+
+(defn heading-level [s]
+  (when-let [[_ stars] (re-matches #"^(\*+)\s+.*" s)]
+    (count stars)))
+
+;; Stack invariant:
+;;   stack = [node-level-1 node-level-2 ... node-current]
+;; Each `node` = {:level L :text "..." :children [...]}
+
+(defn push-node [stack lvl txt]
+  ;; pop until parent has lower level
+  (let [stack (loop [s stack]
+                (if (and (seq s)
+                         (>= (:level (peek s)) lvl))
+                  (recur (pop s))
+                  s))
+        new-node {:level lvl :text txt :children []}]
+    (if (seq stack)
+      ;; attach to parent
+      (conj stack
+            (update (peek stack) :children conj new-node))
+      ;; no parent: start new top-level node
+      [new-node])))
+
+(defn push-body [stack line]
+  (if (seq stack)
+    ;; append line to current node’s children
+    (conj (pop stack)
+          (update (peek stack) :children conj line))
+    stack))
+
+(defn nodes->vec [node]
+  [(:text node)
+   (mapv (fn [c] (if (string? c) c (nodes->vec c)))
+         (:children node))])
+
+(->> *input*
+     ;; skip org headers
+     (drop-while #(str/starts-with? % "#+"))
+
+     (reduce
+      (fn [stack line]
+        (if-let [lvl (heading-level line)]
+          (push-node stack lvl line)
+          (if (seq (str/trim line))
+            (push-body stack line)
+            stack)))
+      [])
+
+     ;; stack ends with the whole tree, but top node might be nested.
+     ;; Extract only top-level nodes (level=1).
+     (filter #(= 1 (:level %)))
+     (mapv nodes->vec)
+     pprint)
+
