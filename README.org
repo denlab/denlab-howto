@@ -938,7 +938,6 @@ sudo checkinstall
          apt install xclip
        #+end_src
 
-
 ********* how do i detach other client when reattach to session?
        #+begin_src bash
    tmux -2 a -dt 0
@@ -967,7 +966,17 @@ sudo checkinstall
        #+BEGIN_SRC bash
        set -g default-command /usr/local/bin/zsh
        #+END_SRC
+********* Copy to system clipboard without tmux-extension?
 
+       #+BEGIN_SRC bash
+         (cat <<e''
+         set-option -s set-clipboard on
+         bind-key -T copy-mode-vi v send-keys -X begin-selection
+         bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -i"
+         e
+         ) \
+         | sudo tee -a /etc/tmux.conf
+       #+END_SRC
 ******** Zip
 ********* list content of a zip file from stdin?
        #+BEGIN_SRC bash
